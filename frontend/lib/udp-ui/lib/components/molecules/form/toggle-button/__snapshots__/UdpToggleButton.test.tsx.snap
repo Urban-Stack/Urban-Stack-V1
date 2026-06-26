@@ -1,0 +1,353 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot > matches snapshot when \`checked\` is true 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <input
+        checked=""
+        class="hidden"
+        hidden=""
+        readonly=""
+        type="checkbox"
+      />
+      <button
+        aria-checked="true"
+        class="flex p-2.5 font-400 rounded-lg focus:outline-hidden cursor-pointer disabled:cursor-not-allowed ring-gray-200 bg-primary-700 ring-0 text-white"
+        role="switch"
+      >
+        Toggle me
+      </button>
+    </div>
+  </body>,
+  "container": <div>
+    <input
+      checked=""
+      class="hidden"
+      hidden=""
+      readonly=""
+      type="checkbox"
+    />
+    <button
+      aria-checked="true"
+      class="flex p-2.5 font-400 rounded-lg focus:outline-hidden cursor-pointer disabled:cursor-not-allowed ring-gray-200 bg-primary-700 ring-0 text-white"
+      role="switch"
+    >
+      Toggle me
+    </button>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshot > matches snapshot with custom className 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <input
+        class="hidden"
+        hidden=""
+        readonly=""
+        type="checkbox"
+      />
+      <button
+        class="flex p-2.5 font-400 text-gray-800 rounded-lg focus:outline-hidden cursor-pointer disabled:cursor-not-allowed ring-1 ring-gray-200 my-custom-class focus:ring-3 focus:ring-primary-200 focus:bg-primary-100 hover:bg-primary-100"
+        role="switch"
+      >
+        Toggle me
+      </button>
+    </div>
+  </body>,
+  "container": <div>
+    <input
+      class="hidden"
+      hidden=""
+      readonly=""
+      type="checkbox"
+    />
+    <button
+      class="flex p-2.5 font-400 text-gray-800 rounded-lg focus:outline-hidden cursor-pointer disabled:cursor-not-allowed ring-1 ring-gray-200 my-custom-class focus:ring-3 focus:ring-primary-200 focus:bg-primary-100 hover:bg-primary-100"
+      role="switch"
+    >
+      Toggle me
+    </button>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshot > matches snapshot with default props 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <input
+        class="hidden"
+        hidden=""
+        readonly=""
+        type="checkbox"
+      />
+      <button
+        class="flex p-2.5 font-400 text-gray-800 rounded-lg focus:outline-hidden cursor-pointer disabled:cursor-not-allowed ring-1 ring-gray-200 focus:ring-3 focus:ring-primary-200 focus:bg-primary-100 hover:bg-primary-100"
+        role="switch"
+      >
+        Toggle me
+      </button>
+    </div>
+  </body>,
+  "container": <div>
+    <input
+      class="hidden"
+      hidden=""
+      readonly=""
+      type="checkbox"
+    />
+    <button
+      class="flex p-2.5 font-400 text-gray-800 rounded-lg focus:outline-hidden cursor-pointer disabled:cursor-not-allowed ring-1 ring-gray-200 focus:ring-3 focus:ring-primary-200 focus:bg-primary-100 hover:bg-primary-100"
+      role="switch"
+    >
+      Toggle me
+    </button>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshot > matches snapshot with icon 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <input
+        class="hidden"
+        hidden=""
+        readonly=""
+        type="checkbox"
+      />
+      <button
+        class="flex p-2.5 font-400 text-gray-800 rounded-lg focus:outline-hidden cursor-pointer disabled:cursor-not-allowed ring-1 ring-gray-200 focus:ring-3 focus:ring-primary-200 focus:bg-primary-100 hover:bg-primary-100"
+        role="switch"
+      >
+        Toggle me
+      </button>
+    </div>
+  </body>,
+  "container": <div>
+    <input
+      class="hidden"
+      hidden=""
+      readonly=""
+      type="checkbox"
+    />
+    <button
+      class="flex p-2.5 font-400 text-gray-800 rounded-lg focus:outline-hidden cursor-pointer disabled:cursor-not-allowed ring-1 ring-gray-200 focus:ring-3 focus:ring-primary-200 focus:bg-primary-100 hover:bg-primary-100"
+      role="switch"
+    >
+      Toggle me
+    </button>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

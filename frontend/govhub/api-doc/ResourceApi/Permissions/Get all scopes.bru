@@ -1,0 +1,15 @@
+meta {
+  name: Get all scopes
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/scopes
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

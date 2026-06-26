@@ -1,0 +1,18 @@
+{{- if .Values.objectStorage.enabled -}}
+{{- $name := "zipupload" -}}
+{{- $serviceName := printf "%s-%s" (include "common.names.fullname" .) $name -}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $serviceName }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  ports:
+  - port: 80
+    name: http
+    targetPort: http
+  selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+{{- end -}}

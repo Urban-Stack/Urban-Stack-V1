@@ -1,0 +1,323 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot > matches snapshot 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="flex gap-3 items-center min-w-40 w-min"
+      >
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <div
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+            >
+              <svg
+                aria-hidden="true"
+                class="text-gray-500 dark:text-gray-400 h-3 w-3"
+                fill="currentColor"
+                height="12"
+                viewBox="0 0 12 12"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <text
+                  y="12"
+                >
+                  #
+                </text>
+              </svg>
+            </div>
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 text-gray-800 focus-within:ring-primary-400 focus-within:border-primary-400 p-2.5 text-sm pl-8 rounded-lg"
+              data-testid="udp-color-picker-text-input"
+              pattern="[0-9A-F]{6}"
+              type="text"
+              value="A1C3F4"
+            />
+          </div>
+        </div>
+        <div
+          class="relative rounded-full overflow-hidden inline-flex items-center justify-center border-2 border-transparent shadow-[0px_0px_0px_3px_#28358399] size-8 min-w-8"
+        >
+          <input
+            class="absolute cursor-pointer size-12 disabled:cursor-not-allowed"
+            color="A1C3F4"
+            data-testid="udp-color-picker-color-input"
+            type="color"
+            value="#A1C3F4"
+          />
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="flex gap-3 items-center min-w-40 w-min"
+    >
+      <div
+        class="flex"
+      >
+        <div
+          class="relative w-full"
+        >
+          <div
+            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+          >
+            <svg
+              aria-hidden="true"
+              class="text-gray-500 dark:text-gray-400 h-3 w-3"
+              fill="currentColor"
+              height="12"
+              viewBox="0 0 12 12"
+              width="12"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <text
+                y="12"
+              >
+                #
+              </text>
+            </svg>
+          </div>
+          <input
+            class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 text-gray-800 focus-within:ring-primary-400 focus-within:border-primary-400 p-2.5 text-sm pl-8 rounded-lg"
+            data-testid="udp-color-picker-text-input"
+            pattern="[0-9A-F]{6}"
+            type="text"
+            value="A1C3F4"
+          />
+        </div>
+      </div>
+      <div
+        class="relative rounded-full overflow-hidden inline-flex items-center justify-center border-2 border-transparent shadow-[0px_0px_0px_3px_#28358399] size-8 min-w-8"
+      >
+        <input
+          class="absolute cursor-pointer size-12 disabled:cursor-not-allowed"
+          color="A1C3F4"
+          data-testid="udp-color-picker-color-input"
+          type="color"
+          value="#A1C3F4"
+        />
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshot > matches snapshot with additional classes 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="flex gap-3 items-center min-w-40 w-min pt-8"
+      >
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <div
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+            >
+              <svg
+                aria-hidden="true"
+                class="text-gray-500 dark:text-gray-400 h-3 w-3"
+                fill="currentColor"
+                height="12"
+                viewBox="0 0 12 12"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <text
+                  y="12"
+                >
+                  #
+                </text>
+              </svg>
+            </div>
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 text-gray-800 focus-within:ring-primary-400 focus-within:border-primary-400 p-2.5 text-sm pl-8 rounded-lg"
+              data-testid="udp-color-picker-text-input"
+              pattern="[0-9A-F]{6}"
+              type="text"
+              value="A1C3F4"
+            />
+          </div>
+        </div>
+        <div
+          class="relative rounded-full overflow-hidden inline-flex items-center justify-center border-2 border-transparent shadow-[0px_0px_0px_3px_#28358399] size-8 min-w-8"
+        >
+          <input
+            class="absolute cursor-pointer size-12 disabled:cursor-not-allowed"
+            color="A1C3F4"
+            data-testid="udp-color-picker-color-input"
+            type="color"
+            value="#A1C3F4"
+          />
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="flex gap-3 items-center min-w-40 w-min pt-8"
+    >
+      <div
+        class="flex"
+      >
+        <div
+          class="relative w-full"
+        >
+          <div
+            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+          >
+            <svg
+              aria-hidden="true"
+              class="text-gray-500 dark:text-gray-400 h-3 w-3"
+              fill="currentColor"
+              height="12"
+              viewBox="0 0 12 12"
+              width="12"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <text
+                y="12"
+              >
+                #
+              </text>
+            </svg>
+          </div>
+          <input
+            class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 text-gray-800 focus-within:ring-primary-400 focus-within:border-primary-400 p-2.5 text-sm pl-8 rounded-lg"
+            data-testid="udp-color-picker-text-input"
+            pattern="[0-9A-F]{6}"
+            type="text"
+            value="A1C3F4"
+          />
+        </div>
+      </div>
+      <div
+        class="relative rounded-full overflow-hidden inline-flex items-center justify-center border-2 border-transparent shadow-[0px_0px_0px_3px_#28358399] size-8 min-w-8"
+      >
+        <input
+          class="absolute cursor-pointer size-12 disabled:cursor-not-allowed"
+          color="A1C3F4"
+          data-testid="udp-color-picker-color-input"
+          type="color"
+          value="#A1C3F4"
+        />
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

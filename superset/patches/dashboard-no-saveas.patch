@@ -1,0 +1,13 @@
+diff --git a/superset-frontend/src/dashboard/components/Header/index.jsx b/superset-frontend/src/dashboard/components/Header/index.jsx
+index 5ce86cc52f..f844b3149c 100644
+--- a/superset-frontend/src/dashboard/components/Header/index.jsx
++++ b/superset-frontend/src/dashboard/components/Header/index.jsx
+@@ -725,7 +725,7 @@ const Header = () => {
+         hasUnsavedChanges={hasUnsavedChanges}
+         userCanEdit={userCanEdit}
+         userCanShare={userCanShare}
+-        userCanSave={userCanSaveAs}
++        userCanSave={false}
+         userCanCurate={userCanCurate}
+         isLoading={isLoading}
+         showPropertiesModal={showPropertiesModal}

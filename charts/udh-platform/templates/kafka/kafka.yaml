@@ -1,0 +1,71 @@
+{{- $name := "kafka" -}}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+    strimzi.io/cluster: {{ include "udh.kafka.cluster" . }}
+spec:
+  replicas: {{ .Values.kafka.singleNode | ternary 1 3 }}
+  roles:
+    - controller
+    - broker
+  storage:
+    type: jbod
+    volumes:
+      - id: 0
+        type: persistent-claim
+        size: 100Gi
+        deleteClaim: {{ .Values.kafka.deleteClaim }}
+  resources: {{- toYaml .Values.kafka.node.resources | nindent 4 }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: {{ include "udh.kafka.cluster" . }}
+  annotations:
+    strimzi.io/node-pools: enabled
+    strimzi.io/kraft: enabled
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  kafka:
+    metadataVersion: 3.7-IV4
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+    {{- if .Values.kafka.monitoring.enabled }}
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          key: kafka-metrics-config.yml
+          name: kafka-metrics
+    {{- end }}
+    config:
+      {{- if .Values.kafka.singleNode }}
+      offsets.topic.replication.factor: 1
+      transaction.state.log.replication.factor: 1
+      transaction.state.log.min.isr: 1
+      default.replication.factor: 1
+      min.insync.replicas: 1
+      {{- else }}
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      default.replication.factor: 3
+      min.insync.replicas: 2
+      {{ end }}
+      log.retention.ms: -1 # forever by default
+  entityOperator:
+    topicOperator: &entityOperatorResources
+      resources: {{- toYaml .Values.kafka.entityOperator.resources | nindent 8 }}
+    userOperator: *entityOperatorResources

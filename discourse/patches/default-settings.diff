@@ -1,0 +1,31 @@
+diff --git a/config/site_settings.yml b/config/site_settings.yml
+index 115d93da8d..16581c2481 100644
+--- a/config/site_settings.yml
++++ b/config/site_settings.yml
+@@ -353,7 +353,7 @@ basic:
+   desktop_category_page_style:
+     client: true
+     enum: "CategoryPageStyle"
+-    default: "categories_and_latest_topics"
++    default: "categories_boxes"
+     area: "interface"
+   mobile_category_page_style:
+     client: true
+@@ -1016,7 +1016,7 @@ users:
+     area: "users"
+   prioritize_username_in_ux:
+     client: true
+-    default: true
++    default: false
+     area: "users"
+   prioritize_full_name_in_ux:
+     client: true
+@@ -1504,7 +1504,7 @@ posting:
+     area: "posts_and_topics"
+   display_name_on_posts:
+     client: true
+-    default: false
++    default: true
+     area: "posts_and_topics"
+   show_time_gap_days:
+     default: 7

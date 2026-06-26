@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+if [[ $# -ne 4 ]]
+then
+  echo "$0 local|feature|staging|prod email@domain.tld firstname lastname"
+  exit 1
+fi
+
+env=$1
+email=$2
+firstname=$3
+lastname=$4
+
+inkc () {
+  kubectl exec sts/$env-udh-platform-sso-keycloak -- "$@" 2>/dev/null
+}
+
+kcadm () {
+  local cmd=""
+  for arg in "$@"
+  do
+    cmd="$cmd ${arg@Q}"
+  done
+
+  inkc bash -c 'kcadm.sh "$@" -r udh --server http://localhost:8080 --user admin --realm master --password $KC_BOOTSTRAP_ADMIN_PASSWORD' - "$@"
+}
+
+KC_URL=$(inkc sh -c 'echo $KEYCLOAK_HOSTNAME')
+
+echo "$firstname $lastname $email $KC_URL"
+echo "Press ENTER to confirm, Ctrl+C to cancel"
+read -t 30
+
+json=$(jq -n --arg e "$email" --arg fn "$firstname" --arg ln "$lastname" --ascii-output \
+       '{email: $e, firstName: $fn, lastName: $ln, enabled: true}')
+
+id=$(kcadm create users -b "$json" -o | jq -r .id)
+kcadm update users/$id/execute-actions-email -b '["VERIFY_EMAIL", "UPDATE_PASSWORD"]' -q lifespan=381600 -q client_id=government-hub -q redirect_uri=${KC_URL/login/govhub}
+
+for realm in master udh
+do
+  echo as $realm admin:
+  echo ${KC_URL}admin/$realm/console/#/udh/users/$id/groups
+done

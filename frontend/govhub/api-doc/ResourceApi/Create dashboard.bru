@@ -1,0 +1,15 @@
+meta {
+  name: Create dashboard
+  type: http
+  seq: 11
+}
+
+put {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/viz-groups/{{viz-group}}/dashboards/{{dashboard-name}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

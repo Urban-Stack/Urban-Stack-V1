@@ -1,0 +1,28 @@
+site_name: UrbanStack Dokumentation
+markdown_extensions:
+  - admonition
+  - abbr
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
+
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+theme:
+  name: material
+  language: de
+plugins:
+  - search
+  - render_swagger
+  - print-site:
+      exclude:
+        # swagger doesn't render
+        - schnittstellen/open-api.md
+watch:
+  - includes
+copyright: |
+  <a href="https://urbanstack.de/impressum">Impressum</a>
+  <a href="https://urbanstack.de/datenschutz">Datenschutz</a>

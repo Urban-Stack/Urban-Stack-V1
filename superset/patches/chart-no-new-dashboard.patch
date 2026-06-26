@@ -1,0 +1,50 @@
+diff --git a/superset-frontend/src/explore/components/SaveModal.tsx b/superset-frontend/src/explore/components/SaveModal.tsx
+index 8c216056a1..9ece1937fe 100644
+--- a/superset-frontend/src/explore/components/SaveModal.tsx
++++ b/superset-frontend/src/explore/components/SaveModal.tsx
+@@ -379,27 +379,20 @@ class SaveModal extends Component<SaveModalProps, SaveModalState> {
+             />
+           </FormItem>
+         )}
++        {this.props.dashboardId && (
+         <FormItem
+           label={t('Add to dashboard')}
+           data-test="save-chart-modal-select-dashboard-form"
+         >
+           <AsyncSelect
+             allowClear
+-            allowNewOptions
+             ariaLabel={t('Select a dashboard')}
+             options={this.loadDashboards}
+             onChange={this.onDashboardChange}
+             value={this.state.dashboard}
+-            placeholder={
+-              <div>
+-                <b>{t('Select')}</b>
+-                {t(' a dashboard OR ')}
+-                <b>{t('create')}</b>
+-                {t(' a new one')}
+-              </div>
+-            }
+           />
+         </FormItem>
++        )}
+         {info && <Alert type="info" message={info} closable={false} />}
+         {this.props.alert && (
+           <Alert
+@@ -439,6 +432,7 @@ class SaveModal extends Component<SaveModalProps, SaveModalState> {
+       <Button id="btn_cancel" buttonSize="small" onClick={this.onHide}>
+         {t('Cancel')}
+       </Button>
++      {this.props.dashboardId && (
+       <Button
+         id="btn_modal_save_goto_dash"
+         buttonSize="small"
+@@ -452,6 +446,7 @@ class SaveModal extends Component<SaveModalProps, SaveModalState> {
+       >
+         {t('Save & go to dashboard')}
+       </Button>
++      )}
+       <Button
+         id="btn_modal_save"
+         buttonSize="small"

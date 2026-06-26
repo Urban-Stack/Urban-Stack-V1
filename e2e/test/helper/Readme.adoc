@@ -1,0 +1,30 @@
+= End-to-End Tests
+:toc:
+
+== Run the tests
+
+[source,bash]
+----
+./run.sh <PATH> # run only specific tests
+----
+
+[source,bash]
+----
+./run.sh --ui # run with UI
+----
+
+== Troubleshooting
+
+=== Keycloak error: 409 Conflict / More results found
+
+The error `More results found for user [...] and client [...]` in the Keycloak logs hints that a race condition occurred creating the user.
+
+*Solution*:
+
+[source,bash]
+----
+minikube delete # delete the minikube cluster
+cd /test-env && ./start.sh # deploy the local cluster again
+----
+
+After the cluster is up, run only one test instead of all in parallel.

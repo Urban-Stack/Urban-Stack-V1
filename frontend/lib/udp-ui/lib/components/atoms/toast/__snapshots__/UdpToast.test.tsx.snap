@@ -1,0 +1,592 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot > matches snapshot for additional options 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <section
+        aria-atomic="false"
+        aria-label="Notifications Alt+T"
+        aria-live="polite"
+        aria-relevant="additions text"
+        class="Toastify"
+      >
+        <div
+          class="Toastify__toast-container Toastify__toast-container--top-right"
+          tabindex="-1"
+        >
+          <div
+            class="Toastify__toast Toastify__toast-theme--light Toastify__toast--success udp-test-class Toastify--animate Toastify__bounce-enter--top-right"
+            data-in="true"
+            id="3"
+            role="alert"
+            tabindex="0"
+          >
+            <div
+              class="Toastify__toast-icon Toastify--animate-icon Toastify__zoom-enter"
+            >
+              <svg
+                fill="var(--toastify-icon-color-success)"
+                height="100%"
+                viewBox="0 0 24 24"
+                width="100%"
+              >
+                <path
+                  d="M12 0a12 12 0 1012 12A12.014 12.014 0 0012 0zm6.927 8.2l-6.845 9.289a1.011 1.011 0 01-1.43.188l-4.888-3.908a1 1 0 111.25-1.562l4.076 3.261 6.227-8.451a1 1 0 111.61 1.183z"
+                />
+              </svg>
+            </div>
+            test toast message
+            <button
+              aria-label="close"
+              class="Toastify__close-button Toastify__close-button--light"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 14 16"
+              >
+                <path
+                  d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <div
+              class="Toastify__progress-bar--wrp"
+              data-hidden="false"
+            >
+              <div
+                class="Toastify__progress-bar--bg Toastify__progress-bar-theme--light Toastify__progress-bar--success"
+              />
+              <div
+                aria-hidden="false"
+                aria-label="notification timer"
+                class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--success"
+                role="progressbar"
+                style="animation-duration: 5000ms; animation-play-state: paused;"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      3
+    </div>
+  </body>,
+  "container": <div>
+    <section
+      aria-atomic="false"
+      aria-label="Notifications Alt+T"
+      aria-live="polite"
+      aria-relevant="additions text"
+      class="Toastify"
+    >
+      <div
+        class="Toastify__toast-container Toastify__toast-container--top-right"
+        tabindex="-1"
+      >
+        <div
+          class="Toastify__toast Toastify__toast-theme--light Toastify__toast--success udp-test-class Toastify--animate Toastify__bounce-enter--top-right"
+          data-in="true"
+          id="3"
+          role="alert"
+          tabindex="0"
+        >
+          <div
+            class="Toastify__toast-icon Toastify--animate-icon Toastify__zoom-enter"
+          >
+            <svg
+              fill="var(--toastify-icon-color-success)"
+              height="100%"
+              viewBox="0 0 24 24"
+              width="100%"
+            >
+              <path
+                d="M12 0a12 12 0 1012 12A12.014 12.014 0 0012 0zm6.927 8.2l-6.845 9.289a1.011 1.011 0 01-1.43.188l-4.888-3.908a1 1 0 111.25-1.562l4.076 3.261 6.227-8.451a1 1 0 111.61 1.183z"
+              />
+            </svg>
+          </div>
+          test toast message
+          <button
+            aria-label="close"
+            class="Toastify__close-button Toastify__close-button--light"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 14 16"
+            >
+              <path
+                d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <div
+            class="Toastify__progress-bar--wrp"
+            data-hidden="false"
+          >
+            <div
+              class="Toastify__progress-bar--bg Toastify__progress-bar-theme--light Toastify__progress-bar--success"
+            />
+            <div
+              aria-hidden="false"
+              aria-label="notification timer"
+              class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--success"
+              role="progressbar"
+              style="animation-duration: 5000ms; animation-play-state: paused;"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    3
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshot > matches snapshot for type \`error\` 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <section
+        aria-atomic="false"
+        aria-label="Notifications Alt+T"
+        aria-live="polite"
+        aria-relevant="additions text"
+        class="Toastify"
+      >
+        <div
+          class="Toastify__toast-container Toastify__toast-container--top-right"
+          tabindex="-1"
+        >
+          <div
+            class="Toastify__toast Toastify__toast-theme--light Toastify__toast--error Toastify--animate Toastify__bounce-enter--top-right"
+            data-in="true"
+            id="2"
+            role="alert"
+            tabindex="0"
+          >
+            <div
+              class="Toastify__toast-icon Toastify--animate-icon Toastify__zoom-enter"
+            >
+              <svg
+                fill="var(--toastify-icon-color-error)"
+                height="100%"
+                viewBox="0 0 24 24"
+                width="100%"
+              >
+                <path
+                  d="M11.983 0a12.206 12.206 0 00-8.51 3.653A11.8 11.8 0 000 12.207 11.779 11.779 0 0011.8 24h.214A12.111 12.111 0 0024 11.791 11.766 11.766 0 0011.983 0zM10.5 16.542a1.476 1.476 0 011.449-1.53h.027a1.527 1.527 0 011.523 1.47 1.475 1.475 0 01-1.449 1.53h-.027a1.529 1.529 0 01-1.523-1.47zM11 12.5v-6a1 1 0 012 0v6a1 1 0 11-2 0z"
+                />
+              </svg>
+            </div>
+            test toast message
+            <button
+              aria-label="close"
+              class="Toastify__close-button Toastify__close-button--light"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 14 16"
+              >
+                <path
+                  d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <div
+              class="Toastify__progress-bar--wrp"
+              data-hidden="false"
+            >
+              <div
+                class="Toastify__progress-bar--bg Toastify__progress-bar-theme--light Toastify__progress-bar--error"
+              />
+              <div
+                aria-hidden="false"
+                aria-label="notification timer"
+                class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--error"
+                role="progressbar"
+                style="animation-duration: 5000ms; animation-play-state: paused;"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      2
+    </div>
+  </body>,
+  "container": <div>
+    <section
+      aria-atomic="false"
+      aria-label="Notifications Alt+T"
+      aria-live="polite"
+      aria-relevant="additions text"
+      class="Toastify"
+    >
+      <div
+        class="Toastify__toast-container Toastify__toast-container--top-right"
+        tabindex="-1"
+      >
+        <div
+          class="Toastify__toast Toastify__toast-theme--light Toastify__toast--error Toastify--animate Toastify__bounce-enter--top-right"
+          data-in="true"
+          id="2"
+          role="alert"
+          tabindex="0"
+        >
+          <div
+            class="Toastify__toast-icon Toastify--animate-icon Toastify__zoom-enter"
+          >
+            <svg
+              fill="var(--toastify-icon-color-error)"
+              height="100%"
+              viewBox="0 0 24 24"
+              width="100%"
+            >
+              <path
+                d="M11.983 0a12.206 12.206 0 00-8.51 3.653A11.8 11.8 0 000 12.207 11.779 11.779 0 0011.8 24h.214A12.111 12.111 0 0024 11.791 11.766 11.766 0 0011.983 0zM10.5 16.542a1.476 1.476 0 011.449-1.53h.027a1.527 1.527 0 011.523 1.47 1.475 1.475 0 01-1.449 1.53h-.027a1.529 1.529 0 01-1.523-1.47zM11 12.5v-6a1 1 0 012 0v6a1 1 0 11-2 0z"
+              />
+            </svg>
+          </div>
+          test toast message
+          <button
+            aria-label="close"
+            class="Toastify__close-button Toastify__close-button--light"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 14 16"
+            >
+              <path
+                d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <div
+            class="Toastify__progress-bar--wrp"
+            data-hidden="false"
+          >
+            <div
+              class="Toastify__progress-bar--bg Toastify__progress-bar-theme--light Toastify__progress-bar--error"
+            />
+            <div
+              aria-hidden="false"
+              aria-label="notification timer"
+              class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--error"
+              role="progressbar"
+              style="animation-duration: 5000ms; animation-play-state: paused;"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    2
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshot > matches snapshot for type \`success\` 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <section
+        aria-atomic="false"
+        aria-label="Notifications Alt+T"
+        aria-live="polite"
+        aria-relevant="additions text"
+        class="Toastify"
+      >
+        <div
+          class="Toastify__toast-container Toastify__toast-container--top-right"
+          tabindex="-1"
+        >
+          <div
+            class="Toastify__toast Toastify__toast-theme--light Toastify__toast--success Toastify--animate Toastify__bounce-enter--top-right"
+            data-in="true"
+            id="1"
+            role="alert"
+            tabindex="0"
+          >
+            <div
+              class="Toastify__toast-icon Toastify--animate-icon Toastify__zoom-enter"
+            >
+              <svg
+                fill="var(--toastify-icon-color-success)"
+                height="100%"
+                viewBox="0 0 24 24"
+                width="100%"
+              >
+                <path
+                  d="M12 0a12 12 0 1012 12A12.014 12.014 0 0012 0zm6.927 8.2l-6.845 9.289a1.011 1.011 0 01-1.43.188l-4.888-3.908a1 1 0 111.25-1.562l4.076 3.261 6.227-8.451a1 1 0 111.61 1.183z"
+                />
+              </svg>
+            </div>
+            test toast message
+            <button
+              aria-label="close"
+              class="Toastify__close-button Toastify__close-button--light"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 14 16"
+              >
+                <path
+                  d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <div
+              class="Toastify__progress-bar--wrp"
+              data-hidden="false"
+            >
+              <div
+                class="Toastify__progress-bar--bg Toastify__progress-bar-theme--light Toastify__progress-bar--success"
+              />
+              <div
+                aria-hidden="false"
+                aria-label="notification timer"
+                class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--success"
+                role="progressbar"
+                style="animation-duration: 5000ms; animation-play-state: paused;"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      1
+    </div>
+  </body>,
+  "container": <div>
+    <section
+      aria-atomic="false"
+      aria-label="Notifications Alt+T"
+      aria-live="polite"
+      aria-relevant="additions text"
+      class="Toastify"
+    >
+      <div
+        class="Toastify__toast-container Toastify__toast-container--top-right"
+        tabindex="-1"
+      >
+        <div
+          class="Toastify__toast Toastify__toast-theme--light Toastify__toast--success Toastify--animate Toastify__bounce-enter--top-right"
+          data-in="true"
+          id="1"
+          role="alert"
+          tabindex="0"
+        >
+          <div
+            class="Toastify__toast-icon Toastify--animate-icon Toastify__zoom-enter"
+          >
+            <svg
+              fill="var(--toastify-icon-color-success)"
+              height="100%"
+              viewBox="0 0 24 24"
+              width="100%"
+            >
+              <path
+                d="M12 0a12 12 0 1012 12A12.014 12.014 0 0012 0zm6.927 8.2l-6.845 9.289a1.011 1.011 0 01-1.43.188l-4.888-3.908a1 1 0 111.25-1.562l4.076 3.261 6.227-8.451a1 1 0 111.61 1.183z"
+              />
+            </svg>
+          </div>
+          test toast message
+          <button
+            aria-label="close"
+            class="Toastify__close-button Toastify__close-button--light"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 14 16"
+            >
+              <path
+                d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <div
+            class="Toastify__progress-bar--wrp"
+            data-hidden="false"
+          >
+            <div
+              class="Toastify__progress-bar--bg Toastify__progress-bar-theme--light Toastify__progress-bar--success"
+            />
+            <div
+              aria-hidden="false"
+              aria-label="notification timer"
+              class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--success"
+              role="progressbar"
+              style="animation-duration: 5000ms; animation-play-state: paused;"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    1
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

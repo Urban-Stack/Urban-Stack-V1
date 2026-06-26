@@ -1,0 +1,20 @@
+diff --git a/superset-frontend/src/dashboard/components/PropertiesModal/index.tsx b/superset-frontend/src/dashboard/components/PropertiesModal/index.tsx
+index 0bfa1706d5..96f9bb9bb5 100644
+--- a/superset-frontend/src/dashboard/components/PropertiesModal/index.tsx
++++ b/superset-frontend/src/dashboard/components/PropertiesModal/index.tsx
+@@ -397,6 +397,7 @@ const PropertiesModal = ({
+ 
+     return (
+       <Row gutter={16}>
++        {false && (
+         <Col xs={24} md={12}>
+           <h3 style={{ marginTop: '1em' }}>{t('Access')}</h3>
+           <StyledFormItem label={t('Owners')}>
+@@ -418,6 +419,7 @@ const PropertiesModal = ({
+             )}
+           </p>
+         </Col>
++        )}
+         <Col xs={24} md={12}>
+           <h3 style={{ marginTop: '1em' }}>{t('Colors')}</h3>
+           <ColorSchemeControlWrapper

@@ -1,0 +1,76 @@
+{% set tags = h.get_facet_items_dict('tags', search_facets, limit=3) %}
+{% set placeholder = _('E.g. environment') %}
+{% set dataset_type = h.default_package_type() %}
+
+<div class="module-search card box">
+  <form class="module-content search-form search-row-flex" method="get" action="{% url_for dataset_type ~ '.search' %}">
+    <div class="row full-row-search">
+      <div class="col-12">
+        <h1 class="heading">
+          Willkommen bei CKAN.
+        </h1>
+        <p>
+          Willkommen im Open Data Portal – offen für Kommunen und Bürger:innen.
+        </p>
+      </div>
+
+      <div class="col-md-8 col-12">
+        <h3 class="heading">{{ _("Search data") }}</h3>
+        <div class="search-input form-group search-giant" style="margin-top: 1.3rem;">
+          <input 
+            id="field-main-search" 
+            type="text" 
+            class="form-control" 
+            name="q" 
+            value="{{ request.args.get('q', '') }}" 
+            autocomplete="off" 
+            placeholder="{{ placeholder }}" 
+          />
+          <button class="btn" type="submit">
+            <i class="fa fa-search"></i>
+            <span class="sr-only">{{ _('Search') }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-12">
+        <div>
+          <h3 class="heading">{{ _("Mandanten") }}</h3>
+          <select id="organization-select" class="org-dropdown teuto-patch resource-item" name="organization">
+            <option value="" {% if not request.args.get('organization') %}selected{% endif %}>Alle</option>
+            {% for org in h.get_org_names() %}
+              <option value="{{ org.name }}" {% if request.args.get('organization') == org.name %}selected{% endif %}>{{ org.title or org.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector('.search-form');
+  const orgSelect = form.querySelector('select[name="organization"]');
+
+  form.addEventListener('submit', function (e) {
+    if (orgSelect && orgSelect.value === "") {
+      orgSelect.removeAttribute('name');
+    }
+  });
+
+  orgSelect.addEventListener('change', function () {
+    const selectedOrg = orgSelect.value || '';
+    const url = new URL(window.location.origin);
+
+    if (selectedOrg) {
+      url.searchParams.set('organization', selectedOrg);
+    } else {
+      url.searchParams.delete('organization');
+    }
+
+    form.setAttribute('action', url.toString());
+    form.submit();
+  });
+});
+</script>

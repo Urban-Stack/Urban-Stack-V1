@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`DashboardsContent matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col flex-grow justify-center"
+  >
+    <div
+      class="size-full"
+      data-testid="dashboards-content-overview"
+    >
+      <div
+        data-testid="mock-overview"
+      />
+    </div>
+  </div>
+</div>
+`;

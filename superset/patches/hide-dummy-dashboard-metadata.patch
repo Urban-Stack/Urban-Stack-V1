@@ -1,0 +1,28 @@
+diff --git a/superset-frontend/src/components/MetadataBar/ContentConfig.tsx b/superset-frontend/src/components/MetadataBar/ContentConfig.tsx
+index de23e654a7..eb311cb08a 100644
+--- a/superset-frontend/src/components/MetadataBar/ContentConfig.tsx
++++ b/superset-frontend/src/components/MetadataBar/ContentConfig.tsx
+@@ -77,21 +77,16 @@ const config = (contentType: ContentType) => {
+         tooltip: (
+           <div>
+             <Info header={t('Last modified')} text={contentType.value} />
+-            <Info header={t('Modified by')} text={contentType.modifiedBy} />
+           </div>
+         ),
+       };
+ 
+     case MetadataType.Owner:
+       return {
+-        icon: Icons.UserOutlined,
+-        title: contentType.createdBy,
++        icon: Icons.PlusOutlined,
++        title: contentType.createdOn,
+         tooltip: (
+           <div>
+-            <Info header={t('Created by')} text={contentType.createdBy} />
+-            {!!contentType.owners && (
+-              <Info header={t('Owners')} text={contentType.owners} />
+-            )}
+             <Info header={t('Created on')} text={contentType.createdOn} />
+           </div>
+         ),

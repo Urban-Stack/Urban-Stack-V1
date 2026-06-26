@@ -1,0 +1,109 @@
+{
+	"portalConfig": {
+		"map": {
+			"controls": {
+				"zoom": true,
+				"orientation": {
+					"zoomMode": "once"
+				}
+			},
+			"mapView": {
+				"backgroundImage": "./resources/img/backgroundCanvas.jpeg",
+				"startCenter": [561210, 5932600],
+				"extent": [510000.0, 5850000.0, 625000.4, 6000000.0],
+				"startZoomLevel": 1
+			}
+		},
+		"portalFooter": {
+			"urls": [
+				{
+					"bezeichnung": "common:modules.portalFooter.designation",
+					"url": "https://geoinfo.hamburg.de/",
+					"alias": "Landesbetrieb Geoinformation und Vermessung",
+					"alias_mobil": "LGV"
+				}
+			]
+		},
+		"tree": {
+			"highlightedFeatures": {
+				"active": true
+			}
+		},
+		"mainMenu": {
+			"expanded": true,
+			"title": {
+				"text": "Basic",
+				"logo": "./resources/img/mp_logo.png",
+				"link": "https://masterportal.org",
+				"toolTip": "Masterportal"
+			},
+			"searchBar": {
+				"searchInterfaces": [
+					{
+						"type": "komootPhoton",
+						"minChars": 3,
+						"serviceId": "11",
+						"limit": 10,
+						"lang": "de",
+						"lat": 53.6,
+						"lon": 10.0,
+						"bbox": "9.6,53.3,10.4,53.8"
+					},
+					{
+						"type": "visibleVector",
+						"resultEvents": {
+							"onClick": ["openGetFeatureInfo", "setMarker", "zoomToResult"],
+							"onHover": ["setMarker"]
+						}
+					},
+					{
+						"type": "topicTree",
+						"hitTemplate": "layer"
+					}
+				]
+			},
+			"sections": [
+				[
+					{
+						"type": "fileImport"
+					},
+					{
+						"type": "openConfig"
+					},
+					{
+						"type": "contact",
+						"serviceId": "80001",
+						"includeSystemInfo": true,
+						"from": [
+							{
+								"email": "lgvgeoportal-hilfe@gv.hamburg.de",
+								"name": "LGVGeoportalHilfe"
+							}
+						],
+						"to": [
+							{
+								"email": "lgvgeoportal-hilfe@gv.hamburg.de",
+								"name": "LGVGeoportalHilfe"
+							}
+						]
+					},
+					{
+						"type": "language"
+					}
+				]
+			]
+		},
+		"secondaryMenu": {
+			"expanded": false,
+			"sections": []
+		}
+	},
+	"layerConfig": {
+		"baselayer": {
+			"elements": []
+		},
+		"subjectlayer": {
+			"elements": []
+		}
+	}
+}

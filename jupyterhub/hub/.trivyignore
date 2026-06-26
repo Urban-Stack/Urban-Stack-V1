@@ -1,0 +1,14 @@
+CVE-2025-7458
+# low severity according to RedHat
+CVE-2026-24515
+# will not be fixed if you can believe the status 'will_not_fix'
+CVE-2023-45853
+# no fix available yet
+CVE-2026-33845
+# not relevant
+CVE-2026-42010
+CVE-2026-7598
+# 32 bit only
+CVE-2026-8376
+# perl doesn't extract any user controlled tar files
+CVE-2026-42496

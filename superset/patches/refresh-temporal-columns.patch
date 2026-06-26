@@ -1,0 +1,13 @@
+diff --git a/superset/connectors/sqla/models.py b/superset/connectors/sqla/models.py
+index a26a442c48..117de7c9d6 100644
+--- a/superset/connectors/sqla/models.py
++++ b/superset/connectors/sqla/models.py
+@@ -1855,6 +1855,8 @@ class SqlaTable(
+                     results.modified.append(col["column_name"])
+                 new_column.type = col["type"]
+                 new_column.expression = ""
++                new_column.is_dttm = None
++                new_column.is_dttm = new_column.is_temporal
+             new_column.groupby = True
+             new_column.filterable = True
+             columns.append(new_column)

@@ -1,0 +1,21 @@
+meta {
+  name: Create a new chat channel
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{discourse-host}}/chat/api/direct-message-channels.json
+  body: formUrlEncoded
+  auth: none
+}
+
+headers {
+  X-Requested-With: XMLHttpRequest
+  X-CSRF-Token: 
+}
+
+body:form-urlencoded {
+  target_usernames[]: root
+  name: 
+}

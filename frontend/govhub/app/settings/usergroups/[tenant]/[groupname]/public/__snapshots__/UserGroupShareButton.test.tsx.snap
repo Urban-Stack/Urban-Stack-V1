@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot modal form matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-6"
+  >
+    <p>
+      Benutzergruppe 
+      "Test-Group-1"
+       teilen?
+    </p>
+    <div
+      class="flex gap-3.5 flex-wrap w-fit [&>*]:grow [&>*]:justify-center"
+    >
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+        data-loading="false"
+        type="submit"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Teilen
+          </div>
+        </div>
+      </button>
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 hover:bg-primary-100 active:bg-primary-100 focus:ring-primary-200 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100"
+        data-loading="false"
+        type="button"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Abbrechen
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshot modal form matches snapshot when error 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-6"
+  >
+    <p>
+      Benutzergruppe 
+      "Test-Group-1"
+       teilen?
+    </p>
+    <p
+      class="mt-2 dark:text-red-500 text-red-700 text-sm"
+      data-testid="user-group-share-error-container"
+    >
+      <span>
+        error
+        <br />
+      </span>
+    </p>
+    <div
+      class="flex gap-3.5 flex-wrap w-fit [&>*]:grow [&>*]:justify-center"
+    >
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+        data-loading="false"
+        type="submit"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Teilen
+          </div>
+        </div>
+      </button>
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 hover:bg-primary-100 active:bg-primary-100 focus:ring-primary-200 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100"
+        data-loading="false"
+        type="button"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Abbrechen
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshot share button matches snapshot 1`] = `
+<div>
+  <div>
+    <button
+      aria-busy="false"
+      class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+      data-loading="false"
+      data-testid="user-group-public-share-button"
+      type="button"
+    >
+      <div
+        class="relative flex items-center gap-1"
+      >
+        <div
+          class="px-1 empty:hidden"
+        >
+          Teilen
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
+`;

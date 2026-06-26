@@ -1,0 +1,11 @@
+meta {
+  name: Download CSV
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{sensormeta-host}}/api/v1/metadata/{{tenant}}/{{project}}/download.csv
+  body: none
+  auth: inherit
+}

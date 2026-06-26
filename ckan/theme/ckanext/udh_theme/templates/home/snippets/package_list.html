@@ -1,0 +1,30 @@
+{#
+    Displays a list of datasets.
+    
+    packages       - A list of packages to display.
+    list_class     - The class name for the list item.
+    item_class     - The class name to use on each item.
+    hide_resources - If true hides the resources (default: false).
+    banner         - If true displays a popular banner (default: false).
+    truncate       - The length to trucate the description to (default: 180)
+    truncate_title - The length to truncate the title to (default: 80).
+    
+    Example:
+    
+      {% snippet 'snippets/package_list.html', packages=c.datasets %}
+    
+    #}
+    {% block package_list %}
+      {% if packages %}
+      <header class="row-heading">
+        <h2 class="heading col-md-12">Neue oder aktualisierte Datensätze</h2>
+      </header>
+        <div class="p-2 row g-4 categories recent-datasets-row {{ list_class or 'dataset-list unstyled' }}">
+          {% block package_list_inner %}
+            {% for package in packages %}
+              {% snippet '/snippets/package_item.html', package=package, item_class=item_class, hide_resources=hide_resources, banner=banner, truncate=truncate, truncate_title=truncate_title %}
+            {% endfor %}
+          {% endblock %}
+        </div>
+      {% endif %}
+    {% endblock %}

@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot > matches snapshot 1`] = `
+<div>
+  <div>
+    <iframe
+      class="size-full rounded-xl"
+      src="https://superset.data-hub.local/superset/dashboard/tenant_vizgroup_name/?standalone=1&edit=false"
+      title="superset-dashboard"
+    />
+  </div>
+</div>
+`;
+
+exports[`snapshot > matches snapshot with additional classes 1`] = `
+<div>
+  <div
+    class="pt-8"
+  >
+    <iframe
+      class="size-full rounded-xl"
+      src="https://superset.data-hub.local/superset/dashboard/tenant_vizgroup_name/?standalone=1&edit=false"
+      title="superset-dashboard"
+    />
+  </div>
+</div>
+`;

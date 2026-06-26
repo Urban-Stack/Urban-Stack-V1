@@ -1,0 +1,26 @@
+{
+	"name": "udh-platform",
+	"version": "1.0.0",
+	"scripts": {
+		"format:check": "prettier . --check ${DIR-.}",
+		"format:fix": "prettier . --write ${DIR-.}",
+		"prepare": "husky"
+	},
+	"engines": {
+		"node": "^24.0.0",
+		"npm": "^11.0.0"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "20.5.3",
+		"@commitlint/config-conventional": "20.5.3",
+		"husky": "9.1.7",
+		"lint-staged": "16.4.0",
+		"prettier": "3.8.3"
+	},
+	"lint-staged": {
+		"*.{cjs,json,css,scss,htm,html,md,yml,yaml}": "node_modules/.bin/prettier --write",
+		"*.nix": "sh -c '{ which alejandra || exit 0 ; } && alejandra \"$@\"' -",
+		"(charts|test-env|docs|util)/*": "util/check-whitespace-violations",
+		"keycloak-extensions/**/*.{sh,java,kt,clj,kts,edn}": "util/check-whitespace-violations"
+	}
+}

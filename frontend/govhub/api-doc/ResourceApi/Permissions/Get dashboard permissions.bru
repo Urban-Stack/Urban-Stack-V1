@@ -1,0 +1,20 @@
+meta {
+  name: Get dashboard permissions
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/viz-groups/{{viz-group}}/dashboards/{{dashboard-name}}/permissions
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}
+
+body:json {
+  {
+  }
+}

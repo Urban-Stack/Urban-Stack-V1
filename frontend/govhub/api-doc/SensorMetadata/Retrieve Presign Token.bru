@@ -1,0 +1,12 @@
+meta {
+  name: Retrieve Presign Token
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{sensormeta-host}}/api/v1/metadata/{{tenant}}/{{project}}/presign/upload-token
+  body: none
+  auth: inherit
+}
+

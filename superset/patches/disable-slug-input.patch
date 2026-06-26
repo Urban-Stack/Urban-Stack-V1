@@ -1,0 +1,13 @@
+diff --git a/superset-frontend/src/dashboard/components/PropertiesModal/index.tsx b/superset-frontend/src/dashboard/components/PropertiesModal/index.tsx
+index 4831ece8a5..1e55ebc56b 100644
+--- a/superset-frontend/src/dashboard/components/PropertiesModal/index.tsx
++++ b/superset-frontend/src/dashboard/components/PropertiesModal/index.tsx
+@@ -653,7 +653,7 @@ const PropertiesModal = ({
+           </Col>
+           <Col xs={24} md={12}>
+             <StyledFormItem label={t('URL slug')} name="slug">
+-              <Input type="text" disabled={isLoading} />
++              <Input type="text" disabled={true} />
+             </StyledFormItem>
+             <p className="help-block">
+               {t('A readable URL for your dashboard')}

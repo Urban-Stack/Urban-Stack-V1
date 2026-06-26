@@ -1,0 +1,15 @@
+meta {
+  name: Get Dashboard
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{superset-host}}/api/v1/dashboard/{{dashboard-slug}}
+  body: none
+  auth: none
+}
+
+headers {
+  Cookie: {{superset-cookies}}
+}

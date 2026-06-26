@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col grow"
+  >
+    <div
+      class="grid auto-rows-[auto] grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))] md:grid-cols-[repeat(auto-fill,_minmax(450px,_1fr))] gap-4"
+      data-testid="citytool-cards-overview"
+    >
+      <div>
+        Title: 
+        Tool 1
+      </div>
+      <div>
+        Title: 
+        Tool 2
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,568 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot renders list overview as expected 1`] = `
+<div>
+  <div
+    class="size-full"
+  >
+    <div
+      class="relative udp-scroll-thin h-full"
+    >
+      <div
+        class="absolute pointer-events-none inset-y-0 z-10 to-transparent transition-opacity duration-350 bg-gradient-to-r left-0 from-primary-50 w-32 opacity-0"
+        data-testid="udp-scroll-wrapper-grad-l"
+      />
+      <div
+        class="absolute pointer-events-none inset-y-0 z-10 to-transparent transition-opacity duration-350 bg-gradient-to-l right-0 from-primary-50 w-32 opacity-0"
+        data-testid="udp-scroll-wrapper-grad-r"
+      />
+      <div
+        class="h-full overflow-x-auto focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+        data-testid="udp-scroll-wrapper-ref"
+      >
+        <div
+          class="relative"
+          data-testid="table-element"
+        >
+          <div
+            class="absolute left-0 top-0 -z-10 h-full w-full bg-white drop-shadow-md dark:bg-black rounded-xl"
+          />
+          <table
+            class="w-full text-left text-sm text-gray-500 dark:text-gray-400 rounded-xl"
+            data-testid="subscription-list-table"
+          >
+            <thead
+              class="group/head text-xs uppercase text-gray-700 dark:text-gray-400"
+            >
+              <tr
+                class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+                data-testid="table-row-element"
+              >
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  Name
+                </th>
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  URI
+                </th>
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  Status
+                </th>
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  Letzte Nachricht
+                </th>
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                />
+              </tr>
+            </thead>
+            <tbody
+              class="group/body divide-y text-gray-900"
+            >
+              <tr
+                class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 group"
+                data-testid="subscription-table-item"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  uri1
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    data-testid="status-badge"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none h-6 whitespace-nowrap bg-primary-100 text-primary-700 rounded-md w-fit"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Verbunden
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  —
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg w-0"
+                >
+                  <div
+                    class="flex gap-2.5 group-hover:opacity-100 lg:opacity-0"
+                  >
+                    <div
+                      class="w-fit"
+                      data-testid="flowbite-tooltip-target"
+                    >
+                      <a
+                        class="block focus:outline-none focus:ring-3 rounded-md hover:bg-primary-200 focus:ring-primary-200"
+                        href="/settings/projects/tenant1/project1/subscriptions/new"
+                      >
+                        <div
+                          class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-200 size-6 p-0.5 rounded-md"
+                        >
+                          <span
+                            class="contents"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="size-4"
+                              fill="currentColor"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              width="24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                clip-rule="evenodd"
+                                d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z"
+                                fill-rule="evenodd"
+                              />
+                              <path
+                                clip-rule="evenodd"
+                                d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                    <div
+                      class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 text-nowrap"
+                      data-floating-ui-focusable=""
+                      data-testid="flowbite-tooltip"
+                      id="_r_0_"
+                      role="tooltip"
+                      style="position: absolute; top: 0px; left: 0px;"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="relative z-20"
+                      >
+                        Subscription bearbeiten
+                      </div>
+                      <div
+                        class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+                        data-testid="flowbite-tooltip-arrow"
+                        style="bottom: -4px;"
+                      >
+                         
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        data-testid="settings-delete-badge"
+                      >
+                        <div
+                          class="w-fit"
+                          data-testid="flowbite-tooltip-target"
+                        >
+                          <button
+                            class="focus:outline-none focus:ring-3 rounded-md hover:bg-danger-200 focus:ring-danger-300 cursor-pointer"
+                            type="button"
+                          >
+                            <div
+                              class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-danger-100 text-danger-700 hover:bg-danger-200 focus:ring-danger-300 size-6 p-0.5 rounded-md"
+                            >
+                              <span
+                                class="contents"
+                              >
+                                <svg
+                                  class="size-4"
+                                  fill="currentColor"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  width="24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    clip-rule="evenodd"
+                                    d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414M10 6h4V4h-4zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0z"
+                                    fill="currentColor"
+                                    fill-rule="evenodd"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </button>
+                        </div>
+                        <div
+                          class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 text-nowrap"
+                          data-floating-ui-focusable=""
+                          data-testid="flowbite-tooltip"
+                          id="_r_2_"
+                          role="tooltip"
+                          style="position: absolute; top: 0px; left: 0px;"
+                          tabindex="-1"
+                        >
+                          <div
+                            class="relative z-20"
+                          >
+                            Subscription löschen
+                          </div>
+                          <div
+                            class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+                            data-testid="flowbite-tooltip-arrow"
+                            style="bottom: -4px;"
+                          >
+                             
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 group"
+                data-testid="subscription-table-item"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  uri2
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    data-testid="status-badge"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none h-6 whitespace-nowrap bg-primary-100 text-primary-700 rounded-md w-fit"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Fehler
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  —
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg w-0"
+                >
+                  <div
+                    class="flex gap-2.5 group-hover:opacity-100 lg:opacity-0"
+                  >
+                    <div
+                      class="w-fit"
+                      data-testid="flowbite-tooltip-target"
+                    >
+                      <a
+                        class="block focus:outline-none focus:ring-3 rounded-md hover:bg-primary-200 focus:ring-primary-200"
+                        href="/settings/projects/tenant1/project1/subscriptions/new"
+                      >
+                        <div
+                          class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-200 size-6 p-0.5 rounded-md"
+                        >
+                          <span
+                            class="contents"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="size-4"
+                              fill="currentColor"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              width="24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                clip-rule="evenodd"
+                                d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z"
+                                fill-rule="evenodd"
+                              />
+                              <path
+                                clip-rule="evenodd"
+                                d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                    <div
+                      class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 text-nowrap"
+                      data-floating-ui-focusable=""
+                      data-testid="flowbite-tooltip"
+                      id="_r_6_"
+                      role="tooltip"
+                      style="position: absolute; top: 0px; left: 0px;"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="relative z-20"
+                      >
+                        Subscription bearbeiten
+                      </div>
+                      <div
+                        class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+                        data-testid="flowbite-tooltip-arrow"
+                        style="bottom: -4px;"
+                      >
+                         
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        data-testid="settings-delete-badge"
+                      >
+                        <div
+                          class="w-fit"
+                          data-testid="flowbite-tooltip-target"
+                        >
+                          <button
+                            class="focus:outline-none focus:ring-3 rounded-md hover:bg-danger-200 focus:ring-danger-300 cursor-pointer"
+                            type="button"
+                          >
+                            <div
+                              class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-danger-100 text-danger-700 hover:bg-danger-200 focus:ring-danger-300 size-6 p-0.5 rounded-md"
+                            >
+                              <span
+                                class="contents"
+                              >
+                                <svg
+                                  class="size-4"
+                                  fill="currentColor"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  width="24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    clip-rule="evenodd"
+                                    d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414M10 6h4V4h-4zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0z"
+                                    fill="currentColor"
+                                    fill-rule="evenodd"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </button>
+                        </div>
+                        <div
+                          class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 text-nowrap"
+                          data-floating-ui-focusable=""
+                          data-testid="flowbite-tooltip"
+                          id="_r_8_"
+                          role="tooltip"
+                          style="position: absolute; top: 0px; left: 0px;"
+                          tabindex="-1"
+                        >
+                          <div
+                            class="relative z-20"
+                          >
+                            Subscription löschen
+                          </div>
+                          <div
+                            class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+                            data-testid="flowbite-tooltip-arrow"
+                            style="bottom: -4px;"
+                          >
+                             
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 group"
+                data-testid="subscription-table-item"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  uri3
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    data-testid="status-badge"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none h-6 whitespace-nowrap bg-primary-100 text-primary-700 rounded-md w-fit"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Verbinde…
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  —
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg w-0"
+                >
+                  <div
+                    class="flex gap-2.5 group-hover:opacity-100 lg:opacity-0"
+                  >
+                    <div
+                      class="w-fit"
+                      data-testid="flowbite-tooltip-target"
+                    >
+                      <a
+                        class="block focus:outline-none focus:ring-3 rounded-md hover:bg-primary-200 focus:ring-primary-200"
+                        href="/settings/projects/tenant1/project1/subscriptions/new"
+                      >
+                        <div
+                          class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-200 size-6 p-0.5 rounded-md"
+                        >
+                          <span
+                            class="contents"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="size-4"
+                              fill="currentColor"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              width="24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                clip-rule="evenodd"
+                                d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z"
+                                fill-rule="evenodd"
+                              />
+                              <path
+                                clip-rule="evenodd"
+                                d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                    <div
+                      class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 text-nowrap"
+                      data-floating-ui-focusable=""
+                      data-testid="flowbite-tooltip"
+                      id="_r_c_"
+                      role="tooltip"
+                      style="position: absolute; top: 0px; left: 0px;"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="relative z-20"
+                      >
+                        Subscription bearbeiten
+                      </div>
+                      <div
+                        class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+                        data-testid="flowbite-tooltip-arrow"
+                        style="bottom: -4px;"
+                      >
+                         
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        data-testid="settings-delete-badge"
+                      >
+                        <div
+                          class="w-fit"
+                          data-testid="flowbite-tooltip-target"
+                        >
+                          <button
+                            class="focus:outline-none focus:ring-3 rounded-md hover:bg-danger-200 focus:ring-danger-300 cursor-pointer"
+                            type="button"
+                          >
+                            <div
+                              class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-danger-100 text-danger-700 hover:bg-danger-200 focus:ring-danger-300 size-6 p-0.5 rounded-md"
+                            >
+                              <span
+                                class="contents"
+                              >
+                                <svg
+                                  class="size-4"
+                                  fill="currentColor"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  width="24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    clip-rule="evenodd"
+                                    d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414M10 6h4V4h-4zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0z"
+                                    fill="currentColor"
+                                    fill-rule="evenodd"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </button>
+                        </div>
+                        <div
+                          class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 text-nowrap"
+                          data-floating-ui-focusable=""
+                          data-testid="flowbite-tooltip"
+                          id="_r_e_"
+                          role="tooltip"
+                          style="position: absolute; top: 0px; left: 0px;"
+                          tabindex="-1"
+                        >
+                          <div
+                            class="relative z-20"
+                          >
+                            Subscription löschen
+                          </div>
+                          <div
+                            class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+                            data-testid="flowbite-tooltip-arrow"
+                            style="bottom: -4px;"
+                          >
+                             
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

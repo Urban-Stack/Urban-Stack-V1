@@ -1,0 +1,13 @@
+diff --git a/lib/site_settings/defaults_provider.rb b/lib/site_settings/defaults_provider.rb
+index 5e5612f247..20447bc864 100644
+--- a/lib/site_settings/defaults_provider.rb
++++ b/lib/site_settings/defaults_provider.rb
+@@ -5,7 +5,7 @@ end
+ 
+ # A cache for providing default value based on site locale
+ class SiteSettings::DefaultsProvider
+-  DEFAULT_LOCALE = "en"
++  DEFAULT_LOCALE = "de"
+ 
+   def initialize(site_setting)
+     @site_setting = site_setting

@@ -1,0 +1,448 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot matches snapshot 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <nav
+        aria-label="Settings sidebar"
+        class="h-full w-64"
+        data-testid="settings-sidebar"
+      >
+        <div
+          class="h-full overflow-y-auto overflow-x-hidden rounded-sm px-3 py-4 dark:bg-gray-800 bg-white"
+        >
+          <div
+            class=""
+            data-testid="flowbite-sidebar-items"
+          >
+            <ul
+              class="mt-4 space-y-2 border-t border-gray-200 pt-4 first:mt-0 first:border-t-0 first:pt-0 dark:border-gray-700"
+              data-testid="flowbite-sidebar-item-group"
+            >
+              <li
+                class=""
+              >
+                <a
+                  aria-disabled="false"
+                  aria-labelledby="flowbite-sidebar-item-_r_0_"
+                  class="flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 dark:text-white dark:hover:bg-gray-700 px-5 py-3 hover:bg-primary-100 active:bg-primary-100' focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                  href="/settings/profile"
+                >
+                  <span
+                    class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                    data-testid="flowbite-sidebar-item-content"
+                    id="flowbite-sidebar-item-_r_0_"
+                  >
+                    <div
+                      class="flex gap-2 truncate"
+                    >
+                      <span
+                        class="truncate"
+                      >
+                        Profileinstellungen
+                      </span>
+                    </div>
+                  </span>
+                </a>
+              </li>
+              <li
+                class=""
+              >
+                <p
+                  aria-disabled="true"
+                  aria-labelledby="flowbite-sidebar-item-_r_1_"
+                  class="flex items-center justify-center rounded-lg p-2 text-base font-normal dark:text-white dark:hover:bg-gray-700 px-5 py-3 cursor-not-allowed hover:bg-transparent text-gray-500"
+                >
+                  <span
+                    class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                    data-testid="flowbite-sidebar-item-content"
+                    id="flowbite-sidebar-item-_r_1_"
+                  >
+                    <div
+                      class="flex gap-2 truncate"
+                    >
+                      <span
+                        class="truncate"
+                      >
+                        Mandanteneinstellungen
+                      </span>
+                    </div>
+                  </span>
+                </p>
+              </li>
+              <li
+                class=""
+              >
+                <a
+                  aria-disabled="false"
+                  aria-labelledby="flowbite-sidebar-item-_r_2_"
+                  class="flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 dark:text-white dark:hover:bg-gray-700 px-5 py-3 hover:bg-primary-100 active:bg-primary-100' focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                  href="/settings/projects"
+                >
+                  <span
+                    class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                    data-testid="flowbite-sidebar-item-content"
+                    id="flowbite-sidebar-item-_r_2_"
+                  >
+                    <div
+                      class="flex gap-2 truncate"
+                    >
+                      <span
+                        class="truncate"
+                      >
+                        Projekte
+                      </span>
+                    </div>
+                  </span>
+                </a>
+              </li>
+              <li
+                class=""
+              >
+                <a
+                  aria-disabled="false"
+                  aria-labelledby="flowbite-sidebar-item-_r_3_"
+                  class="flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 dark:text-white dark:hover:bg-gray-700 px-5 py-3 hover:bg-primary-100 active:bg-primary-100' focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                  href="/settings/dashboardgroups"
+                >
+                  <span
+                    class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                    data-testid="flowbite-sidebar-item-content"
+                    id="flowbite-sidebar-item-_r_3_"
+                  >
+                    <div
+                      class="flex gap-2 truncate"
+                    >
+                      <span
+                        class="truncate"
+                      >
+                        Dashboardgruppen
+                      </span>
+                    </div>
+                  </span>
+                </a>
+              </li>
+              <li
+                class=""
+              >
+                <a
+                  aria-disabled="false"
+                  aria-labelledby="flowbite-sidebar-item-_r_4_"
+                  class="flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 dark:text-white dark:hover:bg-gray-700 px-5 py-3 hover:bg-primary-100 active:bg-primary-100' focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                  href="/settings/usergroups"
+                >
+                  <span
+                    class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                    data-testid="flowbite-sidebar-item-content"
+                    id="flowbite-sidebar-item-_r_4_"
+                  >
+                    <div
+                      class="flex gap-2 truncate"
+                    >
+                      <span
+                        class="truncate"
+                      >
+                        Benutzergruppen
+                      </span>
+                    </div>
+                  </span>
+                </a>
+              </li>
+              <li
+                class=""
+              >
+                <p
+                  aria-disabled="true"
+                  aria-labelledby="flowbite-sidebar-item-_r_5_"
+                  class="flex items-center justify-center rounded-lg p-2 text-base font-normal dark:text-white dark:hover:bg-gray-700 px-5 py-3 cursor-not-allowed hover:bg-transparent text-gray-500"
+                  target="_blank"
+                >
+                  <span
+                    class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                    data-testid="flowbite-sidebar-item-content"
+                    id="flowbite-sidebar-item-_r_5_"
+                  >
+                    <div
+                      class="flex gap-2 truncate"
+                    >
+                      <span
+                        class="truncate"
+                      >
+                        Benutzerverwaltung
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        class="size-5 self-center shrink-0"
+                        fill="none"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </body>,
+  "container": <div>
+    <nav
+      aria-label="Settings sidebar"
+      class="h-full w-64"
+      data-testid="settings-sidebar"
+    >
+      <div
+        class="h-full overflow-y-auto overflow-x-hidden rounded-sm px-3 py-4 dark:bg-gray-800 bg-white"
+      >
+        <div
+          class=""
+          data-testid="flowbite-sidebar-items"
+        >
+          <ul
+            class="mt-4 space-y-2 border-t border-gray-200 pt-4 first:mt-0 first:border-t-0 first:pt-0 dark:border-gray-700"
+            data-testid="flowbite-sidebar-item-group"
+          >
+            <li
+              class=""
+            >
+              <a
+                aria-disabled="false"
+                aria-labelledby="flowbite-sidebar-item-_r_0_"
+                class="flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 dark:text-white dark:hover:bg-gray-700 px-5 py-3 hover:bg-primary-100 active:bg-primary-100' focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                href="/settings/profile"
+              >
+                <span
+                  class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                  data-testid="flowbite-sidebar-item-content"
+                  id="flowbite-sidebar-item-_r_0_"
+                >
+                  <div
+                    class="flex gap-2 truncate"
+                  >
+                    <span
+                      class="truncate"
+                    >
+                      Profileinstellungen
+                    </span>
+                  </div>
+                </span>
+              </a>
+            </li>
+            <li
+              class=""
+            >
+              <p
+                aria-disabled="true"
+                aria-labelledby="flowbite-sidebar-item-_r_1_"
+                class="flex items-center justify-center rounded-lg p-2 text-base font-normal dark:text-white dark:hover:bg-gray-700 px-5 py-3 cursor-not-allowed hover:bg-transparent text-gray-500"
+              >
+                <span
+                  class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                  data-testid="flowbite-sidebar-item-content"
+                  id="flowbite-sidebar-item-_r_1_"
+                >
+                  <div
+                    class="flex gap-2 truncate"
+                  >
+                    <span
+                      class="truncate"
+                    >
+                      Mandanteneinstellungen
+                    </span>
+                  </div>
+                </span>
+              </p>
+            </li>
+            <li
+              class=""
+            >
+              <a
+                aria-disabled="false"
+                aria-labelledby="flowbite-sidebar-item-_r_2_"
+                class="flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 dark:text-white dark:hover:bg-gray-700 px-5 py-3 hover:bg-primary-100 active:bg-primary-100' focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                href="/settings/projects"
+              >
+                <span
+                  class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                  data-testid="flowbite-sidebar-item-content"
+                  id="flowbite-sidebar-item-_r_2_"
+                >
+                  <div
+                    class="flex gap-2 truncate"
+                  >
+                    <span
+                      class="truncate"
+                    >
+                      Projekte
+                    </span>
+                  </div>
+                </span>
+              </a>
+            </li>
+            <li
+              class=""
+            >
+              <a
+                aria-disabled="false"
+                aria-labelledby="flowbite-sidebar-item-_r_3_"
+                class="flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 dark:text-white dark:hover:bg-gray-700 px-5 py-3 hover:bg-primary-100 active:bg-primary-100' focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                href="/settings/dashboardgroups"
+              >
+                <span
+                  class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                  data-testid="flowbite-sidebar-item-content"
+                  id="flowbite-sidebar-item-_r_3_"
+                >
+                  <div
+                    class="flex gap-2 truncate"
+                  >
+                    <span
+                      class="truncate"
+                    >
+                      Dashboardgruppen
+                    </span>
+                  </div>
+                </span>
+              </a>
+            </li>
+            <li
+              class=""
+            >
+              <a
+                aria-disabled="false"
+                aria-labelledby="flowbite-sidebar-item-_r_4_"
+                class="flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 dark:text-white dark:hover:bg-gray-700 px-5 py-3 hover:bg-primary-100 active:bg-primary-100' focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                href="/settings/usergroups"
+              >
+                <span
+                  class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                  data-testid="flowbite-sidebar-item-content"
+                  id="flowbite-sidebar-item-_r_4_"
+                >
+                  <div
+                    class="flex gap-2 truncate"
+                  >
+                    <span
+                      class="truncate"
+                    >
+                      Benutzergruppen
+                    </span>
+                  </div>
+                </span>
+              </a>
+            </li>
+            <li
+              class=""
+            >
+              <p
+                aria-disabled="true"
+                aria-labelledby="flowbite-sidebar-item-_r_5_"
+                class="flex items-center justify-center rounded-lg p-2 text-base font-normal dark:text-white dark:hover:bg-gray-700 px-5 py-3 cursor-not-allowed hover:bg-transparent text-gray-500"
+                target="_blank"
+              >
+                <span
+                  class="flex-1 whitespace-nowrap px-0 flex flex-grow justify-center md:justify-start truncate"
+                  data-testid="flowbite-sidebar-item-content"
+                  id="flowbite-sidebar-item-_r_5_"
+                >
+                  <div
+                    class="flex gap-2 truncate"
+                  >
+                    <span
+                      class="truncate"
+                    >
+                      Benutzerverwaltung
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="size-5 self-center shrink-0"
+                      fill="none"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

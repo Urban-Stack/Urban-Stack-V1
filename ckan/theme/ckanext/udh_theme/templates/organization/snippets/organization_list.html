@@ -1,0 +1,22 @@
+{#
+Display a grid of organization items.
+
+organizations - A list of organizations.
+
+Example:
+
+    {% snippet "organization/snippets/organization_list.html" %}
+
+#}
+{% block organization_list %}
+<div class="container">
+  <div class="row" style="min-width: 100%;">
+  {% block organization_list_inner %}
+  {% for organization in organizations %}
+    <div class="col-12 col-md-4 mb-3">
+    {% snippet "organization/snippets/organization_item.html", organization=organization, position=loop.index, show_capacity=show_capacity %}
+    </div>
+  {% endfor %}
+   {% endblock %}
+</div>
+{% endblock %}

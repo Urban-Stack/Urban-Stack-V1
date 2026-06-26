@@ -1,0 +1,17 @@
+diff --git a/page.html b/page.html
+index 4a526732..632e5ba3 100644
+--- a/page.html
++++ b/page.html
+@@ -171,6 +171,12 @@
+                   {% endif %}
+                 {% endblock nav_bar_left_items %}
+               {% endif %}
++              <li class="nav-item">
++                <a class="nav-link" href="https://urbanstack.de/impressum">Impressum</a>
++              </li>
++              <li class="nav-item">
++                <a class="nav-link" href="https://urbanstack.de/datenschutz">Datenschutz</a>
++              </li>
+             </ul>
+             <ul class="nav navbar-nav me-2">
+               {% block nav_bar_right_items %}

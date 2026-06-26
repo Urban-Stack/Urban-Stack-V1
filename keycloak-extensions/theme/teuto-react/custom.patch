@@ -1,0 +1,13 @@
+diff --git a/js/libs/ui-shared/src/user-profile/UserProfileFields.tsx b/js/libs/ui-shared/src/user-profile/UserProfileFields.tsx
+index 4554ef5d31..05bd630a46 100644
+--- a/js/libs/ui-shared/src/user-profile/UserProfileFields.tsx
++++ b/js/libs/ui-shared/src/user-profile/UserProfileFields.tsx
+@@ -146,7 +146,7 @@ export const UserProfileFields = ({
+                   {label(t, group.displayDescription, "")}
+                 </Text>
+               )}
+-              {attributes.map((attribute) => (
++              {attributes.filter(attribute => attribute.name !== "locale").map((attribute) => (
+                 <FormField
+                   key={attribute.name}
+                   t={t}

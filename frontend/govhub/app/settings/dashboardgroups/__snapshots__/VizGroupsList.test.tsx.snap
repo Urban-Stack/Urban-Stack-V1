@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`renders list overview as expected 1`] = `
+<div>
+  <div
+    class="size-full"
+  >
+    <ul>
+      <li>
+        vizGroup1
+         - 
+        tenant1
+      </li>
+      <li>
+        vizGroup2
+         - 
+        tenant1
+      </li>
+      <li>
+        vizGroup3
+         - 
+        tenant3
+      </li>
+    </ul>
+  </div>
+</div>
+`;

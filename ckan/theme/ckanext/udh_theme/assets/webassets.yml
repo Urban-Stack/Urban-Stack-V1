@@ -1,0 +1,14 @@
+udhtheme-js:
+  filter: rjsmin
+  output: udhtheme/udhtheme.js
+  contents:
+    - js/udhtheme.js
+  extra:
+    preload:
+      - base/main
+
+udhtheme-css:
+  filter: cssrewrite
+  output: udhtheme/udhtheme.css
+  contents:
+    - css/udhtheme.css

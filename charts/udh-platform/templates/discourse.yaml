@@ -1,0 +1,218 @@
+{{- if .Values.discourse.enabled }}
+{{- $discourseApiKeySpec := (merge (dict "name" "discourse-api-key") .) -}}
+{{- $discourseApiKey := include "udh.secret" $discourseApiKeySpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $discourseApiKey) $discourseApiKeySpec) }}
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "discourse") }}
+spec:
+  releaseName: {{ include "data-hub.name" (dict "context" . "name" "discourse") }}
+  chart:
+    spec:
+      chart: discourse
+      version: 16.0.7 # renovate: datasource=docker depName=bitnamicharts/discourse
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: {{ include "data-hub.name" (dict "context" . "name" "bitnami") }}
+  interval: 5m
+  timeout: 15m
+  targetNamespace: {{ .Release.Namespace }}
+  values:
+    global:
+      {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 6 }}
+      security:
+        allowInsecureImages: true # needed because we use our own discourse image
+    postgresql:
+      enabled: false
+    externalDatabase:
+      host: {{ printf "%s-cnpg-rw" (include "common.names.fullname" .) }}
+      port: 5432
+      create: false
+      database: discourse
+      user: "discourse"
+      existingSecret: {{ printf "%s-discourse-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+      existingSecretPasswordKey: password
+    auth:
+      email: {{ .Values.discourse.auth.email }}
+      username: {{ .Values.discourse.auth.username }}
+      password: {{ .Values.discourse.auth.password }}
+    siteName: {{ .Values.discourse.siteName | quote }}
+    {{- if .Values.discourse.ingress.enabled }}
+    ingress:
+      enabled: true
+      hostname: {{ include "data-hub.discourse.hostname" . }}
+      ingressClassName: {{ .Values.discourse.ingress.ingressClassName }}
+      tls: true
+      annotations: {{- include "udh.ingress.annotations" (dict "context" $ "annotations" .Values.discourse.ingress.annotations) | nindent 8 }}
+        nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
+    {{ end }}
+    extraVolumes:
+      - name: api-key
+        secret:
+          secretName: {{ include "data-hub.name" (dict "context" . "name" "discourse-api-key") }}
+      {{- if .Values.global.trustCaSecretName }}
+      - name: ca-cert
+        secret:
+          secretName: {{ .Values.global.trustCaSecretName }}
+      {{- end }}
+    sidekiq:
+      extraEnvVars: {}
+    {{ $image := include "udh-platform.images.image" (dict "imageRoot" .Values.discourse.image "global" .Values.global) }}
+    image:
+      # not actually repository+tag but enough to make the discourse chart put them back together correctly
+      registry: ""
+      repository: {{ regexReplaceAll ":[^:]*$" $image "" | quote }}
+      tag: {{ regexReplaceAll "^.*:" $image "" | quote }}
+      pullPolicy: {{ .Values.discourse.image.pullPolicy }}
+    discourse:
+      resources: {{- toYaml .Values.discourse.resources | nindent 8 }}
+      persistPlugins: false
+      extraEnvVars: {{ toYaml .Values.discourse.extraEnvVars.discourse | nindent 8 }}
+        - name: DISCOURSE_HOSTNAME
+          value: {{ include "data-hub.discourse.hostname" . | quote }}
+        - name: DISCOURSE_EXTRA_CONF_CONTENT
+          value: |
+            version_checks = false
+
+            force_https = true
+            allowed_internal_hosts = {{ include "data-hub.keycloak.hostname" . }}|{{ include "data-hub.govhub.hostname" . }}
+
+            login_required = true
+            enable_local_logins = false
+            oauth2_enabled = true
+            oauth2_client_id = discourse
+            oauth2_authorize_url = {{ include "udh.keycloak.realmUrl" . }}/protocol/openid-connect/auth
+            oauth2_token_url = {{ include "udh.keycloak.realmUrl" . }}/protocol/openid-connect/token
+            oauth2_user_json_url = {{ include "udh.keycloak.realmUrl" . }}/protocol/openid-connect/userinfo
+            default_trust_level = 1
+
+            persistent_sessions = false # require round trip to Keycloak after closing browser
+            maximum_session_age = 10    # require round trip to Keycloak once every work day
+
+            email_editable = false
+            auth_overrides_name = true
+            auth_overrides_email = true
+            auth_overrides_username = true
+            min_username_length = 1
+            max_username_length = 64
+            auth_skip_create_confirm = true
+            username_change_period = 0
+
+            oauth2_scope = email profile openid
+            oauth2_json_username_path = preferred_username
+            oauth2_json_user_id_path = sub
+            oauth2_json_email_path = email
+            oauth2_json_name_path = name
+            oauth2_json_email_verified_path = email_verified
+            oauth2_json_groups_path = groups
+            oauth2_email_verified = true
+
+            enable_cors = true
+            cors_origin = 'https://{{ include "data-hub.govhub.hostname" . }}'
+            allow_embedding_site_in_an_iframe = true
+
+            default_locale = de
+            allow_user_locale = true
+
+            prioritize_username_in_ux = false
+            use_email_for_username_and_name_suggestions = true
+            display_name_on_posts = true
+
+            default_dark_mode_color_scheme_id = none
+            base_font = poppins
+            heading_font = poppins
+            desktop_category_page_style = categories_boxes
+            top_menu = categories|latest|new|unread|top
+
+            authorized_extensions = jpg|jpeg|png|gif|heic|heif|webp|avif|ipynb
+
+            create_tag_allowed_groups = '1|2|0' # admin,moderators,everyone
+
+            personal_message_enabled_groups = '1|2' # disable personal messages, use chat instead
+
+            chat_channel_retention_days = 0
+            enable_category_group_moderation = true
+
+            max_admin_api_reqs_per_minute = 60000
+
+            {{- if .Values.global.testDeployment }}
+            enable_user_tips = false
+            discourse_narrative_bot_enabled = false
+            max_reqs_per_ip_mode = none
+            silence_new_user_sensitivity = 0
+            num_users_to_silence_new_user = 0
+            levenshtein_distance_spammer_emails = 0
+            max_new_accounts_per_registration_ip = 0
+            fast_typing_threshold = disabled
+            notify_mods_when_user_silenced = true
+            {{- end }}
+
+            yjit_enabled = true
+      extraEnvVarsSecret: {{ printf "%s-%s" (include "common.names.fullname" .) "discourse-client-secret" | quote }}
+      extraVolumeMounts:
+        - mountPath: /api-key
+          name: api-key
+          subPath: discourse-api-key
+        {{- if .Values.global.trustCaSecretName }}
+        - mountPath: /usr/local/share/ca-certificates/additional-ca.crt
+          name: ca-cert
+          subPath: ca.crt
+        {{- end }}
+      command:
+        - /bin/bash
+        - -c
+        - |
+          {{- if .Values.global.trustCaSecretName }}
+          update-ca-certificates
+          {{- end }}
+
+          # environment variable does not work
+          export DISCOURSE_EXTRA_CONF_CONTENT="$DISCOURSE_EXTRA_CONF_CONTENT
+          oauth2_client_secret = $DISCOURSE_OAUTH2_CLIENT_SECRET
+          "
+
+          # install theme
+          cat <<"EOF" >> /post-init.sh
+          until su discourse -c 'cd /opt/bitnami/discourse && RAILS_ENV=production bundle exec rake themes:install:custom /opt/ugh-theme'
+          do
+            sleep 1
+          done
+
+          # allow embedding from govhub
+          su discourse -c 'cd /opt/bitnami/discourse && RAILS_ENV=production bundle exec rails console' \
+          <<.
+          EmbeddableHost.upsert({id: 1, host: "{{ include "data-hub.govhub.hostname" . }}", category_id: 1})
+          TranslationOverride.upsert({id: 1, locale: "de", translation_key: "js.chat.direct_messages.title", value: "Chat"})
+          TranslationOverride.upsert({id: 2, locale: "de", translation_key: "js.sidebar.start_new_dm.text", value: "Neuen Chat starten"})
+          ApiKey.upsert({id: 1, description: "global", key_hash: ApiKey.hash_key(File.read('/api-key')), truncated_key: ''})
+          .
+          EOF
+
+          # continue with upstream command
+          exec /opt/bitnami/scripts/discourse/entrypoint.sh /opt/bitnami/scripts/discourse/run.sh
+      readinessProbe:
+        initialDelaySeconds: 10
+        failureThreshold: 24
+    {{- if .Values.discourse.smtp.host }}
+    smtp:
+      enabled: true
+      {{- if .Values.mailhog.enabled }}
+      host: {{ include "data-hub.name" (dict "context" . "name" "mailhog") }}
+      {{- else }}
+      host: {{ .Values.discourse.smtp.host | required "smtp host is required when smtp is activated!" }}
+      {{- end }}
+      port: {{ .Values.discourse.smtp.port }}
+      user: {{ .Values.discourse.smtp.user | required "smtp user is required when smtp is activated!"}}
+      password: {{ .Values.discourse.smtp.password | required "smtp password is required when smtp is activated!"}}
+      protocol: {{ .Values.discourse.smtp.protocol }}
+    {{ end }}
+    redis:
+      image:
+        repository: bitnamilegacy/redis
+    updateStrategy:
+      type: Recreate
+      rollingUpdate:
+{{- end }}

@@ -1,0 +1,248 @@
+{
+	"openapi": "3.0.0",
+	"info": {},
+	"servers": [
+		{
+			"url": "https://api.DOCS_BASE_DOMAIN"
+		}
+	],
+	"components": {
+		"securitySchemes": {
+			"OAuth2": {
+				"description": "OAuth2",
+				"type": "oauth2",
+				"flows": {
+					"authorizationCode": {
+						"authorizationUrl": "https://login.DOCS_BASE_DOMAIN/realms/udh/protocol/openid-connect/auth",
+						"tokenUrl": "https://login.DOCS_BASE_DOMAIN/realms/udh/protocol/openid-connect/token",
+						"scopes": {
+							"openid": "OpenID Connect",
+							"data-hub": "Metadata-Zugriff"
+						}
+					}
+				}
+			}
+		}
+	},
+	"security": [
+		{
+			"OAuth2": ["data-hub"]
+		}
+	],
+	"paths": {
+		"/api/v1/metadata/{tenant}/{project}": {
+			"get": {
+				"operationId": "sensormeta-count",
+				"tags": ["Sensormeta"],
+				"summary": "Ausgabe der Anzahl an Metadateneinträge",
+				"parameters": [
+					{
+						"name": "tenant",
+						"in": "path",
+						"required": true,
+						"description": "Mandant",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "project",
+						"in": "path",
+						"required": true,
+						"description": "Projekt",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$schema": "https://json-schema.org/draft-07/schema",
+									"type": "object",
+									"additionalProperties": false,
+									"properties": {
+										"count": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Project doesn't exist or no permission to view it"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			},
+			"delete": {
+				"operationId": "sensormeta-delete",
+				"tags": ["Sensormeta"],
+				"summary": "Metadaten vom Projekt unwiederruflich löschen",
+				"parameters": [
+					{
+						"name": "tenant",
+						"in": "path",
+						"required": true,
+						"description": "Mandant",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "project",
+						"in": "path",
+						"required": true,
+						"description": "Projekt",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "Success / No Content",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$schema": "https://json-schema.org/draft-07/schema",
+									"type": "object",
+									"additionalProperties": false,
+									"properties": {}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Project doesn't exist or no permission to view it"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			},
+			"post": {
+				"operationId": "sensormeta-upload",
+				"tags": ["Sensormeta"],
+				"summary": "Hochladen von Metadaten",
+				"parameters": [
+					{
+						"name": "tenant",
+						"in": "path",
+						"required": true,
+						"description": "Mandant",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "project",
+						"in": "path",
+						"required": true,
+						"description": "Projekt",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"text/csv": {
+							"schema": {
+								"type": "string",
+								"description": "CSV Sensor-Metadaten"
+							},
+							"example": "sensor_id,sensor_type\nsensor1,air_temperature\nsensor2,battery_level"
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Project doesn't exist or no permission to view it"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/api/v1/metadata/{tenant}/{project}/download.csv": {
+			"get": {
+				"operationId": "sensormeta-download",
+				"tags": ["Sensormeta"],
+				"summary": "Metadaten als CSV herunterladen",
+				"parameters": [
+					{
+						"name": "tenant",
+						"in": "path",
+						"required": true,
+						"description": "Mandant",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "project",
+						"in": "path",
+						"required": true,
+						"description": "Projekt",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Project doesn't exist or no permission to view it"
+					},
+					"422": {
+						"description": "Unprocessable Entity"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		}
+	}
+}

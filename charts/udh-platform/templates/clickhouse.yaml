@@ -1,0 +1,255 @@
+{{- $clickhouseUsersSpec := (merge (dict "name" "clickhouse-users" "key" "pwdAdmin") .) -}}
+{{- $clickhouseUsers := (coalesce .Values.clickhouse.adminPassword (include "udh.secret" $clickhouseUsersSpec)) }}
+{{ include "udh.secretManifest" (merge (dict "value" $clickhouseUsers) $clickhouseUsersSpec) }}
+---
+apiVersion: "clickhouse.altinity.com/v1"
+kind: "ClickHouseInstallation"
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "clickhouse") }}
+spec:
+  defaults:
+    templates:
+      dataVolumeClaimTemplate: data-volume-template
+      podTemplate: default
+  configuration:
+    zookeeper:
+      nodes:
+        - host: {{ include "data-hub.name" (dict "context" . "name" "clickhouse" "prefix" "keeper") }}
+    users:
+      admin/password:
+        valueFrom:
+          secretKeyRef:
+            name: {{ include "data-hub.name" (dict "context" . "name" "clickhouse-users") }}
+            key: pwdAdmin
+      admin/networks/ip: "::/0"
+      admin/profile: default
+      admin/access_management: 1
+      admin/named_collection_control: 1
+    profiles:
+      default/SQL_projects: "''"
+      default/filesystem_cache_name: s3cache
+      default/enable_filesystem_cache: 1
+      default/format_csv_delimiter: ";"
+      default/input_format_csv_try_infer_numbers_from_strings: 1
+    clusters:
+      - name: "clickhouse"
+        layout:
+          shardsCount: 1
+          replicasCount: {{ .Values.clickhouse.replicas }}
+    settings:
+      filesystem_caches/s3cache/path: /locals3cache
+      filesystem_caches/s3cache/max_size: 10Gi
+      {{- if .Values.objectStorage.enabled }}
+      url_scheme_mappers/bucket/to: {{ include "udh.rook-ceph-bucket.service" . }}/{bucket}
+      named_collections_storage/type: keeper
+      named_collections_storage/path: /named_collections/
+      {{- end }}
+    files:
+      # disable logging tables
+      # metrics are handled by prometheus, logs are also printed to console which is handled by loki
+      # keep part_log and query_log, they have a TTL of 30 days
+      9_log_disable.xml: |
+        <clickhouse>
+          <asynchronous_metric_log remove="1"/>
+          <backup_log remove="1"/>
+          <error_log remove="1"/>
+          <metric_log remove="1"/>
+          <query_thread_log remove="1"/>
+          <query_views_log remove="1"/>
+          <session_log remove="1"/>
+          <text_log remove="1"/>
+          <trace_log remove="1"/>
+          <crash_log remove="1"/>
+          <opentelemetry_span_log remove="1"/>
+          <zookeeper_log remove="1"/>
+          <processors_profile_log remove="1"/>
+          <latency_log remove="1"/>
+        </clickhouse>
+      9_sensormeta.xml: |
+        <clickhouse>
+          <named_collections>
+            <postgres_sensormeta>
+              <username overridable="false" from_env="SENSORMETA_POSTGRES_USERNAME" />
+              <password overridable="false" from_env="SENSORMETA_POSTGRES_PASSWORD" />
+              <host overridable="false">{{ printf "%s-cnpg-rw" (include "common.names.fullname"  .) }}</host>
+              <port overridable="false">5432</port>
+              <schema overridable="false">public</schema>
+              <database overridable="false">sensormeta</database>
+              <table overridable="false">sensormeta</table>
+            </postgres_sensormeta>
+          </named_collections>
+        </clickhouse>
+      config.d/replicated_user_directories.xml: |
+        <clickhouse>
+           <user_directories replace="replace">
+             <users_xml>
+               <path>users.xml</path>
+             </users_xml>
+             <replicated>
+               <zookeeper_path>/clickhouse/access</zookeeper_path>
+             </replicated>
+           </user_directories>
+        </clickhouse>
+  templates:
+    volumeClaimTemplates:
+      - name: data-volume-template
+        metadata:
+          labels:
+            velero.io/exclude-from-backup: "true"
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: {{ .Values.clickhouse.persistence.data.size }}
+    podTemplates:
+      - name: default
+        metadata:
+          annotations:
+            backup.velero.io/backup-volumes-excludes: data-volume-template
+        spec:
+          {{- with .Values.clickhouse.priorityClassName }}
+          priorityClassName: {{ . }}
+          {{- end }}
+          containers:
+            - name: clickhouse
+              image: {{ .Values.clickhouse.image | quote }}
+              resources: {{- toYaml .Values.clickhouse.resources | nindent 16 }}
+              volumeMounts:
+                - mountPath: /locals3cache
+                  name: s3cache
+              env: # workaround for a clickhouse bug, see: https://github.com/ClickHouse/ClickHouse/issues/70365#issuecomment-2469874106
+                - name: PGSSLCERT
+                  value: /tmp/postgresql.crt
+                - name: SENSORMETA_POSTGRES_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ printf "%s-sensormeta-reader-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+                      key: username
+                - name: SENSORMETA_POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ printf "%s-sensormeta-reader-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+                      key: password
+          volumes:
+            - name: s3cache
+              emptyDir:
+                sizeLimit: 21Gi
+---
+apiVersion: "clickhouse-keeper.altinity.com/v1"
+kind: "ClickHouseKeeperInstallation"
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "clickhouse") }}
+spec:
+  configuration:
+    clusters:
+      - name: clickhouse
+        layout:
+          replicasCount: {{ .Values.clickhouse.keeper.replicas }}
+  defaults:
+    templates:
+      dataVolumeClaimTemplate: data-volume-template
+      podTemplate: default
+  templates:
+    volumeClaimTemplates:
+      - name: data-volume-template
+        metadata:
+          labels:
+            velero.io/exclude-from-backup: "true"
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: {{ .Values.clickhouse.keeper.persistence.data.size }}
+    podTemplates:
+      - name: default
+        metadata:
+          annotations:
+            backup.velero.io/backup-volumes-excludes: data-volume-template
+        spec:
+          containers:
+            - name: clickhouse-keeper
+              image: {{ .Values.clickhouse.keeper.image | quote }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "clickhouse") }}
+  annotations: {{- include "udh.ingress.annotations" (dict "context" . "annotations" .Values.clickhouse.ingress.annotations) | nindent 4 }}
+spec:
+  rules:
+  - host: {{ include "data-hub.clickhouse.hostname" . }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend: {{- include "common.ingress.backend" (dict "serviceName"  (printf "clickhouse-%s" (include "data-hub.name" (dict "context" . "name" "clickhouse"))) "servicePort" 8123 "context" .) | nindent 14 }}
+  tls:
+  - hosts:
+    - {{ include "data-hub.clickhouse.hostname" . }}
+    secretName: {{ include "data-hub.clickhouse.hostname" . }}-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) "chegress" }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      clickhouse.altinity.com/cluster: clickhouse
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ceph-rgw
+          {{- if and .Values.objectStorage.enabled .Values.objectStorage.reuseClusterFromNamespace }}
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Values.objectStorage.reuseClusterFromNamespace }}
+          {{- end }}
+      ports:
+        - protocol: TCP
+          port: 8080
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: kafka
+      ports:
+        - protocol: TCP
+          port: 9090
+        - protocol: TCP
+          port: 9092
+    - to:
+        - podSelector:
+            matchLabels:
+              clickhouse-keeper.altinity.com/cluster: clickhouse
+      ports:
+        - protocol: TCP
+          port: 2181
+    - to:
+        - podSelector:
+            matchLabels:
+              clickhouse.altinity.com/cluster: clickhouse
+    - to:
+      - podSelector:
+          matchLabels:
+            cnpg.io/cluster: {{ printf "%s-cnpg" (include "common.names.fullname"  .) }}
+      ports:
+        - protocol: TCP
+          port: 5432

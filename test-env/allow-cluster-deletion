@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+namespace=${1-udh}
+stage=${2-local}
+
+kubectl patch -n "$namespace" helmrelease "$stage-udh-platform-rook-ceph-cluster" --type=merge -p='
+spec:
+  values:
+    cephClusterSpec:
+      cleanupPolicy:
+        confirmation: yes-really-destroy-data
+' &&
+flux reconcile helmrelease -n "$namespace" "$stage-udh-platform-rook-ceph-cluster" --timeout 20s

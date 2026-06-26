@@ -1,0 +1,19 @@
+diff --git a/superset-frontend/src/features/home/ActivityTable.tsx b/superset-frontend/src/features/home/ActivityTable.tsx
+index dc456015ff..fcf3e7b9d2 100644
+--- a/superset-frontend/src/features/home/ActivityTable.tsx
++++ b/superset-frontend/src/features/home/ActivityTable.tsx
+@@ -157,14 +157,6 @@ export default function ActivityTable({
+         setItem(LocalStorageKeys.HomepageActivityFilter, TableTab.Edited);
+       },
+     },
+-    {
+-      name: TableTab.Created,
+-      label: t('Created'),
+-      onClick: () => {
+-        setActiveChild(TableTab.Created);
+-        setItem(LocalStorageKeys.HomepageActivityFilter, TableTab.Created);
+-      },
+-    },
+   ];
+ 
+   if (activityData?.[TableTab.Viewed]) {

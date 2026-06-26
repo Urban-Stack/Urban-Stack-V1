@@ -1,0 +1,63 @@
+{{- if .Values.objectStorage.enabled -}}
+{{- $name := "zipupload" -}}
+{{- $uploadTokenSecretName := printf "%s-%s" (include "common.names.fullname" .) "zipupload-upload-token" -}}
+{{- $uploadTokenSecretSpec := (merge (dict "name" "zipupload-upload-token" "key" "secret") .) -}}
+{{- $uploadTokenSecret := include "udh.secret" $uploadTokenSecretSpec -}}
+{{ include "udh.secretManifest" (merge (dict "value" $uploadTokenSecret) $uploadTokenSecretSpec) }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  replicas: {{ .Values.zipupload.replicas }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $name }}
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: {{ $name }}
+    spec:
+      {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 6 }}
+      containers:
+      - name: zipupload
+        image: {{ include "udh-platform.images.image" (dict "imageRoot" .Values.zipupload.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.zipupload.image.pullPolicy }}
+        resources: {{- toYaml .Values.zipupload.resources | nindent 10 }}
+        ports:
+          - containerPort: 8091
+            name: http
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http
+        env:
+          - name: BUCKET_URL
+            value: {{ include "udh.rook-ceph-bucket.service" . }}
+          - name: UPLOAD_TOKEN_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ $uploadTokenSecretName | quote }}
+                key: secret
+      {{- if .Values.global.trustCaSecretName }}
+          - name: REQUESTS_CA_BUNDLE
+            value: /tls/ca.crt
+        volumeMounts:
+          - mountPath: /tls
+            name: ca-cert
+      volumes:
+        - name: ca-cert
+          secret:
+            secretName: {{ .Values.global.trustCaSecretName }}
+            items:
+            - key: ca.crt
+              path: ca.crt
+      {{- end }}
+{{- end -}}

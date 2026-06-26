@@ -1,0 +1,6 @@
+{
+  "version": "1",
+  "name": "UDP API",
+  "type": "collection",
+  "ignore": ["node_modules", ".git", "_examples"]
+}

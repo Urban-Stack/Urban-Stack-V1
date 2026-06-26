@@ -1,0 +1,15 @@
+meta {
+  name: Delete attribute
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/attributes/{{attribute}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot matches snapshot 1`] = `
+<div>
+  <div>
+    <div
+      class="flex justify-between mb-4"
+    >
+      <h3
+        class="font-bold"
+      >
+        Subscription bearbeiten
+      </h3>
+      <div
+        class="flex gap-3.5"
+      >
+        <a
+          aria-busy="false"
+          class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 hover:bg-primary-100 active:bg-primary-100 focus:ring-primary-200 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100"
+          data-loading="false"
+          href="/settings/projects/tenant1/project1/subscriptions"
+          role="button"
+        >
+          <div
+            class="relative flex items-center gap-1"
+          >
+            <div
+              class="px-1 empty:hidden"
+            >
+              Abbrechen
+            </div>
+          </div>
+        </a>
+        <button
+          aria-busy="false"
+          class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+          data-loading="false"
+          type="submit"
+        >
+          <div
+            class="relative flex items-center gap-1"
+          >
+            <div
+              class="flex items-center size-5"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                  fill-rule="evenodd"
+                />
+                <path
+                  clip-rule="evenodd"
+                  d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="px-1 empty:hidden"
+            >
+              Speichern
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="max-w-[556px] flex flex-col gap-6"
+    >
+      <div>
+        <label
+          class="text-sm font-medium text-gray-900 dark:text-white block mb-2"
+          data-testid="flowbite-label"
+          for="edit-subscription-name"
+        >
+          Name der Subscription
+        </label>
+        <div
+          class="flex focus:outline-hidden focus:ring-2 focus:ring-primary-500"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              id="edit-subscription-name"
+              name="edit-subscription-name"
+              required=""
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <label
+          class="text-sm font-medium text-gray-900 dark:text-white block mb-2"
+          data-testid="flowbite-label"
+          for="edit-subscription-uri"
+        >
+          URI
+        </label>
+        <div
+          class="flex focus:outline-hidden focus:ring-2 focus:ring-primary-500"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              id="edit-subscription-uri"
+              name="edit-subscription-uri"
+              placeholder="z.B.: wss://..."
+              required=""
+              type="url"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <label
+          class="text-sm font-medium text-gray-900 dark:text-white block mb-2"
+          data-testid="flowbite-label"
+          for="edit-subscription-topic"
+        >
+          Topic
+        </label>
+        <div
+          class="flex focus:outline-hidden focus:ring-2 focus:ring-primary-500"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              id="edit-subscription-topic"
+              name="edit-subscription-topic"
+              placeholder="z.B.: sensor/..."
+              required=""
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <label
+          class="text-sm font-medium text-gray-900 dark:text-white block mb-2"
+          data-testid="flowbite-label"
+          for="edit-subscription-format"
+        >
+          Format
+        </label>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <select
+              class="block w-full appearance-none border bg-arrow-down-icon bg-[length:0.75em_0.75em] bg-[position:right_12px_center] bg-no-repeat focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              id="edit-subscription-format"
+              name="edit-subscription-format"
+              required=""
+            >
+              <option
+                value="direct"
+              >
+                Direct
+              </option>
+              <option
+                value="lorawan"
+              >
+                Lorawan
+              </option>
+              <option
+                value="zenner"
+              >
+                Zenner
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <hr
+        class="my-2"
+      />
+      <div>
+        <label
+          class="text-sm font-medium text-gray-900 dark:text-white block mb-2"
+          data-testid="flowbite-label"
+          for="edit-subscription-username"
+        >
+          Username
+        </label>
+        <div
+          class="flex focus:outline-hidden focus:ring-2 focus:ring-primary-500"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              id="edit-subscription-username"
+              name="edit-subscription-username"
+              required=""
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <label
+          class="text-sm font-medium text-gray-900 dark:text-white block mb-2"
+          data-testid="flowbite-label"
+          for="edit-subscription-password"
+        >
+          Passwort
+        </label>
+        <div
+          class="flex focus:outline-hidden focus:ring-2 focus:ring-primary-500"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              id="edit-subscription-password"
+              name="edit-subscription-password"
+              required=""
+              type="password"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

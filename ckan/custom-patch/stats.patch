@@ -1,0 +1,130 @@
+diff --git a/ckan/logic/action/get.py b/ckan/logic/action/get.py
+index 2f6effb4c..1de7234fd 100644
+--- a/ckan/logic/action/get.py
++++ b/ckan/logic/action/get.py
+@@ -12,6 +12,7 @@ from typing import (Container, Optional,
+ 
+ from ckan.common import config, asbool, aslist
+ import sqlalchemy
++from sqlalchemy.orm import aliased
+ from sqlalchemy import text
+ 
+ 
+@@ -1278,6 +1279,105 @@ def group_show(context: Context, data_dict: DataDict) -> ActionResult.GroupShow:
+     '''
+     return _group_or_org_show(context, data_dict)
+ 
++def group_stats(context: Context, data_dict: DataDict) -> GroupStatsResult:
++    """
++    Returns a list of groups or organizations along with the count of associated datasets.
++
++    The function supports filtering by group/organization names, a free-text search,
++    and optionally includes private datasets if the user is authorized.
++
++    :param context: CKAN context dictionary, includes user/session information.
++    :param data_dict: Dictionary of input parameters. Supports:
++        - groups: List of group names or comma-separated string (filters by group)
++        - orgs: List of organization names or comma-separated string (filters by dataset owner_org)
++        - q: Free-text search across group name, title, and description
++        - include_private: Boolean flag to include private datasets (if authorized)
++    :param is_org: If True, retrieves stats for organizations; if False, for groups.
++    :return: A list of dictionaries, each containing:
++        - 'name' or 'id' (depending on API version)
++        - 'count': number of active datasets associated with the group/organization
++    """
++
++    api = context.get('api_version')
++    groups = data_dict.get('groups')
++    user = context.get('user')
++    orgs = data_dict.get('orgs')
++    ref_group_by = 'id' if api == 2 else 'name'
++    q = data_dict.get('q', '').strip()
++
++    include_private = asbool(data_dict.get('include_private', False))
++
++    can_see_private = False
++    if include_private and user:
++        try:
++            logic.check_access('package_search', {'user': user})
++            can_see_private = True
++        except NotAuthorized:
++            can_see_private = False
++
++    Organization = aliased(model.Group)
++
++    query = model.Session.query(
++        model.Group.id,
++        model.Group.name,
++        sqlalchemy.func.count(model.Package.id).label('package_count')
++    )
++
++
++    query = query\
++        .outerjoin(model.Member, model.Member.group_id == model.Group.id)\
++        .outerjoin(
++            model.Package,
++            sqlalchemy.and_(
++                model.Member.table_id == model.Package.id,
++                model.Member.table_name == 'package'
++            )
++        )\
++        .outerjoin(Organization, Organization.id == model.Package.owner_org)\
++        .filter(model.Member.state == 'active')\
++        .filter(model.Group.state == 'active')\
++        .filter(model.Group.is_organization == False)\
++        .filter(model.Group.type == 'group')\
++        .filter(sqlalchemy.or_(model.Package.state == 'active', model.Package.id == None))\
++        .filter(sqlalchemy.or_(Organization.state == 'active', Organization.id == None))
++
++    if not can_see_private:
++        query = query.filter(sqlalchemy.or_(
++            model.Package.private == False,
++            model.Package.id == None
++        ))
++
++    if groups:
++        groups = aslist(groups, sep=",")
++        query = query.filter(model.Group.name.in_(groups))
++
++    if q:
++        q = u'%{0}%'.format(q)
++        query = query.filter(_or_(
++            model.Group.name.ilike(q),
++            model.Group.title.ilike(q),
++            model.Group.description.ilike(q),
++        ))
++    
++    if orgs:
++        orgs = aslist(orgs, sep=",")
++        query = query.filter(
++            sqlalchemy.or_(
++                Organization.name.in_(orgs),
++                Organization.id == None
++            )
++        )
++
++    query = query.group_by(model.Group.id, model.Group.name)
++
++    results = query.all()
++
++    group_list = [
++        {ref_group_by: getattr(group, ref_group_by), 'count': group.package_count}
++        for group in results
++    ]
++
++    return group_list
+ 
+ def organization_show(context: Context, data_dict: DataDict) -> ActionResult.OrganizationShow:
+     '''Return the details of a organization.
+diff --git a/ckan/types/logic/action_result.py b/ckan/types/logic/action_result.py
+index 2dc6657dd..38b3421b2 100644
+--- a/ckan/types/logic/action_result.py
++++ b/ckan/types/logic/action_result.py
+@@ -30,6 +30,7 @@ ResourceShow = AnyDict
+ ResourceViewShow = AnyDict
+ ResourceViewList = List[AnyDict]
+ GroupShow = AnyDict
++GroupStatsResult = List[AnyDict]
+ OrganizationShow = AnyDict
+ GroupPackageShow = List[AnyDict]
+ TagShow = AnyDict

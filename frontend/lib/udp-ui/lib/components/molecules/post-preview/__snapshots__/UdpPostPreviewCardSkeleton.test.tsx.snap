@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`correctly renders skeleton 1`] = `
+<div>
+  <div
+    class="h-24 bg-white flex flex-col gap-2 justify-center px-7 border-l-8 shadow rounded-2xl border-gray-200 animate-pulse"
+  >
+    <div
+      class="h-2 bg-gray-200 rounded-full w-32 mb-1.5"
+    />
+    <div
+      class="h-3 bg-gray-200 rounded-full"
+    />
+    <div
+      class="h-3 bg-gray-200 rounded-full w-5/6"
+    />
+  </div>
+</div>
+`;

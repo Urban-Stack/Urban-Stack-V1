@@ -1,0 +1,16 @@
+export const UdpCityToolCardTestIds = {
+  self: 'udp-citytool-card',
+  title: 'udp-citytool-card-title',
+  installButton: 'udp-citytool-card-install-button',
+  requestButton: 'udp-citytool-card-request-button',
+  moreDetailsButton: 'udp-citytool-more-details-button',
+  moreDetailsContent: 'udp-citytool-more-details-content',
+  categories: 'udp-citytool-categories',
+  stateBadge: 'udp-citytool-card-state-badge',
+  contact: 'udp-citytool-card-contact',
+  contactBadge: 'udp-citytool-card-contact-badge',
+  installCount: 'udp-citytool-card-install-count',
+  editBadge: 'udp-citytool-card-edit',
+  removeBadge: 'udp-citytool-card-remove',
+  creatorIcon: 'udp-citytool-card-creator-icon',
+};

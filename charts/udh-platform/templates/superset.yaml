@@ -1,0 +1,228 @@
+{{- $supersetSecretKeySpec := (merge (dict "name" "superset-secret-key") .) -}}
+{{- $supersetSecretKey := include "udh.secret" $supersetSecretKeySpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $supersetSecretKey) $supersetSecretKeySpec) }}
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "superset") }}
+spec:
+  interval: 1h
+  url: http://apache.github.io/superset/
+---
+{{ $host := include "data-hub.superset.hostname" . -}}
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "superset") }}
+spec:
+  interval: 5m
+  timeout: 10m
+  chart:
+    spec:
+      chart: superset
+      version: 0.15.5 # renovate: datasource=helm depName=superset versioning=helm registryUrl=http://apache.github.io/superset
+      sourceRef:
+        kind: HelmRepository
+        name: {{ include "data-hub.name" (dict "context" . "name" "superset") }}
+      interval: 5m
+  releaseName: {{ include "data-hub.name" (dict "context" . "name" "superset") }}
+  targetNamespace: {{ .Release.Namespace }}
+  dependsOn:
+    - name: {{ include "data-hub.name" (dict "context" . "name" "keycloak") }}
+  values:
+    postgresql:
+      enabled: false
+    supersetNode:
+      replicas:
+        replicaCount: {{ .Values.superset.supersetNode.replicas }}
+      connections:
+        db_host: {{ printf "%s-cnpg-rw" (include "common.names.fullname"  .) | quote }}
+        db_user: superset
+      resources: {{- toYaml .Values.superset.supersetNode.resources | nindent 8 }}
+    redis:
+      image:
+        repository: bitnamilegacy/redis
+      master:
+        resources: {{- toYaml .Values.superset.redis.resources | nindent 10 }}
+    supersetWorker:
+      replicas:
+        replicaCount: {{ .Values.superset.supersetWorker.replicas }}
+      command:
+        - "/bin/sh"
+        - "-c"
+        - {{ ". {{ .Values.configMountPath }}/superset_bootstrap.sh; celery --app=superset.tasks.celery_app:app worker --concurrency=8" }}
+      resources: {{- toYaml .Values.superset.supersetWorker.resources | nindent 8 }}
+    supersetCeleryBeat:
+      enabled: true
+      resources: {{- toYaml .Values.superset.supersetCeleryBeat.resources | nindent 8 }}
+    ingress:
+      enabled: true
+      annotations: {{- include "udh.ingress.annotations" (dict "context" . "annotations" .Values.superset.ingress.annotations) | nindent 8 }}
+      hosts:
+        - {{ $host }}
+      tls:
+        - secretName: {{ $host }}-tls
+          hosts:
+            - {{ $host }}
+    init:
+      command:
+        - bash
+        - -c
+        - |
+          set -eu -o pipefail
+
+          sed -i "s/CLICKHOUSE_PASSWORD/$CLICKHOUSE_PASSWORD/g;s/CLICKHOUSE_USERNAME/$CLICKHOUSE_USERNAME/g;s/CLICKHOUSE_HOST/$CLICKHOUSE_HOST/g" /import/*/*.yaml
+
+          . {{ "{{" }} .Values.configMountPath }}/superset_init.sh
+          superset import-directory -o /import
+
+          superset fab create-user --{user,first,last}name=anonymous_screenshotter --email=anonymous_screenshotter@example.com --password={{ randAlphaNum 32 }} --role Public || true
+
+          # add tags
+          superset shell <<.
+          try:
+              from superset.tags.models import get_tag, TagType
+              from superset.extensions import db
+
+              for tag in [
+                  "Echtzeitdaten",
+                  "Gebäudeverwaltung",
+                  "Infrastruktur",
+                  "Instandhaltung",
+                  "Klima",
+                  "Nachhaltigkeit",
+                  "Sicherheit",
+                  "Umwelt",
+                  "Wetter",
+                  ]:
+                  get_tag(tag, db.session, TagType.custom)
+          except Exception as e:
+              print(f"Init failed: {e}")
+              import sys
+              sys.exit(1)
+
+          # trailing empty line for Python REPL parser
+          .
+      adminUser:
+        password: {{ required "admin user password is required!" .Values.superset.adminUser.password }}
+    extraSecretEnv:
+      SUPERSET_SECRET_KEY: {{ $supersetSecretKey | quote }}
+      UGH_FE_HOSTNAME: {{ include "data-hub.govhub.hostname" . | quote }}
+      CITIZENHUB_HOSTNAME: {{ include "data-hub.citizenhub.hostname" . | quote }}
+      MAPBOX_API_KEY: {{ .Values.superset.mapboxToken | quote }}
+      KEYCLOAK_REALM_URL: {{ include "udh.keycloak.realmUrl" . }}
+      SUPERSET_HOST: {{ include "data-hub.name" (dict "context" . "name" "superset") }}:8088
+      SUPERSET_HOST_EXTERNAL: {{ include "data-hub.superset.hostname" . | quote }}
+      {{- if .Values.global.trustCaSecretName }}
+      REQUESTS_CA_BUNDLE: /tls/ca.crt
+      {{- end }}
+      AUTH_DATA_TTL: {{ if .Values.global.testDeployment }}2{{ else }}60{{ end }}
+      SMTP_HOST: {{ ternary (include "data-hub.name" (dict "context" . "name" "mailhog")) (.Values.superset.smtp.host | quote) .Values.mailhog.enabled }}
+      SMTP_PORT: {{ .Values.superset.smtp.port | quote }}
+      SMTP_SSL: {{ .Values.superset.smtp.ssl | quote }}
+      SMTP_USER: {{ .Values.superset.smtp.user | quote }}
+      SMTP_PASSWORD: {{ .Values.superset.smtp.password | quote }}
+      SMTP_MAIL_FROM: {{ .Values.superset.smtp.from | quote }}
+      SMTP_MAIL_FROM_DISPLAY_NAME: {{ .Values.superset.smtp.fromDisplayName | quote }}
+      SMTP_AUTH: {{ .Values.superset.smtp.auth | quote }}
+    extraEnvRaw:
+      - name: DB_PASS
+        valueFrom:
+          secretKeyRef:
+            name: {{ printf "%s-superset-postgres-credentials" (include "common.names.fullname"  .) }}
+            key: password
+      {{- include "udh.clickhouse.env.queryonly" . | nindent 6 }}
+    envFromSecrets:
+      - {{ printf "%s-%s" (include "common.names.fullname" .) "superset-client-secret" | quote }}
+    {{ $image := include "udh-platform.images.image" (dict "imageRoot" .Values.superset.image "global" .Values.global) }}
+    image:
+      # not actually repository+tag but enough to make the superset chart put them back together correctly
+      repository: {{ regexReplaceAll ":[^:]*$" $image "" | quote }}
+      tag: {{ regexReplaceAll "^.*:" $image "" | quote }}
+      pullPolicy: {{ .Values.superset.image.pullPolicy }}
+    {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 4 }}
+    extraVolumeMounts:
+    {{- if .Values.global.trustCaSecretName }}
+    - mountPath: /tls
+      readOnly: true
+      name: ca-cert
+    {{- end }}
+    - mountPath: /app/superset/templates/head_custom_extra.html
+      name: custom-extra
+      subPath: head_custom_extra.html
+    - mountPath: /app/superset/templates/tail_js_custom_extra.html
+      name: custom-extra
+      subPath: tail_js_custom_extra.html
+    extraVolumes:
+    {{- if .Values.global.trustCaSecretName }}
+    - name: ca-cert
+      secret:
+        secretName: {{ .Values.global.trustCaSecretName }}
+        items:
+        - key: ca.crt
+          path: ca.crt
+    {{- end }}
+    - name: custom-extra
+      configMap:
+        name: {{ include "data-hub.name" (dict "context" . "name" "superset-hce") }}
+    configOverrides:
+      appended: | {{- .Files.Get "files/superset/config_overrides.py" | nindent 8 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "superset-hce") }}
+data:
+  # html snippet that is loaded in all superset pages
+  head_custom_extra.html: |
+    <style>
+      /* hide popups, the annoying ones are
+         1. This dashboard is refreshing automatically
+         2. You have been automatically logged in to access this page, therefore you get an unspecific warning
+         see https://github.com/apache/superset/discussions/18451#discussioncomment-3323341
+         might need to be removed / refined later if important popups don't show up */
+      #toast-presenter {
+        display: none;
+        visibility: hidden;
+      }
+
+      #legal-links {
+        z-index: 9999;
+        position: fixed;
+        bottom: 8px;
+        right: 12px;
+        font-size: 0.9em;
+        color: #444;
+        background: #ffffff;
+      }
+      #legal-links a {
+        margin: 0 6px;
+        color: inherit;
+        text-decoration: none;
+      }
+      #legal-links a:hover {
+        text-decoration: underline;
+      }
+    </style>
+    <script>
+      const originalOpen = window.open
+      function openInIframe(url, target, features) {
+        return originalOpen(url, "_self", features)
+      }
+      if (window.self !== window.top) {
+        window.open = openInIframe
+
+        const iframeStyle = document.createElement("style")
+        iframeStyle.innerText = `
+        #main-menu, .App.SqlLab .schemaPane, .App.SqlLab .sidebar-resizer, .App.SqlLab .ant-tabs-nav { display: none !important; }
+        .App.SqlLab { padding: 0 !important; }
+        `
+        document.head.appendChild(iframeStyle)
+      }
+    </script>
+  tail_js_custom_extra.html: |
+    <div id="legal-links">
+      <a href="https://urbanstack.de/impressum">Impressum</a>
+      <a href="https://urbanstack.de/datenschutz">Datenschutz</a>
+    </div>

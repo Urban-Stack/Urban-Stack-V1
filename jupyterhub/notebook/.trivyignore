@@ -1,0 +1,2 @@
+# false positive, CVE doesn't apply to header files
+CVE-2026-23112

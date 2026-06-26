@@ -1,0 +1,37 @@
+{{- $name := "ingestor" -}}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+  name: {{ printf "%s-%s-secrets" (include "common.names.fullname" .) $name }}
+roleRef:
+  kind: Role
+  apiGroup: rbac.authorization.k8s.io
+  name: {{ printf "%s-%s-secrets" (include "common.names.fullname" .) $name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+  name: {{ printf "%s-%s-secrets" (include "common.names.fullname" .) $name }}
+rules:
+  - apiGroups: [""]
+    resources: [secrets]
+    verbs: [list, watch]
+  - apiGroups: [""]
+    resources: [secrets]
+    verbs: [get]
+    resourceNames: [{{ printf "%s-%s" (include "common.names.fullname" .) $name | quote }}]

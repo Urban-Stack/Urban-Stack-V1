@@ -1,0 +1,14 @@
+diff --git a/superset-frontend/plugins/legacy-plugin-chart-map-box/src/MapBox.jsx b/superset-frontend/plugins/legacy-plugin-chart-map-box/src/MapBox.jsx
+index 943cf7174b..5128ff6a68 100644
+--- a/superset-frontend/plugins/legacy-plugin-chart-map-box/src/MapBox.jsx
++++ b/superset-frontend/plugins/legacy-plugin-chart-map-box/src/MapBox.jsx
+@@ -77,6 +77,9 @@ class MapBox extends Component {
+       },
+     };
+     this.handleViewportChange = this.handleViewportChange.bind(this);
++
++    // hacky workaround for https://github.com/apache/superset/issues/27562, we simply cause the first change ourselves
++    setTimeout(() => this.setState(this.state), 0);
+   }
+ 
+   handleViewportChange(viewport) {

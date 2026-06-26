@@ -1,0 +1,251 @@
+{
+	"openapi": "3.0.0",
+	"info": {},
+	"servers": [
+		{
+			"url": "https://api.DOCS_BASE_DOMAIN"
+		}
+	],
+	"components": {
+		"securitySchemes": {
+			"basicAuth": {
+				"description": "Username und Password der Sensor-Credentials",
+				"type": "http",
+				"scheme": "basic"
+			}
+		}
+	},
+	"paths": {
+		"/api/v2/sensor/message/direct": {
+			"post": {
+				"operationId": "http-direct",
+				"tags": ["Ingestor"],
+				"summary": "Sensorwerte per HTTP-Post senden",
+				"security": [
+					{
+						"basicAuth": []
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$schema": "https://json-schema.org/draft-07/schema",
+								"type": "object",
+								"title": "http-direct format",
+								"properties": {
+									"global": {
+										"type": "object",
+										"properties": {
+											"time": {
+												"type": "number"
+											},
+											"sensor_id": {
+												"type": "string"
+											},
+											"temperature_outside": {
+												"type": "number"
+											},
+											"latitude": {
+												"type": "number"
+											},
+											"longitude": {
+												"type": "number"
+											},
+											"status": {
+												"type": "string"
+											},
+											"uv_index": {
+												"type": "number"
+											},
+											"humidity_air": {
+												"type": "number"
+											},
+											"air_pressure": {
+												"type": "number"
+											},
+											"wind_speed": {
+												"type": "number"
+											},
+											"wind_peak_gust": {
+												"type": "number"
+											},
+											"wind_direction": {
+												"type": "number"
+											},
+											"light_intensity": {
+												"type": "number"
+											},
+											"rain_intensity": {
+												"type": "number"
+											},
+											"rain_accumulated": {
+												"type": "number"
+											},
+											"battery_voltage": {
+												"type": "number"
+											},
+											"soil_moisture1": {
+												"type": "number"
+											},
+											"soil_moisture2": {
+												"type": "number"
+											},
+											"soil_moisture3": {
+												"type": "number"
+											},
+											"soil_moisture4": {
+												"type": "number"
+											},
+											"soil_water_column1": {
+												"type": "number"
+											},
+											"soil_water_column2": {
+												"type": "number"
+											},
+											"soil_water_column3": {
+												"type": "number"
+											},
+											"soil_water_column4": {
+												"type": "number"
+											},
+											"soil_water_tension1": {
+												"type": "number"
+											},
+											"soil_water_tension2": {
+												"type": "number"
+											},
+											"soil_water_tension3": {
+												"type": "number"
+											},
+											"soil_water_tension4": {
+												"type": "number"
+											},
+											"soil_temperature1": {
+												"type": "number"
+											},
+											"soil_temperature2": {
+												"type": "number"
+											},
+											"soil_temperature3": {
+												"type": "number"
+											},
+											"soil_temperature4": {
+												"type": "number"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/api/v2/query/{tenant}/{vizGroup}/{query}/geojson": {
+			"get": {
+				"operationId": "geojson",
+				"tags": ["GeoJSON"],
+				"summary": "GeoJSON für eine gespeicherte Abfrage ausgeben",
+				"parameters": [
+					{
+						"name": "tenant",
+						"in": "path",
+						"required": true,
+						"description": "Mandant",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "vizGroup",
+						"in": "path",
+						"required": true,
+						"description": "Dashboardgruppe",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "query",
+						"in": "path",
+						"required": true,
+						"description": "Gespeicherte Abfrage",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "GeoJSON für die gespeicherte Abfrage",
+
+						"content": {
+							"application/json": {
+								"examples": {
+									"test": {
+										"summary": "Simpel",
+										"value": {
+											"type": "FeatureCollection",
+											"features": [
+												{
+													"geometry": { "coordinates": [1, 2], "type": "Point" },
+													"properties": { "num": 123, "str": "abc" },
+													"type": "Feature"
+												}
+											]
+										}
+									}
+								},
+								"schema": {
+									"$schema": "https://json-schema.org/draft-07/schema",
+									"type": "object",
+									"title": "udh-platform configuration",
+									"additionalProperties": false,
+									"properties": {
+										"type": {
+											"const": "FeatureCollection"
+										},
+										"features": {
+											"type": "array",
+											"additionalItems": {
+												"additionalProperties": false,
+												"properties": {
+													"type": {
+														"const": "Feature"
+													},
+													"geometry": {
+														"$ref": "https://geojson.org/schema/Geometry.json"
+													},
+													"properties": {
+														"additionalItems": {
+															"type": ["string", "number", "null", "boolean"]
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Nicht gefunden"
+					},
+					"502": { "description": "Gateway Fehlerantwort" },
+					"503": { "description": "Service nicht verfügbar" }
+				}
+			}
+		}
+	}
+}

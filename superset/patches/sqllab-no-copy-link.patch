@@ -1,0 +1,22 @@
+diff --git a/superset-frontend/src/SqlLab/components/SqlEditor/index.tsx b/superset-frontend/src/SqlLab/components/SqlEditor/index.tsx
+index cab82cd02f..5b1b04229e 100644
+--- a/superset-frontend/src/SqlLab/components/SqlEditor/index.tsx
++++ b/superset-frontend/src/SqlLab/components/SqlEditor/index.tsx
+@@ -119,7 +119,6 @@ import SouthPane from '../SouthPane';
+ import SaveQuery, { QueryPayload } from '../SaveQuery';
+ import ScheduleQueryButton from '../ScheduleQueryButton';
+ import EstimateQueryCostButton from '../EstimateQueryCostButton';
+-import ShareSqlLabQuery from '../ShareSqlLabQuery';
+ import SqlEditorLeftBar from '../SqlEditorLeftBar';
+ import AceEditorWrapper from '../AceEditorWrapper';
+ import RunQueryActionButton from '../RunQueryActionButton';
+@@ -856,9 +855,6 @@ const SqlEditor: FC<Props> = ({
+                   database={database}
+                 />
+               </span>
+-              <span>
+-                <ShareSqlLabQuery queryEditorId={queryEditor.id} />
+-              </span>
+               <AntdDropdown overlay={renderDropdown()} trigger={['click']}>
+                 <Icons.MoreHoriz iconColor={theme.colors.grayscale.base} />
+               </AntdDropdown>

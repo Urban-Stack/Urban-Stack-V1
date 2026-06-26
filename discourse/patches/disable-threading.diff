@@ -1,0 +1,13 @@
+diff --git a/plugins/chat/app/models/chat/direct_message_channel.rb b/plugins/chat/app/models/chat/direct_message_channel.rb
+index 0908a9a53e..7ff420d979 100644
+--- a/plugins/chat/app/models/chat/direct_message_channel.rb
++++ b/plugins/chat/app/models/chat/direct_message_channel.rb
+@@ -4,6 +4,8 @@ module Chat
+   class DirectMessageChannel < Channel
+     alias_method :direct_message, :chatable
+ 
++    before_validation(on: :create) { self.threading_enabled = false }
++
+     def direct_message_channel?
+       true
+     end

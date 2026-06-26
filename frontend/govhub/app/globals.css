@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+@config '../tailwind.config.ts';
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer utilities {
+  .udp-scroll-thin {
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #bababa transparent;
+  }
+
+  /* Chromium/WebKit */
+  .udp-scroll-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .udp-scroll-thin::-webkit-scrollbar-thumb {
+    background-color: #bababa;
+    border-radius: 9999px;
+  }
+
+  .udp-scroll-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}

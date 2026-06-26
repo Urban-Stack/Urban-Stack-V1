@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+source "$(dirname "$BASH_SOURCE")/.common"
+
+NAMESPACE="-n udh"
+
+DATABASE="${1-superset}"
+DATABASE_USER="${2-postgres}"
+
+exec ${KUBECTL} exec $NAMESPACE -ti $(${KUBECTL} get pods $NAMESPACE -lapplication=spilo,spilo-role=master,cluster-name=local-udh-platform-postgres -ojsonpath='{.items[].metadata.name}') -- \
+  psql -U $DATABASE_USER $DATABASE

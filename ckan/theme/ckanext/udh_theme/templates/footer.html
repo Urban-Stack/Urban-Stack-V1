@@ -1,0 +1,29 @@
+<footer class="site-footer">
+	<div class="container">
+		{% block footer_content %}
+		<div class="row">
+			<div class="col-md-8 footer-links">
+				{% block footer_nav %}
+				<ul class="list-unstyled">
+					{% block footer_links %}
+					<li><h5>Ein Produkt von Gütersloh Digital</h5></li>
+					{% endblock %}
+				</ul>
+				<ul class="list-unstyled">
+					{% block footer_links_ckan %}
+					<li>
+						<a href="https://urbanstack.de/">{{ _('UrbanStack') }}</a>
+						<a href="https://urbanstack.de/impressum">{{ _('Impressum') }}</a>
+						<a href="https://urbanstack.de/datenschutz">{{ _('Datenschutz') }}</a>
+					</li>
+					{% endblock %}
+				</ul>
+				{% endblock %}
+			</div>
+			<div class="col-md-4 attribution">
+				{% block footer_attribution %} {% endblock %} {% block footer_lang %} {% endblock %}
+			</div>
+		</div>
+		{% endblock %}
+	</div>
+</footer>

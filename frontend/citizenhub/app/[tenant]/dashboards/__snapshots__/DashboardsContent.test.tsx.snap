@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`DashboardsPage matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col grow"
+  >
+    <div
+      class="grid auto-rows-[auto] grid-cols-[repeat(auto-fill,_minmax(288px,_1fr))] gap-4"
+      data-testid="dashboard-cards-overview"
+    >
+      <div>
+        Mocked Dashboard Card
+      </div>
+      <div>
+        Mocked Dashboard Card
+      </div>
+    </div>
+  </div>
+</div>
+`;

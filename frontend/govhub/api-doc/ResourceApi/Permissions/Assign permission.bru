@@ -1,0 +1,15 @@
+meta {
+  name: Assign permission
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/permissions/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

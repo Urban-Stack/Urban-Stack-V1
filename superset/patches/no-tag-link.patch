@@ -1,0 +1,13 @@
+diff --git a/superset-frontend/src/components/Tags/Tag.tsx b/superset-frontend/src/components/Tags/Tag.tsx
+index 75a3c3e91e..9396c59af9 100644
+--- a/superset-frontend/src/components/Tags/Tag.tsx
++++ b/superset-frontend/src/components/Tags/Tag.tsx
+@@ -68,7 +68,7 @@ const Tag = ({
+       ) : (
+         <Tooltip title={toolTipTitle} key={toolTipTitle}>
+           <StyledTag data-test="tag" key={id} onClick={onClick} role={whatRole}>
+-            {id ? (
++            {false ? (
+               <a
+                 href={`/superset/all_entities/?id=${id}`}
+                 target="_blank"

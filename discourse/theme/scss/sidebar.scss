@@ -1,0 +1,28 @@
+@import 'variables';
+
+:root {
+  --d-sidebar-highlight-background: $ugh-background-color;
+  --d-sidebar-highlight-hover-background: var(--tertiary);
+  --d-sidebar-header-icon-color: var(--tertiary);
+}
+
+#main-outlet-wrapper {
+  .sidebar-wrapper {
+    background-color: var(--primary-very-low);
+    box-shadow: $shadow-md;
+    margin-top: 1em;
+    border-top: 8px solid var(--tertiary);
+    border-radius: var(--mint-border-radius);
+    height: calc(
+      var(--composer-vh, var(--1dvh)) * 100 - var(--header-offset, 0px) - 3em
+    );
+    top: calc(var(--header-offset) + 1em);
+    .sidebar-container {
+      border: none;
+    }
+  }
+}
+
+.sidebar-footer-wrapper {
+  background: var(--primary-very-low);
+}

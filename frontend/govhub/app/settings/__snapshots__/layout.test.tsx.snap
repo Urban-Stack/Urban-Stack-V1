@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Snapshot matches snapshot for settings main page 1`] = `<div />`;
+
+exports[`Snapshot matches snapshot for settings subpage 1`] = `<div />`;

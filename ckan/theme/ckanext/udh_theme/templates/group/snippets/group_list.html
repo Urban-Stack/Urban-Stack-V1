@@ -1,0 +1,19 @@
+{#
+Display a grid of group items with Bootstrap.
+
+groups - A list of groups.
+
+#}
+{% block group_list %}
+<div class="container">
+  <div class="row" style="min-width: 100%;">
+    {% block group_list_inner %}
+      {% for group in groups %}
+        <div class="col-12 col-md-4 mb-3">
+          {% snippet "group/snippets/group_item.html", group=group, position=loop.index, show_capacity=show_capacity %}
+        </div>
+      {% endfor %}
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}

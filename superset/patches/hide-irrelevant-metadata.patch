@@ -1,0 +1,516 @@
+diff --git a/superset-frontend/src/features/alerts/AlertReportModal.tsx b/superset-frontend/src/features/alerts/AlertReportModal.tsx
+index f230a02b52..12ccc5f336 100644
+--- a/superset-frontend/src/features/alerts/AlertReportModal.tsx
++++ b/superset-frontend/src/features/alerts/AlertReportModal.tsx
+@@ -738,30 +738,6 @@ const AlertReportModal: FunctionComponent<AlertReportModalProps> = ({
+     }
+   };
+ 
+-  // Fetch data to populate form dropdowns
+-  const loadOwnerOptions = useMemo(
+-    () =>
+-      (input = '', page: number, pageSize: number) => {
+-        const query = rison.encode({
+-          filter: input,
+-          page,
+-          page_size: pageSize,
+-        });
+-        return SupersetClient.get({
+-          endpoint: `/api/v1/report/related/created_by?q=${query}`,
+-        }).then(response => ({
+-          data: response.json.result.map(
+-            (item: { value: number; text: string }) => ({
+-              value: item.value,
+-              label: item.text,
+-            }),
+-          ),
+-          totalCount: response.json.count,
+-        }));
+-      },
+-    [],
+-  );
+-
+   const getSourceData = useCallback(
+     (db?: MetaObject) => {
+       const database = db || currentAlert?.database;
+@@ -1046,10 +1022,6 @@ const AlertReportModal: FunctionComponent<AlertReportModalProps> = ({
+     updateAlertState('sql', value || '');
+   };
+ 
+-  const onOwnersChange = (value: Array<SelectValue>) => {
+-    updateAlertState('owners', value || []);
+-  };
+-
+   const onSourceChange = (value: Array<SelectValue>) => {
+     updateAlertState('database', value || []);
+   };
+@@ -1500,29 +1472,6 @@ const AlertReportModal: FunctionComponent<AlertReportModalProps> = ({
+                 />
+               </div>
+             </StyledInputContainer>
+-            <StyledInputContainer>
+-              <div className="control-label">
+-                {t('Owners')}
+-                <span className="required">*</span>
+-              </div>
+-              <div data-test="owners-select" className="input-container">
+-                <AsyncSelect
+-                  ariaLabel={t('Owners')}
+-                  allowClear
+-                  name="owners"
+-                  mode="multiple"
+-                  placeholder={t('Select owners')}
+-                  value={
+-                    (currentAlert?.owners as {
+-                      label: string;
+-                      value: number;
+-                    }[]) || []
+-                  }
+-                  options={loadOwnerOptions}
+-                  onChange={onOwnersChange}
+-                />
+-              </div>
+-            </StyledInputContainer>
+             <StyledInputContainer>
+               <div className="control-label">{t('Description')}</div>
+               <div className="input-container">
+diff --git a/superset-frontend/src/pages/AlertReportList/index.tsx b/superset-frontend/src/pages/AlertReportList/index.tsx
+index f60caf0cf7..7394661b84 100644
+--- a/superset-frontend/src/pages/AlertReportList/index.tsx
++++ b/superset-frontend/src/pages/AlertReportList/index.tsx
+@@ -28,7 +28,6 @@ import {
+ } from '@superset-ui/core';
+ import { extendedDayjs } from 'src/utils/dates';
+ import ActionsBar, { ActionProps } from 'src/components/ListView/ActionsBar';
+-import FacePile from 'src/components/FacePile';
+ import { Tooltip } from 'src/components/Tooltip';
+ import ListView, {
+   FilterOperator,
+@@ -40,7 +39,6 @@ import { Switch } from 'src/components/Switch';
+ import { DATETIME_WITH_TIME_ZONE } from 'src/constants';
+ import withToasts from 'src/components/MessageToasts/withToasts';
+ import AlertStatusIcon from 'src/features/alerts/components/AlertStatusIcon';
+-import RecipientIcon from 'src/features/alerts/components/RecipientIcon';
+ import ConfirmStatusChange from 'src/components/ConfirmStatusChange';
+ import DeleteModal from 'src/components/DeleteModal';
+ import LastUpdated from 'src/components/LastUpdated';
+@@ -48,7 +46,7 @@ import {
+   useListViewResource,
+   useSingleViewResource,
+ } from 'src/views/CRUD/hooks';
+-import { createErrorHandler, createFetchRelated } from 'src/views/CRUD/utils';
++import { createErrorHandler } from 'src/views/CRUD/utils';
+ import { isUserAdmin } from 'src/dashboard/util/permissionUtils';
+ import Owner from 'src/types/Owner';
+ import AlertReportModal from 'src/features/alerts/AlertReportModal';
+@@ -294,31 +292,6 @@ function AlertList({
+           </Tooltip>
+         ),
+       },
+-      {
+-        Cell: ({
+-          row: {
+-            original: { recipients },
+-          },
+-        }: any) =>
+-          recipients.map((r: any) => (
+-            <RecipientIcon key={r.id} type={r.type} />
+-          )),
+-        accessor: 'recipients',
+-        Header: t('Notification method'),
+-        disableSortBy: true,
+-        size: 'xl',
+-      },
+-      {
+-        Cell: ({
+-          row: {
+-            original: { owners = [] },
+-          },
+-        }: any) => <FacePile users={owners} />,
+-        Header: t('Owners'),
+-        id: 'owners',
+-        disableSortBy: true,
+-        size: 'xl',
+-      },
+       {
+         Cell: ({
+           row: {
+@@ -455,23 +428,6 @@ function AlertList({
+         input: 'search',
+         operator: FilterOperator.Contains,
+       },
+-      {
+-        Header: t('Owner'),
+-        key: 'owner',
+-        id: 'owners',
+-        input: 'select',
+-        operator: FilterOperator.RelationManyMany,
+-        unfilteredLabel: t('All'),
+-        fetchSelects: createFetchRelated(
+-          'report',
+-          'owners',
+-          createErrorHandler(errMsg =>
+-            t('An error occurred while fetching owners values: %s', errMsg),
+-          ),
+-          user,
+-        ),
+-        paginate: true,
+-      },
+       {
+         Header: t('Status'),
+         key: 'status',
+@@ -493,26 +449,6 @@ function AlertList({
+           { label: AlertStateLabel[AlertState.Grace], value: AlertState.Grace },
+         ],
+       },
+-      {
+-        Header: t('Modified by'),
+-        key: 'changed_by',
+-        id: 'changed_by',
+-        input: 'select',
+-        operator: FilterOperator.RelationOneMany,
+-        unfilteredLabel: t('All'),
+-        fetchSelects: createFetchRelated(
+-          'report',
+-          'changed_by',
+-          createErrorHandler(errMsg =>
+-            t(
+-              'An error occurred while fetching dataset datasource values: %s',
+-              errMsg,
+-            ),
+-          ),
+-          user,
+-        ),
+-        paginate: true,
+-      },
+     ],
+     [],
+   );
+diff --git a/superset-frontend/src/pages/ChartList/index.tsx b/superset-frontend/src/pages/ChartList/index.tsx
+index 031722ab22..a30b2fd7d8 100644
+--- a/superset-frontend/src/pages/ChartList/index.tsx
++++ b/superset-frontend/src/pages/ChartList/index.tsx
+@@ -31,7 +31,6 @@ import { uniqBy } from 'lodash';
+ import { useSelector } from 'react-redux';
+ import {
+   createErrorHandler,
+-  createFetchRelated,
+   handleChartDelete,
+ } from 'src/views/CRUD/utils';
+ import {
+@@ -624,28 +623,6 @@ function ChartList(props: ChartListProps) {
+             },
+           ]
+         : []),
+-      {
+-        Header: t('Owner'),
+-        key: 'owner',
+-        id: 'owners',
+-        input: 'select',
+-        operator: FilterOperator.RelationManyMany,
+-        unfilteredLabel: t('All'),
+-        fetchSelects: createFetchRelated(
+-          'chart',
+-          'owners',
+-          createErrorHandler(errMsg =>
+-            addDangerToast(
+-              t(
+-                'An error occurred while fetching chart owners values: %s',
+-                errMsg,
+-              ),
+-            ),
+-          ),
+-          props.user,
+-        ),
+-        paginate: true,
+-      },
+       {
+         Header: t('Dashboard'),
+         key: 'dashboards',
+@@ -670,26 +647,6 @@ function ChartList(props: ChartListProps) {
+           { label: t('No'), value: false },
+         ],
+       },
+-      {
+-        Header: t('Modified by'),
+-        key: 'changed_by',
+-        id: 'changed_by',
+-        input: 'select',
+-        operator: FilterOperator.RelationOneMany,
+-        unfilteredLabel: t('All'),
+-        fetchSelects: createFetchRelated(
+-          'chart',
+-          'changed_by',
+-          createErrorHandler(errMsg =>
+-            t(
+-              'An error occurred while fetching dataset datasource values: %s',
+-              errMsg,
+-            ),
+-          ),
+-          props.user,
+-        ),
+-        paginate: true,
+-      },
+     ] as Filters;
+     return filters_list;
+   }, [addDangerToast, favoritesFilter, props.user]);
+diff --git a/superset-frontend/src/pages/DashboardList/index.tsx b/superset-frontend/src/pages/DashboardList/index.tsx
+index 3e63bd4b91..91d3f0288b 100644
+--- a/superset-frontend/src/pages/DashboardList/index.tsx
++++ b/superset-frontend/src/pages/DashboardList/index.tsx
+@@ -28,7 +28,6 @@ import { useState, useMemo, useCallback } from 'react';
+ import { Link } from 'react-router-dom';
+ import rison from 'rison';
+ import {
+-  createFetchRelated,
+   createErrorHandler,
+   handleDashboardDelete,
+ } from 'src/views/CRUD/utils';
+@@ -49,7 +48,6 @@ import { dangerouslyGetItemDoNotUse } from 'src/utils/localStorageHelpers';
+ import Owner from 'src/types/Owner';
+ import Tag from 'src/types/TagType';
+ import withToasts from 'src/components/MessageToasts/withToasts';
+-import FacePile from 'src/components/FacePile';
+ import Icons from 'src/components/Icons';
+ import DeleteModal from 'src/components/DeleteModal';
+ import FaveStar from 'src/components/FaveStar';
+@@ -379,17 +377,6 @@ function DashboardList(props: DashboardListProps) {
+         disableSortBy: true,
+         hidden: !isFeatureEnabled(FeatureFlag.TaggingSystem),
+       },
+-      {
+-        Cell: ({
+-          row: {
+-            original: { owners = [] },
+-          },
+-        }: any) => <FacePile users={owners} />,
+-        Header: t('Owners'),
+-        accessor: 'owners',
+-        disableSortBy: true,
+-        size: 'xl',
+-      },
+       {
+         Cell: ({
+           row: {
+@@ -555,28 +542,6 @@ function DashboardList(props: DashboardListProps) {
+             },
+           ]
+         : []),
+-      {
+-        Header: t('Owner'),
+-        key: 'owner',
+-        id: 'owners',
+-        input: 'select',
+-        operator: FilterOperator.RelationManyMany,
+-        unfilteredLabel: t('All'),
+-        fetchSelects: createFetchRelated(
+-          'dashboard',
+-          'owners',
+-          createErrorHandler(errMsg =>
+-            addDangerToast(
+-              t(
+-                'An error occurred while fetching dashboard owner values: %s',
+-                errMsg,
+-              ),
+-            ),
+-          ),
+-          props.user,
+-        ),
+-        paginate: true,
+-      },
+       ...(user?.userId ? [favoritesFilter] : []),
+       {
+         Header: t('Certified'),
+@@ -591,26 +556,6 @@ function DashboardList(props: DashboardListProps) {
+           { label: t('No'), value: false },
+         ],
+       },
+-      {
+-        Header: t('Modified by'),
+-        key: 'changed_by',
+-        id: 'changed_by',
+-        input: 'select',
+-        operator: FilterOperator.RelationOneMany,
+-        unfilteredLabel: t('All'),
+-        fetchSelects: createFetchRelated(
+-          'dashboard',
+-          'changed_by',
+-          createErrorHandler(errMsg =>
+-            t(
+-              'An error occurred while fetching dataset datasource values: %s',
+-              errMsg,
+-            ),
+-          ),
+-          user,
+-        ),
+-        paginate: true,
+-      },
+     ] as Filters;
+     return filters_list;
+   }, [addDangerToast, favoritesFilter, props.user]);
+diff --git a/superset-frontend/src/pages/DatasetList/index.tsx b/superset-frontend/src/pages/DatasetList/index.tsx
+index 8173456e97..7e0c1c403b 100644
+--- a/superset-frontend/src/pages/DatasetList/index.tsx
++++ b/superset-frontend/src/pages/DatasetList/index.tsx
+@@ -27,7 +27,6 @@ import { Link, useHistory } from 'react-router-dom';
+ import rison from 'rison';
+ import {
+   createFetchRelated,
+-  createFetchDistinct,
+   createErrorHandler,
+ } from 'src/views/CRUD/utils';
+ import { ColumnObject } from 'src/features/datasets/types';
+@@ -41,14 +40,12 @@ import ListView, {
+   Filters,
+   FilterOperator,
+ } from 'src/components/ListView';
+-import { DatasetTypeLabel } from 'src/components/Label';
+ import Loading from 'src/components/Loading';
+ import SubMenu, { SubMenuProps, ButtonProps } from 'src/features/home/SubMenu';
+ import Owner from 'src/types/Owner';
+ import withToasts from 'src/components/MessageToasts/withToasts';
+ import { Tooltip } from 'src/components/Tooltip';
+ import Icons from 'src/components/Icons';
+-import FacePile from 'src/components/FacePile';
+ import CertifiedBadge from 'src/components/CertifiedBadge';
+ import InfoTooltip from 'src/components/InfoTooltip';
+ import ImportModelsModal from 'src/components/ImportModal/index';
+@@ -338,43 +335,16 @@ const DatasetList: FunctionComponent<DatasetListProps> = ({
+         Header: t('Name'),
+         accessor: 'table_name',
+       },
+-      {
+-        Cell: ({
+-          row: {
+-            original: { kind },
+-          },
+-        }: any) => <DatasetTypeLabel datasetType={kind} />,
+-        Header: t('Type'),
+-        accessor: 'kind',
+-        disableSortBy: true,
+-        size: 'md',
+-      },
+       {
+         Header: t('Database'),
+         accessor: 'database.database_name',
+         size: 'lg',
+       },
+-      {
+-        Header: t('Schema'),
+-        accessor: 'schema',
+-        size: 'lg',
+-      },
+       {
+         accessor: 'database',
+         disableSortBy: true,
+         hidden: true,
+       },
+-      {
+-        Cell: ({
+-          row: {
+-            original: { owners = [] },
+-          },
+-        }: any) => <FacePile users={owners} />,
+-        Header: t('Owners'),
+-        id: 'owners',
+-        disableSortBy: true,
+-        size: 'lg',
+-      },
+       {
+         Cell: ({
+           row: {
+@@ -504,18 +474,6 @@ const DatasetList: FunctionComponent<DatasetListProps> = ({
+         input: 'search',
+         operator: FilterOperator.Contains,
+       },
+-      {
+-        Header: t('Type'),
+-        key: 'sql',
+-        id: 'sql',
+-        input: 'select',
+-        operator: FilterOperator.DatasetIsNullOrEmpty,
+-        unfilteredLabel: 'All',
+-        selects: [
+-          { label: t('Virtual'), value: false },
+-          { label: t('Physical'), value: true },
+-        ],
+-      },
+       {
+         Header: t('Database'),
+         key: 'database',
+@@ -532,75 +490,6 @@ const DatasetList: FunctionComponent<DatasetListProps> = ({
+         ),
+         paginate: true,
+       },
+-      {
+-        Header: t('Schema'),
+-        key: 'schema',
+-        id: 'schema',
+-        input: 'select',
+-        operator: FilterOperator.Equals,
+-        unfilteredLabel: 'All',
+-        fetchSelects: createFetchDistinct(
+-          'dataset',
+-          'schema',
+-          createErrorHandler(errMsg =>
+-            t('An error occurred while fetching schema values: %s', errMsg),
+-          ),
+-        ),
+-        paginate: true,
+-      },
+-      {
+-        Header: t('Owner'),
+-        key: 'owner',
+-        id: 'owners',
+-        input: 'select',
+-        operator: FilterOperator.RelationManyMany,
+-        unfilteredLabel: 'All',
+-        fetchSelects: createFetchRelated(
+-          'dataset',
+-          'owners',
+-          createErrorHandler(errMsg =>
+-            t(
+-              'An error occurred while fetching dataset owner values: %s',
+-              errMsg,
+-            ),
+-          ),
+-          user,
+-        ),
+-        paginate: true,
+-      },
+-      {
+-        Header: t('Certified'),
+-        key: 'certified',
+-        id: 'id',
+-        urlDisplay: 'certified',
+-        input: 'select',
+-        operator: FilterOperator.DatasetIsCertified,
+-        unfilteredLabel: t('Any'),
+-        selects: [
+-          { label: t('Yes'), value: true },
+-          { label: t('No'), value: false },
+-        ],
+-      },
+-      {
+-        Header: t('Modified by'),
+-        key: 'changed_by',
+-        id: 'changed_by',
+-        input: 'select',
+-        operator: FilterOperator.RelationOneMany,
+-        unfilteredLabel: t('All'),
+-        fetchSelects: createFetchRelated(
+-          'dataset',
+-          'changed_by',
+-          createErrorHandler(errMsg =>
+-            t(
+-              'An error occurred while fetching dataset datasource values: %s',
+-              errMsg,
+-            ),
+-          ),
+-          user,
+-        ),
+-        paginate: true,
+-      },
+     ],
+     [user],
+   );

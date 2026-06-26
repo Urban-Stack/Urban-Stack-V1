@@ -1,0 +1,204 @@
+{{- if .Values.ckan.enabled -}}
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "ckan") }}
+spec:
+  type: oci
+  interval: 1h0m0s
+  url: oci://ghcr.io/teutonet/teutonet-helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "ckan") }}
+spec:
+  releaseName: {{ include "data-hub.name" (dict "context" . "name" "ckan") }}
+  interval: 10m
+  timeout: 20m
+  chart:
+    spec:
+      chart: ckan
+      version: 1.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: {{ include "data-hub.name" (dict "context" . "name" "ckan") }}
+      interval: 5m
+  targetNamespace: {{ .Release.Namespace }}
+  values:
+    global:
+      {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 6 }}
+    postgresql:
+      enabled: false
+    ckan:
+      locales:
+        default: de
+      siteId: {{ .Values.ckan.siteId }}
+      siteTitle: {{ .Values.ckan.siteTitle }}
+      ingress:
+        hostname: {{ include "data-hub.ckan.hostname" . }}
+        annotations: {{ .Values.ckan.ingress.annotations | default (dict) | toYaml | nindent 10 }} # TLS is default enabled in the chart
+      image:
+        registry: {{ .Values.ckan.image.registry }}
+        repository: {{ .Values.ckan.image.repository }}
+        {{- if not .Values.ckan.image.tag }}
+        tag: {{ .Values.global.udhImageTag }}
+        {{- else }}
+        tag: {{ .Values.ckan.image.tag }}
+        {{- end }}
+        {{- with .Values.ckan.image.digest }}
+        digest: {{ . }}
+        {{- end }}
+      sysadmin:
+        email: {{ .Values.ckan.sysadmin.email }}
+      plugins: {{ .Values.ckan.plugins | default (list) | toYaml | nindent 8 }}
+      readiness:
+        initialDelaySeconds: 20
+        failureThreshold: 10
+        timeoutSeconds: 20
+      liveness:
+        initialDelaySeconds: 20
+        failureThreshold: 10
+        timeoutSeconds: 20
+      extraEnvVars:
+        - name: POSTGRES_HOST
+          value: {{ printf "%s-cnpg-rw" (include "common.names.fullname" .) }}
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-ckan-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-ckan-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+              key: password
+        - name: POSTGRES_DB
+          value: ckan
+        - name: CKAN_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-ckan-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+              key: username
+        - name: CKAN_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-ckan-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+              key: password
+        - name: CKAN_DB
+          value: ckan
+        - name: DATASTORE_READONLY_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-datastore-reader-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+              key: username
+        - name: DATASTORE_READONLY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-datastore-reader-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+              key: password
+        - name: DATASTORE_WRITE_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-datastore-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+              key: username
+        - name: DATASTORE_WRITE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-datastore-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+              key: password
+        - name: DATASTORE_DB
+          value: datastore
+        - name: CKAN_SQLALCHEMY_URL
+          value: "postgresql://$(CKAN_DB_USER):$(CKAN_DB_PASSWORD)@$(POSTGRES_HOST)/$(CKAN_DB)"
+        - name: CKAN_DATASTORE_WRITE_URL
+          value: "postgresql://$(DATASTORE_WRITE_USER):$(DATASTORE_WRITE_PASSWORD)@$(POSTGRES_HOST)/$(DATASTORE_DB)"
+        - name: CKAN_DATASTORE_READ_URL
+          value: "postgresql://$(DATASTORE_READONLY_USER):$(DATASTORE_READONLY_PASSWORD)@$(POSTGRES_HOST)/$(DATASTORE_DB)"
+        - name: CKAN___PERMANENT_SESSION_LIFETIME
+          value: "36000"
+        - name: CKAN___SESSION_COOKIE_SECURE
+          value: "true"
+        - name: CKAN___SESSION_PERMANENT
+          value: "false"
+        - name: CKANEXT__KEYCLOAK__SERVER_URL
+          value: https://{{ include "data-hub.keycloak.hostname" . }}
+        - name: CKANEXT__KEYCLOAK__CLIENT_ID
+          value: "ckan"
+        - name: CKANEXT__KEYCLOAK__REALM_NAME
+          value: {{ .Values.keycloak.realm }}
+        - name: CKANEXT__KEYCLOAK__SUB_SUPPORT
+          value: "true"
+        - name: CKANEXT__KEYCLOAK__REDIRECT_URI
+          value: https://{{ include "data-hub.ckan.hostname" . }}/user/sso_login
+        - name: CKANEXT__KEYCLOAK__CLIENT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-%s" (include "common.names.fullname" .) "ckan-client-secret" | quote }}
+              key: CKAN_OAUTH2_CLIENT_SECRET
+        - name: CKANEXT__KEYCLOAK__BUTTON_STYLE
+          value: ""
+        - name: CKANEXT__KEYCLOAK__ENABLE_CKAN_INTERNAL_LOGIN
+          value: "false"
+        - name: CKAN__AUTH__CREATE_DATASET_IF_NOT_IN_ORGANIZATIONS
+          value: "false"
+        - name: CKAN__AUTH__USER_CREATE_GROUPS
+          value: "false"
+        - name: CKAN__AUTH__USER_CREATE_ORGANIZATIONS
+          value: "false"
+        - name: CKAN__AUTH__USER_DELETE_GROUPS
+          value: "false"
+        - name: CKAN__AUTH__USER_DELETE_ORGANIZATIONS
+          value: "false"
+        - name: CKAN__AUTH__PUBLIC_USER_DETAILS
+          value: "false"
+        {{- if .Values.global.trustCaSecretName }}
+        - name: REQUESTS_CA_BUNDLE
+          value: /tls/ca.crt
+        {{- end }}
+      extraVolumeMounts:
+      {{- if .Values.global.trustCaSecretName }}
+        - mountPath: /tls
+          readOnly: true
+          name: ca-cert
+      {{- end }}
+      extraVolumes:
+      {{- if .Values.global.trustCaSecretName }}
+        - name: ca-cert
+          secret:
+            secretName: {{ .Values.global.trustCaSecretName }}
+            items:
+              - key: ca.crt
+                path: ca.crt
+      {{- end }}
+    solr:
+      metrics:
+        enabled: {{ .Values.ckan.serviceMonitor }}
+        resourcesPreset: "medium"
+        serviceMonitor:
+          enabled: true
+          additionalLabels:
+            managed.by/monitoring: teutonet
+      collectionReplicas: {{ .Values.ckan.solr.collectionReplicas }}
+      replicaCount: {{ .Values.ckan.solr.replicaCount }}
+      zookeeper:
+        image:
+          repository: bitnamilegacy/zookeeper
+        metrics:
+          enabled: {{ .Values.ckan.serviceMonitor }}
+          serviceMonitor:
+            enabled: true
+            additionalLabels:
+              managed.by/monitoring: teutonet
+        replicaCount: {{ .Values.ckan.solr.zookeeper.replicaCount }}
+        resourcesPreset: "medium"
+    valkey:
+      replicaCount: {{ .Values.ckan.valkey.replicaCount }}
+      metrics:
+        enabled: {{ .Values.ckan.serviceMonitor }}
+        serviceMonitor:
+          enabled: true
+          selector:
+            managed.by/monitoring: teutonet
+{{- end -}}

@@ -1,0 +1,11 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "shared-app") }}
+  namespace: {{ include "udh.shared-apps-namespace" . | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: citytools
+spec:
+  interval: 1h0m0s
+  type: oci
+  url: oci://ghcr.io/ol-teuto/charts

@@ -1,0 +1,19 @@
+meta {
+  name: Upload Presigned CSV
+  type: http
+  seq: 5
+}
+
+put {
+  url: <USE_RESPONSE_FROM_PRESIGNED_URL>
+  body: file
+  auth: none
+}
+
+params:query {
+  token:
+}
+
+body:file {
+  file: @file(_examples/sensormeta.csv) @contentType(text/csv; charset=utf-8)
+}

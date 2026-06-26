@@ -1,0 +1,16 @@
+@import "variables";
+
+body:not(.navigation-categories):not(.navigation-topics) #main-outlet {
+  border-radius: var(--mint-border-radius);
+  box-shadow: $shadow-md;
+  padding: 2em;
+  @include mint-card-bg;
+  border-top: 8px solid $tertiary;
+  margin-top: 1em;
+}
+
+.boxed {
+  &.white {
+    @include mint-card-bg;
+  }
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Set attribute
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/attributes/{{attribute}}
+  body: text
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}
+
+body:text {
+  cc0a53
+}

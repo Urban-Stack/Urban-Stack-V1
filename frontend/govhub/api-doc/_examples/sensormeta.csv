@@ -1,0 +1,3 @@
+sensor_id,external_reference,location_description,location_name,sensor_type
+0,42,"Hamsterrad","HAMRAD","Thermometer"
+1,42,"Meerschweinrad","SCHWRAD","Thermometer"

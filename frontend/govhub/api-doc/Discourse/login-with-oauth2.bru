@@ -1,0 +1,19 @@
+meta {
+  name: Login with OAuth2
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{discourse-host}}/auth/oauth2_basic
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  authenticity_token: huG_v5u_v1XK5vx-BzDRv9sB5HcvtUkvHJFl4MidwH3e5EuJoQ1KbACgIhHySrzFlaDqfCGMSoqsb0njfRtDKw
+}
+
+vars:pre-request {
+  csrf-token: {{discourse-csrf-token}}
+}

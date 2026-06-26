@@ -1,0 +1,15 @@
+meta {
+  name: Get Latest Posts
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{discourse-host}}/posts.json
+  body: none
+  auth: none
+}
+
+headers {
+  Cookie: {{discourse-cookies}}
+}

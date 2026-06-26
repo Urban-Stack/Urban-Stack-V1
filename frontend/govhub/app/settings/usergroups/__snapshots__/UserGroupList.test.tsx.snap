@@ -1,0 +1,383 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot renders list overview as expected 1`] = `
+<div>
+  <div
+    class="size-full"
+  >
+    <div
+      class="relative udp-scroll-thin h-full"
+    >
+      <div
+        class="absolute pointer-events-none inset-y-0 z-10 to-transparent transition-opacity duration-350 bg-gradient-to-r left-0 from-primary-50 w-32 opacity-0"
+        data-testid="udp-scroll-wrapper-grad-l"
+      />
+      <div
+        class="absolute pointer-events-none inset-y-0 z-10 to-transparent transition-opacity duration-350 bg-gradient-to-l right-0 from-primary-50 w-32 opacity-0"
+        data-testid="udp-scroll-wrapper-grad-r"
+      />
+      <div
+        class="h-full overflow-x-auto focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+        data-testid="udp-scroll-wrapper-ref"
+      >
+        <div
+          class="relative"
+          data-testid="table-element"
+        >
+          <div
+            class="absolute left-0 top-0 -z-10 h-full w-full bg-white drop-shadow-md dark:bg-black rounded-xl"
+          />
+          <table
+            class="w-full text-left text-sm text-gray-500 dark:text-gray-400 rounded-xl"
+            data-testid="user-group-table"
+          >
+            <thead
+              class="group/head text-xs uppercase text-gray-700 dark:text-gray-400"
+            >
+              <tr
+                class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+                data-testid="table-row-element"
+              >
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  Name
+                </th>
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  Mandant
+                </th>
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  Berechtigungen
+                </th>
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  Mitglied
+                </th>
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  Geteilt
+                </th>
+                <th
+                  class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+                >
+                  <span
+                    class="sr-only"
+                  >
+                    Adminbereich
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="group/body"
+            >
+              <tr
+                class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
+                data-testid="user-group-table-row"
+                tabindex="0"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  test-group-1
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  test-tenant
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-table-scopes"
+                >
+                  <div
+                    class="flex"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Admin
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-member"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-shared"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg w-0"
+                >
+                  <div
+                    class="flex opacity-0 group-hover/row:opacity-100 group-focus-within/row:opacity-100"
+                  >
+                    <a
+                      class="p-[2px] hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:rounded-md"
+                      data-testid="user-group-admin-area-link"
+                      href="https://keycloak.example.com/admin/udh/console/#/udh/groups/test/keycloak/group/path/1"
+                      target="_blank"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="size-5"
+                        fill="none"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
+                data-testid="user-group-table-row"
+                tabindex="0"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  test-group-2
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  test-tenant
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-table-scopes"
+                >
+                  <div
+                    class="flex"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Betrachter
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-member"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-shared"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg w-0"
+                >
+                  <div
+                    class="flex opacity-0 group-hover/row:opacity-100 group-focus-within/row:opacity-100"
+                  >
+                    <a
+                      class="p-[2px] hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:rounded-md"
+                      data-testid="user-group-admin-area-link"
+                      href="https://keycloak.example.com/admin/udh/console/#/udh/groups/test/keycloak/group/path/2"
+                      target="_blank"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="size-5"
+                        fill="none"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
+                data-testid="user-group-table-row"
+                tabindex="0"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  test-group-3
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  test-tenant
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-table-scopes"
+                >
+                  <div
+                    class="flex"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Admin
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-member"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-shared"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg w-0"
+                >
+                  <div
+                    class="flex opacity-0 group-hover/row:opacity-100 group-focus-within/row:opacity-100"
+                  >
+                    <a
+                      class="p-[2px] hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:rounded-md"
+                      data-testid="user-group-admin-area-link"
+                      href="https://keycloak.example.com/admin/udh/console/#/udh/groups/test/keycloak/group/path/3"
+                      target="_blank"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="size-5"
+                        fill="none"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
+                data-testid="user-group-table-row"
+                tabindex="0"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  test-group-4
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  test-tenant
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-table-scopes"
+                >
+                  <div
+                    class="flex"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Betrachter
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-member"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                  data-testid="user-group-shared"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg w-0"
+                >
+                  <div
+                    class="flex opacity-0 group-hover/row:opacity-100 group-focus-within/row:opacity-100"
+                  >
+                    <a
+                      class="p-[2px] hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:rounded-md"
+                      data-testid="user-group-admin-area-link"
+                      href="https://keycloak.example.com/admin/udh/console/#/udh/groups/test/keycloak/group/path/4"
+                      target="_blank"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="size-5"
+                        fill="none"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

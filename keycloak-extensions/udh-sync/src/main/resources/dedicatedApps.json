@@ -1,0 +1,19 @@
+{
+	"rei3": {
+		"name": "Rei3",
+		"description": "Low Code Tool",
+		"pictureUri": "https://github.com/r3-team/r3/assets/91060542/a759e7ec-e1a0-4a4e-a426-509abc764352",
+		"indexPath": "/",
+		"categories": ["INTELLIGENT_AUTOMATION", "APPS_TOOLS"],
+		"protocolMappers": [
+			{
+				"protocolMapper": "udh-dedicated-app",
+				"config": {
+					"userinfo.token.claim": "false",
+					"id.token.claim": "true",
+					"access.token.claim": "false"
+				}
+			}
+		]
+	}
+}

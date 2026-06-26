@@ -1,0 +1,27 @@
+diff --git a/superset-frontend/src/components/DatabaseSelector/index.tsx b/superset-frontend/src/components/DatabaseSelector/index.tsx
+index 96223b105f..c6a0353c79 100644
+--- a/superset-frontend/src/components/DatabaseSelector/index.tsx
++++ b/superset-frontend/src/components/DatabaseSelector/index.tsx
+@@ -450,7 +450,7 @@ export default function DatabaseSelector({
+       {renderDatabaseSelect()}
+       {renderError()}
+       {showCatalogSelector && renderCatalogSelect()}
+-      {renderSchemaSelect()}
++      {false && renderSchemaSelect()}
+     </DatabaseSelectorWrapper>
+   );
+ }
+diff --git a/superset-frontend/src/components/TableSelector/index.tsx b/superset-frontend/src/components/TableSelector/index.tsx
+index 940f42cb3d..d76f756f8a 100644
+--- a/superset-frontend/src/components/TableSelector/index.tsx
++++ b/superset-frontend/src/components/TableSelector/index.tsx
+@@ -366,8 +366,7 @@ const TableSelector: FunctionComponent<TableSelectorProps> = ({
+         isDatabaseSelectEnabled={isDatabaseSelectEnabled && !readOnly}
+         readOnly={readOnly}
+       />
+-      {sqlLabMode && !formMode && <div className="divider" />}
+-      {renderTableSelect()}
++      {false && renderTableSelect()}
+     </TableSelectorWrapper>
+   );
+ };

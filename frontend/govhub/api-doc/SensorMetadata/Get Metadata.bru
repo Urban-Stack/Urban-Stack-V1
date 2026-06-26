@@ -1,0 +1,11 @@
+meta {
+  name: Get Metadata
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{sensormeta-host}}/api/v1/metadata/{{tenant}}/{{project}}
+  body: none
+  auth: inherit
+}

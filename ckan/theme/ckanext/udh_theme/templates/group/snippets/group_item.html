@@ -1,0 +1,67 @@
+{#
+Renders a media item for a group in a Bootstrap grid.
+
+group - A group dict.
+#}
+{% set type = group.type or 'group' %}
+{% set url = h.url_for(type ~ '.read', id=group.name) %}
+
+{% block item %}
+    <a href="{{ url }}" aria-label="{{ view_label }}" >
+
+    <div class="card h-100 teuto-card">
+        {% block item_inner %}
+        {% block image %}
+            <img src="{{ group.image_display_url or h.url_for_static('/base/images/placeholder-group.png') }}" 
+                alt="{{ group.name }}" 
+                class="card-img-top img-fluid">
+        {% endblock %}
+        <div class="card-body d-flex flex-column">
+            {% block title %}
+            <h5 class="card-title">{{ group.display_name }}</h5>
+            {% endblock %}
+
+            {% block description %}
+            {% if group.description %}
+                <p class="card-text">{{ h.markdown_extract(group.description, extract_length=80) }}</p>
+            {% endif %}
+            {% endblock %}
+
+            {% block datasets %}
+            {% if group.package_count %}
+                <p class="mb-1"><strong>{{ ungettext('{num} Dataset', '{num} Datasets', group.package_count).format(num=group.package_count) }}</strong></p>
+            {% elif group.package_count == 0 %}
+                <p class="mb-1"><span>{{ _('0 Datasets') }}</span></p>
+            {% endif %}
+            {% endblock %}
+
+            {% block members %}
+            {% if 'member_count' in group and group.member_count %}
+                <p class="mb-1"><strong>{{ ungettext('{num} Member', '{num} Members', group.member_count).format(num=group.member_count) }}</strong></p>
+            {% elif 'member_count' in group %}
+                <p class="mb-1"><span>{{ _('0 Members') }}</span></p>
+            {% endif %}
+            {% endblock %}
+
+            {% block capacity %}
+            {% if show_capacity and group.capacity %}
+                <p><span class="badge bg-secondary">{{ h.roles_translated().get(group.capacity, group.capacity) }}</span></p>
+            {% endif %}
+            {% endblock %}
+
+            {% if group.user_member %}
+                {% set remove_label = _('Unlink {name} from the dataset').format(name=group.display_name) %}
+                <input name="group_remove.{{ group.id }}" 
+                    value="{{ _('Remove') }}" 
+                    type="submit" 
+                    class="btn btn-danger btn-sm w-100 mt-auto" 
+                    aria-label="{{ remove_label }}" 
+                    data-bs-title="{{ remove_label }}" 
+                    data-bs-toggle="tooltip" />
+            {% endif %}
+        </div>
+        {% endblock %}
+    </div>
+  </a>
+
+{% endblock %}

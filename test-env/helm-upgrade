@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+source "$(dirname "$BASH_SOURCE")/.common"
+
+cd "$REPO"
+
+CHART_PATH=charts/udh-platform
+
+digest_for_image() {
+    docker image inspect -f'{{index .RepoDigests 0}}' $1 | cut -d "@" -f 2
+}
+
+image_opts=""
+for dockerfile in **/Dockerfile
+do
+  repo=`dirname $dockerfile`
+  image=$REGISTRY/$repo
+
+  image_value_path="`valuePath $repo`"
+  # hack since the directory structure doesn't follow the usualy convention
+  if [[ "$image_value_path" == "keycloakExtensions" ]]
+  then
+    image_value_path="keycloak.extensions"
+  fi
+  image_opts="$image_opts --set $image_value_path.image.repository=$repo"
+  image_opts="$image_opts --set $image_value_path.image.digest=`digest_for_image $image`"
+  image_opts="$image_opts --set $image_value_path.image.registry=$REGISTRY"
+done
+
+# echo $image_opts
+
+helmreleases_loop () {
+  until $KUBECTL wait --for=condition=Ready -n udh helmrelease --all --timeout=60s
+  do
+    for cmd in suspend resume
+    do
+      flux --context "${MINIKUBE_PROFILE}" $cmd --all helmrelease -n udh || sleep 5
+    done
+  done
+}
+
+trap 'exit 130' INT
+# start suspend+resuming Helm releases in parallel in case a local rollout takes too long
+{
+  sleep 5 # avoid race condition with Helm release update, post upgrade hooks need a few seconds anyway
+  helmreleases_loop
+} &
+trap "kill $! &>/dev/null || true" EXIT
+
+# for rapid iteration use
+# SKIP_HELM_UPDATE= test-env/helm-upgrade
+[[ -v SKIP_HELM_UPDATE ]] || helm dependency update $CHART_PATH
+helm upgrade \
+  --force-conflicts \
+  local $CHART_PATH \
+  --kube-context "${MINIKUBE_PROFILE}" \
+  -n udh \
+  --install \
+  --create-namespace \
+  --timeout 30m \
+  --set=ingestor.apiServer.{host=`minikube_ip`,port=8443} \
+  -f $CHART_PATH/values-local.yaml \
+  $image_opts \
+  ${HELM_OPTS-}
+
+# wait for the status/suspend/resume loop above
+wait
+# then run the check again in case the Helm releases were already Ready from a previous run and the loop exited before they were updated, in that case this loops
+# ensures that all ingresses have been created before the domains are written to /etc/hosts
+# and that the whole rollout is done before exiting the script
+helmreleases_loop

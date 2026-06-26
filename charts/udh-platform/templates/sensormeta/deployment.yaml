@@ -1,0 +1,124 @@
+{{- $name := "sensormeta" -}}
+{{- $uploadTokenSecretName := printf "%s-%s" (include "common.names.fullname" .) "sensormeta-upload-token" -}}
+{{- $uploadTokenSecretSpec := (merge (dict "name" "sensormeta-upload-token" "key" "secret") .) -}}
+{{- $uploadTokenSecret := include "udh.secret" $uploadTokenSecretSpec -}}
+{{ include "udh.secretManifest" (merge (dict "value" $uploadTokenSecret) $uploadTokenSecretSpec) }}
+{{- define "udh.sensormeta.common" }}
+{{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  replicas: {{ .Values.sensormeta.replicas }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $name }}
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: {{ $name }}
+    spec:
+      {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 6 }}
+      initContainers:
+      - name: ensure-table
+        image: {{ include "udh-platform.images.image" (dict "imageRoot" .Values.sensormeta.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.sensormeta.image.pullPolicy }}
+        resources: {{- toYaml .Values.sensormeta.resources | nindent 10 }}
+        command:
+          - /bin/sh
+          - -c
+          - |
+            set -e
+
+            . .venv/bin/activate
+
+            python3 -m flask --app sensormeta ensure-table
+            # refresh can fail if the view doesn't exist yet
+            python3 -m flask --app sensormeta refresh-view || true
+        env:
+          - name: KEYCLOAK_REALM_URL
+            value: {{ include "udh.keycloak.realmUrl" . }}
+          {{- include "udh.clickhouse.env.admin" . | nindent 10 }}
+          - name: POSTGRES_HOST
+            value: {{ printf "%s-cnpg-rw" (include "common.names.fullname" .) }}
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ printf "%s-sensormeta-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ printf "%s-sensormeta-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+                key: password
+          - name: POSTGRES_NAME
+            value: sensormeta
+          - name: UPLOAD_TOKEN_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ $uploadTokenSecretName | quote }}
+                key: secret
+      {{- if .Values.global.trustCaSecretName }}
+          - name: REQUESTS_CA_BUNDLE
+            value: /tls/ca.crt
+        volumeMounts:
+          - mountPath: /tls
+            name: ca-cert
+      {{- end }}
+      containers:
+      - name: sensormeta
+        image: {{ include "udh-platform.images.image" (dict "imageRoot" .Values.sensormeta.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.sensormeta.image.pullPolicy }}
+        resources: {{- toYaml .Values.sensormeta.resources | nindent 10 }}
+        ports:
+          - containerPort: 8091
+            name: http
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http
+        env:
+          - name: KEYCLOAK_REALM_URL
+            value: {{ include "udh.keycloak.realmUrl" . }}
+          {{- include "udh.clickhouse.env.admin" . | nindent 10 }}
+          - name: POSTGRES_HOST
+            value: {{ printf "%s-cnpg-rw" (include "common.names.fullname" .) }}
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ printf "%s-sensormeta-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ printf "%s-sensormeta-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+                key: password
+          - name: POSTGRES_NAME
+            value: sensormeta
+          - name: UPLOAD_TOKEN_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ $uploadTokenSecretName | quote }}
+                key: secret
+      {{- if .Values.global.trustCaSecretName }}
+          - name: REQUESTS_CA_BUNDLE
+            value: /tls/ca.crt
+        volumeMounts:
+          - mountPath: /tls
+            name: ca-cert
+      volumes:
+        - name: ca-cert
+          secret:
+            secretName: {{ .Values.global.trustCaSecretName }}
+            items:
+            - key: ca.crt
+              path: ca.crt
+      {{- end }}

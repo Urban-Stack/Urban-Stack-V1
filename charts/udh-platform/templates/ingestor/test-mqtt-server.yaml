@@ -1,0 +1,92 @@
+{{- if .Values.ingestor.testmqtt.enabled -}}
+{{- $testmqttPasswordSpec := (merge (dict "name" "testmqtt-secret" "key" "PASSWORD") .) -}}
+{{- $testmqttPassword := include "udh.secret" $testmqttPasswordSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $testmqttPassword) $testmqttPasswordSpec) }}
+{{- $name := "testmqtt" }}
+{{- $serviceName := printf "%s-%s" (include "common.names.fullname" .) $name }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $name }}
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: {{ $name }}
+    spec:
+      {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 6 }}
+      containers:
+      - name: mosquitto
+        image: {{ include "udh-platform.images.image" (dict "imageRoot" .Values.ingestor.testmqtt.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.ingestor.testmqtt.image.pullPolicy }}
+        resources: {{- toYaml .Values.ingestor.testmqtt.resources | nindent 10 }}
+        ports:
+          - containerPort: 1883
+            name: mqtt
+          - containerPort: 8080
+            name: http
+        envFrom:
+          - secretRef:
+              name: {{ printf "%s-testmqtt-secret" (include "common.names.fullname" .) | quote }}
+        args:
+          - sh
+          - -c
+          - |
+            mosquitto_passwd -c -b /mosquitto_password username "$PASSWORD"
+            chmod 555 /mosquitto_password
+
+            cat >>/mosquitto.conf <<.
+            password_file /mosquitto_password
+
+            listener 1883
+
+            listener 8080
+            protocol websockets
+            .
+            exec /usr/sbin/mosquitto -c /mosquitto.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $serviceName }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  ports:
+  - port: 80
+    name: http
+    targetPort: http
+  - port: 1883
+    name: mqtt
+    targetPort: mqtt
+  selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+---
+{{ $host := include "data-hub.ingestor.testmqtt.hostname" . -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+  annotations:
+    {{- include "udh.ingress.annotations" (dict "annotations" .Values.ingestor.testmqtt.ingress.annotations "context" .) | nindent 4 }}
+spec:
+  rules:
+    - host: {{ $host | quote }}
+      http:
+        paths:
+          - backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" "http" "context" .) | nindent 14 }}
+            pathType: Prefix
+            path: /
+  tls:
+  - hosts:
+    - {{ $host }}
+    secretName: {{ $host }}-tls
+{{- end -}}

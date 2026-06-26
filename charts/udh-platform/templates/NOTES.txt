@@ -1,0 +1,4 @@
+# Keycloak
+{{ printf "https://%s" (include "data-hub.keycloak.hostname" .) }}/admin/master/console/
+admin
+kubectl -n {{ .Release.Namespace }} get secret {{ .Release.Name }}-udh-platform-sso-keycloak -ojsonpath='{.data.admin-password}' | base64 -d ; echo

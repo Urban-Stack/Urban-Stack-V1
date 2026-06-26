@@ -1,0 +1,130 @@
+{{- $nextAuthSessionSecretSpec := (merge (dict "name" "govhub-session-secret") .) -}}
+{{- $nextAuthSessionSecret := include "udh.secret" $nextAuthSessionSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $nextAuthSessionSecret) $nextAuthSessionSecretSpec) }}
+{{ $name := "govhub" -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  replicas: {{ .Values.frontend.govhub.replicas | default 1 | int }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $name }}
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: {{ $name }}
+    spec:
+      {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 6 }}
+      containers:
+      - name: {{ $name }}
+        image: {{ include "udh-platform.images.image" (dict "imageRoot" .Values.frontend.govhub.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.frontend.govhub.image.pullPolicy }}
+        ports:
+          - containerPort: 3000
+            name: http
+        resources: {{- toYaml .Values.frontend.govhub.resources | nindent 10 }}
+        env:
+          - name: AUTH_URL
+            value: {{ printf "https://%s" (include "data-hub.govhub.hostname" .) }}
+          - name: AUTH_SECRET
+            value: {{ $nextAuthSessionSecret | quote }}
+          - name: AUTH_KEYCLOAK_ID
+            value: "government-hub"
+          - name: AUTH_KEYCLOAK_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ printf "%s-%s" (include "common.names.fullname" .) "government-hub-client-secret" }}
+                key: government-hub-client-secret
+          - name: KEYCLOAK_URI
+            value: {{ printf "https://%s" (include "data-hub.keycloak.hostname" .) }}
+          - name: AUTH_KEYCLOAK_ISSUER
+            value: {{ include "udh.keycloak.realmUrl" . }}
+          - name: SUPERSET_URI
+            value: https://{{ include "data-hub.superset.hostname" . }}
+          - name: DISCOURSE_URI
+            value: https://{{ include "data-hub.discourse.hostname" . }}
+          - name: CITYTOOLS_URI
+            value: https://{{ include "data-hub.citytools.hostname" . }}
+          - name: STORAGE_URI
+            value: https://{{ include "data-hub.storage.hostname" . }}
+          - name: PUBQUERY_URI
+            value: https://{{ include "data-hub.pubquery.hostname" . }}
+          - name: GRAPHQL_URI
+            value: {{ include "udh.keycloak.realmUrl" . }}/data-hub/graphql
+          - name: JUPYTERHUB_URI
+            value: {{ printf "https://%s" (include "data-hub.jupyterhub.hostname" .) }}
+          - name: CKAN_URI
+            value: {{ printf "https://%s" (include "data-hub.ckan.hostname" .) }}
+          - name: DOCS_URI
+            value: {{ printf "https://%s" (include "data-hub.docs.hostname" .) }}
+          - name: HELPDESK_URI
+            value: {{ printf "https://%s" (include "data-hub.govhub.hostname" .) }}
+          - name: SENSOR_METADATA_URI
+            value: {{ printf "https://%s" (include "data-hub.sensormeta.hostname" .) }}
+          - name: AIDEMO_URI
+            value: https://aidemo.urbanstack.de
+          - name: CITIZENHUB_URI
+            value: {{ printf "https://%s" (include "data-hub.citizenhub.hostname" .) }}
+          - name: IMAGE_DOMAIN_SUPERSET
+            value: {{ include "data-hub.superset.hostname" . }}
+          - name: IMAGE_DOMAIN_DISCOURSE
+            value: {{ include "data-hub.discourse.hostname" . }}
+      {{- if .Values.global.trustCaSecretName }}
+          - name: NODE_EXTRA_CA_CERTS
+            value: /tls/ca.crt
+        volumeMounts:
+          - mountPath: /tls
+            readOnly: true
+            name: ca-cert
+      volumes:
+        - name: ca-cert
+          secret:
+            secretName: {{ .Values.global.trustCaSecretName }}
+            items:
+            - key: ca.crt
+              path: ca.crt
+      {{- end }}
+
+---
+{{ $serviceName := printf "%s-%s" (include "common.names.fullname" .) $name -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $serviceName }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  ports:
+  - port: 80
+    name: http
+    targetPort: http
+  selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+---
+{{ $host := include "data-hub.govhub.hostname" . -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+  annotations:
+    {{- include "udh.ingress.annotations" (dict "annotations" .Values.frontend.govhub.ingress.annotations "context" .) | nindent 4 }}
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
+spec:
+  rules:
+    - host: {{ $host | quote }}
+      http:
+        paths:
+          - backend: {{- include "common.ingress.backend" (dict "serviceName"  $serviceName "servicePort" "http" "context" .) | nindent 14 }}
+            pathType: Prefix
+            path: /
+  tls:
+  - hosts:
+    - {{ $host }}
+    secretName: {{ $host }}-tls

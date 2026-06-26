@@ -1,0 +1,89 @@
+diff --git a/plugins/discourse-oauth2-basic/config/settings.yml b/plugins/discourse-oauth2-basic/config/settings.yml
+index 73f76aecb7..49b3db052c 100644
+--- a/plugins/discourse-oauth2-basic/config/settings.yml
++++ b/plugins/discourse-oauth2-basic/config/settings.yml
+@@ -63,6 +63,9 @@ login:
+   oauth2_json_email_verified_path:
+     default: ""
+     area: "oauth2"
++  oauth2_json_groups_path:
++    default: ""
++    area: "oauth2"
+   oauth2_json_avatar_path:
+     default: ""
+     area: "oauth2"
+diff --git a/plugins/discourse-oauth2-basic/lib/oauth2_basic_authenticator.rb b/plugins/discourse-oauth2-basic/lib/oauth2_basic_authenticator.rb
+index 0b77defc10..a6c0954264 100644
+--- a/plugins/discourse-oauth2-basic/lib/oauth2_basic_authenticator.rb
++++ b/plugins/discourse-oauth2-basic/lib/oauth2_basic_authenticator.rb
+@@ -179,6 +179,7 @@ class OAuth2BasicAuthenticator < Auth::ManagedAuthenticator
+         json_walk(result, user_json, :email)
+         json_walk(result, user_json, :email_verified)
+         json_walk(result, user_json, :avatar)
++        json_walk(result, user_json, :groups)
+ 
+         DiscoursePluginRegistry.oauth2_basic_additional_json_paths.each do |detail|
+           prop = "extra:#{detail}"
+@@ -226,7 +227,7 @@ class OAuth2BasicAuthenticator < Auth::ManagedAuthenticator
+           :username
+         ]
+         auth["info"]["image"] = fetched_user_details[:avatar] if fetched_user_details[:avatar]
+-        %w[name email email_verified].each do |property|
++        %w[name email email_verified groups].each do |property|
+           auth["info"][property] = fetched_user_details[property.to_sym] if fetched_user_details[
+             property.to_sym
+           ]
+@@ -252,10 +253,52 @@ class OAuth2BasicAuthenticator < Auth::ManagedAuthenticator
+       end
+     end
+ 
+-    super(auth, existing_account: existing_account)
++    # Manage user groups
++    groups = auth["info"]["groups"] || []
++
++    result = super(auth, existing_account: existing_account)
++    result.extra_data[:groups] = groups.to_a
++    handle_group_memberships(result.user, groups) if result.user
++    result
++  end
++
++  def after_create_account(user, auth)
++    super
++    handle_group_memberships(user, auth.extra_data[:groups] || [])
++  end
++
++  def handle_group_memberships(user, groups)
++    desired_group_names = groups.select{ |g| is_managed_group?(g) }.to_set
++    current_groups = user.groups.select{ |g| is_managed_group?(g.name) }
++    current_group_names = current_groups.map{ |g| g.name }.to_set
++    current_groups.each do |group|
++      if !desired_group_names.include?(group.name)
++        log "removed user from #{group.name}"
++        group.remove(user)
++      end
++    end
++    desired_group_names.each do |group_name|
++      if !current_group_names.include?(group_name)
++        db_group = Group.find_by(name: group_name)
++        if db_group
++          log "added user to #{group_name}"
++          db_group.add(user)
++        else
++          log "could not find group #{group_name}"
++        end
++      end
++    end
+   end
+ 
+   def enabled?
+     SiteSetting.oauth2_enabled
+   end
++
++  def provides_groups?
++    true
++  end
++
++  def is_managed_group?(name)
++    name == "staff" || name == "Team" || name.ends_with?(".member") || name.ends_with?(".admin")
++  end
+ end

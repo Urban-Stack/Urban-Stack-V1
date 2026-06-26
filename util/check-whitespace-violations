@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+files=("$@")
+
+success=true
+
+check () {
+  if grep -rHn "$1" -- "${files[@]}"
+  then
+    echo "^ includes $2 ^"
+    success=false
+  fi
+}
+
+check ' $' "trailing whitespace"
+check $'\t' tabs
+
+$success

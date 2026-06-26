@@ -1,0 +1,1022 @@
+{{- $supersetClientSecretSpec := (merge (dict "name" "superset-client-secret" "key" "CLIENT_SECRET") .) -}}
+{{- $supersetClientSecret := include "udh.secret" $supersetClientSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $supersetClientSecret) $supersetClientSecretSpec) }}
+{{- $pubqueryClientSecretSpec := (merge (dict "name" "pubquery-client-secret" "key" "CLIENT_SECRET") .) -}}
+{{- $pubqueryClientSecret := include "udh.secret" $pubqueryClientSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $pubqueryClientSecret) $pubqueryClientSecretSpec) }}
+{{- $ingestorClientSecretSpec := (merge (dict "name" "ingestor-client-secret" "key" "CLIENT_SECRET") .) -}}
+{{- $ingestorClientSecret := include "udh.secret" $ingestorClientSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $ingestorClientSecret) $ingestorClientSecretSpec) }}
+{{- $nifiClientSecretSpec := (merge (dict "name" "nifi-client-secret" "key" "NIFI_SECURITY_USER_OIDC_CLIENT_SECRET") .) -}}
+{{- $nifiClientSecret := include "udh.secret" $nifiClientSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $nifiClientSecret) $nifiClientSecretSpec) }}
+{{- $discourseClientSecretSpec := (merge (dict "name" "discourse-client-secret" "key" "DISCOURSE_OAUTH2_CLIENT_SECRET") .) -}}
+{{- $discourseClientSecret := include "udh.secret" $discourseClientSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $discourseClientSecret) $discourseClientSecretSpec) }}
+{{- $ckanClientSecretSpec := (merge (dict "name" "ckan-client-secret" "key" "CKAN_OAUTH2_CLIENT_SECRET") .) -}}
+{{- $ckanClientSecret := include "udh.secret" $ckanClientSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $ckanClientSecret) $ckanClientSecretSpec) }}
+{{- $governmentHubClientSecretSpec := (merge (dict "name" "government-hub-client-secret") .) -}}
+{{- $governmentHubClientSecret := include "udh.secret" $governmentHubClientSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $governmentHubClientSecret) $governmentHubClientSecretSpec) }}
+{{- $citizenHubClientSecretSpec := (merge (dict "name" "citizen-hub-client-secret") .) -}}
+{{- $citizenHubClientSecret := include "udh.secret" $citizenHubClientSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $citizenHubClientSecret) $citizenHubClientSecretSpec) }}
+{{- $autoProvisioningClientSecretSpec := (merge (dict "name" "auto-provisioning-client-secret") .) -}}
+{{- $autoProvisioningClientSecret := include "udh.secret" $autoProvisioningClientSecretSpec }}
+{{ include "udh.secretManifest" (merge (dict "value" $autoProvisioningClientSecret) $autoProvisioningClientSecretSpec) }}
+{{- $host := include "data-hub.keycloak.hostname" . }}
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "bitnami") }}
+spec:
+  interval: 1h0m0s
+  url: oci://{{ .Values.global.ociMirror }}docker.io/bitnamicharts
+  type: oci
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "keycloak") }}
+spec:
+  releaseName: {{ include "data-hub.name" (dict "context" . "name" "sso") }}
+  chart:
+    spec:
+      chart: keycloak
+      version: 24.3.2 # renovate: datasource=docker depName=bitnamicharts/keycloak
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: {{ include "data-hub.name" (dict "context" . "name" "bitnami") }}
+  interval: 1h0m0s
+  timeout: 10m
+  targetNamespace: {{ .Release.Namespace }}
+  dependsOn: [
+    {{- if and .Values.objectStorage.enabled (not .Values.objectStorage.reuseClusterFromNamespace) }}
+    name: {{ include "data-hub.name" (dict "context" . "name" "rook-ceph-cluster") | quote }},
+    {{- end }}
+    {{- if .Values.discourse.enabled }}
+    name: {{ include "data-hub.name" (dict "context" . "name" "discourse") | quote }},
+    {{- end }}
+    {{- if .Values.ckan.enabled }}
+    name: {{ include "data-hub.name" (dict "context" . "name" "ckan") | quote }},
+    {{- end }}
+  ]
+  values:
+    replicaCount: {{ .Values.keycloak.replicas }}
+    auth:
+      adminUser: {{ .Values.keycloak.adminUser | quote }}
+      adminPassword: {{ .Values.keycloak.adminPassword | quote }}
+    postgresql:
+      enabled: false
+    externalDatabase:
+      host: {{ printf "%s-cnpg-rw" (include "common.names.fullname" .) }}
+      port: 5432
+      database: keycloak
+      existingSecret: {{ printf "%s-keycloak-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+      existingSecretUserKey: "username"
+      existingSecretPasswordKey: "password"
+    extraStartupArgs: --features=admin-fine-grained-authz{{ if .Values.global.trustCaSecretName }} -Djavax.net.ssl.trustStore=/tmp/cacerts{{ end }}{{ if .Values.keycloak.debug }} --debug 5005{{ end }}
+      {{ if .Values.global.testDeployment }} --spi-brute-force-protector-default-brute-force-detector-allow-concurrent-requests=true{{ end }}
+    production: true
+    # The keycloak chart expects a list of strings, not a map
+    {{- $imagePullSecrets := get (include "udh-platform.imagePullSecrets" (dict "context" .) | fromYaml) "imagePullSecrets" }}
+    {{- if $imagePullSecrets }}
+    global:
+      security:
+        allowInsecureImages: true
+      imagePullSecrets:
+      {{- range $entry := $imagePullSecrets }}
+        - {{ get $entry "name" }}
+      {{- end }}
+    {{- end }}
+    service:
+      type: ClusterIP
+      http:
+        enabled: false
+    resources: {{- $.Values.keycloak.resources | toYaml | nindent 6 }}
+
+    image:
+      repository: bitnamilegacy/keycloak
+
+    ingress:
+      enabled: true
+      hostname: {{ $host }}
+      tls: true
+      servicePort: https
+      annotations: {{- include "udh.ingress.annotations" (dict "context" $ "annotations" .Values.keycloak.ingress.annotations) | nindent 8 }}
+        nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    tls:
+      enabled: true
+      autoGenerated: true
+    extraVolumes:
+      {{- if .Values.global.trustCaSecretName }}
+      - name: ca-cert
+        secret:
+          secretName: {{ .Values.global.trustCaSecretName }}
+          items:
+          - key: ca.crt
+            path: ca.crt
+      {{- end }}
+    extraVolumeMounts:
+      {{- if .Values.global.trustCaSecretName }}
+      - mountPath: /tls
+        readOnly: true
+        name: ca-cert
+      {{- end }}
+    command:
+      - /bin/bash
+      - -c
+      - |
+        {{- if .Values.global.trustCaSecretName }}
+        cp /opt/bitnami/java/lib/security/cacerts /tmp/
+        keytool -import -keystore /tmp/cacerts -storepass changeit -noprompt < /tls/ca.crt
+        {{- end }}
+
+        # continue with upstream command
+        exec /opt/bitnami/scripts/keycloak/entrypoint.sh /opt/bitnami/scripts/keycloak/run.sh
+    initContainers:
+      - name: extensions
+        image: {{ include "udh-platform.images.keycloak.extensions" (dict "context" .) }}
+        imagePullPolicy: {{ .Values.keycloak.extensions.image.pullPolicy }}
+        volumeMounts:
+          - name: empty-dir
+            mountPath: /target
+            subPath: app-providers-dir
+    extraEnvVars:
+      - name: KEYCLOAK_ENABLE_HEALTH_ENDPOINTS
+        value: "true"
+      - name: KC_LOG_LEVEL
+        value: {{ .Values.keycloak.logLevel | quote }}
+      - name: GOVHUB_URL
+        value: {{ include "data-hub.govhub.hostname" . | printf "https://%s" | quote }}
+      - name: CITIZENHUB_URL
+        value: {{ include "data-hub.citizenhub.hostname" . | printf "https://%s" | quote }}
+      {{- if .Values.objectStorage.enabled }}
+      - name: BUCKET_ENDPOINT
+        value: {{ include "data-hub.storage.hostname" . | printf "https://%s" | quote }}
+      - name: BUCKET_SERVICE_ENDPOINT
+        value: {{ include "udh.rook-ceph-bucket.service" . }}.svc.cluster.local
+      {{- include "udh.objectstore.userEnv" (dict "user" "bucket-admin" "context" .) | nindent 6 }}
+      - name: CITYTOOLS_INGRESS
+        value: {{ printf "%s-citytools" (include "common.names.fullname" .) | quote }}
+      - name: CITYTOOLS_SERVICE_ENDPOINT
+        value: http://{{ printf "%s-citytools" (include "common.names.fullname" .) }}.{{ .Release.Namespace }}.svc.cluster.local
+      {{- end }}
+      - name: SUPERSET_HOST
+        value: {{ include "data-hub.name" (dict "context" . "name" "superset") }}:8088
+      - name: SUPERSET_PASSWORD
+        value: {{ .Values.superset.adminUser.password | quote }}
+      {{- if .Values.ckan.enabled }}
+      - name: CKAN_HOST
+        value: {{ include "data-hub.ckan.hostname" . | printf "https://%s" | quote }}
+      - name: CKAN_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: {{ include "data-hub.name" (dict "context" . "name" "ckan-ckan-config") }}
+            key: emailApiKey
+      {{- end }}
+      - name: INGESTOR_SECRET
+        value: {{ printf "%s-ingestor" (include "common.names.fullname" .) | quote }}
+      {{- if .Values.discourse.enabled }}
+      - name: DISCOURSE_HOST
+        value: {{ include "data-hub.discourse.hostname" . | printf "https://%s" | quote }}
+      - name: DISCOURSE_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: {{ include "data-hub.name" (dict "context" . "name" "discourse-api-key") }}
+            key: discourse-api-key
+      - name: DISCOURSE_USERNAME
+        value: system
+      {{- end }}
+      {{- include "udh.clickhouse.env.admin" . | nindent 6 }}
+      - name: CLICKHOUSE_PASSWORD_QUERYONLY
+        valueFrom:
+          secretKeyRef:
+            name: {{ include "data-hub.name" (dict "context" . "name" "clickhouse-queryonly") }}
+            key: clickhouse-queryonly
+      - name: SHARED_APPS_NAMESPACE
+        value: {{ include "udh.shared-apps-namespace" . | quote }}
+      - name: SHARED_APPS_POSTGRES
+        value: {{ printf "%s-shared-apps-db" (include "common.names.fullname"  .) | quote }}
+      - name: SHARED_APPS_BASE_DOMAIN
+        value: {{ .Values.global.baseDomain }}
+      - name: SHARED_APPS_HELM_REPO
+        value: {{ include "data-hub.name" (dict "context" . "name" "shared-app") }}
+      {{- if .Values.global.trustCaSecretName }}
+      - name: APPS_CERT_ISSUER
+        value: {{ .Values.global.trustCaSecretName | quote }}
+      {{- end }}
+      - name: DEDICATED_APPS_NAMESPACE
+        value: {{ include "udh.dedicated-apps-namespace" . | quote }}
+      - name: DEDICATED_APPS_POSTGRES
+        value: {{ printf "%s-dedicated-apps-db" (include "common.names.fullname"  .) | quote }}
+      - name: DEDICATED_APPS_BASE_DOMAIN
+        value: {{ .Values.global.baseDomain }}
+      - name: DEDICATED_APPS_BASE_HELM_REPO
+        value: {{ include "data-hub.name" (dict "context" . "name" "dedicated") }}
+      - name: DEDICATED_APPS_BASE_PULL_SECRET
+        value: {{ include "data-hub.name" (dict "context" . "name" "pullsecret") }}
+      {{- with .Values.keycloak.helpdeskEmail }}
+      - name: HELPDESK_EMAIL
+        value: {{ . | quote }}
+      {{- end }}
+      - name: QUARKUS_HTTP_READ_TIMEOUT
+        value: PT300S
+      - name: QUARKUS_TRANSACTION_MANAGER_DEFAULT_TRANSACTION_TIMEOUT
+        value: PT300S
+    rbac:
+      create: true
+      rules:
+        - apiGroups: [""]
+          resources: [secrets]
+          verbs: [update]
+          resourceNames: [{{ printf "%s-ingestor" (include "common.names.fullname" .) | quote }}]
+        - apiGroups: [networking.k8s.io]
+          resources: [ingresses]
+          verbs: [update, get]
+          resourceNames: [{{ printf "%s-citytools" (include "common.names.fullname" .) | quote }}]
+    keycloakConfigCli:
+      enabled: true
+      image:
+        repository: bitnamilegacy/keycloak-config-cli
+        tag: 6.2.1-debian-12-r0
+      configuration:
+        {{ .Values.keycloak.realm }}.yaml: |
+          passwordPolicy: {{ .Values.keycloak.passwordPolicy }}
+          requiredCredentials:
+            - password
+          realm: {{ .Values.keycloak.realm }}
+          displayName: Urban Gov Hub
+
+          # TODO delete workaround once https://github.com/ceph/ceph/pull/53915 has landed in our clusters
+          # more info https://tracker.ceph.com/issues/54562
+          components:
+            org.keycloak.keys.KeyProvider:
+            - name: rsa-generated
+              providerId: rsa-generated
+              config:
+                priority:
+                - '150'
+          loginTheme: data-hub
+          emailTheme: data-hub
+          accountTheme: teuto-react
+          adminTheme: data-hub
+          internationalizationEnabled: true
+          supportedLocales:
+            - de
+          defaultLocale: de
+          {{ define "udh.keycloak.smtp" }}
+          {{- if .Values.keycloak.smtp }}
+          smtpServer:
+            from: {{ .Values.keycloak.smtp.from | quote}}
+            fromDisplayName: {{ .Values.keycloak.smtp.fromDisplayName | quote}}
+            {{- if .Values.mailhog.enabled }}
+            host: {{ include "data-hub.name" (dict "context" . "name" "mailhog") }}
+            {{- else }}
+            host: {{ .Values.keycloak.smtp.host | quote}}
+            {{- end }}
+            port: {{ .Values.keycloak.smtp.port }}
+            auth: {{ .Values.keycloak.smtp.auth }}
+            ssl: {{ .Values.keycloak.smtp.ssl }}
+            envelopeFrom: {{ .Values.keycloak.smtp.from | quote}}
+            user: {{ .Values.keycloak.smtp.user | quote}}
+            password: {{ .Values.keycloak.smtp.password | quote}}
+          {{ end -}}
+          {{- end -}}
+          {{ include "udh.keycloak.smtp" . }}
+          enabled: true
+          loginWithEmailAllowed: true
+          registrationEmailAsUsername: true
+          resetPasswordAllowed: true
+          rememberMe: true
+          internationalizationEnabled: true
+          messageBundles:
+            de:
+              customattribute.showName.true: Ja, meinen Namen und meine E-Mail-Adresse sichtbar machen.
+              customattribute.showName.false: Nein, meinen Namen und meine E-Mail-Adresse durch ein Pseudonym ersetzen.
+                Administratoren können die Daten in der Benutzerverwaltung weiterhin sehen.
+          attributes:
+            userProfileEnabled: true
+          userProfile:
+            attributes:
+              - name: username
+                displayName: ${username}
+                validations:
+                  length:
+                    min: 3
+                    max: 255
+                  username-prohibited-characters: {}
+                  up-username-not-idn-homograph: {}
+                permissions:
+                  view:
+                    - admin
+                    - user
+                  edit:
+                    - admin
+                    - user
+                multivalued: false
+              - name: email
+                displayName: ${email}
+                validations:
+                  email: {}
+                  length:
+                    max: 255
+                required:
+                  roles:
+                    - user
+                permissions:
+                  view:
+                    - admin
+                    - user
+                  edit:
+                    - admin
+                    - user
+                multivalued: false
+              - name: firstName
+                displayName: ${firstName}
+                validations:
+                  length:
+                    max: 255
+                  person-name-prohibited-characters: {}
+                required:
+                  roles:
+                    - user
+                permissions:
+                  view:
+                    - admin
+                    - user
+                  edit:
+                    - admin
+                    - user
+                multivalued: false
+              - name: lastName
+                displayName: ${lastName}
+                validations:
+                  length:
+                    max: 255
+                  person-name-prohibited-characters: {}
+                required:
+                  roles:
+                    - user
+                permissions:
+                  view:
+                    - admin
+                    - user
+                  edit:
+                    - admin
+                    - user
+                multivalued: false
+              - name: showName
+                displayName: Name und E-Mail sichtbar
+                validations:
+                  options:
+                    options:
+                      - "true"
+                      - "false"
+                annotations:
+                  inputType: select-radiobuttons
+                  inputOptionLabelsI18nPrefix: customattribute.showName
+                  inputHelperTextBefore: Dürfen Name und E-Mail-Adresse für nicht-Administratoren angezeigt werden?
+                    Im Sinne der Zusammenarbeit und Kommunikation wird diese Einstellung ausdrücklich empfohlen.
+                    Die Einstellung kann jederzeit in beide Richtungen geändert werden. Änderungen werden nach einem erneuten Login in der jeweiligen Anwendung wirksam.
+                required:
+                  roles: [user]
+                permissions:
+                  view: [admin, user]
+                  edit: [admin, user]
+                multivalued: false
+
+          clients:
+            - clientId: jupyterhub
+              publicClient: true
+              baseUrl: https://{{ include "data-hub.jupyterhub.hostname" . }}
+              defaultClientScopes: []
+              optionalClientScopes: [email, profile]
+              redirectUris:
+                - https://{{ include "data-hub.jupyterhub.hostname" . }}/hub/oauth_callback
+                - https://{{ include "data-hub.govhub.hostname" . }}/
+              webOrigins:
+                - +
+            - clientId: usercode
+              standardFlowEnabled: false
+              defaultClientScopes: []
+              attributes:
+                oauth2.device.authorization.grant.enabled: 'true'
+                client.session.idle.timeout: 36000
+              publicClient: true
+              optionalClientScopes: [buckets, data-hub]
+              protocolMappers:
+                - &udh_sync
+                  name: udh-sync
+                  protocol: openid-connect
+                  protocolMapper: udh-sync
+                  config:
+                    userinfo.token.claim: 'true'
+                    id.token.claim: 'true'
+                    access.token.claim: 'true'
+            - clientId: docs-open-api
+              standardFlowEnabled: true
+              defaultClientScopes: []
+              publicClient: true
+              optionalClientScopes: [data-hub]
+              redirectUris:
+                - https://{{ include "data-hub.docs.hostname" . }}/schnittstellen/open-api/oauth2-redirect.html
+              webOrigins:
+                - +
+            - clientId: data-hub
+              standardFlowEnabled: false
+              serviceAccountsEnabled: true
+              authorizationServicesEnabled: true
+              defaultClientScopes: []
+              publicClient: false
+              optionalClientScopes: []
+            - clientId: superset
+              publicClient: false
+              secret: {{ $supersetClientSecret | quote }}
+              serviceAccountsEnabled: true
+              baseUrl: https://{{ include "data-hub.superset.hostname" . }}
+              standardFlowEnabled: true
+              defaultClientScopes: [email, profile]
+              optionalClientScopes: []
+              redirectUris:
+                - https://{{ include "data-hub.superset.hostname" . }}/oauth-authorized/keycloak
+              protocolMappers:
+                - <<: *udh_sync
+                  config: # don't include in access / ID token because it contains the list of owned dashboards
+                    userinfo.token.claim: 'true'
+              webOrigins: [+]
+              attributes:
+                access.token.lifespan: 36000 # same as PERMANENT_SESSION_LIFETIME
+                client.session.idle.timeout: 36000 # same as PERMANENT_SESSION_LIFETIME
+            - clientId: discourse
+              publicClient: false
+              secret: {{ $discourseClientSecret | quote }}
+              baseUrl: https://{{ include "data-hub.discourse.hostname" . }}
+              standardFlowEnabled: true
+              defaultClientScopes: [email, profile]
+              optionalClientScopes: []
+              redirectUris:
+                - https://{{ include "data-hub.discourse.hostname" . }}/auth/oauth2_basic/callback
+              protocolMappers:
+                - <<: *udh_sync
+                  config: # don't include in access / ID token because it contains the list of groups
+                    userinfo.token.claim: 'true'
+              webOrigins: [+]
+            - clientId: ckan
+              publicClient: false
+              secret: {{ $ckanClientSecret | quote }}
+              baseUrl: https://{{ include "data-hub.ckan.hostname" . }}
+              standardFlowEnabled: true
+              defaultClientScopes: [email, profile]
+              optionalClientScopes: []
+              redirectUris:
+                - https://{{ include "data-hub.ckan.hostname" . }}/user/sso_login
+              protocolMappers:
+                - <<: *udh_sync
+                  config: # don't include in access / ID token because it contains the list of groups
+                    userinfo.token.claim: 'true'
+              webOrigins: [+]
+            - clientId: government-hub
+              secret: {{ $governmentHubClientSecret | quote }}
+              baseUrl: https://{{ include "data-hub.govhub.hostname" . }}
+              standardFlowEnabled: true
+              publicClient: false
+              defaultClientScopes: [profile, email, buckets]
+              optionalClientScopes: [data-hub]
+              redirectUris:
+                - https://{{ include "data-hub.govhub.hostname" . }}/api/auth/callback/keycloak
+                - https://{{ include "data-hub.govhub.hostname" . }}/
+              protocolMappers:
+                - *udh_sync
+              webOrigins:
+                - +
+              attributes:
+                post.logout.redirect.uris: https://{{ include "data-hub.govhub.hostname" . }}/api/auth/signout
+                pkce.code.challenge.method: S256
+            - clientId: graphiql
+              publicClient: true
+              baseUrl: https://{{ include "data-hub.keycloak.hostname" . }}/realms/udh/data-hub/graphiql
+              standardFlowEnabled: true
+              defaultClientScopes: [data-hub]
+              optionalClientScopes: []
+              redirectUris:
+                - https://{{ include "data-hub.keycloak.hostname" . }}/realms/udh/data-hub/graphiql
+              webOrigins:
+                - +
+              attributes:
+                pkce.code.challenge.method: S256
+            - clientId: auto-provisioning
+              clientAuthenticatorType: client-secret
+              secret: {{ $autoProvisioningClientSecret | quote }}
+              notBefore: 0
+              bearerOnly: false
+              consentRequired: false
+              standardFlowEnabled: false
+              implicitFlowEnabled: false
+              directAccessGrantsEnabled: false
+              serviceAccountsEnabled: true
+              publicClient: false
+              frontchannelLogout: false
+              protocol: openid-connect
+              fullScopeAllowed: true
+              protocolMappers:
+                - &data_hub_audience
+                  name: add-aud-data-hub
+                  protocol: openid-connect
+                  protocolMapper: oidc-audience-mapper
+                  consentRequired: false
+                  config:
+                    included.client.audience: data-hub
+                    id.token.claim: "false"
+                    access.token.claim: "true"
+            - clientId: pubquery
+              standardFlowEnabled: false
+              serviceAccountsEnabled: true
+              publicClient: false
+              secret: {{ $pubqueryClientSecret | quote }}
+            - clientId: ingestor
+              standardFlowEnabled: false
+              serviceAccountsEnabled: true
+              publicClient: false
+              secret: {{ $ingestorClientSecret | quote }}
+            {{- if .Values.nifi.enabled }}
+            - clientId: nifi
+              standardFlowEnabled: true
+              publicClient: false
+              secret: {{ $nifiClientSecret | quote }}
+              defaultClientScopes: [email]
+              optionalClientScopes: []
+              redirectUris:
+                - https://{{ include "data-hub.nifi.hostname" . }}:443/nifi-api/access/oidc/callback
+                - https://{{ include "data-hub.nifi.hostname" . }}:443/nifi/logout-complete
+              protocolMappers:
+                - name: tenant-info
+                  protocol: openid-connect
+                  protocolMapper: udh-citytool
+                  config:
+                    userinfo.token.claim: 'true'
+                    id.token.claim: 'true'
+            {{- end }}
+            {{- if .Values.global.testDeployment }}
+            - clientId: automated-tests-client
+              secret: {{ dig "data-hub-admin" "password" "" .Values.keycloak.testUsers | quote }}
+              serviceAccountsEnabled: true
+              directAccessGrantsEnabled: true
+              protocolMappers:
+                - *data_hub_audience
+            {{- end }}
+          clientScopes:
+            - name: buckets
+              protocol: openid-connect
+              attributes:
+                display.on.consent.screen: 'true'
+                consent.screen.text: Storage Buckets
+              protocolMappers:
+                - name: audience
+                  protocol: openid-connect
+                  protocolMapper: oidc-audience-mapper
+                  config:
+                    included.custom.audience: buckets
+                    id.token.claim: 'true'
+            - name: data-hub
+              protocol: openid-connect
+              attributes:
+                display.on.consent.screen: 'true'
+                consent.screen.text: Plattformressourcen verwalten
+              protocolMappers:
+                - *data_hub_audience
+
+          users:
+            {{- if $.Values.keycloak.testUsers }}
+            {{- range $user := $.Values.keycloak.testUsers }}
+            - {{- if $user.firstName }}
+              firstName: {{ $user.firstName }}
+              {{- end }}
+              {{- if $user.lastName }}
+              lastName: {{ $user.lastName }}
+              {{- end }}
+              email: {{ $user.email | quote }}
+              enabled: True
+              emailVerified: True
+              attributes:
+                showName: true
+              realmRoles: {{- $user.realmRoles | default (list) | toYaml | nindent 16 }}
+              clientRoles: {{- $user.clientRoles | default (dict) | toYaml | nindent 16 }}
+              credentials:
+                - type: password
+                  value: {{ $user.password | quote }}
+            {{- end }}
+            {{- end }}
+            - username: service-account-auto-provisioning
+              serviceAccountClientId: auto-provisioning
+              clientRoles:
+                realm-management:
+                  - manage-realm
+                  - query-users
+                  - manage-users
+                  - query-groups
+
+          authenticationFlows:
+            - alias: dedicated-app
+              description: Browser based authentication
+              providerId: basic-flow
+              topLevel: true
+              builtIn: false
+              authenticationExecutions:
+                - authenticatorFlow: true
+                  requirement: ALTERNATIVE
+                  priority: 20
+                  autheticatorFlow: true
+                  flowAlias: dedicated-app Cookie
+                  userSetupAllowed: false
+                - authenticator: auth-spnego
+                  authenticatorFlow: false
+                  requirement: DISABLED
+                  priority: 26
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+                - authenticator: identity-provider-redirector
+                  authenticatorFlow: false
+                  requirement: ALTERNATIVE
+                  priority: 30
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+                - authenticatorFlow: true
+                  requirement: ALTERNATIVE
+                  priority: 32
+                  autheticatorFlow: true
+                  flowAlias: dedicated-app forms
+                  userSetupAllowed: false
+            - alias: dedicated-app Browser - Conditional OTP
+              description: Flow to determine if the OTP is required for the authentication
+              providerId: basic-flow
+              topLevel: false
+              builtIn: false
+              authenticationExecutions:
+                - authenticator: conditional-user-configured
+                  authenticatorFlow: false
+                  requirement: REQUIRED
+                  priority: 10
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+                - authenticator: auth-otp-form
+                  authenticatorFlow: false
+                  requirement: REQUIRED
+                  priority: 20
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+            - alias: dedicated-app Cookie
+              description: 'Make sure tenant is checked when the user is still logged in via cookie'
+              providerId: basic-flow
+              topLevel: false
+              builtIn: false
+              authenticationExecutions:
+                - authenticator: auth-cookie
+                  authenticatorFlow: false
+                  requirement: REQUIRED
+                  priority: 0
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+                - authenticator: user-tenant-check
+                  authenticatorFlow: false
+                  requirement: REQUIRED
+                  priority: 1
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+            - alias: dedicated-app forms
+              description: Username, password, otp and other auth forms.
+              providerId: basic-flow
+              topLevel: false
+              builtIn: false
+              authenticationExecutions:
+                - authenticator: auth-username-password-form
+                  authenticatorFlow: false
+                  requirement: REQUIRED
+                  priority: 10
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+                - authenticator: user-tenant-check
+                  authenticatorFlow: false
+                  requirement: REQUIRED
+                  priority: 20
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+                - authenticatorFlow: true
+                  requirement: CONDITIONAL
+                  priority: 21
+                  autheticatorFlow: true
+                  flowAlias: dedicated-app Browser - Conditional OTP
+                  userSetupAllowed: false
+          browserSecurityHeaders:
+            contentSecurityPolicy: "frame-src 'self'; frame-ancestors 'self' https://{{ include "data-hub.govhub.hostname" . }}; object-src 'none';"
+
+          # timeouts
+
+          ## must be 10h too for refresh tokens to work within the 10h, necessary for usercode client use from JupyterHub notebooks to not be frustrating
+          ssoSessionIdleTimeout: 36000
+          ## client sessions expire after 30m unless explicitly configured (like usercode), causes a round trip to Keycloak
+          clientSessionIdleTimeout: 1800
+
+          ## require new login after 10h = one work day, also short enough to require login after being gone for one night
+          ssoSessionMaxLifespan: 36000
+          ## clients also need to trigger a completely new login
+          clientSessionMaxLifespan: 36000
+
+          ## with "Remember me" we allow staying signed in over a weekend + one holiday + logging in at the end of the work day
+          ## = 2d + 1d + 10h
+          ssoSessionIdleTimeoutRememberMe: 381600
+          ## require new login after 30d with "Remember me"
+          ssoSessionMaxLifespanRememberMe: 2592000
+
+          {{ define "udh.keycloak.bruteforce" -}}
+          # security defenses / brute force detection
+          bruteForceProtected: true
+          permanentLockout: false
+          failureFactor: 30
+          waitIncrementSeconds: 60
+          quickLoginCheckMilliSeconds: 1000
+          minimumQuickLoginWaitSeconds: 60
+          maxFailureWaitSeconds: 900
+          maxDeltaTimeSeconds: 43200
+          {{- end -}}
+          {{ include "udh.keycloak.bruteforce" . }}
+          eventsListeners:
+            - jboss-logging
+            - udh-sync
+        citizenhub.yaml: |
+          realm: citizenhub
+          displayName: Urban Citizen Hub
+          passwordPolicy: {{ .Values.keycloak.passwordPolicy }}
+          requiredCredentials:
+            - password
+          loginTheme: data-hub
+          emailTheme: data-hub
+          accountTheme: teuto-react
+          adminTheme: data-hub
+          internationalizationEnabled: true
+          supportedLocales:
+            - de
+          defaultLocale: de
+          {{ include "udh.keycloak.smtp" . }}
+          enabled: true
+          registrationAllowed: {{ .Values.keycloak.uchRegistration.enabled }}
+          loginWithEmailAllowed: true
+          registrationEmailAsUsername: true
+          resetPasswordAllowed: true
+          rememberMe: true
+          verifyEmail: true
+          actionTokenGeneratedByUserLifespan: 43200 # 12 * 60 * 60
+          requiredActions:
+            - alias: delete_account
+              name: Delete Account
+              providerId: delete_account
+              enabled: true
+              defaultAction: false
+              priority: 60
+              config: {}
+            # - alias: "TERMS_AND_CONDITIONS"
+            #   name: "Terms and Conditions"
+            #   providerId: "TERMS_AND_CONDITIONS"
+            #   enabled: true
+            #   defaultAction: false
+            #   priority: 20
+            #   config: {}
+          authenticationFlows:
+            - alias: registration form
+              description: Registration form
+              providerId: form-flow
+              topLevel: false
+              builtIn: true
+              authenticationExecutions:
+                - authenticator: registration-user-creation
+                  authenticatorFlow: false
+                  requirement: REQUIRED
+                  priority: 20
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+                - authenticator: registration-password-action
+                  authenticatorFlow: false
+                  requirement: REQUIRED
+                  priority: 50
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+                - authenticator: registration-recaptcha-action
+                  authenticatorFlow: false
+                  requirement: DISABLED
+                  priority: 60
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+                - authenticator: registration-terms-and-conditions
+                  authenticatorFlow: false
+                  requirement: REQUIRED # this is DISABLED by default
+                  priority: 70
+                  autheticatorFlow: false
+                  userSetupAllowed: false
+
+          roles:
+            realm:
+              - name: default-roles-citizenhub
+                composites:
+                  realm:
+                    - offline_access
+                    - uma_authorization
+                  client:
+                    account:
+                      - manage-account
+                      - delete-account
+                      - view-profile
+          clients:
+            - clientId: citizen-hub
+              secret: {{ $citizenHubClientSecret | quote }}
+              baseUrl: https://{{ include "data-hub.citizenhub.hostname" . }}
+              standardFlowEnabled: true
+              publicClient: false
+              defaultClientScopes: [profile, email]
+              redirectUris:
+                - https://{{ include "data-hub.citizenhub.hostname" . }}/api/auth/callback/keycloak
+                - https://{{ include "data-hub.citizenhub.hostname" . }}/
+              webOrigins:
+                - +
+              attributes:
+                post.logout.redirect.uris: https://{{ include "data-hub.citizenhub.hostname" . }}/api/auth/signout
+                pkce.code.challenge.method: S256
+          components:
+            org.keycloak.userprofile.UserProfileProvider:
+              - providerId: declarative-user-profile
+                config:
+                  kc.user.profile.config:
+                    - |
+                      {
+                        "attributes": [
+                          {
+                            "name": "username",
+                            "displayName": "${username}",
+                            "validations": {
+                              "length": {
+                                "min": 3,
+                                "max": 255
+                              },
+                              "username-prohibited-characters": {},
+                              "up-username-not-idn-homograph": {}
+                            },
+                            "permissions": {
+                              "view": [
+                                "admin",
+                                "user"
+                              ],
+                              "edit": [
+                                "admin",
+                                "user"
+                              ]
+                            },
+                            "multivalued": false
+                          },
+                          {
+                            "name": "email",
+                            "displayName": "${email}",
+                            "validations": {
+                              "email": {},
+                              "length": {
+                                "max": 255
+                              }
+                            },
+                            "required": {
+                              "roles": [
+                                "user"
+                              ]
+                            },
+                            "permissions": {
+                              "view": [
+                                "admin",
+                                "user"
+                              ],
+                              "edit": [
+                                "admin",
+                                "user"
+                              ]
+                            },
+                            "multivalued": false
+                          },
+                          {
+                            "name": "firstName",
+                            "displayName": "${firstName}",
+                            "validations": {
+                              "length": {
+                                "max": 255
+                              },
+                              "person-name-prohibited-characters": {}
+                            },
+                            "annotations": {},
+                            "permissions": {
+                              "view": [
+                                "admin",
+                                "user"
+                              ],
+                              "edit": [
+                                "admin",
+                                "user"
+                              ]
+                            },
+                            "multivalued": false
+                          },
+                          {
+                            "name": "lastName",
+                            "displayName": "${lastName}",
+                            "validations": {
+                              "length": {
+                                "max": 255
+                              },
+                              "person-name-prohibited-characters": {}
+                            },
+                            "annotations": {},
+                            "permissions": {
+                              "view": [
+                                "admin",
+                                "user"
+                              ],
+                              "edit": [
+                                "admin",
+                                "user"
+                              ]
+                            },
+                            "multivalued": false
+                          }
+                        ],
+                        "groups": [
+                          {
+                            "name": "user-metadata",
+                            "displayHeader": "User metadata",
+                            "displayDescription": "Attributes, which refer to user metadata"
+                          }
+                        ]
+                      }
+          {{ include "udh.keycloak.bruteforce" . }}
+          eventsListeners:
+            - jboss-logging
+            - udh-sync
+          # https://github.com/keycloak/keycloak/issues/41331 once keycloak is up to date
+        master.yaml: |
+          realm: master
+          {{ include "udh.keycloak.bruteforce" . }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ printf "%s-kc-root" (include "common.names.fullname" .) | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+  annotations: {{- include "udh.ingress.annotations" (dict "context" $ "annotations" .Values.keycloak.ingress.annotations) | nindent 4 }}
+    nginx.ingress.kubernetes.io/temporal-redirect: https://{{ include "data-hub.govhub.hostname" . }}/
+spec:
+  rules:
+    - host: {{ $host | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Exact
+            backend:
+              service:
+                name: no-backend
+                port:
+                  name: no-backend
+  tls:
+  - hosts:
+    - {{ $host }}
+    secretName: {{ $host }}-tls
+# we can't use cross namespace rbac with the rbac field in the keycloak values
+{{- range $kind := list "shared" "dedicated" }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels: {{- include "common.labels.standard" $ | nindent 4 }}
+    app.kubernetes.io/component: keycloak
+  name: {{ include "data-hub.name" (dict "context" $ "name" (printf "keycloak-%s-apps" $kind)) }}
+  namespace: {{ include (printf "udh.%s-apps-namespace" $kind) $ | quote }}
+rules:
+- apiGroups: [helm.toolkit.fluxcd.io]
+  resources: [helmreleases]
+  verbs: [list,get,update,create,delete]
+- apiGroups: [""]
+  resources: [pods,pods/log]
+  verbs: [list,get]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels: {{- include "common.labels.standard" $ | nindent 4 }}
+    app.kubernetes.io/component: keycloak
+  name: {{ include "data-hub.name" (dict "context" $ "name" (printf "keycloak-%s-apps" $kind)) }}
+  namespace: {{ include (printf "udh.%s-apps-namespace" $kind) $ | quote }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "data-hub.name" (dict "context" $ "name" (printf "keycloak-%s-apps" $kind)) }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "data-hub.name" (dict "context" $ "name" "sso-keycloak") }}
+  namespace: {{ $.Release.Namespace | quote }}
+{{- end }}

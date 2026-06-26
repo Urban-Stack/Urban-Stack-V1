@@ -1,0 +1,20 @@
+{
+	"useTabs": true,
+	"singleQuote": true,
+	"trailingComma": "none",
+	"printWidth": 100,
+	"overrides": [
+		{
+			"files": "*.yaml",
+			"options": {
+				"singleQuote": false
+			}
+		},
+		{
+			"files": "charts/udh-platform/*.json",
+			"options": {
+				"useTabs": false
+			}
+		}
+	]
+}

@@ -1,0 +1,22 @@
+# Ignore files for PNPM, NPM and YARN
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+/charts/udh-platform/templates
+/charts/udh-platform/*enc.yaml
+/frontend/govhub/
+/discourse/theme/
+/ckan/theme/
+/docs/user/docs/schnittstellen/open-api/oauth2-redirect.html
+
+build/
+.svelte-kit
+
+playwright-report/
+.venv/
+target/
+
+flake.lock
+
+/.gitlab/*templates/*.md

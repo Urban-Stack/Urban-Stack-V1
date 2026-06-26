@@ -1,0 +1,55 @@
+diff --git a/superset/dashboards/api.py b/superset/dashboards/api.py
+index b578ee081d..e6c005ed8b 100644
+--- a/superset/dashboards/api.py
++++ b/superset/dashboards/api.py
+@@ -117,4 +117,5 @@ from superset.utils.screenshots import (
+     DEFAULT_DASHBOARD_WINDOW_SIZE,
+     ScreenshotCachePayload,
++    StatusValues,
+ )
+ from superset.utils.urls import get_url_path
+@@ -1307,5 +1308,8 @@ class DashboardRestApi(BaseSupersetModelRestApi):
+                 dashboard_id=dashboard.id,
+                 force=False,
++                cache_key=cache_key,
+             )
++
++        if cache_payload.should_trigger_task() or cache_payload.status == StatusValues.COMPUTING:
+             return self.response(
+                 202,
+@@ -1317,10 +1321,13 @@ class DashboardRestApi(BaseSupersetModelRestApi):
+             )
+ 
+-        self.incr_stats("from_cache", self.thumbnail.__name__)
+-        return Response(
+-            FileWrapper(cache_payload.get_image()),
+-            mimetype="image/png",
+-            direct_passthrough=True,
+-        )
++        if image := cache_payload.get_image():
++            self.incr_stats("from_cache", self.thumbnail.__name__)
++            return Response(
++                FileWrapper(image),
++                mimetype="image/png",
++                direct_passthrough=True,
++            )
++        else:
++            return self.response_404()
+ 
+     @expose("/favorite_status/", methods=("GET",))
+diff --git a/superset/tasks/thumbnails.py b/superset/tasks/thumbnails.py
+index 8f85972507..5c3e2e412d 100644
+--- a/superset/tasks/thumbnails.py
++++ b/superset/tasks/thumbnails.py
+@@ -79,4 +79,5 @@ def cache_dashboard_thumbnail(
+     thumb_size: Optional[WindowSize] = None,
+     window_size: Optional[WindowSize] = None,
++    cache_key: str | None = None,
+ ) -> None:
+     # pylint: disable=import-outside-toplevel
+@@ -104,4 +105,5 @@ def cache_dashboard_thumbnail(
+             thumb_size=thumb_size,
+             force=force,
++            cache_key=cache_key,
+         )
+ 

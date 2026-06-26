@@ -1,0 +1,211 @@
+@font-face {
+	font-family: 'Poppins';
+	src: url('./assets/fonts/poppins-100.woff2') format('woff2');
+	font-weight: 100;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('./assets/fonts/poppins-200.woff2') format('woff2');
+	font-weight: 200;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('./assets/fonts/poppins-300.woff2') format('woff2');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('./assets/fonts/poppins-regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('./assets/fonts/poppins-500.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('./assets/fonts/poppins-600.woff2') format('woff2');
+	font-weight: 600;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('./assets/fonts/poppins-700.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('./assets/fonts/poppins-800.woff2') format('woff2');
+	font-weight: 800;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('./assets/fonts/poppins-900.woff2') format('woff2');
+	font-weight: 900;
+	font-style: normal;
+}
+:root {
+	--urbanstack-sidebar-text-color: #131720 !important;
+	--urbanstack-sidebar-background-color: #fafafa !important;
+	--urbanstack-input-background: #f2f2f2 !important;
+	--urbanstack-keycloak-active-sidebar: #dbdbdb !important;
+	--urbanstack-sidebar-hover-color: #e7e7e7 !important;
+	--urbanstack-border-radius: 0.4rem !important;
+
+	--pf-v5-global--FontFamily--base: 'Poppins' !important;
+	--pf-v5-global--FontFamily--heading: 'Poppins' !important;
+	--pf-v5-global--FontFamily--sans-serif: 'Poppins' !important;
+	--pf-v5-global--FontFamily--monospace: 'Poppins' !important;
+}
+/* Darkmode overrides */
+.pf-v5-theme-dark {
+	--urbanstack-sidebar-text-color: white !important;
+	--urbanstack-sidebar-background-color: black !important;
+	--urbanstack-input-background: #000000 !important;
+	--urbanstack-keycloak-active-sidebar: #2a2a2a !important;
+	--urbanstack-sidebar-hover-color: #333333 !important;
+}
+
+.pf-v5-c-page__sidebar-body {
+	background-color: var(--urbanstack-sidebar-background-color);
+}
+
+.pf-v5-c-nav__link {
+	border-radius: var(--urbanstack-border-radius);
+	padding: 12px;
+	text-align: start;
+	color: var(--urbanstack-sidebar-text-color);
+	background-color: var(--urbanstack-sidebar-background-color);
+	border: none !important;
+}
+
+.pf-v5-c-nav__link.pf-m-current {
+	color: var(--urbanstack-sidebar-text-color);
+}
+
+.pf-v5-c-nav__link.pf-m-current:hover {
+	background-color: var(--urbanstack-keycloak-active-sidebar);
+	color: var(--urbanstack-sidebar-text-color);
+}
+
+.pf-v5-c-nav__link:hover {
+	color: var(--urbanstack-sidebar-text-color);
+}
+
+.pf-v5-c-nav__link[aria-expanded='false'] {
+	background-color: var(--urbanstack-keycloak-active-sidebar) !important;
+	color: var(--urbanstack-sidebar-text-color) !important;
+}
+
+.pf-v5-c-nav__link[aria-expanded='true'] {
+	color: var(--urbanstack-sidebar-text-color) !important;
+}
+
+.pf-v5-c-nav__link[aria-expanded='false']:focus,
+.pf-v5-c-nav__link[aria-expanded='false']:focus-visible {
+	background-color: var(--urbanstack-keycloak-active-sidebar) !important;
+	color: var(--urbanstack-sidebar-text-color) !important;
+}
+
+.pf-v5-c-nav__link:hover {
+	background-color: var(--urbanstack-sidebar-hover-color);
+}
+.pf-v5-c-nav__link:focus {
+	background-color: var(--urbanstack-sidebar-hover-color);
+}
+.pf-v5-c-nav__link.pf-m-current {
+	background-color: var(--urbanstack-keycloak-active-sidebar);
+	font-weight: 900 !important;
+}
+.pf-v5-c-form-control:before {
+	border-radius: var(--urbanstack-border-radius);
+}
+
+h1 {
+	font-size: xx-large !important;
+	font-weight: 700 !important;
+}
+h2 {
+	font-weight: 600 !important;
+}
+
+.pf-v5-c-nav__list {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+.pf-v5-c-nav__item {
+	padding: 0rem 0.5rem;
+}
+
+.pf-v5-c-nav__link:before {
+	border: 0px !important;
+}
+
+.pf-v5-c-nav__item:before {
+	border: 0px !important;
+}
+
+.pf-v5-c-nav__link.pf-m-current:after {
+	border: 0px !important;
+}
+
+.pf-v5-c-nav__link:hover:after {
+	border: 0px !important;
+}
+
+.pf-v5-c-form-control {
+	border: 1px solid gray;
+	border-radius: var(--urbanstack-border-radius);
+	background-color: var(--urbanstack-input-background);
+	padding: 0.5rem !important;
+}
+
+.pf-v5-c-form-control > input {
+	min-height: 3rem !important;
+}
+.pf-v5-c-form-control:after {
+	border: 0px !important;
+}
+
+.pf-v5-c-nav__subnav {
+	padding-top: 1rem;
+}
+
+.pf-v5-c-form-control:focus-within > input {
+	border-radius: var(--urbanstack-border-radius);
+	box-shadow: 0 0 0 2px var(--pf-v5-global--primary-color--100);
+}
+
+#legal-links {
+	z-index: 9999;
+	position: fixed;
+	bottom: 8px;
+	right: 12px;
+	font-size: 0.9em;
+	color: var(--urbanstack-sidebar-text-color);
+}
+#legal-links a {
+	margin: 0 6px;
+	color: inherit;
+	text-decoration: none;
+}
+#legal-links a:hover {
+	text-decoration: underline;
+}

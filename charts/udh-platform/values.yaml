@@ -1,0 +1,545 @@
+global:
+  udhImageTag: latest
+  udhImageRegistry: "tickets.teuto.net:5050"
+  imageCredentials:
+    udh-platform:
+      host: "tickets.teuto.net:5050"
+      username: "udh-pull-secret"
+      password: SECRET
+  storageClass: teutostack-ssd
+  babashka:
+    image:
+      registry: "docker.io"
+      pullPolicy: Always
+      repository: "babashka/babashka"
+      tag: 1.12.218
+      digest: ""
+  basePipeline:
+    image:
+      registry: tickets.teuto.net:5050
+      repository: teuto-public/base-pipeline/base-pipeline
+      tag: v2.0.27
+  sslInsecureSkipVerify: false
+  ingress:
+    annotations:
+      kubernetes.io/tls-acme: "true"
+  networkPolicy:
+    additionalExternalEgress: []
+  testDeployment: false
+  ociMirror: ""
+
+keycloak:
+  replicas: 1
+  realm: udh
+  citizenhub:
+    realm: citizenhub
+  debug: false
+  logLevel: info,com.clickhouse:warn # see https://www.keycloak.org/server/logging for more complex values
+  passwordPolicy: length(12) and digits(1) and upperCase(1) and lowerCase(1) and specialChars(1) and notEmail(undefined) and notUsername(undefined)
+  extensions:
+    image:
+      registry: "tickets.teuto.net:5050"
+      pullPolicy: Always
+      repository: "4teuto/cust/9314/udh-platform/udp/keycloak-extensions"
+      tag: ""
+      digest: ""
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+  resources:
+    requests:
+      cpu: 50m
+      memory: 1536Mi
+    limits:
+      memory: 3072Mi
+  uchRegistration:
+    enabled: true
+  testUsers: {}
+  resourceApiAutoProvision:
+    tenants:
+      guetersloh:
+        attributes:
+          color-primary: "293785"
+          tenant-logo: /Logo.svg
+          tenant-name: Gütersloh
+          tenant-image: https://www.guetersloh.de/de-wAssets/img/stadtansichten-und-akteure/weblication/wThumbnails/Adenauerplatz_046-070a0a52-6e4e3d30@2000w.jpg
+          citizen-hub-image: https://www.guetersloh.de/de-wAssets/img/aktuelles/bilder-pm-2019/Luftbild.png
+          tenant-coords: 51.909062:8.381308:13
+          legal-notice-url: https://www.guetersloh.de/de/impressum.php
+          privacy-url: https://www.guetersloh.de/de/datenschutz.php
+          contact-url: https://www.guetersloh.de/de/kontakt/
+          news-url: https://www.guetersloh.de/de/rathaus/presseportal/news/rss.php
+        viz-groups:
+          sccon: {}
+      detmold:
+        attributes:
+          color-primary: 1c782c
+          tenant-logo: /logo-dt-white.svg
+          tenant-name: Detmold
+          tenant-image: https://serviceportal-detmold.de/documents/33528/0/d1.jpg
+          citizen-hub-image: https://serviceportal-detmold.de/documents/33528/0/d1.jpg
+          tenant-coords: 51.93548:8.87934:13
+          legal-notice-url: https://www.detmold.de/de/impressum.php
+          privacy-url: https://www.detmold.de/de/datenschutz.php
+          contact-url: https://www.detmold.de/de/kontakt/
+        viz-groups:
+          sccon: {}
+  smtp: &keycloakSMTP
+    from: keycloak-udh-platform@example.com
+    fromDisplayName: keycloak-config-cli
+    host: mailing.example.com
+    auth: true
+    port: 25
+    ssl: false
+    user: admin
+    password: adminpassword
+  adminUser: admin
+  adminPassword: ""
+mailhog:
+  enabled: false
+  auth:
+    enabled: true
+  ingress:
+    enabled: false
+    annotations: {}
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 20m
+      memory: 128Mi
+
+cloudnativePostgres:
+  image:
+    registry: ghcr.io
+    repository: cloudnative-pg/postgresql
+    tag: "15.17"
+  replicas: 1
+  persistence:
+    size: 40Gi
+#  backup:
+#    schedule: "0 0 * * *"
+#    s3:
+#      endpointURL: https://api.ffm3.teutostack.de:6780
+#      path: s3://my-bucket/
+#      secret:
+#        name: backup-credentials
+
+sharedAppsDatabase:
+  image:
+    registry: ghcr.io
+    repository: cloudnative-pg/postgresql
+    tag: "17.9"
+  replicas: 1
+  persistence:
+    size: 4Gi
+
+# use standard namespace by default
+sharedAppsNamespace: null
+
+dedicatedAppsDatabase:
+  image:
+    registry: ghcr.io
+    repository: cloudnative-pg/postgresql
+    tag: "17.9"
+  replicas: 1
+  persistence:
+    size: 4Gi
+
+# use standard namespace by default
+dedicatedAppsNamespace: null
+
+dedicatedApps:
+  apps: {}
+
+clickhouse:
+  image: clickhouse/clickhouse-server:26.3.4.11
+  replicas: 1
+  keeper:
+    image: clickhouse/clickhouse-keeper:26.3.4.11
+    replicas: 1
+    persistence:
+      data:
+        size: 1Gi
+  ingress:
+    annotations: {}
+  persistence:
+    data:
+      size: 1Gi
+  resources:
+    requests:
+      cpu: 200m
+      memory: 800Mi
+    limits:
+      memory: 3Gi
+
+discourse:
+  resources:
+    requests:
+      memory: 512Mi
+    limits:
+      memory: 10Gi
+  enabled: true
+  siteName: This is my awesome site
+  image:
+    registry: "tickets.teuto.net:5050"
+    repository: 4teuto/cust/9314/udh-platform/udp/discourse
+    pullPolicy: Always
+  auth:
+    email: admin@example.com
+    username: admin
+    password: adminpassword
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 8m
+  smtp:
+    host: local-udh-platform-mailhog
+    port: 25
+    user: my-user
+    password: test123
+    protocol: tls
+  extraEnvVars:
+    discourse:
+      - name: DISCOURSE_PRECOMPILE_ASSETS
+        value: "false"
+      - name: RUBY_YJIT_ENABLE
+        value: "1"
+    sidekiq: {}
+jupyterhub:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 200m
+  proxy:
+    chp:
+      resources:
+        requests:
+          cpu: 20m
+          memory: 256Mi
+        limits:
+          memory: 1024Mi
+    traefik:
+      resources:
+        requests:
+          cpu: 20m
+          memory: 256Mi
+        limits:
+          memory: 1024Mi
+    secretSync:
+      resources:
+        requests:
+          cpu: 20m
+          memory: 256Mi
+        limits:
+          memory: 1024Mi
+  hub:
+    image:
+      registry: "tickets.teuto.net:5050"
+      pullPolicy: Always
+      repository: "4teuto/cust/9314/udh-platform/udp/jupyterhub"
+      tag: ""
+      digest: ""
+    resources:
+      requests:
+        cpu: 20m
+        memory: 256Mi
+      limits:
+        memory: 1024Mi
+  prePuller:
+    resources:
+      requests:
+        memory: 256Mi
+      limits:
+        memory: 1024Mi
+  notebook:
+    image:
+      registry: "tickets.teuto.net:5050"
+      pullPolicy: Always
+      repository: "4teuto/cust/9314/udh-platform/udp/jupyterhub-notebook"
+      tag: ""
+      digest: ""
+  singleuser:
+    allowPrivateIPs: false
+    # minimum size that can be provided by openstack (storageclass teutostack-ssd)
+    storageCapacity: 1Gi
+
+fakeCa:
+  enabled: false
+  generate: false
+  certificate: ""
+  privateKey: ""
+  name: ""
+
+objectStorage:
+  enabled: true
+  allowDeletion: false
+  storage: 5Gi
+  monStorage: 5Gi
+  singleNode: false
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+  operator:
+    enabled: false
+  reuseClusterFromNamespace: ""
+  serviceMonitor:
+    enabled: true
+
+frontend:
+  govhub:
+    replicas: 1
+    image:
+      registry: "tickets.teuto.net:5050"
+      repository: 4teuto/cust/9314/udh-platform/udp/govhub
+    ingress:
+      annotations: {}
+    resources:
+      requests:
+        cpu: 20m
+        memory: 128Mi
+      limits:
+        memory: 512Mi
+  citizenhub:
+    replicas: 1
+    image:
+      registry: "tickets.teuto.net:5050"
+      repository: 4teuto/cust/9314/udh-platform/udp/citizenhub
+    ingress:
+      annotations: {}
+    resources:
+      requests:
+        cpu: 20m
+        memory: 128Mi
+      limits:
+        memory: 512Mi
+
+superset:
+  adminUser:
+    password: adminpassword
+  image:
+    registry: "tickets.teuto.net:5050"
+    repository: 4teuto/cust/9314/udh-platform/udp/superset
+    pullPolicy: Always
+  ingress:
+    annotations: {}
+  supersetNode:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 20m
+        memory: 250Mi
+      limits:
+        memory: 1Gi
+  redis:
+    resources:
+      requests:
+        cpu: 40m
+        memory: 20Mi
+      limits:
+        memory: 200Mi
+  supersetWorker:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 200m
+        memory: 900Mi
+      limits:
+        memory: 4Gi
+  supersetCeleryBeat:
+    resources:
+      requests: &celeryBeatRequests
+        cpu: 20m
+        memory: 256Mi
+      limits:
+        memory: 512Mi
+  mapboxToken: ""
+  smtp:
+    <<: *keycloakSMTP
+    from: superset@example.com
+    fromDisplayName: Urban Stack
+
+kafka:
+  singleNode: false
+  deleteClaim: false
+  monitoring:
+    enabled: true
+  node:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 3Gi
+      limits:
+        memory: 6Gi
+  entityOperator:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
+      limits:
+        memory: 1Gi
+
+ingestor:
+  image:
+    registry: "tickets.teuto.net:5050"
+    repository: 4teuto/cust/9314/udh-platform/udp/ingestor
+  resources:
+    requests:
+      cpu: 100m
+      memory: 32Mi
+    limits:
+      memory: 1Gi
+  ingress:
+    annotations: {}
+  testmqtt:
+    enabled: false
+    image:
+      registry: mirror.gcr.io
+      repository: eclipse-mosquitto
+      tag: 2.0.22
+    resources:
+      requests:
+        cpu: 20m
+        memory: 32Mi
+      limits:
+        memory: 256Mi
+    ingress:
+      annotations: {}
+  apiServer:
+    host: null
+    port: null
+
+pubquery:
+  replicas: 1
+  image:
+    registry: "tickets.teuto.net:5050"
+    repository: 4teuto/cust/9314/udh-platform/udp/pubquery
+  resources:
+    requests:
+      cpu: 100m
+      memory: 32Mi
+    limits:
+      memory: 1Gi
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/upstream-hash-by: "$request_uri"
+
+citytools:
+  enabled: true
+  replicas: 1
+  ingress:
+    annotations: {}
+  image:
+    registry: "tickets.teuto.net:5050"
+    repository: 4teuto/cust/9314/udh-platform/udp/citytools
+  resources:
+    requests:
+      cpu: 10m
+      memory: 50Mi
+    limits:
+      memory: 200Mi
+
+docs:
+  enabled: true
+  replicas: 1
+  ingress:
+    annotations: {}
+  image:
+    registry: "tickets.teuto.net:5050"
+    repository: 4teuto/cust/9314/udh-platform/udp/docs
+  resources:
+    requests:
+      cpu: 10m
+      memory: 50Mi
+    limits:
+      memory: 200Mi
+
+ckan:
+  enabled: true
+  serviceMonitor: true
+  image:
+    registry: "tickets.teuto.net:5050"
+    repository: 4teuto/cust/9314/udh-platform/udp/ckan
+  siteId: ckan_urbanstack
+  siteTitle: CKAN UrbanStack
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 200m
+  sysadmin:
+    email: sysadmin@example.com
+  plugins:
+    - image_view
+    - text_view
+    - datatables_view
+    - datastore
+    - datapusher
+    - envvars
+    - dcat
+    - dcatde
+    - dcat_json_interface
+    - keycloak
+    - udh_theme
+  solr:
+    collectionReplicas: 2
+    replicaCount: 2
+    zookeeper:
+      replicaCount: 3
+  valkey:
+    replicaCount: 2
+
+sensormeta:
+  replicas: 1
+  image:
+    registry: "tickets.teuto.net:5050"
+    repository: 4teuto/cust/9314/udh-platform/udp/sensormeta
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 16m
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 32Mi
+    limits:
+      memory: 300Mi
+
+nifi:
+  enabled: false
+  initialAdminIdentity: data-hub-admin@example.com
+  image:
+    registry: docker.io
+    repository: apache/nifi
+    tag: 2.9.0
+  resources:
+    requests:
+      cpu: 100m
+      memory: 1Gi
+    limits:
+      memory: 2Gi
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+  persistence:
+    size: 20Gi
+    accessMode: ReadWriteOnce
+    storageClass: ""
+
+zipupload:
+  replicas: 1
+  image:
+    registry: "tickets.teuto.net:5050"
+    repository: 4teuto/cust/9314/udh-platform/udp/zipupload
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 100m
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, OPTIONS"
+      nginx.ingress.kubernetes.io/cors-allow-headers: "Content-Type"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      memory: 400Mi

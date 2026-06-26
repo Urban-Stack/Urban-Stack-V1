@@ -1,0 +1,32 @@
+diff --git a/superset/translations/de/LC_MESSAGES/messages.po b/superset/translations/de/LC_MESSAGES/messages.po
+index 3704dab965..5443128964 100644
+--- a/superset/translations/de/LC_MESSAGES/messages.po
++++ b/superset/translations/de/LC_MESSAGES/messages.po
+@@ -4441,7 +4441,7 @@ msgid "Download to CSV"
+ msgstr "Als CSV herunterladen"
+ 
+ msgid "Draft"
+-msgstr "Entwurf"
++msgstr "Intern"
+ 
+ msgid "Drag and drop components and charts to the dashboard"
+ msgstr "Ziehen Sie Komponenten und Diagramme per Drag & Drop auf das Dashboard"
+@@ -12038,8 +12038,7 @@ msgstr "Dieses Dashboard ist jetzt veröffentlicht"
+ 
+ msgid "This dashboard is published. Click to make it a draft."
+ msgstr ""
+-"Dieses Dashboard ist veröffentlicht. Klicken Sie hier, um es in den "
+-"Entwurfstatus zu setzen."
++"Dieses Dashboard ist veröffentlicht. Klicken Sie hier, um es als intern zu markieren."
+ 
+ msgid ""
+ "This dashboard is ready to embed. In your application, pass the following"
+@@ -14490,7 +14489,7 @@ msgid "dialect+driver://username:password@host:port/database"
+ msgstr "dialect+driver://username:password@host:port/database"
+ 
+ msgid "draft"
+-msgstr "Entwurf"
++msgstr "Intern"
+ 
+ msgid "dttm"
+ msgstr "dttm"

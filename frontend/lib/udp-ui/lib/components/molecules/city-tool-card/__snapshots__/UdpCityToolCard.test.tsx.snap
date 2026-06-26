@@ -1,0 +1,4241 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshots > matches snapshot for contact given 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div
+              class="w-fit"
+              data-testid="flowbite-tooltip-target"
+            >
+              <a
+                class="block focus:outline-none focus:ring-3 rounded-md hover:bg-primary-200 focus:ring-primary-200"
+                data-testid="udp-citytool-card-contact-badge"
+                href="mailto:contact@mail.xy"
+              >
+                <div
+                  class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-200 size-6 p-0.5 rounded-md"
+                >
+                  <span
+                    class="contents"
+                  >
+                    <svg
+                      class="size-4.5"
+                      fill="none"
+                      height="53"
+                      viewBox="0 0 53 53"
+                      width="53"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M26.2745 28.2751L46.4486 12.1521C45.6739 11.5378 44.6918 11.1984 43.6753 11.1938H8.87365C7.85717 11.1984 6.87504 11.5378 6.10039 12.1521L26.2745 28.2751Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                      <path
+                        clip-rule="evenodd"
+                        d="M28.9934 31.4481C28.2017 32.0133 27.2342 32.3219 26.2375 32.3272C25.3087 32.3289 24.4046 32.0481 23.6622 31.5273L4.52344 16.2366V37.5851C4.52344 38.662 4.98176 39.6947 5.79758 40.4561C6.61341 41.2176 7.7199 41.6453 8.87365 41.6453H43.6753C44.8291 41.6453 45.9356 41.2176 46.7514 40.4561C47.5672 39.6947 48.0256 38.662 48.0256 37.5851V16.2366L28.9934 31.4481Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            </div>
+            <div
+              class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700"
+              data-floating-ui-focusable=""
+              data-testid="flowbite-tooltip"
+              id="_r_i_"
+              role="tooltip"
+              style="position: absolute; top: 0px; left: 0px;"
+              tabindex="-1"
+            >
+              <div
+                class="relative z-20"
+              >
+                Ansprechpartner: contact@mail.xy
+              </div>
+              <div
+                class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+                data-testid="flowbite-tooltip-arrow"
+                style="top: -4px;"
+              >
+                 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+          <div
+            class="w-fit"
+            data-testid="flowbite-tooltip-target"
+          >
+            <a
+              class="block focus:outline-none focus:ring-3 rounded-md hover:bg-primary-200 focus:ring-primary-200"
+              data-testid="udp-citytool-card-contact-badge"
+              href="mailto:contact@mail.xy"
+            >
+              <div
+                class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-200 size-6 p-0.5 rounded-md"
+              >
+                <span
+                  class="contents"
+                >
+                  <svg
+                    class="size-4.5"
+                    fill="none"
+                    height="53"
+                    viewBox="0 0 53 53"
+                    width="53"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M26.2745 28.2751L46.4486 12.1521C45.6739 11.5378 44.6918 11.1984 43.6753 11.1938H8.87365C7.85717 11.1984 6.87504 11.5378 6.10039 12.1521L26.2745 28.2751Z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                    />
+                    <path
+                      clip-rule="evenodd"
+                      d="M28.9934 31.4481C28.2017 32.0133 27.2342 32.3219 26.2375 32.3272C25.3087 32.3289 24.4046 32.0481 23.6622 31.5273L4.52344 16.2366V37.5851C4.52344 38.662 4.98176 39.6947 5.79758 40.4561C6.61341 41.2176 7.7199 41.6453 8.87365 41.6453H43.6753C44.8291 41.6453 45.9356 41.2176 46.7514 40.4561C47.5672 39.6947 48.0256 38.662 48.0256 37.5851V16.2366L28.9934 31.4481Z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </a>
+          </div>
+          <div
+            class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700"
+            data-floating-ui-focusable=""
+            data-testid="flowbite-tooltip"
+            id="_r_i_"
+            role="tooltip"
+            style="position: absolute; top: 0px; left: 0px;"
+            tabindex="-1"
+          >
+            <div
+              class="relative z-20"
+            >
+              Ansprechpartner: contact@mail.xy
+            </div>
+            <div
+              class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+              data-testid="flowbite-tooltip-arrow"
+              style="top: -4px;"
+            >
+               
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot for installation count given 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          >
+            <p
+              class="text-primary-300 text-sm truncate"
+              data-testid="udp-citytool-card-install-count"
+            >
+              123 Installationen
+            </p>
+          </div>
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        >
+          <p
+            class="text-primary-300 text-sm truncate"
+            data-testid="udp-citytool-card-install-count"
+          >
+            123 Installationen
+          </p>
+        </div>
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot for minimal content 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot for state 'installable' 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+            <div
+              class="h-10.5 flex items-center"
+            >
+              <button
+                aria-busy="false"
+                class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+                data-loading="false"
+                data-testid="udp-citytool-card-install-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    installable text
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+          <div
+            class="h-10.5 flex items-center"
+          >
+            <button
+              aria-busy="false"
+              class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+              data-loading="false"
+              data-testid="udp-citytool-card-install-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  installable text
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot for state 'installed' 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+            <div
+              class="h-10.5 flex items-center"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none h-6 whitespace-nowrap bg-success-100 text-success-700 rounded-md"
+                data-testid="udp-citytool-card-state-badge"
+              >
+                <span
+                  class="contents"
+                >
+                  installed text
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+          <div
+            class="h-10.5 flex items-center"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none h-6 whitespace-nowrap bg-success-100 text-success-700 rounded-md"
+              data-testid="udp-citytool-card-state-badge"
+            >
+              <span
+                class="contents"
+              >
+                installed text
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot for state 'request' 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+            <div
+              class="h-10.5 flex items-center"
+            >
+              <button
+                aria-busy="false"
+                class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+                data-loading="false"
+                data-testid="udp-citytool-card-request-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    request text
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+          <div
+            class="h-10.5 flex items-center"
+          >
+            <button
+              aria-busy="false"
+              class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+              data-loading="false"
+              data-testid="udp-citytool-card-request-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  request text
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot for state 'warning' 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+            <div
+              class="h-10.5 flex items-center"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none h-6 whitespace-nowrap bg-warning-100 text-warning-700 rounded-md"
+                data-testid="udp-citytool-card-state-badge"
+              >
+                <span
+                  class="contents"
+                >
+                  warning text
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+          <div
+            class="h-10.5 flex items-center"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none h-6 whitespace-nowrap bg-warning-100 text-warning-700 rounded-md"
+              data-testid="udp-citytool-card-state-badge"
+            >
+              <span
+                class="contents"
+              >
+                warning text
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot when editable 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div
+              class="w-fit flex"
+              data-testid="flowbite-tooltip-target"
+            >
+              <button
+                class="focus:outline-none focus:ring-3 rounded-md hover:bg-primary-200 focus:ring-primary-200 cursor-pointer"
+                data-testid="udp-citytool-card-edit"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-200 size-6 p-0.5 rounded-md cursor-pointer"
+                >
+                  <span
+                    class="contents"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="size-5"
+                      fill="currentColor"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z"
+                        fill-rule="evenodd"
+                      />
+                      <path
+                        clip-rule="evenodd"
+                        d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </button>
+            </div>
+            <div
+              class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs max-w-96 transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 grow"
+              data-floating-ui-focusable=""
+              data-testid="flowbite-tooltip"
+              id="_r_m_"
+              role="tooltip"
+              style="position: absolute; top: 0px; left: 0px;"
+              tabindex="-1"
+            >
+              <div
+                class="relative z-20"
+              >
+                edit badge
+              </div>
+              <div
+                class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+                data-testid="flowbite-tooltip-arrow"
+                style="top: -4px;"
+              >
+                 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+          <div
+            class="w-fit flex"
+            data-testid="flowbite-tooltip-target"
+          >
+            <button
+              class="focus:outline-none focus:ring-3 rounded-md hover:bg-primary-200 focus:ring-primary-200 cursor-pointer"
+              data-testid="udp-citytool-card-edit"
+              type="button"
+            >
+              <div
+                class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-200 size-6 p-0.5 rounded-md cursor-pointer"
+              >
+                <span
+                  class="contents"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="size-5"
+                    fill="currentColor"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z"
+                      fill-rule="evenodd"
+                    />
+                    <path
+                      clip-rule="evenodd"
+                      d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </button>
+          </div>
+          <div
+            class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs max-w-96 transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 grow"
+            data-floating-ui-focusable=""
+            data-testid="flowbite-tooltip"
+            id="_r_m_"
+            role="tooltip"
+            style="position: absolute; top: 0px; left: 0px;"
+            tabindex="-1"
+          >
+            <div
+              class="relative z-20"
+            >
+              edit badge
+            </div>
+            <div
+              class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+              data-testid="flowbite-tooltip-arrow"
+              style="top: -4px;"
+            >
+               
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot when linked 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <a
+              class="flex gap-1 items-center text-primary-700 truncate group hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="udp-citytool-card-title"
+              href="/foobar"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+              <svg
+                aria-hidden="true"
+                class="invisible group-hover:visible group-focus:visible size-6 shrink-0"
+                fill="currentColor"
+                height="24"
+                viewBox="0 0 16 17"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13.2864 9.71809C12.8384 9.71693 12.3992 9.59422 12.0155 9.36305C11.6319 9.13187 11.3181 8.80089 11.1078 8.40541L9.26804 10.2452C8.86614 10.6333 8.32785 10.8481 7.76911 10.8433C7.21038 10.8384 6.6759 10.6143 6.28081 10.2192C5.8857 9.82409 5.66159 9.28962 5.65674 8.73089C5.65188 8.17215 5.86667 7.63386 6.25485 7.23196L8.09459 5.39221C7.69911 5.18188 7.36813 4.86814 7.13695 4.48447C6.90578 4.1008 6.78307 3.66158 6.78191 3.21365C6.78191 3.18665 6.78901 3.16179 6.79043 3.1348H3.53927C3.13115 3.13518 2.73985 3.29747 2.45126 3.58606C2.16267 3.87465 2.00038 4.26595 2 4.67408V12.9607C2.00038 13.3689 2.16267 13.7602 2.45126 14.0487C2.73985 14.3373 3.13115 14.4996 3.53927 14.5H11.8259C12.2341 14.4996 12.6254 14.3373 12.9139 14.0487C13.2025 13.7602 13.3648 13.3689 13.3652 12.9607V9.70957C13.3382 9.71099 13.3133 9.71809 13.2864 9.71809Z"
+                />
+                <path
+                  d="M13.2864 7.94228C13.098 7.94228 12.9173 7.86744 12.7841 7.73423C12.6509 7.60102 12.576 7.42034 12.576 7.23196V3.92397H9.26804C9.07966 3.92397 8.89898 3.84913 8.76577 3.71592C8.63256 3.58271 8.55772 3.40204 8.55772 3.21365C8.55772 3.02526 8.63256 2.84458 8.76577 2.71137C8.89898 2.57816 9.07966 2.50332 9.26804 2.50332H13.2864C13.4747 2.50332 13.6554 2.57816 13.7886 2.71137C13.9218 2.84458 13.9967 3.02526 13.9967 3.21365V7.23196C13.9967 7.42034 13.9218 7.60102 13.7886 7.73423C13.6554 7.86744 13.4747 7.94228 13.2864 7.94228Z"
+                />
+                <path
+                  d="M7.76145 9.44888C7.62074 9.44941 7.48304 9.40814 7.36582 9.33031C7.2486 9.25247 7.15713 9.14157 7.10303 9.01168C7.04893 8.88179 7.03462 8.73875 7.06193 8.60072C7.08923 8.46268 7.15692 8.33587 7.2564 8.23636L12.7842 2.70861C12.8503 2.64247 12.9288 2.59001 13.0152 2.55421C13.1016 2.51842 13.1942 2.5 13.2878 2.5C13.3813 2.5 13.4739 2.51842 13.5603 2.55421C13.6467 2.59001 13.7253 2.64247 13.7914 2.70861C13.8575 2.77474 13.91 2.85326 13.9458 2.93967C13.9816 3.02608 14 3.1187 14 3.21223C14 3.30576 13.9816 3.39837 13.9458 3.48478C13.91 3.5712 13.8575 3.64971 13.7914 3.71585L8.26365 9.2436C8.19763 9.30927 8.11927 9.36122 8.03307 9.39645C7.94688 9.43169 7.85456 9.4495 7.76145 9.44888Z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <a
+            class="flex gap-1 items-center text-primary-700 truncate group hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+            data-testid="udp-citytool-card-title"
+            href="/foobar"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+            <svg
+              aria-hidden="true"
+              class="invisible group-hover:visible group-focus:visible size-6 shrink-0"
+              fill="currentColor"
+              height="24"
+              viewBox="0 0 16 17"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.2864 9.71809C12.8384 9.71693 12.3992 9.59422 12.0155 9.36305C11.6319 9.13187 11.3181 8.80089 11.1078 8.40541L9.26804 10.2452C8.86614 10.6333 8.32785 10.8481 7.76911 10.8433C7.21038 10.8384 6.6759 10.6143 6.28081 10.2192C5.8857 9.82409 5.66159 9.28962 5.65674 8.73089C5.65188 8.17215 5.86667 7.63386 6.25485 7.23196L8.09459 5.39221C7.69911 5.18188 7.36813 4.86814 7.13695 4.48447C6.90578 4.1008 6.78307 3.66158 6.78191 3.21365C6.78191 3.18665 6.78901 3.16179 6.79043 3.1348H3.53927C3.13115 3.13518 2.73985 3.29747 2.45126 3.58606C2.16267 3.87465 2.00038 4.26595 2 4.67408V12.9607C2.00038 13.3689 2.16267 13.7602 2.45126 14.0487C2.73985 14.3373 3.13115 14.4996 3.53927 14.5H11.8259C12.2341 14.4996 12.6254 14.3373 12.9139 14.0487C13.2025 13.7602 13.3648 13.3689 13.3652 12.9607V9.70957C13.3382 9.71099 13.3133 9.71809 13.2864 9.71809Z"
+              />
+              <path
+                d="M13.2864 7.94228C13.098 7.94228 12.9173 7.86744 12.7841 7.73423C12.6509 7.60102 12.576 7.42034 12.576 7.23196V3.92397H9.26804C9.07966 3.92397 8.89898 3.84913 8.76577 3.71592C8.63256 3.58271 8.55772 3.40204 8.55772 3.21365C8.55772 3.02526 8.63256 2.84458 8.76577 2.71137C8.89898 2.57816 9.07966 2.50332 9.26804 2.50332H13.2864C13.4747 2.50332 13.6554 2.57816 13.7886 2.71137C13.9218 2.84458 13.9967 3.02526 13.9967 3.21365V7.23196C13.9967 7.42034 13.9218 7.60102 13.7886 7.73423C13.6554 7.86744 13.4747 7.94228 13.2864 7.94228Z"
+              />
+              <path
+                d="M7.76145 9.44888C7.62074 9.44941 7.48304 9.40814 7.36582 9.33031C7.2486 9.25247 7.15713 9.14157 7.10303 9.01168C7.04893 8.88179 7.03462 8.73875 7.06193 8.60072C7.08923 8.46268 7.15692 8.33587 7.2564 8.23636L12.7842 2.70861C12.8503 2.64247 12.9288 2.59001 13.0152 2.55421C13.1016 2.51842 13.1942 2.5 13.2878 2.5C13.3813 2.5 13.4739 2.51842 13.5603 2.55421C13.6467 2.59001 13.7253 2.64247 13.7914 2.70861C13.8575 2.77474 13.91 2.85326 13.9458 2.93967C13.9816 3.02608 14 3.1187 14 3.21223C14 3.30576 13.9816 3.39837 13.9458 3.48478C13.91 3.5712 13.8575 3.64971 13.7914 3.71585L8.26365 9.2436C8.19763 9.30927 8.11927 9.36122 8.03307 9.39645C7.94688 9.43169 7.85456 9.4495 7.76145 9.44888Z"
+              />
+            </svg>
+          </a>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot when loading 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+            <div
+              class="h-10.5 flex items-center"
+            >
+              <button
+                aria-busy="true"
+                aria-label="Wird verarbeitet"
+                class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+                data-loading="true"
+                data-testid="udp-citytool-card-install-button"
+                disabled=""
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <span
+                    aria-live="polite"
+                    class="sr-only"
+                  >
+                    Wird verarbeitet
+                  </span>
+                  <div
+                    class="absolute inset-0 flex items-center justify-center"
+                  >
+                    <span
+                      data-testid="udp-button-loading-spinner"
+                      role="status"
+                    >
+                      <svg
+                        class="inline animate-spin text-primary-200 fill-primary-500 dark:text-gray-600 h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 100 101"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="px-1 empty:hidden invisible"
+                  >
+                    Installieren
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+          <div
+            class="h-10.5 flex items-center"
+          >
+            <button
+              aria-busy="true"
+              aria-label="Wird verarbeitet"
+              class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+              data-loading="true"
+              data-testid="udp-citytool-card-install-button"
+              disabled=""
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <span
+                  aria-live="polite"
+                  class="sr-only"
+                >
+                  Wird verarbeitet
+                </span>
+                <div
+                  class="absolute inset-0 flex items-center justify-center"
+                >
+                  <span
+                    data-testid="udp-button-loading-spinner"
+                    role="status"
+                  >
+                    <svg
+                      class="inline animate-spin text-primary-200 fill-primary-500 dark:text-gray-600 h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 100 101"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                <div
+                  class="px-1 empty:hidden invisible"
+                >
+                  Installieren
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot when removable 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div
+              class="w-fit flex"
+              data-testid="flowbite-tooltip-target"
+            >
+              <button
+                class="focus:outline-none focus:ring-3 rounded-md hover:bg-danger-200 focus:ring-danger-300 cursor-pointer"
+                data-testid="udp-citytool-card-remove"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-danger-100 text-danger-700 hover:bg-danger-200 focus:ring-danger-300 size-6 p-0.5 rounded-md cursor-pointer"
+                >
+                  <span
+                    class="contents"
+                  >
+                    <svg
+                      class="size-4.5"
+                      fill="currentColor"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414M10 6h4V4h-4zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </button>
+            </div>
+            <div
+              class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs max-w-96 transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 grow"
+              data-floating-ui-focusable=""
+              data-testid="flowbite-tooltip"
+              id="_r_q_"
+              role="tooltip"
+              style="position: absolute; top: 0px; left: 0px;"
+              tabindex="-1"
+            >
+              <div
+                class="relative z-20"
+              >
+                remove badge
+              </div>
+              <div
+                class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+                data-testid="flowbite-tooltip-arrow"
+                style="top: -4px;"
+              >
+                 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+          <div
+            class="w-fit flex"
+            data-testid="flowbite-tooltip-target"
+          >
+            <button
+              class="focus:outline-none focus:ring-3 rounded-md hover:bg-danger-200 focus:ring-danger-300 cursor-pointer"
+              data-testid="udp-citytool-card-remove"
+              type="button"
+            >
+              <div
+                class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-danger-100 text-danger-700 hover:bg-danger-200 focus:ring-danger-300 size-6 p-0.5 rounded-md cursor-pointer"
+              >
+                <span
+                  class="contents"
+                >
+                  <svg
+                    class="size-4.5"
+                    fill="currentColor"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414M10 6h4V4h-4zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </button>
+          </div>
+          <div
+            class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs max-w-96 transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 grow"
+            data-floating-ui-focusable=""
+            data-testid="flowbite-tooltip"
+            id="_r_q_"
+            role="tooltip"
+            style="position: absolute; top: 0px; left: 0px;"
+            tabindex="-1"
+          >
+            <div
+              class="relative z-20"
+            >
+              remove badge
+            </div>
+            <div
+              class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+              data-testid="flowbite-tooltip-arrow"
+              style="top: -4px;"
+            >
+               
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot with custom class 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg custom-test-class"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg custom-test-class"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot with fallbackImage 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 pointer-events-none"
+          >
+            <img
+              alt=""
+              class="absolute size-full max-w-none object-cover"
+              src="https://example.com/fallback.jpg"
+            />
+            <div
+              class="absolute inset-0 bg-gray-100/60"
+            />
+          </div>
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none"
+        >
+          <img
+            alt=""
+            class="absolute size-full max-w-none object-cover"
+            src="https://example.com/fallback.jpg"
+          />
+          <div
+            class="absolute inset-0 bg-gray-100/60"
+          />
+        </div>
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`snapshots > matches snapshot with pictureUri 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white flex flex-col rounded-2xl shadow-lg"
+        data-testid="udp-citytool-card"
+      >
+        <div
+          class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+        >
+          <div
+            class="flex justify-between gap-4 items-center"
+          >
+            <div
+              class="flex gap-1 items-center text-primary-700 truncate group"
+              data-testid="udp-citytool-card-title"
+            >
+              <h2
+                class="text-xl font-bold truncate"
+              >
+                City Tool title
+              </h2>
+            </div>
+          </div>
+          <div
+            class="relative"
+            data-testid="udp-citytool-categories"
+          >
+            <div
+              class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat1
+                </span>
+              </div>
+              <div
+                class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+              >
+                <span
+                  class="contents"
+                >
+                  cat2
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+        >
+          <img
+            alt=""
+            aria-hidden="true"
+            class="absolute inset-0 size-full max-w-none object-cover pointer-events-none"
+            src="https://example.com/img.jpg"
+          />
+        </div>
+        <div
+          class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+        >
+          <div
+            class="h-full flex items-center truncate"
+          />
+          <div
+            class="flex gap-2.5 items-center"
+          >
+            <div>
+              <button
+                aria-busy="false"
+                class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+                data-loading="false"
+                data-testid="udp-citytool-more-details-button"
+                type="button"
+              >
+                <div
+                  class="relative flex items-center gap-1"
+                >
+                  <div
+                    class="px-1 empty:hidden"
+                  >
+                    Details anzeigen
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white flex flex-col rounded-2xl shadow-lg"
+      data-testid="udp-citytool-card"
+    >
+      <div
+        class="flex flex-col gap-2.5 p-6 shrink-0 overflow-hidden"
+      >
+        <div
+          class="flex justify-between gap-4 items-center"
+        >
+          <div
+            class="flex gap-1 items-center text-primary-700 truncate group"
+            data-testid="udp-citytool-card-title"
+          >
+            <h2
+              class="text-xl font-bold truncate"
+            >
+              City Tool title
+            </h2>
+          </div>
+        </div>
+        <div
+          class="relative"
+          data-testid="udp-citytool-categories"
+        >
+          <div
+            class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat1
+              </span>
+            </div>
+            <div
+              class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+            >
+              <span
+                class="contents"
+              >
+                cat2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex-[1_0_0] min-h-40 w-full overflow-hidden"
+      >
+        <img
+          alt=""
+          aria-hidden="true"
+          class="absolute inset-0 size-full max-w-none object-cover pointer-events-none"
+          src="https://example.com/img.jpg"
+        />
+      </div>
+      <div
+        class="min-h-11 h-11 px-6 flex gap-4 justify-between items-center text-primary-300 text-sm shrink-0"
+      >
+        <div
+          class="h-full flex items-center truncate"
+        />
+        <div
+          class="flex gap-2.5 items-center"
+        >
+          <div>
+            <button
+              aria-busy="false"
+              class="flex font-medium text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100 hover:bg-transparent active:bg-transparent hover:text-primary-500 p-1 focus:rounded-md focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-loading="false"
+              data-testid="udp-citytool-more-details-button"
+              type="button"
+            >
+              <div
+                class="relative flex items-center gap-1"
+              >
+                <div
+                  class="px-1 empty:hidden"
+                >
+                  Details anzeigen
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

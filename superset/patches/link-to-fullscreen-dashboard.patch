@@ -1,0 +1,77 @@
+diff --git a/superset-frontend/src/dashboard/components/Header/index.jsx b/superset-frontend/src/dashboard/components/Header/index.jsx
+index 1a4f3b43bf..d705770af7 100644
+--- a/superset-frontend/src/dashboard/components/Header/index.jsx
++++ b/superset-frontend/src/dashboard/components/Header/index.jsx
+@@ -597,32 +597,47 @@ const Header = () => {
+       isStarred,
+     ],
+   );
++const titlePanelAdditionalItems = useMemo(() => {
++  const inIframe = window.self !== window.top;
++  const isStandalone = new URLSearchParams(window.location.search).has('standalone');
+ 
+-  const titlePanelAdditionalItems = useMemo(
+-    () => [
+-      !editMode && (
+-        <PublishedStatus
+-          dashboardId={dashboardInfo.id}
+-          isPublished={isPublished}
+-          savePublished={boundActionCreators.savePublished}
+-          userCanEdit={userCanEdit}
+-          userCanSave={userCanSaveAs}
+-          visible={!editMode}
+-        />
+-      ),
+-      !editMode && !isEmbedded && metadataBar,
+-    ],
+-    [
+-      boundActionCreators.savePublished,
+-      dashboardInfo.id,
+-      editMode,
+-      metadataBar,
+-      isEmbedded,
+-      isPublished,
+-      userCanEdit,
+-      userCanSaveAs,
+-    ],
+-  );
++  return [
++    !editMode && (
++      <PublishedStatus
++        dashboardId={dashboardInfo.id}
++        isPublished={isPublished}
++        savePublished={boundActionCreators.savePublished}
++        userCanEdit={userCanEdit}
++        userCanSave={userCanSaveAs}
++        visible={!editMode}
++      />
++    ),
++    !editMode && !isEmbedded && metadataBar,
++    (!isStandalone || inIframe) && (
++      <Button
++        as="button"
++        buttonStyle="secondary"
++        buttonSize="small"
++        className="action-button"
++        href={`${window.location.pathname}/?standalone=1`}
++        style={{
++          marginLeft: '0.5rem',
++        }}
++        target="_blank"
++        css={editButtonStyle}
++        aria-label="Vollbild-Ansicht öffnen"
++      > Vollbild-Ansicht öffnen
++      </Button>),];}, [
++  boundActionCreators.savePublished,
++  dashboardInfo.id,
++  editMode,
++  metadataBar,
++  isEmbedded,
++  isPublished,
++  userCanEdit,
++  userCanSaveAs,
++],
++);
+ 
+   const rightPanelAdditionalItems = useMemo(
+     () => (

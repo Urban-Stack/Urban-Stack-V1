@@ -1,0 +1,15 @@
+meta {
+  name: Get groups
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/groups
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

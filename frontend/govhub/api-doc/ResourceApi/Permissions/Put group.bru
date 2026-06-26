@@ -1,0 +1,15 @@
+meta {
+  name: Put group
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/groups/{{group}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

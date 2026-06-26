@@ -1,0 +1,14 @@
+diff --git a/superset/tasks/utils.py b/superset/tasks/utils.py
+index 845ea2b5fc..53d7509f1d 100644
+--- a/superset/tasks/utils.py
++++ b/superset/tasks/utils.py
+@@ -70,7 +70,8 @@ def get_executor(  # noqa: C901
+             return ExecutorType.FIXED_USER, executor.username
+         if executor == ExecutorType.FIXED_USER:
+             raise InvalidExecutorError()
+-        if executor == ExecutorType.CURRENT_USER and current_user:
++        from superset.models.dashboard import Dashboard
++        if executor == ExecutorType.CURRENT_USER and current_user and not (isinstance(model, Dashboard) and model.published):
+             return executor, current_user
+         if executor == ExecutorType.CREATOR_OWNER:
+             if (user := model.created_by) and (owner := owner_dict.get(user.id)):

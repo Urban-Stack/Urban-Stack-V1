@@ -1,0 +1,16 @@
+{{- if .Values.nifi.enabled }}
+{{- $name := "nifi" -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+  name: {{ printf "%s-%s" (include "common.names.fullname" $) $name | quote }}
+spec:
+  accessModes:
+    - {{ .Values.nifi.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.nifi.persistence.size }}
+  {{ include "common.storage.class" (dict "persistence" .Values.nifi.persistence "global" $ )}}
+{{- end }}

@@ -1,0 +1,56 @@
+publiccodeYmlVersion: '0.3.0'
+
+name: 'Urbanstack'
+url: 'https://gitlab.opencode.de/teutonet/urbanstack'
+softwareVersion: 'prod'
+logo: 'urbanstack.png'
+releaseDate: '2025-11-14'
+platforms:
+  - linux
+  - web
+
+categories:
+  - data-analytics
+  - data-visualization
+  - data-collection
+  - geographic-information-systems
+  - identity-management
+  - it-development
+  - digital-citizenship
+  - online-community
+  - resource-management
+
+developmentStatus: stable
+
+softwareType: 'standalone/web'
+
+description:
+  de:
+    shortDescription: >
+      Der Urbanstack in ein digitales Ökosystem, von Kommunen für Kommunen. Digitalisierung leicht gemacht: Software-as-a-Service für Ihre Verwaltung und Bürger:innen!
+    longDescription: >
+      Unser Urban Stack bietet ein digitales Ökosystem für Kommunen, Mitarbeitende und Bürger:Innen – Gemeinschaftlich genutzte Infrastruktur mit umfassenden Komponenten: städtische Daten können analysiert, visualisiert und verschnitten werden. Ein Raum für Ideen und Austausch entsteht – ein Ort, an dem Kommunen gemeinsam ihre und unsere Zukunft gestalten. Ein partnerschaftliches Miteinander, das echten Mehrwert schafft.
+
+      Unser Urban Stack stellt die Menschen in den Mittelpunkt. Er passt sich flexibel an die Anforderungen der Kommunen an und lässt sich effizient sowie ressourcenschonend implementieren. Seine smarten Komponenten sind für alle nutzbar – von der kleinen Gemeinde bis zur Metropole, von Sachbearbeiter:innen bis zu Data Scientists. So profitieren alle von innovativen Lösungen und dem gebündelten Know-how innerhalb des digitalen Ökosystems.
+
+      Unser Urban Stack bietet maßgeschneiderte Lösungen für kommunale Herausforderungen durch eine Kombination aus Datenmanagement, -analyse und -präsentation sowie Community- und City-Tools – Eine soziotechnische Mischung die Perspektiven vereint, neue Ideen hervorbringt und Projekte umsetzt! Kommunen profitieren von bewährten Ansätzen, Erfahrungen und geteilten Lösungen. Dies bildet die Grundlage für eine ganzheitliche Digitalisierung und Entwicklung, die Kommunen, ihre Mitarbeitenden und die Bürger:innen miteinander verbindet. Hier entstehen Lösungen, die den Unterschied machen.
+    features:
+      - Zentrale Datenplattform für Daten in urbanen und regionalen Kontexten
+      - Datenvisualisierung
+      - Datenverwaltung
+      - Datenanalyse
+      - Community
+
+legal:
+  license: AGPL-3.0
+
+maintenance:
+  type: 'internal'
+
+  contacts:
+    - name: info@teuto.net
+
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - de

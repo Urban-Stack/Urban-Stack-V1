@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-6"
+  >
+    <div
+      class="flex flex-col gap-4"
+    >
+      <p>
+        Wie möchten Sie Ihre Benutzergruppe nennen?
+      </p>
+      <div
+        class="flex focus:outline-hidden focus:ring-2 focus:ring-primary-500"
+      >
+        <div
+          class="relative w-full"
+        >
+          <input
+            class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+            name="new-user-group-name"
+            placeholder="Unbenannte Benutzergruppe"
+            required=""
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex gap-3.5 flex-wrap w-fit [&>*]:grow [&>*]:justify-center"
+    >
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+        data-loading="false"
+        type="submit"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Gruppe erstellen
+          </div>
+        </div>
+      </button>
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 hover:bg-primary-100 active:bg-primary-100 focus:ring-primary-200 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100"
+        data-loading="false"
+        type="button"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Abbrechen
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+`;

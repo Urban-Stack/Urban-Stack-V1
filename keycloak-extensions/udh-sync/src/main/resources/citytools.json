@@ -1,0 +1,17 @@
+{
+	"masterportal": {
+		"showInGovhub": false,
+		"showInCitizenhub": true,
+		"name": "Masterportal",
+		"description": "Das Masterportal",
+		"pictureUri": "https://www.masterportal.org/fileadmin/content/newsbeitraege/news_masterportal.jpg",
+		"indexPath": "/Basic/index.html",
+		"categories": ["CITIZEN_SERVICES", "GEO_INFORMATION"]
+	},
+	"internal-test-tool": {
+		"showInGovhub": true,
+		"showInCitizenhub": false,
+		"name": "Internes Test Tool",
+		"description": "intern"
+	}
+}

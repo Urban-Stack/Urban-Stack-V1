@@ -1,0 +1,48 @@
+{{- if .Values.mailhog.enabled -}}
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "codecentric") }}
+spec:
+  interval: 1h0m0s
+  url: https://codecentric.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "mailhog") }}
+spec:
+  releaseName: {{ include "data-hub.name" (dict "context" . "name" "mailhog") }}
+  chart:
+    spec:
+      chart: mailhog
+      version: 5.8.0 # renovate: datasource=helm depName=mailhog versioning=helm registryUrl=https://codecentric.github.io/helm-charts
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: {{ include "data-hub.name" (dict "context" . "name" "codecentric") }}
+  interval: 1h0m0s
+  targetNamespace: {{ .Release.Namespace }}
+  values:
+    auth:
+      enabled: {{ .Values.mailhog.auth.enabled }}
+      fileContents: {{ htpasswd .Values.keycloak.smtp.user .Values.keycloak.smtp.password  | quote }}
+    podReplicas: 1
+    service:
+      port:
+        smtp: 25
+    resources: {{- $.Values.mailhog.resources | toYaml | nindent 6 }}
+    ingress:
+      enabled: {{ .Values.mailhog.ingress.enabled }}
+      annotations: {{- include "udh.ingress.annotations" (dict "context" . "annotations" .Values.mailhog.ingress.annotations) | nindent 8 }}
+      hosts:
+        - host: {{ include "data-hub.mailhog.hostname" . }}
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - {{ include "data-hub.mailhog.hostname" . }}
+          secretName: {{ include "data-hub.mailhog.hostname" . }}-tls
+{{- end -}}

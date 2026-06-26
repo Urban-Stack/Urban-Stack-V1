@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`EditBadge matches the snapshot 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="w-fit"
+        data-testid="flowbite-tooltip-target"
+      >
+        <a
+          class="block focus:outline-none focus:ring-3 rounded-md hover:bg-primary-200 focus:ring-primary-200"
+          href="/settings/projects/test-tenant/test-project/subscriptions/sub1"
+        >
+          <div
+            class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-200 size-6 p-0.5 rounded-md"
+          >
+            <span
+              class="contents"
+            >
+              <svg
+                aria-hidden="true"
+                class="size-4"
+                fill="currentColor"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z"
+                  fill-rule="evenodd"
+                />
+                <path
+                  clip-rule="evenodd"
+                  d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 text-nowrap"
+        data-floating-ui-focusable=""
+        data-testid="flowbite-tooltip"
+        id="_r_0_"
+        role="tooltip"
+        style="position: absolute; top: 0px; left: 0px;"
+        tabindex="-1"
+      >
+        <div
+          class="relative z-20"
+        >
+          Subscription bearbeiten
+        </div>
+        <div
+          class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+          data-testid="flowbite-tooltip-arrow"
+          style="bottom: -4px;"
+        >
+           
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="w-fit"
+      data-testid="flowbite-tooltip-target"
+    >
+      <a
+        class="block focus:outline-none focus:ring-3 rounded-md hover:bg-primary-200 focus:ring-primary-200"
+        href="/settings/projects/test-tenant/test-project/subscriptions/sub1"
+      >
+        <div
+          class="relative flex items-center justify-center text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-200 size-6 p-0.5 rounded-md"
+        >
+          <span
+            class="contents"
+          >
+            <svg
+              aria-hidden="true"
+              class="size-4"
+              fill="currentColor"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z"
+                fill-rule="evenodd"
+              />
+              <path
+                clip-rule="evenodd"
+                d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+    <div
+      class="absolute z-10 inline-block rounded-lg px-3 py-2 text-sm font-medium shadow-xs transition-opacity duration-300 invisible opacity-0 bg-gray-900 text-white dark:bg-gray-700 text-nowrap"
+      data-floating-ui-focusable=""
+      data-testid="flowbite-tooltip"
+      id="_r_0_"
+      role="tooltip"
+      style="position: absolute; top: 0px; left: 0px;"
+      tabindex="-1"
+    >
+      <div
+        class="relative z-20"
+      >
+        Subscription bearbeiten
+      </div>
+      <div
+        class="absolute z-10 h-2 w-2 rotate-45 bg-gray-900 dark:bg-gray-700"
+        data-testid="flowbite-tooltip-arrow"
+        style="bottom: -4px;"
+      >
+         
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

@@ -1,0 +1,222 @@
+global:
+  baseDomain: data-hub.local
+  udhImageRegistry: "localimage.test"
+  trustCaSecretName: udh-test-iss
+  storageClass: standard
+  sslInsecureSkipVerify: true
+  ingress:
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/issuer: "udh-test-iss"
+  networkPolicy:
+    additionalExternalEgress:
+      - to:
+          - podSelector:
+              matchLabels:
+                app.kubernetes.io/name: ingress-nginx
+            namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: ingress-nginx
+        ports:
+          - protocol: TCP
+            port: 80
+          - protocol: TCP
+            port: 443
+  testDeployment: true
+
+keycloak:
+  debug: true
+  logLevel: info,com.clickhouse:warn,udh:debug
+  passwordPolicy: length(4)
+  helpdeskEmail: helpdesk@example.com
+  extensions:
+    image:
+      registry: "localimage.test"
+      pullPolicy: IfNotPresent
+      repository: "keycloak-extensions"
+      tag: ""
+      digest: ""
+  testUsers:
+    data-hub-admin:
+      email: data-hub-admin@example.com
+      firstName: Data Hub
+      lastName: Admin
+      password: adminpassword
+      clientRoles:
+        realm-management:
+          - manage-realm
+          - query-users
+          - manage-users
+          - query-groups
+    demo:
+      email: demo-udh-platform@example.com
+      firstName: Mike
+      lastName: Hunt
+      password: demo
+    demo2:
+      email: demo2-udh-platform@example.com
+      firstName: Tanya
+      lastName: Smith
+      password: demo
+  resourceApiAutoProvision:
+    tenants:
+      guetersloh:
+        members:
+          - demo-udh-platform@example.com
+          - demo2-udh-platform@example.com
+          - data-hub-admin@example.com
+        groups:
+          admin:
+            members:
+              - demo-udh-platform@example.com
+        viz-groups:
+          sccon:
+            dashboards:
+              unwetter: {}
+  smtp: &keycloakSMTP
+    from: keycloak-udh-platform@teuto.net
+    fromDisplayName: keycloak-local
+    host: feature-mailhog
+    auth: false
+    ssl: false
+  adminPassword: adminpassword
+
+superset:
+  smtp:
+    <<: *keycloakSMTP
+    from: superset-local@urbanstack.de
+    fromDisplayName: Urban Stack
+
+mailhog:
+  enabled: true
+  ingress:
+    enabled: true
+
+sharedAppsDatabase:
+  serviceMonitor:
+    enabled: false
+
+sharedAppsNamespace: udh-shared-apps
+
+dedicatedAppsDatabase:
+  serviceMonitor:
+    enabled: false
+
+dedicatedAppsNamespace: udh-dedicated-apps
+
+jupyterhub:
+  singleuser:
+    allowPrivateIPs: true # local test-env routes ingresses internally
+
+fakeCa:
+  enabled: true
+  # openssl req -new -x509 -days 3650 -keyout ca.key -out docs/local-ca.crt -subj "/CN=udp" -addext "basicConstraints=critical,CA:TRUE" -addext "keyUsage=critical,keyCertSign" -addext "nameConstraints=permitted;DNS:.data-hub.local" -nodes
+  privateKey: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDL92EwqXN7CK2P
+    asNyDCRFzL7gR9CEWr4iBos/f62Yd0HTFFPFGNLZN166vl2SwWXbRWzzVouB19H4
+    HELxdgO+BgCDdXw7+jUlFaeUIj7TYzspZ/iM5EKQEARPsAUNUrlvXZReP49sjIQt
+    HVsYfj+gi17Q2Mtk/X112cvY+Kvp+nYStCd5LTFXRscMFRF9h6IgieFVQfHchH/r
+    Tz02ikfke1u7RESBAX4B4mJEvdE7sGC4bTnSz3zIV7fZXOIE8n8wfySt/V2tjg0v
+    HF/UtEaRnmUknb/BK7EVgyJb4GrJNTfRa9SUTlyMTejWadVDFS0vwcRJsqYzSR6y
+    6v3tyoL1AgMBAAECggEAYSMt3rp8vGYMHmbGsOx2Y+WYLAEXnckHjvXV4EZiut9k
+    8m1WXeIuHHPhwgcCUm+Xnj9onVUkuJA7t7Fh8lP1gUyjdvf/VCMbp08yUXqjuBGk
+    rdoNxa+5wZlXLEpUhZ1VoeOL0vzrRdN/6Wp3JWmOzNtDKyxsZWrSEsvIaMs5OIMM
+    3MXlADMhsmDC2TeymCZdtJ56+2q13j2O9nExgTRAxZiwEKmThgcxCBL9djyDKj5A
+    sxiA00g4YCiAGYDE8vb2A6OuLNWn7kICgokz/VutswdqKwQD1ClgcyIaEfDOxVKd
+    cH6Djw45WHzoux4SDlQwmLRQGEkE3hBqZ4exzD682wKBgQD3YXLGy4rpgvxLdVZv
+    PEHAXs85fLj120fgXVjR7QUAsUHjVM1hoS0pPFuIoAp1tPy2jUH5tgpxyrX0b+/N
+    jrE7Z2/Tdq2yveYTd5PgBJihmMZIPsBpodySRrmDtUnCjK5XYY1/XSziAzyQVvZp
+    3NnG3S2ZbuYhoXAdudmS6tFrKwKBgQDTErCvqN8aqQI/w0tExdG+zsXmYBw2xOtM
+    N5B98ZeJRO/w87DxfEuMWdluyeB6ZZUXgxssyjxTKX1T1JI+ernPsSUetiM8F/dE
+    YVwyBQGOocULpCj+cLrL8ieV4eDgVF4B8AXNDCuAn63KdSrDjFZFOU4DKOgXkj4/
+    KnO88WQ6XwKBgHb8NhqMGDqMuBELVRGXqACBGacK6GPInt+5xljiaf+VQp23Ujnd
+    Lj2hPF2QrLdE4DBl7Q/QkWF+INp7ZJo4QeLSs6TAdnd8g0dlwoiDbW58bxKcrCui
+    oNbykZRaBCpBRDHfSBG0nTvwVpcOXOM6SL0v8RjVkHcokSabF51kuGmVAoGAPbe6
+    WDK9wdLnaHOXX62kLfHSJhG2TkF4N9oLcvgggi/ZJRBsjb/1az2eeWmoLMHlPXHF
+    kWw1BXAdSFTgykoiaNt4aimB1gF/+MurJKkYEne04TmIDxYxWI8fChF5Kr8gmdpw
+    J8vGMJ8ANzHZZkJzu1wNNplQfAv0DY5BN18yGmsCgYEA0wZ3DsyW+2qCcYMjQmwu
+    n8959yvGRRlXPjyoqkdq2YSppJw+rIi12XQAw0zuhu96T+IT8Mb8LzYdRSKHt9Bn
+    I8K4mTO8P592IrnAnDi9Um3y64Xi8Osr97ml6HrIDDAOZYJ9Kkqd4VdZGRYfBRW2
+    MQcmpdsFoPSmNnUd8eA97Vw=
+    -----END PRIVATE KEY-----
+  certificate: |
+    -----BEGIN CERTIFICATE-----
+    MIIDLzCCAhegAwIBAgIUCdWc5EPM8eGURZVvLyX6v7h0GxgwDQYJKoZIhvcNAQEL
+    BQAwDjEMMAoGA1UEAwwDdWRwMB4XDTI1MDUwODA5NTQzOFoXDTM1MDUwNjA5NTQz
+    OFowDjEMMAoGA1UEAwwDdWRwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+    AQEAy/dhMKlzewitj2rDcgwkRcy+4EfQhFq+IgaLP3+tmHdB0xRTxRjS2Tdeur5d
+    ksFl20Vs81aLgdfR+BxC8XYDvgYAg3V8O/o1JRWnlCI+02M7KWf4jORCkBAET7AF
+    DVK5b12UXj+PbIyELR1bGH4/oIte0NjLZP19ddnL2Pir6fp2ErQneS0xV0bHDBUR
+    fYeiIInhVUHx3IR/6089NopH5Htbu0REgQF+AeJiRL3RO7BguG050s98yFe32Vzi
+    BPJ/MH8krf1drY4NLxxf1LRGkZ5lJJ2/wSuxFYMiW+BqyTU30WvUlE5cjE3o1mnV
+    QxUtL8HESbKmM0kesur97cqC9QIDAQABo4GEMIGBMB0GA1UdDgQWBBSofzNCRZcM
+    KkSMr6XMF7kBKJP2SzAfBgNVHSMEGDAWgBSofzNCRZcMKkSMr6XMF7kBKJP2SzAP
+    BgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwICBDAeBgNVHR4EFzAVoBMwEYIP
+    LmRhdGEtaHViLmxvY2FsMA0GCSqGSIb3DQEBCwUAA4IBAQAZVT22oZUYdFw8QJ8e
+    ttfyVtLMZ5iXzje99l12Fp4vrqKHKDkKyzuD0N11ompvXI0lyGRyRFNOqqloBUNt
+    hwWwcuFlzZo7tHb4WV5xj8BI65Dla9WYrAuPW4S9UIeJIClz8K+gTEIh3PYRFQ6j
+    biRsjeW7oAZ9hmZPyzZT1NMthw1H0o0dX2965MfehwwuduSyMcV1VnMOqV5KtrZd
+    oI9inWuzLSmOg9qhm+U7MilNHgtaRn0XaR34KvYS7JTJxESQqu933oqXCcVratXB
+    yxgZsTnDbsEKdAQFefWQetZcx3HEKUogm0PH5ZuBgCJ2t2baumaLKCPsqXMYsSo6
+    TSkY
+    -----END CERTIFICATE-----
+  name: "udh-test-iss"
+
+objectStorage:
+  singleNode: true
+  serviceMonitor:
+    enabled: false
+
+frontend:
+  govhub:
+    image:
+      repository: frontend/govhub
+      pullPolicy: IfNotPresent
+  citizenhub:
+    image:
+      repository: frontend/citizenhub
+      pullPolicy: IfNotPresent
+
+discourse:
+  enabled: true
+
+kafka:
+  singleNode: true
+  deleteClaim: true
+  monitoring:
+    enabled: false
+
+ingestor:
+  testmqtt:
+    enabled: true
+
+clickhouse:
+  adminPassword: adminpassword
+
+citytools:
+  image:
+    repository: citytools
+    pullPolicy: IfNotPresent
+
+ckan:
+  serviceMonitor: false
+  ingress:
+    annotations:
+      cert-manager.io/issuer: "udh-test-iss"
+  image:
+    registry: "localimage.test"
+    pullPolicy: IfNotPresent
+    repository: "ckan"
+    tag: ""
+    digest: ""
+  solr:
+    collectionReplicas: 1
+    replicaCount: 1
+    zookeeper:
+      replicaCount: 1
+  valkey:
+    replicaCount: 1
+
+nifi:
+  enabled: true

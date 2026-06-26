@@ -1,0 +1,4 @@
+kubeconfig
+node_modules/
+.prettierrc
+.idea/

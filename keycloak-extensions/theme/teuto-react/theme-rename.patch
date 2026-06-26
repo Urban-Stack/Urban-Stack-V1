@@ -1,0 +1,35 @@
+diff --git a/js/apps/account-ui/maven-resources/META-INF/keycloak-themes.json b/js/apps/account-ui/maven-resources/META-INF/keycloak-themes.json
+index 6a7079f865..ab5b79ed14 100644
+--- a/js/apps/account-ui/maven-resources/META-INF/keycloak-themes.json
++++ b/js/apps/account-ui/maven-resources/META-INF/keycloak-themes.json
+@@ -1,7 +1,7 @@
+ {
+   "themes": [
+     {
+-      "name": "keycloak.v3",
++      "name": "teuto-react",
+       "types": [
+         "account"
+       ]
+diff --git a/js/apps/account-ui/maven-resources/theme/teuto-react/account/theme.properties b/js/apps/account-ui/maven-resources/theme/teuto-react/account/theme.properties
+index fb2e245ea5..fa597fff6b 100644
+--- a/js/apps/account-ui/maven-resources/theme/teuto-react/account/theme.properties
++++ b/js/apps/account-ui/maven-resources/theme/teuto-react/account/theme.properties
+@@ -1,2 +1,2 @@
+-parent=base
++parent=keycloak.v3
+ deprecatedMode=false
+\ No newline at end of file
+diff --git a/js/apps/account-ui/vite.config.ts b/js/apps/account-ui/vite.config.ts
+index 638b753f24..1286172302 100644
+--- a/js/apps/account-ui/vite.config.ts
++++ b/js/apps/account-ui/vite.config.ts
+@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
+         },
+       }
+     : {
+-        outDir: "target/classes/theme/keycloak.v3/account/resources",
++        outDir: "target/classes/theme/teuto-react/account/resources",
+       };
+   return {
+     base: "",

@@ -1,0 +1,89 @@
+{{- $name := "ingestor" -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $name }}
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: {{ $name }}
+    spec:
+      {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 6 }}
+      serviceAccount: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+      initContainers:
+      - name: wait-keycloak
+        image: &image {{ include "udh-platform.images.image" (dict "imageRoot" .Values.ingestor.image "global" .Values.global) }}
+        imagePullPolicy: &pullPolicy{{ .Values.ingestor.image.pullPolicy }}
+        command:
+          - bash
+          - -c
+          - |
+            until curl -sf {{ if .Values.global.trustCaSecretName }}--cacert /certificates/ca.crt{{ end }} "$OAUTH2_ISSUER"
+            do
+              echo "`date` Still waiting for Keycloak..."
+              sleep 5
+            done
+        resources: &resources{{- toYaml .Values.ingestor.resources | nindent 10 }}
+        env: &env
+          - name: KEYCLOAK_REALM_URL
+            value: {{ include "udh.keycloak.realmUrl" . }}
+          {{- if .Values.ingestor.apiServer.host }}
+          - name: KUBERNETES_SERVICE_HOST
+            value: {{ .Values.ingestor.apiServer.host | quote }}
+          {{- end }}
+          {{- if .Values.ingestor.apiServer.port }}
+          - name: KUBERNETES_SERVICE_PORT
+            value: {{ .Values.ingestor.apiServer.port | quote }}
+          {{- end }}
+          - name: DEPLOYMENT_NAME
+            value: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+          - name: OAUTH2_ISSUER
+            value: {{ include "udh.keycloak.realmUrl" . }}
+          {{- include "udh.kafka.env" . | nindent 10 }}
+        {{- if .Values.global.trustCaSecretName }}
+          - name: USE_SYSTEM_CA_CERTS
+            value: "1"
+        volumeMounts:
+          - mountPath: /certificates
+            name: ca-cert
+        {{- end }}
+      containers:
+      - name: ingestor
+        image: *image
+        imagePullPolicy: *pullPolicy
+        resources: *resources
+        ports:
+          - containerPort: 8080
+            name: http
+        livenessProbe:
+          initialDelaySeconds: 25
+          httpGet:
+            path: /actuator/health/liveness
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: http
+        envFrom:
+          - secretRef:
+              name: {{ printf "%s-%s" (include "common.names.fullname" .) "ingestor-client-secret" | quote }}
+        env: *env
+      {{- if .Values.global.trustCaSecretName }}
+        volumeMounts:
+          - mountPath: /certificates
+            name: ca-cert
+      volumes:
+        - name: ca-cert
+          secret:
+            secretName: {{ .Values.global.trustCaSecretName }}
+            items:
+            - key: ca.crt
+              path: ca.crt
+      {{- end }}

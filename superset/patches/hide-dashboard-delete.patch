@@ -1,0 +1,26 @@
+diff --git a/superset-frontend/src/features/dashboards/DashboardCard.tsx b/superset-frontend/src/features/dashboards/DashboardCard.tsx
+index 5eb02aeab8..f8cd1fbd65 100644
+--- a/superset-frontend/src/features/dashboards/DashboardCard.tsx
++++ b/superset-frontend/src/features/dashboards/DashboardCard.tsx
+@@ -64,7 +64,7 @@ function DashboardCard({
+ }: DashboardCardProps) {
+   const history = useHistory();
+   const canEdit = hasPerm('can_write');
+-  const canDelete = hasPerm('can_write');
++  const canDelete = false;
+   const canExport = hasPerm('can_export');
+ 
+   const theme = useTheme();
+diff --git a/superset-frontend/src/pages/DashboardList/index.tsx b/superset-frontend/src/pages/DashboardList/index.tsx
+index 361168f418..a76d7f43b4 100644
+--- a/superset-frontend/src/pages/DashboardList/index.tsx
++++ b/superset-frontend/src/pages/DashboardList/index.tsx
+@@ -208,7 +208,7 @@ function DashboardList(props: DashboardListProps) {
+ 
+   const canCreate = hasPerm('can_write');
+   const canEdit = hasPerm('can_write');
+-  const canDelete = hasPerm('can_write');
++  const canDelete = false;
+   const canExport = hasPerm('can_export');
+ 
+   const initialSort = [{ id: 'changed_on_delta_humanized', desc: true }];

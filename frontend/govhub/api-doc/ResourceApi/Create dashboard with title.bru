@@ -1,0 +1,21 @@
+meta {
+  name: Create dashboard with title
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/viz-groups/{{viz-group}}/create-dashboard
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}
+
+body:json {
+  {
+    "title": "This is an awesome, but also very long title!"
+  }
+}

@@ -1,0 +1,154 @@
+{% set group_counts = {} %}
+{% for item in h.get_group_stats() %}
+  {% set _ = group_counts.update({item['name']: item['count']}) %}
+{% endfor %}
+
+<div class="row categories">
+	<div class="categories-row">
+		<a class="categories-cards" href="/group/soci">
+			<div class="module-content government">
+				<img class="emoji" aria-hidden="true" src="/base/images/groups/soci.svg"/>
+				<h3 class="categories-text">Bevölkerung und Gesellschaft</h3>
+			</div>
+		</a>
+	<a class="categories-cards" href="/group/educ">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/educ.svg"/>
+						<h3 class="categories-text">Bildung, Kultur und Sport</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/ener">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/ener.svg"/>
+						<h3 class="categories-text">Energie</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/heal">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/heal.svg"/>
+						<h3 class="categories-text">Gesundheit</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/agri">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/agri.svg"/>
+						<h3 class="categories-text">Landwirtschaft, Fischerei, Forstwirtschaft und Nahrungsmittel</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/gove">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/gove.svg"/>
+						<h3 class="categories-text">Regierung und öffentlicher Sektor</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/intr">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/intr.svg"/>
+						<h3 class="categories-text">Internationale Themen</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/just">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/just.svg"/>
+						<h3 class="categories-text">Justiz, Rechtssystem und öffentliche Sicherheit</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/econ">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/econ.svg"/>
+						<h3 class="categories-text">Wirtschaft und Finanzen</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/envi">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/envi.svg"/>			
+						<h3 class="categories-text">Umwelt
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/regi">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/regi.svg"/>
+						<h3 class="categories-text">Regionen und Städte</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/tran">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/tran.svg"/>
+						<h3 class="categories-text">Verkehr</h3>
+					</div>
+				</a>
+				<a class="categories-cards" href="/group/tech">
+					<div class="module-content government">
+						<img class="emoji" aria-hidden="true" src="/base/images/groups/tech.svg"/>
+						<h3 class="categories-text">Wissenschaft und Technologie</h3>
+					</div>
+				</a>
+			</div>
+		</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const orgSelect = document.getElementById("organization-select");
+  const categoriesContainer = document.querySelector(".categories-row");
+
+  if (!orgSelect || !categoriesContainer) {
+    console.warn("Dropdown oder Kategorien-Container nicht gefunden.");
+    return;
+  }
+
+  function updateGroupStats(orgName) {
+    const url = new URL("/api/3/action/group_stats", window.location.origin);
+    url.searchParams.set("include_private", "true");
+    if (orgName) {
+      url.searchParams.set("orgs", orgName);
+    }
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (!data.success) {
+          console.error("API returned error:", data);
+          return;
+        }
+
+        const counts = {};
+        data.result.forEach(item => {
+          counts[item.name] = item.count;
+        });
+
+        // Update die Zahlen in den Kacheln
+        document.querySelectorAll(".categories-cards").forEach(card => {
+          const href = card.getAttribute("href") || "";
+          const groupMatch = href.match(/\/group\/([^/]+)/);
+          if (groupMatch) {
+            const groupName = groupMatch[1];
+            const count = counts[groupName] || 0;
+
+            // Falls vorhanden, vorhandene Count-Elemente entfernen
+            const existing = card.querySelector("set-count");
+            if (existing) existing.remove();
+
+            // Neues Count-Element einfügen
+            const countEl = document.createElement("span");
+            countEl.classList.add("dataset-count");
+			if (count == 1) {
+				countEl.textContent = count + " Datensatz";
+			}
+			else {
+				countEl.textContent = count + " Datensätze";
+			}
+            card.querySelector(".module-content").appendChild(countEl);
+          }
+        });
+      })
+      .catch(err => console.error("Fetch error:", err));
+  }
+
+  // Initialer Aufruf beim Laden
+  updateGroupStats(orgSelect.value);
+
+  // Reagiere auf Auswahländerung
+  orgSelect.addEventListener("change", function () {
+    updateGroupStats(orgSelect.value);
+  });
+});
+</script>

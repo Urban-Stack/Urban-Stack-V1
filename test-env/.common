@@ -1,0 +1,30 @@
+#!/bin/false
+# source this with bash, don't execute it
+
+set -eu -o pipefail
+shopt -s globstar
+
+TEST_ENV=$(readlink -f "$(dirname "$BASH_SOURCE")")
+REPO=$(readlink -f "$TEST_ENV/..")
+: ${MINIKUBE_PROFILE:=udp-local}
+
+source "$TEST_ENV/versions.sh"
+
+KUBECTL="kubectl --context ${MINIKUBE_PROFILE}"
+REGISTRY=localhost:5000
+
+confirm () {
+  printf '%s [yN]: ' "$1"
+  local answer
+  read answer
+  [[ $answer == y ]]
+}
+
+valuePath () {
+  # kebab to camel case with support for at least the abbreviation ...DB, `/` becomes `.`
+  sed 's/-\([a-zA-Z]\([a-zA-Z]\($\|[^a-zA-Z]\)\)\?\)/\U\1/g;s/\//./g' <<<$1
+}
+
+minikube_ip () {
+  minikube ip -p "${MINIKUBE_PROFILE}" | grep '^[0-9]*.[0-9]*.[0-9]*.[0-9]*$'
+}

@@ -1,0 +1,31 @@
+$ugh-background-color: #ebebeb;
+$shadow-md:
+	0 4px 6px -1px rgb(0 0 0 / 0.1),
+	0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+@mixin mint-card-bg {
+  background: var(--primary-very-low);
+
+  @media (prefers-color-scheme: light) {
+    background: var(--header_background);
+  }
+}
+
+:root {
+  --mint-border-radius: 10px;
+  --mint-hover-shadow: 4px 4px var(--tertiary-high);
+  --mint-color-mint: #a6a6a6;
+  --mint-color-blue: #e5f8ff;
+  --d-max-width: none !important;
+}
+
+$color-square-gradient: linear-gradient(
+  4deg,
+  rgba(143, 236, 202, 0.29) 55%,
+  rgba(74, 247, 255, 0.08) 100%
+);
+$color-square-webkit-gradient: -webkit-linear-gradient(
+  4deg,
+  rgba(143, 236, 202, 0.29) 55%,
+  rgba(74, 247, 255, 0.08) 100%
+);

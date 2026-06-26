@@ -1,0 +1,1474 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "citytools": {
+      "type": "object",
+      "description": "Settings for citytools",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enables citytools in general"
+        },
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "replicas": {
+          "$ref": "#/$defs/replicas"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        }
+      }
+    },
+    "ckan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "plugins": {
+          "type": "array",
+          "description": "An array of plugin names to be enabled in CKAN",
+          "items": {
+            "type": "string"
+          }
+        },
+        "serviceMonitor": {
+          "type": "boolean",
+          "description": "Sets whether metrics are enabled for solr, zookeeper and valkey"
+        },
+        "siteId": {
+          "type": "string",
+          "description": "The ID of the CKAN site"
+        },
+        "siteTitle": {
+          "type": "string",
+          "description": "The title of the CKAN site"
+        },
+        "solr": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "collectionReplicas": {
+              "type": "integer",
+              "description": "Number of replicas of the collection that should be kept"
+            },
+            "replicaCount": {
+              "type": "integer",
+              "description": "Number of replicas of the solr container"
+            },
+            "zookeeper": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "replicaCount": {
+                  "type": "integer",
+                  "description": "Number of replicas of the zookeeper container"
+                }
+              }
+            }
+          }
+        },
+        "valkey": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "replicaCount": {
+              "type": "integer",
+              "description": "Number of replicas of the valkey container"
+            }
+          }
+        },
+        "sysadmin": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "The email address of the system administrator"
+            }
+          }
+        }
+      }
+    },
+    "clickhouse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "adminPassword": {
+          "type": "string",
+          "description": "The password for the admin account"
+        },
+        "image": {
+          "type": "string",
+          "description": "Image tag for clickhouse",
+          "examples": ["clickhouse/clickhouse-server:25.7.4.11"]
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "keeper": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "image": {
+              "type": "string",
+              "description": "Image tag for keeper",
+              "examples": ["clickhouse/clickhouse-keeper:25.7.4.11"]
+            },
+            "persistence": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "Settings for persistent data for keeper",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "size": {
+                      "type": "string",
+                      "description": "Amount of persistent data keeper is allowed to store"
+                    }
+                  }
+                }
+              }
+            },
+            "replicas": {
+              "type": "integer",
+              "description": "Number of replicas of the keeper container"
+            }
+          }
+        },
+        "persistence": {
+          "type": "object",
+          "description": "Settings for persistent data for clickhouse",
+          "additionalProperties": false,
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "string",
+                  "description": "Amount of persistent data clickhouse is allowed to store"
+                }
+              }
+            }
+          }
+        },
+        "priorityClassName": {
+          "type": "string",
+          "examples": ["clickhouse-high-mem"]
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Number of replicas of the clickhouse container"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        }
+      }
+    },
+    "cloudnativePostgres": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "backup": {
+          "type": "object",
+          "description": "Object containing database backup settings, e.g. AWS access keys, bucket names and endpoints etc."
+        },
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "persistence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "size": {
+              "type": "string",
+              "description": "Amount of persistent data the database is allowed to store"
+            }
+          }
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Number of desired replicas of the database container"
+        }
+      }
+    },
+    "discourse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "auth": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "Email address of the admin user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Password of the admin user"
+            },
+            "username": {
+              "type": "string",
+              "description": "Username of the admin user"
+            }
+          }
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not discourse is enabled"
+        },
+        "extraEnvVars": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Object containing extra environment variables for several services",
+          "properties": {
+            "discourse": {
+              "type": "array",
+              "description": "Array of environment values for discourse, in key-value pairs",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the environment variable"
+                  },
+                  "value": {
+                    "type": "string",
+                    "description": "Value of the environment variable"
+                  }
+                }
+              }
+            },
+            "sidekiq": {
+              "type": "object"
+            }
+          }
+        },
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        },
+        "siteName": {
+          "type": "string",
+          "description": "Name of the site Discourse should show"
+        },
+        "smtp": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Object containing SMTP settings for Discourse",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Hostname Discourse should send emails from"
+            },
+            "password": {
+              "type": "string",
+              "description": "Password for discourse's email user"
+            },
+            "port": {
+              "type": "integer",
+              "description": "Port to use for emails"
+            },
+            "protocol": {
+              "type": "string",
+              "description": "The protocol to use for emails"
+            },
+            "user": {
+              "type": "string",
+              "description": "Username of discourse's email user"
+            }
+          }
+        }
+      }
+    },
+    "docs": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for the online documentation",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not the docs container is enabled"
+        },
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Number of replicas of the docs container"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        }
+      }
+    },
+    "fakeCa": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for the fake certificate agency. Used for testing!",
+      "properties": {
+        "certificate": {
+          "type": "string",
+          "description": "The certificate string"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not the fake CA is enabled"
+        },
+        "generate": {
+          "type": "boolean",
+          "description": "Whether or not a new certificate should be generated"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the certificate issuer"
+        },
+        "privateKey": {
+          "type": "string",
+          "description": "Private key of the certificate"
+        }
+      }
+    },
+    "frontend": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for the various frontend services",
+      "properties": {
+        "citizenhub": {
+          "type": "object",
+          "properties": {
+            "image": {
+              "$ref": "#/$defs/image"
+            },
+            "ingress": {
+              "$ref": "#/$defs/ingress"
+            },
+            "replicas": {
+              "type": "integer",
+              "description": "Number of replicas for the citizenhub container"
+            },
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        },
+        "govhub": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "image": {
+              "$ref": "#/$defs/image"
+            },
+            "ingress": {
+              "$ref": "#/$defs/ingress"
+            },
+            "replicas": {
+              "type": "integer",
+              "description": "Number of replicas for the govhub container"
+            },
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        }
+      }
+    },
+    "global": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Global settings",
+      "properties": {
+        "babashka": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Settings for babashka",
+          "properties": {
+            "image": {
+              "$ref": "#/$defs/image"
+            }
+          }
+        },
+        "baseDomain": {
+          "type": "string",
+          "description": "Base URL for where the platform is hosted"
+        },
+        "basePipeline": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Settings for the base pipeline that deploys the platform",
+          "properties": {
+            "image": {
+              "$ref": "#/$defs/image"
+            }
+          }
+        },
+        "imageCredentials": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "A map of credentials to be used, the keys are the names of the images",
+          "properties": {
+            "udh-platform": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "examples": ["docker.io"]
+                },
+                "password": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "networkPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Network policy settings",
+          "properties": {
+            "additionalExternalEgress": {
+              "type": "array",
+              "description": "Array of external egresses pods are allowed to communicate with",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "ports": {
+                    "type": "array",
+                    "description": "Array of ports and protocols this particular egress is allowed to use",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "port": {
+                          "type": "integer"
+                        },
+                        "protocol": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "to": {
+                    "type": "array",
+                    "description": "Array of objects detailing which pods from which namespaces are allowed to use the egress",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "namespaceSelector": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "description": "Selector for the namespace the pod should be in",
+                          "properties": {
+                            "matchLabels": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "properties": {
+                                "kubernetes.io/metadata.name": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "podSelector": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "description": "Selector for the name of the desired pod",
+                          "properties": {
+                            "matchLabels": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "properties": {
+                                "app.kubernetes.io/name": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ociMirror": {
+          "type": "string",
+          "description": "URL for an alternate mirror to pull images from"
+        },
+        "sslInsecureSkipVerify": {
+          "type": "boolean",
+          "description": "Skips SSL certificate verification for Babashka"
+        },
+        "storageClass": {
+          "type": "string",
+          "description": "Storage class for any storage used",
+          "examples": ["teutostack-ssd"]
+        },
+        "testDeployment": {
+          "type": "boolean",
+          "description": "Specifies whether or not the deployment is a test deployment. Do not use in production!"
+        },
+        "trustCaSecretName": {
+          "type": "string",
+          "description": "Name of the secret the trust CA is stored in"
+        },
+        "udhImageRegistry": {
+          "type": "string",
+          "description": "The registry the platform image will be pulled from"
+        },
+        "udhImageTag": {
+          "type": "string",
+          "description": "Tag of the udh image that should be used",
+          "examples": ["latest"]
+        }
+      }
+    },
+    "ingestor": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for the ingestor",
+      "properties": {
+        "apiServer": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "host": {
+              "type": ["string", "null"],
+              "description": "Host where the api server runs"
+            },
+            "port": {
+              "type": ["integer", "null"],
+              "description": "Port under which the api server is available"
+            }
+          }
+        },
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        },
+        "testmqtt": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether or not the test MQTT server is enabled"
+            },
+            "image": {
+              "$ref": "#/$defs/image"
+            },
+            "ingress": {
+              "$ref": "#/$defs/ingress"
+            },
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        }
+      }
+    },
+    "jupyterhub": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hub": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "image": {
+              "$ref": "#/$defs/image"
+            },
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "notebook": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "image": {
+              "$ref": "#/$defs/image"
+            }
+          }
+        },
+        "prePuller": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        },
+        "proxy": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Proxy settings for jupyterhub",
+          "properties": {
+            "chp": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "resources": {
+                  "$ref": "#/$defs/resources"
+                }
+              }
+            },
+            "secretSync": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "resources": {
+                  "$ref": "#/$defs/resources"
+                }
+              }
+            },
+            "traefik": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "resources": {
+                  "$ref": "#/$defs/resources"
+                }
+              }
+            }
+          }
+        },
+        "singleuser": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Settings for running jupyterhub as a single user instance",
+          "properties": {
+            "allowPrivateIPs": {
+              "type": "boolean",
+              "description": "Whether or not private IPs should be allowed access"
+            },
+            "storageCapacity": {
+              "type": "string",
+              "description": "Amount of storage jupyterhub can use for this single user instance",
+              "examples": ["1Gi"]
+            }
+          }
+        }
+      }
+    },
+    "kafka": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for Kafka",
+      "properties": {
+        "deleteClaim": {
+          "type": "boolean",
+          "description": "Specifies if the persistent volume claim has to be deleted when the cluster is un-deployed."
+        },
+        "entityOperator": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        },
+        "monitoring": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether or not monitoring is enabled for Kafka"
+            }
+          }
+        },
+        "node": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Environment settings for Kafka nodes",
+          "properties": {
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        },
+        "singleNode": {
+          "type": "boolean",
+          "description": "Whether or not Kafka runs as a single node. Controls several replication settings."
+        }
+      }
+    },
+    "keycloak": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for keycloak",
+      "properties": {
+        "adminPassword": {
+          "type": "string",
+          "description": "The password for the admin user"
+        },
+        "adminUser": {
+          "type": "string",
+          "description": "The username for the admin user"
+        },
+        "debug": {
+          "type": "boolean",
+          "description": "Enables debug mode for Keycloak, which includes extended logging",
+          "default": false
+        },
+        "extensions": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Image for keycloak extensions",
+          "properties": {
+            "image": {
+              "$ref": "#/$defs/image"
+            }
+          }
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "helpdeskEmail": {
+          "type": ["string", "null"],
+          "default": null,
+          "description": "Where messages from helpdesk are sent to as E-Mails, null means no E-Mails are sent"
+        },
+        "logLevel": {
+          "type": "string",
+          "description": "Specifies Keycloak's log level",
+          "default": "info,com.clickhouse:warn",
+          "$comment": "see https://www.keycloak.org/server/logging for more complex values"
+        },
+        "passwordPolicy": {
+          "type": "string",
+          "description": "Specifies Keycloak's password policy"
+        },
+        "realm": {
+          "type": "string",
+          "description": "The name of the realm in which the data hub resources will be created"
+        },
+        "citizenhub": {
+          "type": "object",
+          "properties": {
+            "realm": {
+              "type": "string",
+              "description": "The name of the realm in which the citizenhub resources will be created"
+            }
+          }
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Amount of replicas of the Keycloak container",
+          "default": 1
+        },
+        "resourceApiAutoProvision": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Map of resources that should be automatically provisioned by Keycloak for tenants",
+          "properties": {
+            "tenants": {
+              "type": "object",
+              "description": "Map of tenants and their automatically provisioned resources",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "attributes": {
+                    "type": "object",
+                    "properties": {
+                      "citizen-hub-image": {
+                        "type": "string",
+                        "description": "URL for the tenant's citizen hub header image"
+                      },
+                      "color-primary": {
+                        "type": "string",
+                        "description": "Hex value of the primary color for the tenant"
+                      },
+                      "contact-url": {
+                        "type": "string",
+                        "description": "URL to the tenant's contact information"
+                      },
+                      "legal-notice-url": {
+                        "type": "string",
+                        "description": "URL to the tenant's legal notice"
+                      },
+                      "privacy-url": {
+                        "type": "string",
+                        "description": "URL to the tenant's privacy notice"
+                      },
+                      "tenant-coords": {
+                        "type": "string",
+                        "description": "Coordinates for the tenant's position",
+                        "examples": ["51.909062:8.381308:13"]
+                      },
+                      "tenant-image": {
+                        "type": "string",
+                        "description": "URL for the tenant's header image"
+                      },
+                      "tenant-logo": {
+                        "type": "string",
+                        "description": "Path to the tenant's logo",
+                        "examples": ["/Logo.svg"]
+                      },
+                      "tenant-name": {
+                        "type": "string",
+                        "description": "The tenant's name"
+                      }
+                    }
+                  },
+                  "groups": {
+                    "type": "object",
+                    "description": "Nested map of groups and their members for the tenant",
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "members": {
+                          "type": "array",
+                          "description": "Array of email addresses of users that are members of this group",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "members": {
+                    "type": "array",
+                    "description": "Array of email addresses of users that are members of this tenant",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "viz-groups": {
+                    "type": "object",
+                    "description": "Map of vizGroups for the tenant",
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        },
+        "smtp": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "SMTP settings for Keycloak",
+          "properties": {
+            "auth": {
+              "type": "boolean"
+            },
+            "from": {
+              "type": "string",
+              "description": "From address for emails Keycloak sends"
+            },
+            "fromDisplayName": {
+              "type": "string",
+              "description": "Friendly name Keycloak uses for its emails"
+            },
+            "host": {
+              "type": "string",
+              "description": "Host Keycloak sends emails from"
+            },
+            "password": {
+              "type": "string",
+              "description": "Password for the user Keycloak sends emails with"
+            },
+            "port": {
+              "type": "integer",
+              "description": "Port used for sending emails"
+            },
+            "ssl": {
+              "type": "boolean",
+              "description": "Whether or not SSL encryption should be used for emails"
+            },
+            "user": {
+              "type": "string",
+              "description": "Username of the user Keycloak sends emails with"
+            }
+          }
+        },
+        "testUsers": {
+          "$ref": "#/$defs/testUsers"
+        },
+        "uchRegistration": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "mailhog": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for mailhog",
+      "properties": {
+        "auth": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether or not auth is enabled for mailhog"
+            }
+          }
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not mailhog is enabled"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        }
+      }
+    },
+    "objectStorage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowDeletion": {
+          "type": "boolean",
+          "description": "Whether or not objects can be deleted from storage"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not object storage is enabled"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "monStorage": {
+          "type": "string",
+          "description": "Amount of storage monitoring is allowed to use",
+          "examples": ["5Gi"]
+        },
+        "operator": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether or not the operator is enabled. Makes object storage depend on Rook/Ceph"
+            }
+          }
+        },
+        "reuseClusterFromNamespace": {
+          "type": "string",
+          "description": "Name of namespace resources can be reused from"
+        },
+        "serviceMonitor": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether or not monitoring is enabled"
+            }
+          }
+        },
+        "singleNode": {
+          "type": "boolean",
+          "description": "Whether or not object storage runs on a single node. Controls several replication settings."
+        },
+        "storage": {
+          "type": "string",
+          "description": "Amount of storage objectStorage is allowed to use",
+          "examples": ["5Gi"]
+        }
+      }
+    },
+    "pubquery": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for pubquery",
+      "properties": {
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Number of desired replicas of the pubquery container"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        }
+      }
+    },
+    "sensormeta": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for sensormeta",
+      "properties": {
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Number of desired replicas of the sensormeta container"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        }
+      }
+    },
+    "sharedAppsDatabase": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for the shared apps database",
+      "properties": {
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "backup": {
+          "type": "object",
+          "description": "Object containing database backup settings, e.g. AWS access keys, bucket names and endpoints etc."
+        },
+        "persistence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "size": {
+              "type": "string",
+              "description": "Amount of persistent storage the shared apps database is allowed to use",
+              "examples": ["10Gi"]
+            }
+          }
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Number of desired replicas of the shared apps database container"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        },
+        "serviceMonitor": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether or not monitoring is enabled for the shared apps database"
+            }
+          }
+        }
+      }
+    },
+    "sharedAppsNamespace": {
+      "type": ["string", "null"],
+      "description": "The name of the namespace the shared apps are supposed to use"
+    },
+    "dedicatedAppsDatabase": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for the dedicated apps database",
+      "properties": {
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "backup": {
+          "type": "object",
+          "description": "Object containing database backup settings, e.g. AWS access keys, bucket names and endpoints etc."
+        },
+        "persistence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "size": {
+              "type": "string",
+              "description": "Amount of persistent storage the dedicated apps database is allowed to use",
+              "examples": ["10Gi"]
+            }
+          }
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Number of desired replicas of the dedicated apps database container"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        },
+        "serviceMonitor": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether or not monitoring is enabled for the dedicated apps database"
+            }
+          }
+        }
+      }
+    },
+    "dedicatedAppsNamespace": {
+      "type": ["string", "null"],
+      "description": "The name of the namespace the dedicated apps are supposed to use"
+    },
+    "superset": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for superset",
+      "properties": {
+        "adminUser": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "password": {
+              "type": "string",
+              "description": "The password of the admin user for superset"
+            }
+          }
+        },
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "mapboxToken": {
+          "type": "string",
+          "description": "The token for use with mapbox"
+        },
+        "redis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        },
+        "smtp": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "SMTP settings for superset emails",
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "From address Superset should use for emails"
+            },
+            "fromDisplayName": {
+              "type": "string",
+              "description": "Friendly name for emails from Superset"
+            },
+            "password": {
+              "type": "string",
+              "description": "The password for the email user superset uses"
+            },
+            "user": {
+              "type": "string",
+              "description": "The username for the email user superset uses"
+            },
+            "host": {
+              "type": "string",
+              "description": "The host from which Superset sends emails"
+            },
+            "port": {
+              "type": "integer",
+              "description": "The port Superset uses for emails"
+            },
+            "ssl": {
+              "type": "boolean",
+              "description": "Whether or not Superset uses SSL encryption for emails"
+            },
+            "auth": {
+              "type": "boolean",
+              "description": "Whether or not Superset authenticates to the email server"
+            }
+          }
+        },
+        "supersetCeleryBeat": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        },
+        "supersetNode": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "replicas": {
+              "type": "integer",
+              "description": "Number of desired superset nodes"
+            },
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        },
+        "supersetWorker": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "replicas": {
+              "type": "integer",
+              "description": "Number of desired replicas of the superset worker"
+            },
+            "resources": {
+              "$ref": "#/$defs/resources"
+            }
+          }
+        }
+      }
+    },
+    "zipupload": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Settings for zipupload",
+      "properties": {
+        "image": {
+          "$ref": "#/$defs/image"
+        },
+        "ingress": {
+          "$ref": "#/$defs/ingress"
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Number of desired replicas of the zipupload container"
+        },
+        "resources": {
+          "$ref": "#/$defs/resources"
+        }
+      }
+    },
+    "backup": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "bucket": {
+          "type": "string"
+        },
+        "credentials": {
+          "type": "object",
+          "properties": {
+            "accessKey": {
+              "type": "string"
+            },
+            "secretAccessKey": {
+              "type": "string"
+            }
+          },
+          "required": ["accessKey", "secretAccessKey"],
+          "additionalProperties": false
+        },
+        "resticKey": {
+          "type": "string"
+        },
+        "schedule": {
+          "type": "string"
+        },
+        "retention": {
+          "type": "object",
+          "properties": {
+            "keepDaily": {
+              "type": "integer"
+            },
+            "keepWeekly": {
+              "type": "integer"
+            }
+          },
+          "required": ["keepDaily", "keepWeekly"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["endpoint", "credentials", "resticKey", "schedule", "retention"],
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]([-a-z0-9]{0,62}[a-z0-9])?$"
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "registry": {
+          "type": "string",
+          "description": "The host of the registry",
+          "examples": ["docker.io"]
+        },
+        "pullPolicy": {
+          "type": "string",
+          "examples": ["Always"]
+        },
+        "repository": {
+          "type": "string",
+          "description": "The image path in the registry",
+          "examples": ["bitnami/kubectl"]
+        },
+        "tag": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string"
+        },
+        "pullSecrets": {
+          "$ref": "#/$defs/pullSecrets"
+        }
+      }
+    },
+    "pullSecrets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resources": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requests": {
+          "type": "object",
+          "description": "Settings on how many resources the pod is allowed to request",
+          "additionalProperties": false,
+          "properties": {
+            "cpu": {
+              "type": "string"
+            },
+            "memory": {
+              "type": "string"
+            }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "description": "Limits for how many resources the pod is allowed to consume",
+          "additionalProperties": false,
+          "properties": {
+            "cpu": {
+              "type": "string"
+            },
+            "memory": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "testUsers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email for the test user"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The test user's first name"
+          },
+          "username": {
+            "type": "string",
+            "description": "The test user's username"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The test user's last name"
+          },
+          "password": {
+            "type": "string",
+            "description": "The test user's password"
+          },
+          "clientRoles": {
+            "type": "object",
+            "properties": {
+              "realm-management": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "replicas": {
+      "type": "integer",
+      "description": "Number of replicas of the container"
+    },
+    "ingress": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "type": "object"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "ingressClassName": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

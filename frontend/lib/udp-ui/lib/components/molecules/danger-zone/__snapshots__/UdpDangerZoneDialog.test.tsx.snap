@@ -1,0 +1,250 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Snapshots > matches snapshot 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="h-full flex flex-col text-wrap gap-5"
+      >
+        <div
+          class="flex flex-row items-center gap-2 text-danger-500 font-semibold"
+        >
+          <svg
+            class="size-5 object-center shrink-0"
+            fill="currentColor"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414M10 6h4V4h-4zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+          </svg>
+          <h3>
+            Text A
+          </h3>
+        </div>
+        <div
+          class="flex flex-col gap-1 text-danger-500"
+        >
+          <p>
+            Text B
+          </p>
+        </div>
+        <div
+          class="flex flex-col"
+        >
+          <label
+            class="dark:text-white pb-2 text-gray-900 text-xs font-normal"
+            data-testid="flowbite-label"
+            for="resourcename-input"
+          >
+            Text C
+          </label>
+          <div
+            class="flex focus:outline-hidden focus:ring-2 focus:ring-primary-500"
+          >
+            <div
+              class="relative w-full"
+            >
+              <input
+                class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+                id="resourcename-input"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <button
+          aria-busy="false"
+          class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-danger-100 text-danger-700 hover:bg-danger-200 active:bg-danger-200 focus:ring-danger-300 focus:text-danger-800 disabled:bg-danger-50 disabled:text-danger-200 data-[loading=true]:bg-danger-200 w-fit"
+          data-loading="false"
+          disabled=""
+          type="button"
+        >
+          <div
+            class="relative flex items-center gap-1"
+          >
+            <div
+              class="flex items-center size-5"
+            >
+              <svg
+                fill="currentColor"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414M10 6h4V4h-4zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="px-1 empty:hidden"
+            >
+              Löschen
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="h-full flex flex-col text-wrap gap-5"
+    >
+      <div
+        class="flex flex-row items-center gap-2 text-danger-500 font-semibold"
+      >
+        <svg
+          class="size-5 object-center shrink-0"
+          fill="currentColor"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414M10 6h4V4h-4zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0z"
+            fill="currentColor"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h3>
+          Text A
+        </h3>
+      </div>
+      <div
+        class="flex flex-col gap-1 text-danger-500"
+      >
+        <p>
+          Text B
+        </p>
+      </div>
+      <div
+        class="flex flex-col"
+      >
+        <label
+          class="dark:text-white pb-2 text-gray-900 text-xs font-normal"
+          data-testid="flowbite-label"
+          for="resourcename-input"
+        >
+          Text C
+        </label>
+        <div
+          class="flex focus:outline-hidden focus:ring-2 focus:ring-primary-500"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              id="resourcename-input"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-danger-100 text-danger-700 hover:bg-danger-200 active:bg-danger-200 focus:ring-danger-300 focus:text-danger-800 disabled:bg-danger-50 disabled:text-danger-200 data-[loading=true]:bg-danger-200 w-fit"
+        data-loading="false"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="flex items-center size-5"
+          >
+            <svg
+              fill="currentColor"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414M10 6h4V4h-4zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0z"
+                fill="currentColor"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <div
+            class="px-1 empty:hidden"
+          >
+            Löschen
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

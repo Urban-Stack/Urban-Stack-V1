@@ -1,0 +1,42 @@
+diff --git a/js/apps/account-ui/src/main.tsx b/js/apps/account-ui/src/main.tsx
+index f756e54..94dd2da 100644
+--- a/js/apps/account-ui/src/main.tsx
++++ b/js/apps/account-ui/src/main.tsx
+@@ -8,6 +8,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
+ import { i18n } from "./i18n";
+ import { routes } from "./routes";
+ 
++import "./custom.css";
++
++
+ initializeDarkMode();
+ 
+ // Initialize required components before rendering app.
+@@ -21,5 +24,13 @@ const router = createBrowserRouter(routes);
+ root.render(
+   <StrictMode>
+     <RouterProvider router={router} />
++    <div id="legal-links">
++        <a href="https://urbanstack.de/impressum">
++          Impressum
++        </a>
++        <a href="https://urbanstack.de/datenschutz">
++          Datenschutz
++        </a>
++      </div>
+   </StrictMode>,
+ );
+diff --git a/js/libs/ui-shared/src/utils/darkMode.ts b/js/libs/ui-shared/src/utils/darkMode.ts
+index fb845b3..0732d1b 100644
+--- a/js/libs/ui-shared/src/utils/darkMode.ts
++++ b/js/libs/ui-shared/src/utils/darkMode.ts
+@@ -12,8 +12,5 @@ function updateDarkMode(isEnabled: boolean) {
+ }
+ 
+ export function initializeDarkMode() {
+-  updateDarkMode(mediaQuery.matches);
+-  mediaQuery.addEventListener("change", (event) =>
+-    updateDarkMode(event.matches),
+-  );
++  updateDarkMode(false);
+ }

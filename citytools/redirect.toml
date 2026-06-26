@@ -1,0 +1,4 @@
+[[advanced.redirects]]
+source = "/"
+destination = "https://urbanstack.de/"
+kind = 302

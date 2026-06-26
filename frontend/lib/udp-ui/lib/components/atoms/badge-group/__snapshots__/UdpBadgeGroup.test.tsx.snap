@@ -1,0 +1,73 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot > renders badge group as expected 1`] = `
+<div>
+  <div
+    class="flex flex-wrap gap-2"
+  >
+    <div
+      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+    >
+      <span
+        class="contents"
+      >
+        Badge #1
+      </span>
+    </div>
+    <div
+      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+    >
+      <span
+        class="contents"
+      >
+        Badge #2
+      </span>
+    </div>
+    <div
+      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+    >
+      <span
+        class="contents"
+      >
+        Badge #3
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshot > renders scrollable badge group as expected 1`] = `
+<div>
+  <div
+    class="flex flex-nowrap overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+  >
+    <div
+      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+    >
+      <span
+        class="contents"
+      >
+        Badge #1
+      </span>
+    </div>
+    <div
+      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+    >
+      <span
+        class="contents"
+      >
+        Badge #2
+      </span>
+    </div>
+    <div
+      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+    >
+      <span
+        class="contents"
+      >
+        Badge #3
+      </span>
+    </div>
+  </div>
+</div>
+`;

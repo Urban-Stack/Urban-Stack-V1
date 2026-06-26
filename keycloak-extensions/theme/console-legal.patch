@@ -1,0 +1,32 @@
+diff --git a/index.ftl b/index.ftl
+index e0befb22..7fec1b9c 100644
+--- a/index.ftl
++++ b/index.ftl
+@@ -49,2 +49,20 @@
+       }
++
++      #legal-links {
++        z-index: 9999;
++        position: fixed;
++        bottom: 8px;
++        right: 12px;
++        font-size: 0.9em;
++        color: #444;
++        background: #ffffff;
++      }
++      #legal-links a {
++        margin: 0 6px;
++        color: inherit;
++        text-decoration: none;
++      }
++      #legal-links a:hover {
++        text-decoration: underline;
++      }
+     </style>
+@@ -150,2 +168,6 @@
+     </script>
++    <div id="legal-links">
++      <a href="https://urbanstack.de/impressum">Impressum</a>
++      <a href="https://urbanstack.de/datenschutz">Datenschutz</a>
++    </div>
+   </body>

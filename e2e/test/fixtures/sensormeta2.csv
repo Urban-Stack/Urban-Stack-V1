@@ -1,0 +1,3 @@
+sensor_id,external_reference,location_description,location_name,sensor_type
+2,42,"Mausrad","MRAD","Thermometer"
+3,42,"","Ratatoskr","Thermometer"

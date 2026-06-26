@@ -1,0 +1,15 @@
+meta {
+  name: Get CSRF Token
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{discourse-host}}/session/csrf
+  body: none
+  auth: none
+}
+
+headers {
+  x-requested-with: XMLHttpRequest
+}

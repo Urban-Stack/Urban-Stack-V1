@@ -1,0 +1,24 @@
+{% import 'macros/form.html' as form %}
+
+<form id="group-edit" method="post" data-module="basic-form" enctype="multipart/form-data">
+	{{ h.csrf_input() }} {% block error_summary %} {{ form.errors(error_summary) }} {% endblock %} {%
+	block basic_fields %} {% set attrs = {'data-module': 'slug-preview-target', 'class':
+	'form-control'} %} {{ form.input('title', label=_('Name'), id='field-name',
+	placeholder=h.humanize_entity_type('group', group_type, 'name placeholder') or _('My Group'),
+	value=data.title, error=errors.title, classes=['control-full'], attrs=attrs) }} {{
+	form.markdown('description', label=_('Description'), id='field-description',
+	placeholder=h.humanize_entity_type('group', group_type, 'description placeholder') or _('A little
+	information about my group...'), value=data.description, error=errors.description) }} {% set
+	is_upload = data.image_url and not data.image_url.startswith('http') %} {% set is_url =
+	data.image_url and data.image_url.startswith('http') %} {{ form.image_upload(data, errors,
+	is_upload_enabled=h.uploads_enabled(), is_url=is_url, is_upload=is_upload) }} {% endblock %} {%
+	block custom_fields %} {% snippet 'snippets/custom_form_fields.html', extras=data.extras,
+	errors=errors, limit=3 %} {% endblock %} {{ form.required_message() }}
+
+	<div class="form-actions">
+		<button class="btn btn-primary" name="save" type="submit">
+			{% block save_text %}{{ h.humanize_entity_type('group', group_type, 'save label') or _('Save
+			Group') }}{% endblock %}
+		</button>
+	</div>
+</form>

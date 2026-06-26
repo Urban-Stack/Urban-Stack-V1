@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`DashboardTable snapshot renders table as expected 1`] = `
+<div>
+  <div
+    class="relative udp-scroll-thin h-full"
+  >
+    <div
+      class="absolute pointer-events-none inset-y-0 z-10 to-transparent transition-opacity duration-350 bg-gradient-to-r left-0 from-primary-50 w-32 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-l"
+    />
+    <div
+      class="absolute pointer-events-none inset-y-0 z-10 to-transparent transition-opacity duration-350 bg-gradient-to-l right-0 from-primary-50 w-32 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-r"
+    />
+    <div
+      class="h-full overflow-x-auto focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+      data-testid="udp-scroll-wrapper-ref"
+    >
+      <div
+        class="relative"
+        data-testid="table-element"
+      >
+        <div
+          class="absolute left-0 top-0 -z-10 h-full w-full bg-white drop-shadow-md dark:bg-black rounded-xl"
+        />
+        <table
+          class="w-full text-left text-sm text-gray-500 dark:text-gray-400 rounded-xl"
+          data-testid="dashboard-list-table"
+        >
+          <thead
+            class="group/head text-xs uppercase text-gray-700 dark:text-gray-400"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+              data-testid="table-row-element"
+            >
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Name
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="group/body divide-y text-gray-900"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+              data-testid="dashboard-table-item"
+            >
+              <td
+                class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+              >
+                Dashboard1
+              </td>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+              data-testid="dashboard-table-item"
+            >
+              <td
+                class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+              >
+                Dashboard2
+              </td>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+              data-testid="dashboard-table-item"
+            >
+              <td
+                class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+              >
+                Dashboard3
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;

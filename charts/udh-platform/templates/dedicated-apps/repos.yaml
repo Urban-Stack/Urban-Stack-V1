@@ -1,0 +1,34 @@
+{{- range $appName, $appDef := .Values.dedicatedApps.apps }}
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: {{ include "data-hub.name" (dict "context" $ "name" (printf "dedicated-%s" $appName)) }}
+  namespace: {{ include "udh.dedicated-apps-namespace" $ | quote }}
+  labels: {{- include "common.labels.standard" $ | nindent 4 }}
+    app.kubernetes.io/component: dedicated-apps
+spec:
+  interval: 1h0m0s
+  {{- if $appDef.imageCredentials }}
+  secretRef:
+    name: {{ include "data-hub.name" (dict "context" $ "name" (printf "pullsecret-%s" $appName)) }}
+  {{- end }}
+  ref:
+    tag: {{ $appDef.tag | quote }}
+  url: {{ $appDef.url | quote }}
+
+{{- if $appDef.imageCredentials }}
+{{- $cred := $appDef.imageCredentials }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "data-hub.name" (dict "context" $ "name" (printf "pullsecret-%s" $appName)) }}
+  namespace: {{ include "udh.dedicated-apps-namespace" $ | quote }}
+  labels: {{- include "common.labels.standard" $ | nindent 4 }}
+    app.kubernetes.io/component: dedicated-apps
+type: kubernetes.io/dockerconfigjson
+stringData:
+  .dockerconfigjson: {{ dict "auths" (dict (required "You must specify a registry host" $cred.host) (dict "auth" (printf "%s:%s" (required "You must specify a registry username" $cred.username) (required "You must specify a registry password" $cred.password) | b64enc))) | toJson | quote }}
+{{- end }}
+{{- end }}

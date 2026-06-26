@@ -1,0 +1,13 @@
+diff --git a/superset-frontend/src/SqlLab/components/SaveQuery/index.tsx b/superset-frontend/src/SqlLab/components/SaveQuery/index.tsx
+index dbebf6d9b4..6ac5ee1a8f 100644
+--- a/superset-frontend/src/SqlLab/components/SaveQuery/index.tsx
++++ b/superset-frontend/src/SqlLab/components/SaveQuery/index.tsx
+@@ -108,7 +108,7 @@ const SaveQuery = ({
+   const isSaved = !!query.remoteId;
+   const canExploreDatabase = !!database?.allows_virtual_table_explore;
+   const shouldShowSaveButton =
+-    database?.allows_virtual_table_explore !== undefined;
++    false;
+ 
+   const overlayMenu = (
+     <Menu>

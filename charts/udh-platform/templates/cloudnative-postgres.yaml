@@ -1,0 +1,144 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: {{ printf "%s-teuto" (include "common.names.fullname"  .) | quote }}
+spec:
+  interval: 1h0m0s
+  provider: generic
+  type: oci
+  url: oci://ghcr.io/teutonet/teutonet-helm-charts
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ printf "%s-cnpg" (include "common.names.fullname"  .) | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: database
+spec:
+  chart:
+    spec:
+      chart: teuto-cnpg
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: {{ printf "%s-teuto" (include "common.names.fullname"  .) | quote }}
+      version: 3.x.x
+  interval: 1m
+  values:
+    databaseImage:
+      registry: {{ .Values.cloudnativePostgres.image.registry }}
+      repository: {{ .Values.cloudnativePostgres.image.repository }}
+      tag: {{ .Values.cloudnativePostgres.image.tag | quote }}
+    {{- if .Values.cloudnativePostgres.backup }}
+    backup:
+      schedule: {{ .Values.cloudnativePostgres.backup.schedule | quote }}
+      s3:
+        endpointURL: {{ .Values.cloudnativePostgres.backup.s3.endpointURL | quote }}
+        path: {{ .Values.cloudnativePostgres.backup.s3.path | quote }}
+        secret:
+          name: {{ printf "%s-cnpg-backup" (include "common.names.fullname"  .) | quote }}
+    {{- end }}
+    storageSize: {{ .Values.cloudnativePostgres.persistence.size }}
+    instances: {{ .Values.cloudnativePostgres.replicas }}
+  valuesFrom:
+    - kind: ConfigMap
+      name: {{ printf "%s-postgres-config" (include "common.names.fullname"  .) | quote }}
+      valuesKey: roles
+      targetPath: roles
+    - kind: ConfigMap
+      name: {{ printf "%s-postgres-config" (include "common.names.fullname"  .) | quote }}
+      valuesKey: databases
+      targetPath: databases
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-postgres-config" (include "common.names.fullname"  .) | quote }}
+data:
+  databases: |
+    ckan: ckan
+    datapusher: datapusher
+    datastore: datastore
+    discourse:
+      owner: discourse
+      extensions:
+        vector: {}
+    jupyterhub: jupyterhub
+    keycloak: keycloak
+    sensormeta: sensormeta
+    superset: superset
+  roles: |
+    - name: ckan
+      ensure: present
+      login: true
+      superuser: false
+      passwordSecret:
+        name: {{ printf "%s-ckan-postgres-credentials" (include "common.names.fullname"  .) }}
+    - name: datapusher
+      ensure: present
+      login: true
+      superuser: false
+      passwordSecret:
+        name: {{ printf "%s-datapusher-postgres-credentials" (include "common.names.fullname"  .) }}
+    - name: datastore
+      ensure: present
+      login: true
+      superuser: false
+      passwordSecret:
+        name: {{ printf "%s-datastore-postgres-credentials" (include "common.names.fullname"  .) }}
+    - name: datastore_reader
+      ensure: present
+      login: true
+      superuser: false
+      passwordSecret:
+        name: {{ printf "%s-datastore-reader-postgres-credentials" (include "common.names.fullname"  .) }}
+    - name: discourse
+      ensure: present
+      login: true
+      superuser: false
+      passwordSecret:
+        name: {{ printf "%s-discourse-postgres-credentials" (include "common.names.fullname"  .) }}
+    - name: jupyterhub
+      ensure: present
+      login: true
+      superuser: false
+      passwordSecret:
+        name: {{ printf "%s-jupyterhub-postgres-credentials" (include "common.names.fullname"  .) }}
+    - name: keycloak
+      ensure: present
+      login: true
+      superuser: false
+      passwordSecret:
+        name: {{ printf "%s-keycloak-postgres-credentials" (include "common.names.fullname"  .) }}
+    - name: sensormeta
+      ensure: present
+      login: true
+      superuser: false
+      passwordSecret:
+        name: {{ printf "%s-sensormeta-postgres-credentials" (include "common.names.fullname"  .) }}
+    - name: sensormeta_reader
+      ensure: present
+      login: true
+      superuser: false
+      inRoles:
+        - pg_read_all_data
+      passwordSecret:
+        name: {{ printf "%s-sensormeta-reader-postgres-credentials" (include "common.names.fullname"  .) }}
+    - name: superset
+      ensure: present
+      login: true
+      superuser: false
+      passwordSecret:
+        name: {{ printf "%s-superset-postgres-credentials" (include "common.names.fullname"  .) }}
+---
+{{- if .Values.cloudnativePostgres.backup }}
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: {{ printf "%s-cnpg-backup" (include "common.names.fullname"  .) | quote }}
+stringData:
+  ACCESS_KEY_ID: {{ .Values.cloudnativePostgres.backup.s3.secret.accessKeyId }}
+  ACCESS_SECRET_KEY: {{ .Values.cloudnativePostgres.backup.s3.secret.accessSecretKey }}
+{{- end -}}

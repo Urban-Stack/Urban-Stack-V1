@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot renders page as expected 1`] = `
+<div>
+  <div
+    class="h-full flex flex-col"
+  >
+    <div
+      class="flex justify-end mb-6"
+    >
+      <a
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+        data-loading="false"
+        href="/settings/projects/tenant1/project1/subscriptions/new"
+        role="button"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="flex items-center size-5"
+          >
+            <svg
+              aria-hidden="true"
+              fill="none"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12h14m-7 7V5"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+              />
+            </svg>
+          </div>
+          <div
+            class="px-1 empty:hidden"
+          >
+            Neue Subscription
+          </div>
+        </div>
+      </a>
+    </div>
+    <div>
+      list of subscriptions
+    </div>
+  </div>
+</div>
+`;

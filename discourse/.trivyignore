@@ -1,0 +1,50 @@
+# false positive for Debian bookworm (12) https://github.com/aquasecurity/trivy/discussions/6722
+CVE-2023-45853
+
+# tbd https://tickets.teuto.net/4teuto/cust/9314/udh-platform/udp/-/issues/69
+CVE-2022-28550
+CVE-2023-6879
+CVE-2025-13836
+CVE-2026-27699
+CVE-2026-6100
+
+# low severity according to RedHat
+CVE-2026-24515
+
+# go stdlib vuln that doesn't apply
+CVE-2025-68121
+
+# no imagemagick update yet
+CVE-2026-25897
+CVE-2026-25898
+CVE-2026-25968
+CVE-2026-25971
+CVE-2026-25983
+CVE-2026-25986
+CVE-2026-25987
+CVE-2026-26284
+
+# handlebar templates are precompiled
+CVE-2026-33937
+
+# allow_duplicate_key: false is not used
+CVE-2026-33210
+
+# no fix available yet
+CVE-2026-33845
+
+# not relevant
+CVE-2026-42010
+CVE-2026-7598
+
+# IMAP is not used
+CVE-2026-42257
+CVE-2026-42258
+
+# 32 bit only
+CVE-2026-8376
+# perl doesn't extract any user controlled tar files
+CVE-2026-42496
+
+# vitest dev ui is neither running nor exposed over the network
+CVE-2026-47429

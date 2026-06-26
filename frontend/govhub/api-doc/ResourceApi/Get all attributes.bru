@@ -1,0 +1,15 @@
+meta {
+  name: Get all attributes
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/attributes/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

@@ -1,0 +1,38 @@
+# The UDP keycloak does not support hot reloading, so you may use this separate container to run a local keycloak instance which does.
+# The theme directory from this project gets copied and mounted in the local keycloak instance,
+#   meaning this is a 1:1 copy, and you develop by directly adjusting the project setup in the subdirectories here.
+# Important: the realm for the custom theme is different from the master realm!
+# Make sure you visit the correct URL: http://localhost:8080/realms/dev/protocol/openid-connect/auth?client_id=security-admin-console
+
+name: 'keycloak-theme'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_HOSTNAME=localhost
+      - KC_EMAIL_HOST=smtp
+      - KC_EMAIL_PORT=1025
+      - KC_EMAIL_FROM=noreply@localhost.com
+      - KC_EMAIL_ENABLED=true
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./theme/src/main/resources/theme:/opt/keycloak/themes
+      - ./dev:/opt/keycloak/data/import
+    command:
+      - 'start-dev'
+      - '--import-realm'
+
+  # In order to receive emails, go to the MailHog interface at http://localhost:8025/ and use the inbox
+  # For your convenience, there is a user with the email address "foo@bar" which you can use in the "Forgot Password?" page
+  # Tip: When sending an email succeeds, there will be A LOT of JSON output in your terminal
+  smtp:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - '1025:1025' # SMTP port
+      - '8025:8025' # Web UI port

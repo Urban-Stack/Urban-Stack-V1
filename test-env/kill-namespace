@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# kills a namespace including the ceph cluster
+# unlike properly enabling deletion through the Helm chart, this does not require a successful rollout and is faster
+
+set -eu -o pipefail
+
+namespace=${1-udh}
+
+while kubectl delete ns "$namespace" --wait=false
+do
+  kubectl -n "$namespace" get $(
+    kubectl api-resources -oname |
+      grep ceph |
+      grep -v cephcluster `# has to be handled by operator for next rollout to work` |
+      xargs printf '%s,'
+    )secrets,cm -oname |
+  grep ceph |
+  xargs kubectl -n "$namespace" patch --type='merge' -p '{"metadata":{"finalizers":null}}' \
+  || true # ignore errors, there may be races
+
+  sleep 5
+done

@@ -1,0 +1,30 @@
+# will not be fixed if you can believe the status 'will_not_fix'
+CVE-2023-45853
+
+# used by chrome from playwright, no fix yet
+CVE-2023-6879
+CVE-2023-0645
+CVE-2023-5841
+CVE-2026-40393
+
+# sqlite is not used
+CVE-2025-6965
+CVE-2025-7458
+
+# low severity according to RedHat
+CVE-2026-24515
+
+# firefox is not used
+CVE-2026-2781
+
+# no fix available yet
+CVE-2026-33845
+
+# not relevant
+CVE-2026-42010
+CVE-2026-7598
+
+# 32 bit only
+CVE-2026-8376
+# perl doesn't extract any user controlled tar files
+CVE-2026-42496

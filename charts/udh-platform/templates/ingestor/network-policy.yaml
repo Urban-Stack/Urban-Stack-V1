@@ -1,0 +1,49 @@
+{{- $name := "ingestor" -}}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  podSelector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $name }}
+  policyTypes:
+    - Egress
+  egress:
+    {{- if .Values.ingestor.apiServer.host }}
+    - to:
+        - ipBlock:
+            cidr: {{ .Values.ingestor.apiServer.host }}/32
+    {{- end }}
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+    - to:
+        - podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    - to:
+        - podSelector:
+            matchLabels:
+              strimzi.io/kind: Kafka
+    {{- if .Values.ingestor.testmqtt.enabled }}
+    - to:
+        - podSelector:
+            matchLabels: {{- include "common.labels.matchLabels" . | nindent 14 }}
+              app.kubernetes.io/component: testmqtt
+    {{- end }}
+    {{- if .Values.global.networkPolicy.additionalExternalEgress }}
+    {{- .Values.global.networkPolicy.additionalExternalEgress | toYaml | nindent 4 }}
+    {{- end }}

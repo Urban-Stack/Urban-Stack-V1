@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: ingestor
+  cloud:
+    kubernetes:
+      config:
+        enabled: false
+      secrets:
+        enableApi: true
+        name: ${DEPLOYMENT_NAME}
+      reload:
+        enabled: true
+        monitoring-secrets: true
+management:
+  endpoints:
+    web:
+      discovery:
+        enabled: false

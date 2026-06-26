@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot matches snapshot 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <nav
+        class="fixed w-full top-0 bg-primary-700 h-16 z-50"
+        data-testid="app-navbar"
+      >
+        <div
+          class="flex flex-wrap items-center justify-between h-full mx-auto p-3 text-white"
+        >
+          <div
+            class="flex space-x-3"
+          >
+            <button
+              class="align-middle focus:ring-2 focus:ring-primary-200 focus:outline-hidden focus:border-transparent rounded-lg text-white hover:text-primary-100 active:text-primary-200"
+              data-testid="app-sidebar-toggle"
+              label="Seitenmenü öffnen"
+            >
+              <svg
+                aria-hidden="true"
+                class="h-8 w-8"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 7h14M5 12h14M5 17h14"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="2"
+                />
+              </svg>
+              <span
+                class="sr-only"
+              >
+                Seitenmenü öffnen
+              </span>
+            </button>
+            <a
+              class="flex items-center space-x-3 rtl:space-x-reverse focus:ring-2 focus:outline-hidden rounded-lg focus:border-primary-200 focus:ring-3-primary-200 px-2"
+              href="/guetersloh"
+            >
+              <img
+                alt="Logo"
+                class="h-8"
+                src="/Logo.svg"
+                title="Logo"
+              />
+            </a>
+          </div>
+          <a
+            aria-busy="false"
+            class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-100 text-primary-700 hover:bg-primary-200 active:bg-primary-200 focus:ring-primary-200 disabled:bg-primary-100 disabled:text-primary-200 data-[loading=true]:bg-primary-200"
+            data-loading="false"
+            href="/api/auth/signin"
+            role="button"
+          >
+            <div
+              class="relative flex items-center gap-1"
+            >
+              <div
+                class="px-1 empty:hidden"
+              >
+                Anmelden/Registrieren
+              </div>
+            </div>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </body>,
+  "container": <div>
+    <nav
+      class="fixed w-full top-0 bg-primary-700 h-16 z-50"
+      data-testid="app-navbar"
+    >
+      <div
+        class="flex flex-wrap items-center justify-between h-full mx-auto p-3 text-white"
+      >
+        <div
+          class="flex space-x-3"
+        >
+          <button
+            class="align-middle focus:ring-2 focus:ring-primary-200 focus:outline-hidden focus:border-transparent rounded-lg text-white hover:text-primary-100 active:text-primary-200"
+            data-testid="app-sidebar-toggle"
+            label="Seitenmenü öffnen"
+          >
+            <svg
+              aria-hidden="true"
+              class="h-8 w-8"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 7h14M5 12h14M5 17h14"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="2"
+              />
+            </svg>
+            <span
+              class="sr-only"
+            >
+              Seitenmenü öffnen
+            </span>
+          </button>
+          <a
+            class="flex items-center space-x-3 rtl:space-x-reverse focus:ring-2 focus:outline-hidden rounded-lg focus:border-primary-200 focus:ring-3-primary-200 px-2"
+            href="/guetersloh"
+          >
+            <img
+              alt="Logo"
+              class="h-8"
+              src="/Logo.svg"
+              title="Logo"
+            />
+          </a>
+        </div>
+        <a
+          aria-busy="false"
+          class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-100 text-primary-700 hover:bg-primary-200 active:bg-primary-200 focus:ring-primary-200 disabled:bg-primary-100 disabled:text-primary-200 data-[loading=true]:bg-primary-200"
+          data-loading="false"
+          href="/api/auth/signin"
+          role="button"
+        >
+          <div
+            class="relative flex items-center gap-1"
+          >
+            <div
+              class="px-1 empty:hidden"
+            >
+              Anmelden/Registrieren
+            </div>
+          </div>
+        </a>
+      </div>
+    </nav>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

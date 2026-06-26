@@ -1,0 +1,302 @@
+---
+title: "Data Hub Authorization"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    self_contained: true
+---
+```{r include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_accent()
+
+library(DiagrammeR)
+knitr::knit_engines$set(incgraph = function(options) {
+  assign(options$name, function(i) {
+  graph <- paste(options$code, collapse = "\n")
+  x <- 0
+  while (TRUE) {
+    x <- x + 1
+    placeholder <- paste0("#", x)
+    if (grepl(placeholder, graph))
+    graph <- gsub(placeholder, if (x > i) "[style=invis]" else "", graph)
+    else
+    break
+  }
+  grViz(graph, width=750, height=options$height)
+  }, .GlobalEnv)
+  ""
+})
+
+xaringanExtra::use_tile_view()
+```
+
+# Integration
+
+```{r echo=FALSE}
+grViz("
+      digraph {
+        compound=true
+        User -> Superset [lhead=cluster_platform]
+        subgraph cluster_platform {
+          {
+            rank=same
+            ClickHouse
+            Superset
+            '...' [color=white]
+          }
+          ClickHouse -> Superset -> '...' [style=invis]
+        }
+      }
+", width=750, height=300)
+```
+???
+- platform integrates different existing components
+--
+
+- Authentication
+- Authorization
+???
+- creates uniform authentication and authorization layer across everything
+
+---
+
+# Authorization
+
+```{r echo=FALSE}
+grViz("
+      graph {
+        'Project A'
+        'Project B'
+        'Project C'
+      }
+", width=750, height=300)
+```
+???
+- components have different ideas about how their data can be segmented
+- maybe
+  - component A has its own policy language for fine-grained access
+  - component B has "projects"
+  - component C is a database with RLS
+--
+name: segmentation
+layout: true
+
+Organization / Realm / Zone / Space / ...
+
+---
+???
+- common language: projects, a flat segmentation of the application's data
+- uniform principle throughout the platform
+
+---
+layout: true
+
+# Keycloak Authorization Services
+
+```{incgraph name='kcas', height=350}
+digraph {
+  p[label="in group X (Policy)"] #3
+  p -> Tom [style=invis]
+  {rank=same;nodesep=1;Tom;Apple}
+  Apple[label="Apple (Resource)"] #1
+  Tom -> Apple [label="apple:eat (Scope)"] #2
+}
+```
+
+---
+`r kcas(0)`
+???
+- basic building blocks of Keycloak Authorization Services
+- Tom = user that wants to do things
+---
+`r kcas(1)`
+???
+- Resources = things that can be accessed / used
+---
+`r kcas(2)`
+???
+- Scopes = what you can do with a resource
+---
+`r kcas(3)`
+???
+- why Tom? because he's in group X
+
+--
+= Permission
+???
+- Permission = If **Policy** applies then allow **Scope** on **Resource**
+---
+layout: true
+
+# Data Hub Resources
+
+```{incgraph name='dhres', height=450}
+graph {
+  r[label=""] #3
+  t1[label="Tenant 1"] #1
+  t2[label="Tenant 2"] #1
+  p1[label='Project A']
+  p2[label='Project B'] #1
+  p3[label='Project C'] #1
+  c[label='Webhook Credential']
+  p2 -- c #2
+  g[label='Group Foobar']
+  t2 -- g #2
+
+  r -- t1 #3
+  r -- t2 #3
+  t1 -- p1 #2
+  t1 -- p2 #2
+  t2 -- p3 #2
+}
+```
+
+---
+`r dhres(0)`
+???
+- resources in Data Hub
+- creating permissions for every single thing unfeasible
+---
+`r dhres(1)`
+???
+- of course more
+- tenants are also resources
+---
+`r dhres(2)`
+???
+- resources can be organized in a tree
+---
+`r dhres(3)`
+???
+- at least when you turn the forest into a tree
+- this simplifies things
+  - can give a single permission for a whole subtree
+  - recursive deletion instead of forgetting some credential when deleting a project etc.
+- tree concept **on top** of KC AS because it's helpful
+- same principles on all levels, allows expression of desired access in both directions
+  - give admin permission, but for only one project
+  - second tenant: admins only have access inside their tenant
+  - contrast with simple admin true/false (either you're admin or regular user), does not solve either of those
+---
+layout: false
+template: segmentation
+
+???
+- when to create S3 bucket / DB tables / dashboard space?
+- manual = same chores every time
+- same as arranging book pages in a book instead of loose in a bag, it makes sense - considering how those things will be used - to just create one of everything for each project
+- the moment you create a new project, a bucket, a space for dashboards, somewhere to save time series etc. are all available
+- unused S3 bucket / ... is virtually free
+--
+=> per project
+---
+layout: false
+
+# Example Scopes
+
+```
+group:manage-members
+```
+<br>
+???
+- in the context of a group that bundles users, managing who is a member of the group is meaningful scope
+--
+
+```
+project:bucket-write
+project:clickhouse-read
+...
+```
+<br>
+???
+- for a project, the different things created in all the components should be configurable separately => service provider might need to upload files but has no business modifying the ClickHouse tables for the project
+--
+
+```
+project:admin
+tenant:admin
+group:admin
+...
+```
+<br>
+???
+- includes everything, this is the scope that allows everything for the whole subtree
+- (optional) granting `project:admin` on a tenant resource is possible and equivalent to granting it on all projects within, does not affect anything else like groups
+--
+
+```
+project:view
+tenant:view
+group:view
+...
+```
+<br>
+???
+- in some contexts even the list of project names / customers / user groups should not be visible to everyone, for those that are not granted `:view` scope it looks as if it doesn't exists
+---
+layout: true
+
+# Keycloak ↔ Components
+
+```{incgraph name='kccomp', height=200}
+digraph {
+  rankdir=LR
+  k[label=Keycloak]
+  t[label="Token Claims\nRun Ahead"] #1
+  c[label="Superset\nGrafana\nPrometheus\nClickHouse"]
+  k -> t -> c
+}
+```
+
+---
+`r kccomp(0)`
+???
+- we have the permissions in Keycloak and the Component needs to make an authorization decision
+- how is authorization information communicated implementation-wise?
+- ideally every software we want to use supports Keycloak Authorization Services on its own
+- while some does, it's the exception rather than the rule
+- one approach would be to add that generic support for everything => unfeasible to impossible
+- alternative
+  - talk to every component in a way it understands
+  - use suitable existing mechanisms to communicate enough information to model the special cases we need
+---
+`r kccomp(1)`
+???
+- either include information in token
+- or - while user is sent to Keycloak for authentication
+  - pause token creation
+  - talk to component over its API
+  - ensure user exists and access is configured exactly like we need it
+  - when token creation completes authorization information is already reconciled in component
+  - after completion of authentication in component everything looks as expected
+--
+
+```json
+{
+  ...
+  "https://aws.amazon.com/tags": {
+    "principal_tags": {
+      "bucket": ["tenant1.project1", "tenant1.project2"],
+    }
+  },
+  ...
+}
+```
+???
+- example S3 (compatible, Ceph)
+- this is what S3 (compatible) understands
+- by using that mechanism we can integrate unmodified Ceph for buckets
+---
+layout: false
+
+# Configuration
+- necessary expressivity
+- regular use simpler
+???
+- the underlying model needs to be expressive enough to cover the use cases that can reasonably arise
+- for most situations the flexibility is not necessary
+- => the user interface and offer simple ways to configure the most common cases, such as allowing full access to a project
+---
+class: inverse, center, middle
+
+# Q(+A?)

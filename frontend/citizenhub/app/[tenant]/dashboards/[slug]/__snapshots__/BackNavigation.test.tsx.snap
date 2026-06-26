@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`BackNavigation matches snapshot 1`] = `
+<div>
+  <a
+    class="flex gap-2 items-center text-gray-600 hover:underline"
+    href="/custom/link"
+  >
+    <svg
+      data-testid="ic-angle-left"
+    />
+    <span
+      class="text-sm"
+    >
+      Zurück zur Übersicht
+    </span>
+  </a>
+</div>
+`;

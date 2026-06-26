@@ -1,0 +1,241 @@
+version: 1.0.0
+database_uuid: 30d54d0f-992e-4d1b-8f2e-b9f9cf59f37c
+table_name: sensor_messages_with_meta
+schema: default
+main_dttm_col: time
+uuid: 7275de21-7b64-4227-846f-dcf2b9457870
+metrics:
+  - metric_name: count
+    verbose_name: COUNT(*)
+    metric_type: count
+    expression: COUNT(*)
+    description: null
+    d3format: null
+    currency: null
+    extra: null
+    warning_text: null
+columns:
+  - &float32
+    column_name: temperature_outside
+    verbose_name: null
+    is_dttm: false
+    is_active: true
+    type: NULLABLE(FLOAT32)
+    advanced_data_type: null
+    groupby: true
+    filterable: true
+    expression: null
+    description: null
+    python_date_format: null
+    extra: null
+  - &float64
+    column_name: latitude
+    verbose_name: null
+    is_dttm: false
+    is_active: true
+    type: NULLABLE(FLOAT64)
+    advanced_data_type: null
+    groupby: true
+    filterable: true
+    expression: null
+    description: null
+    python_date_format: null
+    extra: null
+  - <<: *float64
+    column_name: longitude
+  - &string
+    column_name: sensor_id
+    verbose_name: null
+    is_dttm: false
+    is_active: true
+    type: NULLABLE(STRING)
+    advanced_data_type: null
+    groupby: true
+    filterable: true
+    expression: null
+    description: null
+    python_date_format: null
+    extra: null
+  - column_name: time
+    verbose_name: null
+    is_dttm: true
+    is_active: true
+    type: DATETIME
+    advanced_data_type: null
+    groupby: true
+    filterable: true
+    expression: null
+    description: null
+    python_date_format: null
+    extra: null
+  - <<: *string
+    column_name: project
+    type: STRING
+  - <<: *string
+    column_name: status
+  - <<: *float64
+    column_name: uv_index
+  - <<: *float64
+    column_name: humidity_air
+  - <<: *float64
+    column_name: air_pressure
+  - <<: *float64
+    column_name: wind_speed
+  - <<: *float64
+    column_name: wind_peak_gust
+  - <<: *float64
+    column_name: wind_direction
+  - <<: *float64
+    column_name: light_intensity
+  - <<: *float64
+    column_name: rain_intensity
+  - <<: *float64
+    column_name: rain_accumulated
+  - <<: *float64
+    column_name: battery_voltage
+  - <<: *float64
+    column_name: soil_moisture1
+  - <<: *float64
+    column_name: soil_moisture2
+  - <<: *float64
+    column_name: soil_moisture3
+  - <<: *float64
+    column_name: soil_moisture4
+  - <<: *float64
+    column_name: soil_water_column1
+  - <<: *float64
+    column_name: soil_water_column2
+  - <<: *float64
+    column_name: soil_water_column3
+  - <<: *float64
+    column_name: soil_water_column4
+  - <<: *float64
+    column_name: soil_water_tension1
+  - <<: *float64
+    column_name: soil_water_tension2
+  - <<: *float64
+    column_name: soil_water_tension3
+  - <<: *float64
+    column_name: soil_water_tension4
+  - <<: *float64
+    column_name: soil_temperature1
+  - <<: *float64
+    column_name: soil_temperature2
+  - <<: *float64
+    column_name: soil_temperature3
+  - <<: *float64
+    column_name: soil_temperature4
+  - <<: *float64
+    column_name: pm2_5
+  - <<: *float64
+    column_name: pm10
+  - <<: *float64
+    column_name: distance
+  - <<: *float64
+    column_name: pedestrian_traffic_h
+  - <<: *float64
+    column_name: lux
+  - <<: *float64
+    column_name: co2
+  - <<: *float32
+    column_name: temperature_inside
+  - <<: *float64
+    column_name: battery_level
+  - &int64
+    column_name: bp_alarm
+    verbose_name: null
+    is_dttm: false
+    is_active: true
+    type: NULLABLE(INT64)
+    advanced_data_type: null
+    groupby: true
+    filterable: true
+    expression: null
+    description: null
+    python_date_format: null
+    extra: null
+  - <<: *int64
+    column_name: bp_bat_perc
+  - &bool
+    column_name: bp_beep_base
+    verbose_name: null
+    is_dttm: false
+    is_active: true
+    type: NULLABLE(BOOL)
+    advanced_data_type: null
+    groupby: true
+    filterable: true
+    expression: null
+    description: null
+    python_date_format: null
+    extra: null
+  - <<: *float64
+    column_name: bp_bv
+  - <<: *bool
+    column_name: bp_ds18b20_present
+  - <<: *int64
+    column_name: bp_ds18b20_sensor_amount
+  - <<: *int64
+    column_name: bp_fft_bin_amount
+  - <<: *int64
+    column_name: bp_fft_hz_per_bin
+  - <<: *bool
+    column_name: bp_fft_present
+  - <<: *int64
+    column_name: bp_fft_start_bin
+  - <<: *int64
+    column_name: bp_fft_stop_bin
+  - <<: *int64
+    column_name: bp_s_bin_122_173
+  - <<: *int64
+    column_name: bp_s_bin_173_224
+  - <<: *int64
+    column_name: bp_s_bin_224_276
+  - <<: *int64
+    column_name: bp_s_bin_276_327
+  - <<: *int64
+    column_name: bp_s_bin_327_378
+  - <<: *int64
+    column_name: bp_s_bin_378_429
+  - <<: *int64
+    column_name: bp_s_bin_429_480
+  - <<: *int64
+    column_name: bp_s_bin_480_532
+  - <<: *int64
+    column_name: bp_s_bin_532_583
+  - <<: *int64
+    column_name: bp_s_bin_71_122
+  - <<: *float64
+    column_name: bp_t_i
+  - <<: *int64
+    column_name: bp_w_v
+  - <<: *bool
+    column_name: bp_weight_present
+  - <<: *int64
+    column_name: bp_weight_sensor_amount
+  - <<: *bool
+    column_name: status_parking
+  - <<: *float64
+    column_name: previous_state_duration_parking
+  - <<: *float64
+    column_name: previous_state_duration_error_parking
+  - <<: *bool
+    column_name: previous_state_duration_overflow_parking
+  - <<: *string
+    column_name: external_reference
+  - <<: *string
+    column_name: location_description
+  - <<: *string
+    column_name: location_name
+  - <<: *string
+    column_name: sensor_type
+  - <<: *string
+    column_name: custom1
+  - <<: *string
+    column_name: custom2
+  - <<: *string
+    column_name: custom3
+  - <<: *string
+    column_name: custom4
+  - <<: *string
+    column_name: custom5

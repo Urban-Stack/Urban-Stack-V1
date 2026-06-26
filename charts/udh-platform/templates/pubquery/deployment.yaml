@@ -1,0 +1,57 @@
+{{- $name := "pubquery" -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  replicas: {{ .Values.pubquery.replicas }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $name }}
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: {{ $name }}
+    spec:
+      {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 6 }}
+      containers:
+      - name: pubquery
+        image: {{ include "udh-platform.images.image" (dict "imageRoot" .Values.pubquery.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.pubquery.image.pullPolicy }}
+        resources: {{- toYaml .Values.pubquery.resources | nindent 10 }}
+        ports:
+          - containerPort: 8080
+            name: http
+        livenessProbe:
+          initialDelaySeconds: 25
+          httpGet:
+            path: /actuator/health/liveness
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: http
+        envFrom:
+          - secretRef:
+              name: {{ printf "%s-%s" (include "common.names.fullname" .) "pubquery-client-secret" | quote }}
+        env:
+          - name: KEYCLOAK_REALM_URL
+            value: {{ include "udh.keycloak.realmUrl" . }}
+          {{- include "udh.clickhouse.env.queryonly" . | nindent 10 }}
+      {{- if .Values.global.trustCaSecretName }}
+          - name: USE_SYSTEM_CA_CERTS
+            value: "1"
+        volumeMounts:
+          - mountPath: /certificates
+            name: ca-cert
+      volumes:
+        - name: ca-cert
+          secret:
+            secretName: {{ .Values.global.trustCaSecretName }}
+            items:
+            - key: ca.crt
+              path: ca.crt
+      {{- end }}

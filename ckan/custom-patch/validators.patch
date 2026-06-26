@@ -1,0 +1,14 @@
+diff --git a/ckan/logic/validators.py b/ckan/logic/validators.py
+index 635ef9dee..e354ce518 100644
+--- a/ckan/logic/validators.py
++++ b/ckan/logic/validators.py
+@@ -655,7 +655,8 @@ def user_name_validator(key: FlattenKey, data: FlattenDataDict,
+             errors[key].append(_('That login name is not available.'))
+     elif user_obj_from_context:
+         requester = context.get('auth_user_obj', None)
+-        if requester and authz.is_sysadmin(requester.name):
++        ignore_auth = context.get('ignore_auth', None)
++        if ignore_auth or (requester and authz.is_sysadmin(requester.name)):
+             return
+         old_user = model.User.get(user_obj_from_context.id)
+         if old_user is not None and old_user.state != model.State.PENDING:

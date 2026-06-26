@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`DashboardsContainer matches snapshot 1`] = `
+<div>
+  <div
+    class="h-full flex flex-col gap-y-4"
+  >
+    <div
+      class="flex flex-wrap gap-4"
+    >
+      <h1
+        class="grow-[999] self-end text-3xl font-bold text-gray-900"
+      >
+        Dashboards
+      </h1>
+    </div>
+    <div
+      data-testid="mock-dashboard-search-bar"
+    />
+    <div
+      class="flex flex-row flex-wrap justify-between items-start sm:items-center gap-4"
+    >
+      <div
+        data-testid="mock-filter"
+      />
+      <div
+        data-testid="mock-view-selector"
+      />
+    </div>
+    <div
+      data-testid="mock-dashboards-content"
+    />
+  </div>
+</div>
+`;

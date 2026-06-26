@@ -1,0 +1,17 @@
+@import 'tailwindcss';
+
+@config '@/tailwind.config.ts';
+
+.udp-scroll-thin {
+  ::-webkit-scrollbar {
+    @apply rounded-lg w-2 h-0.5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-200 rounded-lg;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+}

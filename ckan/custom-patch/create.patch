@@ -1,0 +1,24 @@
+diff --git a/ckan/logic/action/create.py b/ckan/logic/action/create.py
+index 9d26c1f59..338fdc817 100644
+--- a/ckan/logic/action/create.py
++++ b/ckan/logic/action/create.py
+@@ -598,7 +598,8 @@ def member_create(context: Context,
+         if user_obj and member.table_name == u'user' and \
+                 member.table_id == user_obj.id and \
+                 member.capacity == u'admin' and \
+-                capacity != u'admin':
++                capacity != u'admin' and \
++                context.get("ignore_auth") is False:
+             raise NotAuthorized("Administrators cannot revoke their "
+                                 "own admin status")
+         if member.state != 'active':
+@@ -969,7 +969,8 @@ def user_create(context: Context,
+     author_obj = model.User.get(context.get('user'))
+     if data_dict.get("id"):
+         is_sysadmin = (author_obj and author_obj.sysadmin)
+-        if not is_sysadmin or model.User.get(data_dict["id"]):
++        ignore_auth = context.get('ignore_auth')
++        if not (ignore_auth or is_sysadmin) or model.User.get(data_dict["id"]):
+             data_dict.pop("id", None)
+     context.pop("user_obj", None)
+

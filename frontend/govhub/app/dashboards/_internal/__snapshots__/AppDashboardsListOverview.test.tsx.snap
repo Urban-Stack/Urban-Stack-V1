@@ -1,0 +1,1860 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot matches snapshot where at least one Dashboard is favored 1`] = `
+<div>
+  <div
+    class="relative udp-scroll-thin"
+  >
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-r left-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-l"
+    />
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-l right-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-r"
+    />
+    <div
+      class="h-full overflow-x-auto focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+      data-testid="udp-scroll-wrapper-ref"
+    >
+      <div
+        class="relative"
+        data-testid="table-element"
+      >
+        <div
+          class="absolute left-0 top-0 -z-10 h-full w-full rounded-lg drop-shadow-md dark:bg-black whitespace-nowrap bg-white"
+        />
+        <table
+          class="w-full text-left text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap bg-white"
+          data-testid="dashboard-list-overview"
+        >
+          <thead
+            class="group/head text-xs uppercase text-gray-700 dark:text-gray-400"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+              data-testid="table-row-element"
+            >
+              <th
+                class="bg-gray-50 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700 w-0 p-0 pr-1"
+              >
+                <span
+                  class="sr-only"
+                >
+                  Favorit
+                </span>
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Name
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Zuletzt bearbeitet
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Gruppe
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Status
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Tags
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="group/body divide-y text-gray-900"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-0"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 0
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-1"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 1
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Intern
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-2"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 2
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshot matches snapshot where at least one Dashboard is not favored 1`] = `
+<div>
+  <div
+    class="relative udp-scroll-thin"
+  >
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-r left-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-l"
+    />
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-l right-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-r"
+    />
+    <div
+      class="h-full overflow-x-auto focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+      data-testid="udp-scroll-wrapper-ref"
+    >
+      <div
+        class="relative"
+        data-testid="table-element"
+      >
+        <div
+          class="absolute left-0 top-0 -z-10 h-full w-full rounded-lg drop-shadow-md dark:bg-black whitespace-nowrap bg-white"
+        />
+        <table
+          class="w-full text-left text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap bg-white"
+          data-testid="dashboard-list-overview"
+        >
+          <thead
+            class="group/head text-xs uppercase text-gray-700 dark:text-gray-400"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+              data-testid="table-row-element"
+            >
+              <th
+                class="bg-gray-50 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700 w-0 p-0 pr-1"
+              >
+                <span
+                  class="sr-only"
+                >
+                  Favorit
+                </span>
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Name
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Zuletzt bearbeitet
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Gruppe
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Status
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Tags
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="group/body divide-y text-gray-900"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-0"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 0
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-1"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 1
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Intern
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-2"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 2
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshot matches snapshot where the title of a dashboard is empty 1`] = `
+<div>
+  <div
+    class="relative udp-scroll-thin"
+  >
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-r left-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-l"
+    />
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-l right-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-r"
+    />
+    <div
+      class="h-full overflow-x-auto focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+      data-testid="udp-scroll-wrapper-ref"
+    >
+      <div
+        class="relative"
+        data-testid="table-element"
+      >
+        <div
+          class="absolute left-0 top-0 -z-10 h-full w-full rounded-lg drop-shadow-md dark:bg-black whitespace-nowrap bg-white"
+        />
+        <table
+          class="w-full text-left text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap bg-white"
+          data-testid="dashboard-list-overview"
+        >
+          <thead
+            class="group/head text-xs uppercase text-gray-700 dark:text-gray-400"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+              data-testid="table-row-element"
+            >
+              <th
+                class="bg-gray-50 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700 w-0 p-0 pr-1"
+              >
+                <span
+                  class="sr-only"
+                >
+                  Favorit
+                </span>
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Name
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Zuletzt bearbeitet
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Gruppe
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Status
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Tags
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="group/body divide-y text-gray-900"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-0"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 0
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-1"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-500"
+                  data-testid="dashboard-list-item-name"
+                />
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Intern
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-2"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 2
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshot matches snapshot where the title of a dashboard is missing 1`] = `
+<div>
+  <div
+    class="relative udp-scroll-thin"
+  >
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-r left-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-l"
+    />
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-l right-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-r"
+    />
+    <div
+      class="h-full overflow-x-auto focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+      data-testid="udp-scroll-wrapper-ref"
+    >
+      <div
+        class="relative"
+        data-testid="table-element"
+      >
+        <div
+          class="absolute left-0 top-0 -z-10 h-full w-full rounded-lg drop-shadow-md dark:bg-black whitespace-nowrap bg-white"
+        />
+        <table
+          class="w-full text-left text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap bg-white"
+          data-testid="dashboard-list-overview"
+        >
+          <thead
+            class="group/head text-xs uppercase text-gray-700 dark:text-gray-400"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+              data-testid="table-row-element"
+            >
+              <th
+                class="bg-gray-50 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700 w-0 p-0 pr-1"
+              >
+                <span
+                  class="sr-only"
+                >
+                  Favorit
+                </span>
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Name
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Zuletzt bearbeitet
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Gruppe
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Status
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Tags
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="group/body divide-y text-gray-900"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-0"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 0
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-1"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-500"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Unbenanntes Dashboard
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Intern
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-2"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 2
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshot renders list overview as expected 1`] = `
+<div>
+  <div
+    class="relative udp-scroll-thin"
+  >
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-r left-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-l"
+    />
+    <div
+      class="absolute pointer-events-none inset-y-0 w-16 z-10 from-white to-transparent transition-opacity duration-350 bg-gradient-to-l right-0 opacity-0"
+      data-testid="udp-scroll-wrapper-grad-r"
+    />
+    <div
+      class="h-full overflow-x-auto focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+      data-testid="udp-scroll-wrapper-ref"
+    >
+      <div
+        class="relative"
+        data-testid="table-element"
+      >
+        <div
+          class="absolute left-0 top-0 -z-10 h-full w-full rounded-lg drop-shadow-md dark:bg-black whitespace-nowrap bg-white"
+        />
+        <table
+          class="w-full text-left text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap bg-white"
+          data-testid="dashboard-list-overview"
+        >
+          <thead
+            class="group/head text-xs uppercase text-gray-700 dark:text-gray-400"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600"
+              data-testid="table-row-element"
+            >
+              <th
+                class="bg-gray-50 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700 w-0 p-0 pr-1"
+              >
+                <span
+                  class="sr-only"
+                >
+                  Favorit
+                </span>
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Name
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Zuletzt bearbeitet
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Gruppe
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Status
+              </th>
+              <th
+                class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
+              >
+                Tags
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="group/body divide-y text-gray-900"
+          >
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-0"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 0
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-1"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 1
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Intern
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+            <tr
+              class="group/row hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-primary-300"
+              data-testid="dashboard-list-item"
+              tabindex="0"
+            >
+              <td
+                class="group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-0 justify-center"
+              >
+                <label
+                  class="group inline-flex rounded text-primary-500 cursor-pointer w-6 px-0.5 pt-1 pb-1 ml-4 bg-transparent"
+                  data-testid="dashboard-list-favorite"
+                >
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="text-gray-500 group-hover:text-current peer-checked:text-current peer-checked:[&_path]:fill-current"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </label>
+              </td>
+              <a
+                class="contents"
+                href="/dashboards/tenant_viz-group_test-dashboard-2"
+              >
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:last:rounded-br-lg group-last/body:group-last/row:first:rounded-bl-none text-gray-900"
+                  data-testid="dashboard-list-item-name"
+                >
+                  Test Dashboard 2
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg text-gray-500"
+                >
+                  15. September 2024
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  viz-group
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  Veröffentlicht
+                </td>
+                <td
+                  class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
+                >
+                  <div
+                    class="flex flex-wrap gap-2"
+                  >
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #1
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #2
+                      </span>
+                    </div>
+                    <div
+                      class="relative flex items-center justify-center px-3 py-2 text-sm font-medium leading-none whitespace-nowrap bg-primary-100 text-primary-700 rounded-md h-6"
+                    >
+                      <span
+                        class="contents"
+                      >
+                        Tag #3
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </a>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;

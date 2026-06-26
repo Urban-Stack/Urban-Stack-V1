@@ -1,0 +1,15 @@
+{
+	"globalAlerts": ["hello-world"],
+
+	"restrictedAlerts": {},
+
+	"alerts": {
+		"hello-world": {
+			"displayClass": "info",
+			"category": "Hallo Welt!",
+			"content": "Ich habe die <b>volle</b> Kontrolle über das Masterportal!",
+			"mustBeConfirmed": true,
+			"once": false
+		}
+	}
+}

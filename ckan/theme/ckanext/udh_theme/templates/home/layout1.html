@@ -1,0 +1,28 @@
+<div role="main" class="hero">
+	<div class="container">
+		<div class="row row1">
+			<div class="col-md-12">
+				{% block search %} {% snippet 'home/snippets/search.html', search_facets=search_facets %} {%
+				endblock %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="landing" role="main" id="content">
+	<div class="mx-auto container landing-page-content">
+		{% snippet 'home/snippets/group_list.html' %}
+		<a href="/about" class="opendata-container">
+			<button class="opendata-btn">
+				<div>Open data</div>
+			</button>
+			<p class="opendata-text">in Deutschland und International</p>
+		</a>
+	
+		
+		{% snippet 'home/snippets/recent_datasets.html' %}
+	</div>
+</div>
+
+
+
+  

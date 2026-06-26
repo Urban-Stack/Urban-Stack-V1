@@ -1,0 +1,7 @@
+{% set latest_datasets = h.get_recent_datasets() %}
+
+  <div class="recent_datasets">
+      <section id="recent-list">
+          {% snippet 'home/snippets/package_list.html', packages=latest_datasets %}
+      </section>
+  </div>

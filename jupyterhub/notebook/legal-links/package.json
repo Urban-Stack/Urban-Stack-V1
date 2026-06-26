@@ -1,0 +1,14 @@
+{
+	"name": "legal-links",
+	"version": "0.1.0",
+	"description": "Adds Impressum and Datenschutz links to JupyterLab menu",
+	"keywords": [
+		"jupyterlab",
+		"extension"
+	],
+	"type": "module",
+	"jupyterlab": {
+		"extension": true
+	},
+	"main": "index.js"
+}

@@ -1,0 +1,13 @@
+database_name: clickhouse
+sqlalchemy_uri: clickhousedb://CLICKHOUSE_USERNAME:CLICKHOUSE_PASSWORD@CLICKHOUSE_HOST
+cache_timeout: null
+expose_in_sqllab: true
+allow_run_async: false
+allow_ctas: false
+allow_cvas: false
+allow_dml: false
+allow_file_upload: false
+extra:
+  allows_virtual_table_explore: false
+uuid: 30d54d0f-992e-4d1b-8f2e-b9f9cf59f37c
+version: 1.0.0

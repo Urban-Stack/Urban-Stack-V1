@@ -1,0 +1,15 @@
+meta {
+  name: Get dashboards
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/viz-groups/{{viz-group}}/dashboards
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

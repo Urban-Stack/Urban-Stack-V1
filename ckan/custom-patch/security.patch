@@ -1,0 +1,21 @@
+diff --git a/ckan/logic/action/get.py b/ckan/logic/action/get.py
+index 2f6effb4c..f2c1c7132 100644
+--- a/ckan/logic/action/get.py
++++ b/ckan/logic/action/get.py
+@@ -839,6 +839,7 @@ def user_list(
+ 
+     q = data_dict.get('q', '')
+     email = data_dict.get('email')
++    user = context.get('user')
+     order_by = data_dict.get('order_by', 'display_name')
+     all_fields = asbool(data_dict.get('all_fields', True))
+ 
+@@ -867,6 +868,8 @@ def user_list(
+         query = model.User.search(q, query, user_name=context.get('user'))
+     if email:
+         query = query.filter_by(email=email)
++    if not authz.is_sysadmin(user):
++        query = query.filter_by(name=user)
+ 
+     order_by_field = None
+     if order_by == 'edits':

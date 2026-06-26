@@ -1,0 +1,6 @@
+apiVersion: scheduling.k8s.io/v1
+description: Not required for platform core function
+kind: PriorityClass
+metadata:
+  name: jupyterhub-singleuser
+value: -250

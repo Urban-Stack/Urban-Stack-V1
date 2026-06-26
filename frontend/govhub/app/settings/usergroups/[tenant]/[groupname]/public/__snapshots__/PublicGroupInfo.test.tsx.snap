@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot info box 1`] = `
+<div>
+  <div
+    class="group flex flex-col text-wrap text-primary-700 rounded-2xl p-4 bg-primary-100"
+    data-testid="user-group-public-info"
+  >
+    <div
+      class="flex flex-row gap-2"
+    >
+      <svg
+        aria-hidden="true"
+        class="size-5 shrink-0 mt-1"
+        fill="currentColor"
+        height="24"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0l4-4Z"
+          fill-rule="evenodd"
+        />
+      </svg>
+      <h3
+        class="text-lg font-bold"
+      >
+        Benutzergruppe erfolgreich geteilt
+      </h3>
+    </div>
+    <div
+      class="flex flex-col gap-3"
+    >
+      <p>
+        Diese Benutzergruppe ist jetzt für alle Mandanten sichtbar.
+      </p>
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600 w-fit"
+        data-loading="false"
+        type="button"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="flex items-center size-5"
+          >
+            <svg
+              fill="none"
+              height="14"
+              viewBox="0 0 14 14"
+              width="14"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0.848751 1.5111C0.621251 1.33172 0.290938 1.37329 0.111563 1.60079C-0.0678116 1.82829 -0.0262491 2.1586 0.201251 2.33797L13.1512 12.488C13.3787 12.6673 13.7091 12.6258 13.8884 12.3983C14.0678 12.1708 14.0262 11.8405 13.7987 11.6611L10.7034 9.23516L12.6831 7.25547C13.9191 6.01954 13.9191 4.01797 12.6831 2.78204C11.5894 1.68829 9.86562 1.5461 8.60781 2.44516L8.57281 2.46922C8.25781 2.69454 8.18563 3.13204 8.41094 3.44485C8.63625 3.75766 9.07375 3.83204 9.38656 3.60672L9.42156 3.58266C10.1237 3.08172 11.0841 3.16047 11.6922 3.77079C12.3812 4.45985 12.3812 5.57547 11.6922 6.26454L9.59219 8.36454L8.89437 7.81766C9.42594 6.64079 9.18969 5.22985 8.24687 4.28704C7.105 3.14297 5.30469 3.05766 4.06219 4.0311L0.848751 1.5111ZM5.22813 4.94329C5.88656 4.61735 6.70906 4.72672 7.25812 5.27797C7.69562 5.71547 7.85969 6.33454 7.73281 6.90766L5.22813 4.94329ZM8.89437 10.5083L4.83219 7.30579C4.78625 8.17641 5.09906 9.05797 5.75531 9.71204C6.60625 10.563 7.82031 10.8277 8.89656 10.5061L8.89437 10.5083ZM2.55063 5.50985L1.31688 6.7436C0.0809384 7.97954 0.0809384 9.9811 1.31688 11.217C2.41063 12.3108 4.13438 12.453 5.39219 11.5539L5.42719 11.5298C5.74219 11.3045 5.81438 10.867 5.58906 10.5542C5.36375 10.2414 4.92625 10.167 4.61344 10.3923L4.57844 10.4164C3.87625 10.9173 2.91594 10.8386 2.30781 10.2283C1.61875 9.53704 1.61875 8.42141 2.30781 7.73235L3.65969 6.38047L2.55281 5.50766L2.55063 5.50985Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <div
+            class="px-1 empty:hidden"
+          >
+            Teilen aufheben
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot hides title if not in edit mode 1`] = `
+<div>
+  <div
+    class="h-full flex flex-col gap-y-4"
+  />
+</div>
+`;
+
+exports[`snapshot shows correct title if in edit mode 1`] = `
+<div>
+  <div
+    class="h-full flex flex-col gap-y-4"
+  >
+    <h1
+      class="flex-grow text-2xl font-bold text-gray-900"
+    >
+      Neues Dashboard erstellen
+    </h1>
+  </div>
+</div>
+`;

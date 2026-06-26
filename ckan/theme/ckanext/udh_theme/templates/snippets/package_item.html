@@ -1,0 +1,96 @@
+{#
+    Displays a single of dataset.
+    
+    package        - A package to display.
+    item_class     - The class name to use on the list item.
+    hide_resources - If true hides the resources (default: false).
+    banner         - If true displays a popular banner (default: false).
+    truncate       - The length to trucate the description to (default: 180)
+    truncate_title - The length to truncate the title to (default: 50).
+    
+    Example:
+    
+      {% snippet 'snippets/package_item.html', package=c.datasets[0] %}
+    
+    #}
+    {% set truncate = truncate or 180 %}
+    {% set truncate_title = truncate_title or 50 %}
+    {% set title = package.title or package.name %}
+    {% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
+    
+    {% block package_item %}
+    
+      <div class="bd-highlight col-12 col-md-10 col-lg-4 g-3
+       {{ item_class or "dataset-item" }}">
+        
+        {% block content %}
+          <div class="dataset-content">
+            <div class="thumb-wrapper float-left">
+               {% if package.icon_url %}
+                 <img style="max-width:150px; float:left;" src="{{package.icon_url}}">
+               {% else %}
+                <svg class="w-[42px] h-[42px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"/>
+                  </svg>
+
+               {% endif %}
+             </div>
+           
+            {% block heading %}
+              <h3 class="dataset-heading">
+                {% block heading_private %}
+                  {% if package.private %}
+                    <span class="dataset-private label label-inverse badge bg-secondary">
+                      <i class="icon-lock"></i>
+                      {{ _('Private') }} 
+                    </span>
+                  {% else %}
+                    <span class="dataset-public label label-success badge bg-success">
+                      <i class="icon-globe"></i>
+                      PUBLIC
+                    </span>
+                  {% endif %}
+                {% endblock %}
+                {% block heading_title %}
+                  {{ h.link_to(h.truncate(title, truncate_title), h.url_for(package.type ~ '.read', id=package.name)) }}
+                {% endblock %}
+                {% block heading_meta %}
+                  {% if package.get('state', '').startswith('draft') %}
+                    <span class="label label-info">{{ _('Draft') }}</span>
+                  {% elif package.get('state', '').startswith('deleted') %}
+                    <span class="label label-important">{{ _('Deleted') }}</span>
+                  {% endif %}
+                  {{ h.popular('recent views', package.tracking_summary.recent, min=10) if package.tracking_summary }}
+                {% endblock %}
+              </h3>
+            {% endblock %}
+            {% block notes %}
+              {% if package.organization.name %}
+                    <div>Organisation: {{package.organization.title or package.organization.name}}</div>
+              {% endif %}
+              {% if package.metadata_modified %}
+                <div class="package-item-extra">Aktualisiert am: {{h.render_datetime(package.metadata_modified)}}</div>
+              {% endif %}
+            {% endblock %}
+            {% block resources %}
+              {% if package.resources and not hide_resources %}
+                {% block resources_outer %}
+                  <ul class="dataset-resources unstyled" style="padding-left: 0px; margin-bottom: 0px;">
+                    {% block resources_inner %}
+                      {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+                        {% if resource %}
+                        <li>
+                          <a class="dataset-public badge badge-secondary bg-secondary" href="{{ h.url_for(package.type ~ '.read', id=package.name) }}" data-format="{{ resource.lower() }}">{{ resource }}</a>
+                        </li>
+                        {% endif %}
+                      {% endfor %}
+                    {% endblock %}
+                  </ul>
+                {% endblock %}
+              {% endif %}
+            {% endblock %}
+          </div>
+        {% endblock %}
+      </div>
+    {% endblock %}
+    

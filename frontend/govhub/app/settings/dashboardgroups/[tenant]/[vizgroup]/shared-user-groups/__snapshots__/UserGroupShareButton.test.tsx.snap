@@ -1,0 +1,346 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`snapshot popover form matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-6"
+  >
+    <div
+      class="flex flex-col gap-4"
+    >
+      <p>
+        Dashboardgruppe 
+        "Test-Viz-Group"
+         freigeben
+      </p>
+      <div
+        data-testid="user-group-share-user-group-select"
+      >
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <select
+              class="block w-full appearance-none border bg-arrow-down-icon bg-[length:0.75em_0.75em] bg-[position:right_12px_center] bg-no-repeat focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              name="form-group"
+              required=""
+            >
+              <option
+                value="{"name":"test-group-1","tenant":"test-tenant-1"}"
+              >
+                test-group-1
+                 (
+                test-tenant-1
+                )
+              </option>
+              <option
+                value="{"name":"test-group-2","tenant":"test-tenant-1"}"
+              >
+                test-group-2
+                 (
+                test-tenant-1
+                )
+              </option>
+              <option
+                value="{"name":"test-group-3","tenant":"test-tenant-2"}"
+              >
+                test-group-3
+                 (
+                test-tenant-2
+                )
+              </option>
+              <option
+                value="{"name":"test-group-4","tenant":"test-tenant-1"}"
+              >
+                test-group-4
+                 (
+                test-tenant-1
+                )
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <fieldset
+        class="flex flex-col gap-4 ml-4"
+        data-testid="user-group-share-perm-radio-button-group"
+      >
+        <div
+          class="flex items-center [&>*]:cursor-pointer"
+          data-testid="udp-radio-button-group-option"
+        >
+          <input
+            checked=""
+            class="h-4 w-4 appearance-none rounded-full border border-gray-300 bg-gray-100 bg-[length:1em_1em] bg-center bg-no-repeat checked:border-transparent checked:bg-current checked:bg-dot-icon focus:outline-none focus:ring-2 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:checked:border-transparent dark:checked:bg-current text-primary-600 focus:ring-primary-600 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
+            id="form-permission_read"
+            name="form-permission"
+            type="radio"
+            value="read"
+          />
+          <label
+            class="text-sm font-medium text-gray-900 dark:text-white pl-2 line-clamp-1"
+            data-testid="flowbite-label"
+            for="form-permission_read"
+          >
+            Betrachter
+          </label>
+        </div>
+        <div
+          class="flex items-center [&>*]:cursor-pointer"
+          data-testid="udp-radio-button-group-option"
+        >
+          <input
+            class="h-4 w-4 appearance-none rounded-full border border-gray-300 bg-gray-100 bg-[length:1em_1em] bg-center bg-no-repeat checked:border-transparent checked:bg-current checked:bg-dot-icon focus:outline-none focus:ring-2 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:checked:border-transparent dark:checked:bg-current text-primary-600 focus:ring-primary-600 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
+            id="form-permission_admin"
+            name="form-permission"
+            type="radio"
+            value="admin"
+          />
+          <label
+            class="text-sm font-medium text-gray-900 dark:text-white pl-2 line-clamp-1"
+            data-testid="flowbite-label"
+            for="form-permission_admin"
+          >
+            Mitarbeiter
+          </label>
+        </div>
+      </fieldset>
+    </div>
+    <div
+      class="flex gap-3.5 flex-wrap w-fit [&>*]:grow [&>*]:justify-center"
+    >
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+        data-loading="false"
+        type="submit"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Freigeben
+          </div>
+        </div>
+      </button>
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 hover:bg-primary-100 active:bg-primary-100 focus:ring-primary-200 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100"
+        data-loading="false"
+        type="button"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Abbrechen
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshot popover form matches snapshot when group name error 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-6"
+  >
+    <div
+      class="flex flex-col gap-4"
+    >
+      <p>
+        Dashboardgruppe 
+        "Test-Viz-Group"
+         freigeben
+      </p>
+      <div
+        data-testid="user-group-share-user-group-select"
+      >
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <select
+              class="block w-full appearance-none border bg-arrow-down-icon bg-[length:0.75em_0.75em] bg-[position:right_12px_center] bg-no-repeat focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-red-500 bg-red-50 text-red-900 placeholder-red-700 focus:border-red-500 focus:ring-red-500 dark:border-red-400 dark:bg-red-100 dark:focus:border-red-500 dark:focus:ring-red-500 p-2.5 text-sm rounded-lg"
+              name="form-group"
+              required=""
+            >
+              <p
+                class="mt-2 dark:text-red-500 text-danger-500 text-sm"
+              >
+                <span>
+                  error
+                  <br />
+                </span>
+              </p>
+              <option
+                value="{"name":"test-group-1","tenant":"test-tenant-1"}"
+              >
+                test-group-1
+                 (
+                test-tenant-1
+                )
+              </option>
+              <option
+                value="{"name":"test-group-2","tenant":"test-tenant-1"}"
+              >
+                test-group-2
+                 (
+                test-tenant-1
+                )
+              </option>
+              <option
+                value="{"name":"test-group-3","tenant":"test-tenant-2"}"
+              >
+                test-group-3
+                 (
+                test-tenant-2
+                )
+              </option>
+              <option
+                value="{"name":"test-group-4","tenant":"test-tenant-1"}"
+              >
+                test-group-4
+                 (
+                test-tenant-1
+                )
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <fieldset
+        class="flex flex-col gap-4 ml-4"
+        data-testid="user-group-share-perm-radio-button-group"
+      >
+        <div
+          class="flex items-center [&>*]:cursor-pointer"
+          data-testid="udp-radio-button-group-option"
+        >
+          <input
+            checked=""
+            class="h-4 w-4 appearance-none rounded-full border border-gray-300 bg-gray-100 bg-[length:1em_1em] bg-center bg-no-repeat checked:border-transparent checked:bg-current checked:bg-dot-icon focus:outline-none focus:ring-2 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:checked:border-transparent dark:checked:bg-current text-primary-600 focus:ring-primary-600 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
+            id="form-permission_read"
+            name="form-permission"
+            type="radio"
+            value="read"
+          />
+          <label
+            class="text-sm font-medium text-gray-900 dark:text-white pl-2 line-clamp-1"
+            data-testid="flowbite-label"
+            for="form-permission_read"
+          >
+            Betrachter
+          </label>
+        </div>
+        <div
+          class="flex items-center [&>*]:cursor-pointer"
+          data-testid="udp-radio-button-group-option"
+        >
+          <input
+            class="h-4 w-4 appearance-none rounded-full border border-gray-300 bg-gray-100 bg-[length:1em_1em] bg-center bg-no-repeat checked:border-transparent checked:bg-current checked:bg-dot-icon focus:outline-none focus:ring-2 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:checked:border-transparent dark:checked:bg-current text-primary-600 focus:ring-primary-600 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
+            id="form-permission_admin"
+            name="form-permission"
+            type="radio"
+            value="admin"
+          />
+          <label
+            class="text-sm font-medium text-gray-900 dark:text-white pl-2 line-clamp-1"
+            data-testid="flowbite-label"
+            for="form-permission_admin"
+          >
+            Mitarbeiter
+          </label>
+        </div>
+      </fieldset>
+    </div>
+    <div
+      class="flex gap-3.5 flex-wrap w-fit [&>*]:grow [&>*]:justify-center"
+    >
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+        data-loading="false"
+        type="submit"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Freigeben
+          </div>
+        </div>
+      </button>
+      <button
+        aria-busy="false"
+        class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-transparent text-primary-700 hover:bg-primary-100 active:bg-primary-100 focus:ring-primary-200 focus:text-primary-600 disabled:bg-transparent disabled:text-primary-200 data-[loading=true]:bg-primary-100"
+        data-loading="false"
+        type="button"
+      >
+        <div
+          class="relative flex items-center gap-1"
+        >
+          <div
+            class="px-1 empty:hidden"
+          >
+            Abbrechen
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshot share button matches snapshot 1`] = `
+<div>
+  <div>
+    <button
+      aria-busy="false"
+      class="flex p-2.5 font-medium text-sm rounded-lg focus:outline-hidden focus:ring-3 cursor-pointer disabled:cursor-not-allowed bg-primary-700 text-white hover:bg-primary-600 active:bg-primary-600 focus:ring-primary-200 disabled:bg-primary-200 data-[loading=true]:bg-primary-600"
+      data-loading="false"
+      type="button"
+    >
+      <div
+        class="relative flex items-center gap-1"
+      >
+        <div
+          class="flex items-center size-5"
+        >
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M14.516 6.743c-.41-.368-.443-1-.077-1.41a.99.99 0 0 1 1.405-.078l5.487 4.948.007.006A2.047 2.047 0 0 1 22 11.721a2.06 2.06 0 0 1-.662 1.51l-5.584 5.09a.99.99 0 0 1-1.404-.07 1.003 1.003 0 0 1 .068-1.412l5.578-5.082a.05.05 0 0 0 .015-.036.051.051 0 0 0-.015-.036l-5.48-4.942Zm-6.543 9.199v-.42a4.168 4.168 0 0 0-2.715 2.415c-.154.382-.44.695-.806.88a1.683 1.683 0 0 1-2.167-.571 1.705 1.705 0 0 1-.279-1.092V15.88c0-3.77 2.526-7.039 5.967-7.573V7.57a1.957 1.957 0 0 1 .993-1.838 1.931 1.931 0 0 1 2.153.184l5.08 4.248a.646.646 0 0 1 .012.011l.011.01a2.098 2.098 0 0 1 .703 1.57 2.108 2.108 0 0 1-.726 1.59l-5.08 4.25a1.933 1.933 0 0 1-2.929-.614 1.957 1.957 0 0 1-.217-1.04Z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <div
+          class="px-1 empty:hidden"
+        >
+          Freigeben
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
+`;

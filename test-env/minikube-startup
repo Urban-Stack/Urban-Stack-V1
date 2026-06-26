@@ -1,0 +1,189 @@
+#!/usr/bin/env bash
+
+source "$(dirname "$BASH_SOURCE")/.common"
+
+cd "$REPO"
+
+: ${MINIKUBE_RESOURCE_CPU:=8}
+: ${MINIKUBE_RESOURCE_RAM:=24576}
+: ${KUBERNETES_VERSION:=$DEFAULT_KUBERNETES_VERSION}
+: ${TELEPRESENCE:=1}
+
+error () {
+  printf %s\\n "$1" >&2
+  exit 1
+}
+
+# required tools
+
+# echo "Checking for SOPS"
+# if ! command -v sops &> /dev/null
+# then
+#   echo "SOPS is not installed, exiting"
+#   echo "install it with 'pacman -Suy sops'"
+#   exit
+# fi
+
+echo "Checking for Helm"
+if ! command -v helm &> /dev/null
+then
+  echo "Helm is not installed, exiting"
+  echo "install it with 'pacman -Suy helm'"
+  exit
+fi
+
+helm_version="$(helm version --short 2>/dev/null | head -n 1)"
+if [[ ! $helm_version =~ ^v4\. ]]
+then
+  echo "Helm 4.x.x is required, but found: ${helm_version:-unknown}"
+  exit
+fi
+
+echo "Checking for jq"
+if ! command -v jq &> /dev/null
+then
+  echo "jq is not installed, exiting"
+  echo "install it with 'pacman -Suy jq'"
+  exit
+fi
+
+echo "Checking for Minikube"
+if ! command -v minikube &> /dev/null
+then
+  echo "Minikube is not installed, exiting"
+  echo "install it with 'pacman -Suy minikube'"
+  exit
+fi
+
+# echo "Checking for Helm-secrets"
+# if ! helm plugin list | grep -q 'secrets';
+# then
+#   echo "Helm-secrets is not installed, exiting"
+#   echo "please check https://github.com/jkroepke/helm-secrets for installing it"
+#   exit
+# fi
+
+minikube_started=false
+
+if [[ `minikube status -p "${MINIKUBE_PROFILE}" | grep '\(host\|kubelet\|apiserver\): Running' | wc -l` -eq 3 ]]
+then
+  echo "minikube already running"
+else
+  echo "force docker-driver"
+  minikube config -p "${MINIKUBE_PROFILE}" set driver docker
+
+  echo "starting minikube"
+  minikube start -p "${MINIKUBE_PROFILE}" --cni=calico --cpus=${MINIKUBE_RESOURCE_CPU} --memory=${MINIKUBE_RESOURCE_RAM} --kubernetes-version=${KUBERNETES_VERSION} --namespace=udh --install-addons=false
+
+  minikube_started=true
+fi
+
+if [[ $(minikube profile) != "$MINIKUBE_PROFILE" ]]; then
+  echo "set minikube profile to ${MINIKUBE_PROFILE}"
+  minikube profile "${MINIKUBE_PROFILE}"
+else
+  echo "minikube profile already set to ${MINIKUBE_PROFILE}"
+fi
+
+if $minikube_started || [ ${MINIKUBE_SETUP:-0} -eq 1 ]
+then
+  echo "creating apps namespaces"
+  $KUBECTL create namespace udh-shared-apps || true
+  $KUBECTL create namespace udh-dedicated-apps || true
+
+  echo "enabling ingress controller"
+  minikube addons enable ingress --images="IngressController=registry.k8s.io/ingress-nginx/controller:v1.13.2"
+
+  # snippet annotations are disabled by default
+  $KUBECTL -n ingress-nginx get configmaps ingress-nginx-controller -ojson | jq '.data["allow-snippet-annotations"] = "true" | .data["annotations-risk-level"] = "Critical"' | $KUBECTL apply -f -
+
+  echo "enabling metrics-server"
+  minikube addons enable metrics-server
+
+  echo "enabling minikube registry"
+  minikube addons enable registry --images="KubeRegistryProxy=registry.k8s.io/minikube/kube-registry-proxy:v0.0.11"
+
+  echo "enabling cert-manager"
+  helm upgrade cert-manager --kube-context "${MINIKUBE_PROFILE}" --version "$CERT_MANAGER_VERSION" --install --create-namespace -n cert-manager cert-manager --repo https://charts.jetstack.io --set crds.enabled=true --wait
+
+  echo "enabling cnpg operator"
+  helm upgrade cnpg  --kube-context "${MINIKUBE_PROFILE}" --version "$CNPG_VERSION" --install  --create-namespace -n cnpg-system cloudnative-pg --repo https://cloudnative-pg.github.io/charts --wait
+
+  echo "enabling kafka operator"
+  helm upgrade kafka-operator --kube-context "${MINIKUBE_PROFILE}" --version "$KAFKA_OPERATOR_VERSION" --install --create-namespace -n kafka oci://quay.io/strimzi-helm/strimzi-kafka-operator --set watchAnyNamespace=true --wait
+
+  echo "enabling clickhouse operator"
+  helm upgrade clickhouse-operator --kube-context "${MINIKUBE_PROFILE}" --version "$CLICKHOUSE_OPERATOR_VERSION" --install --create-namespace -n clickhouse altinity-clickhouse-operator --repo https://docs.altinity.com/clickhouse-operator --set configs.files.config\\.yaml.watch.namespaces={".*"} --wait \
+    --set operator.resources.requests.cpu=10m \
+    --set operator.resources.requests.memory=80Mi \
+    --set operator.resources.limits.memory=200Mi \
+    --set metrics.resources.requests.cpu=5m \
+    --set metrics.resources.requests.memory=32Mi \
+    --set metrics.resources.limits.memory=200Mi
+
+  echo "install flux"
+  $KUBECTL apply -f https://github.com/fluxcd/flux2/releases/download/$FLUX_VERSION/install.yaml
+
+  if [ $TELEPRESENCE -eq 1 ]; then
+    set +e
+    which telepresence 2> /dev/null
+    rc=$?
+    set -e
+    if [ $rc -eq 0 ]; then
+      echo "prepare telepresence"
+      telepresence helm --context "${MINIKUBE_PROFILE}" install || true
+    fi
+  fi
+
+  echo "create loop device nodes in minikube"
+  minikube ssh </dev/null '
+  for i in {0..63}
+  do
+    sudo mknod /dev/loop$i b 7 $i || true
+  done'
+
+  echo "removing problematic device nodes in minikube"
+  minikube ssh </dev/null 'sudo rm /dev/dm-* || true'
+
+  echo "install CSI hostpath plugin and dependencies"
+  hostpath_repo="$(mktemp -d)"
+  git clone --depth 1 -b "$HOSTPATH_VERSION" https://github.com/kubernetes-csi/csi-driver-host-path "$hostpath_repo"
+  SNAPSHOTTER_BRANCH="$SNAPSHOTTER_VERSION" eval "$(grep -o 'kubectl apply .*{SNAPSHOTTER_.*' "$hostpath_repo/docs/deploy-1.17-and-later.md" | sed 's/kubectl/$KUBECTL -n kube-system/')"
+  sed -i 's/kubectl/$KUBECTL -n default/g' "$hostpath_repo"/deploy/kubernetes-latest/deploy.sh
+  KUBECTL="$KUBECTL" "$hostpath_repo"/deploy/kubernetes-latest/deploy.sh
+  $KUBECTL apply -f <(sed 's/metadata:/&\n  annotations:\n    storageclass.kubernetes.io\/is-default-class: "true"/' "$hostpath_repo/examples/csi-storageclass.yaml")
+  rm -rf "$hostpath_repo"
+
+  echo "install rook operator"
+  $KUBECTL apply -n flux-system -f "$REPO/docs/example-rook-operator.yaml"
+
+  echo "create jupyterhub-singleuser PriorityClass"
+  $KUBECTL apply -f "$REPO/docs/jupyterhub-singleuser-priorityclass.yaml"
+
+  echo "install podmonitor crd"
+  $KUBECTL apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/refs/heads/main/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+fi
+
+# Verify k8s version
+installed_kubernetes_version=$($KUBECTL version -o json 2> /dev/null | jq -r '.serverVersion.gitVersion')
+if [[ $installed_kubernetes_version != $KUBERNETES_VERSION ]]
+then
+  echo "Wrong kubernetes version, you need a server version of $KUBERNETES_VERSION but you have $installed_kubernetes_version, consider minikube delete and retrying."
+fi
+
+# make test domain available inside cluster
+if ! $KUBECTL -n kube-system get configmap coredns -oyaml | grep -qF "rewrite name regex ^.*data-hub.local\\.$ ingress-nginx-controller.ingress-nginx.svc.cluster.local answer auto"
+then
+  $KUBECTL -n kube-system get configmap coredns -oyaml \
+  | sed 's/^\( *\)loadbalance/\1rewrite name regex ^.*data-hub.local\\.$ ingress-nginx-controller.ingress-nginx.svc.cluster.local answer auto\n\0/g' \
+  | $KUBECTL apply -f -
+  $KUBECTL rollout restart -n kube-system deployment coredns
+fi
+
+# workaround, never resolve .intra domains because they cause problems on manjaro
+if ! $KUBECTL -n kube-system get configmap coredns -oyaml | grep 'template ANY ANY intra' -q
+then
+  $KUBECTL -n kube-system get configmap coredns -oyaml \
+  | sed 's/^        forward/        template ANY ANY intra {\n           rcode NXDOMAIN\n        }\n        forward/' \
+  | $KUBECTL apply -f -
+fi

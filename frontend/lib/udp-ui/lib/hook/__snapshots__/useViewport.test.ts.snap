@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useViewport > detector > viewport detector matches snapshot 1`] = `
+<body>
+  <div />
+  <div
+    class="before:content-['base'] sm:before:content-['sm'] md:before:content-['md'] lg:before:content-['lg'] xl:before:content-['xl'] 2xl:before:content-['2xl'] hidden before:block"
+    id="udp-viewport-detector"
+  />
+</body>
+`;

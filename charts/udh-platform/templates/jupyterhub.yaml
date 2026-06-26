@@ -1,0 +1,208 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "jupyterhub") }}
+spec:
+  interval: 1h0m0s
+  url: https://jupyterhub.github.io/helm-chart/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "jupyterhub") }}
+spec:
+  releaseName: {{ include "data-hub.name" (dict "context" . "name" "jupyterhub") }}
+  chart:
+    spec:
+      chart: jupyterhub
+      version: 4.3.5 # renovate: datasource=helm depName=jupyterhub versioning=helm registryUrl=https://jupyterhub.github.io/helm-chart
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: {{ include "data-hub.name" (dict "context" . "name" "jupyterhub") }}
+  interval: 1h0m0s
+  targetNamespace: {{ .Release.Namespace }}
+  values:
+    fullnameOverride: null # default is empty string which removes all prefixes
+    ingress:
+      enabled: true
+      hosts:
+        - {{ include "data-hub.jupyterhub.hostname" . }}
+      annotations: {{- include "udh.ingress.annotations" (dict "context" $ "annotations" .Values.jupyterhub.ingress.annotations) | nindent 8 }}
+      tls:
+        - hosts:
+          - {{ include "data-hub.jupyterhub.hostname" . }}
+          secretName: {{ include "data-hub.jupyterhub.hostname" . }}-tls
+    hub:
+      image:
+        {{ $image := include "udh-platform.images.image" (dict "imageRoot" .Values.jupyterhub.hub.image "global" .Values.global) }}
+        # not actually repository+tag but enough to make the jupyterhub chart put them back together correctly
+        name: {{ regexReplaceAll ":[^:]*$" $image "" | quote }}
+        tag: {{ regexReplaceAll "^.*:" $image "" | quote }}
+        pullPolicy: {{ .Values.jupyterhub.notebook.image.pullPolicy }}
+        {{- include "udh-platform.imagePullSecrets" (dict "context" .) | replace "imagePullSecrets:" "pullSecrets:" | nindent 8 }}
+      networkPolicy:
+        egress:
+          - ports:
+            - port: 6443
+          - ports:
+            - port: 8443
+          - to:
+            - podSelector:
+                matchLabels:
+                  cnpg.io/cluster: {{ printf "%s-cnpg" (include "common.names.fullname" .) }}
+            ports:
+              - protocol: TCP
+                port: 5432
+      config:
+        GenericOAuthenticator:
+          client_id: jupyterhub
+          authorize_url: "{{ include "udh.keycloak.realmUrl" . }}/protocol/openid-connect/auth"
+          token_url: "{{ include "udh.keycloak.realmUrl" . }}/protocol/openid-connect/token"
+          userdata_url: "{{ include "udh.keycloak.realmUrl" . }}/protocol/openid-connect/userinfo"
+          scope: [openid, email, profile]
+          username_claim: sub # ensures that the user ALWAYS keeps their data (and only theirs!) across email address and username changes
+          allow_all: true
+          login_service: Data HUB
+          logout_redirect_url: {{ printf "https://%s/realms/udh/protocol/openid-connect/logout?client_id=jupyterhub&post_logout_redirect_uri=https://%s/" (include "data-hub.keycloak.hostname" .) (include "data-hub.govhub.hostname" .) }}
+          validate_server_cert: {{ .Values.fakeCa.enabled | ternary "false" "true" }}
+        Authenticator:
+          auto_login: true
+        JupyterHub:
+          authenticator_class: generic-oauth
+          tornado_settings:
+            cookie_options:
+              expires_days: 0.4167
+        KubeSpawner:
+          environment:
+            BASE_DOMAIN: {{ $.Values.global.baseDomain | quote }}
+      db:
+        type: postgres
+        upgrade: true
+      resources: {{- $.Values.jupyterhub.hub.resources | toYaml | nindent 8 }}
+      extraVolumes:
+        - name: db-credentials
+          secret:
+            secretName: {{ printf "%s-jupyterhub-postgres-credentials" (include "common.names.fullname"  .) | quote }}
+      extraVolumeMounts:
+        - mountPath: /run/secrets/db
+          name: db-credentials
+      extraConfig:
+        # see https://github.com/jupyterhub/zero-to-jupyterhub-k8s/issues/2545#issuecomment-2612703648
+        db.py: |
+          from pathlib import Path
+          import sqlalchemy
+          c.JupyterHub.db_url = sqlalchemy.engine.URL.create(
+            drivername='postgresql+psycopg2',
+            username=Path('/run/secrets/db/username').read_text(),
+            password=Path('/run/secrets/db/password').read_text(),
+            host={{ printf "%s-cnpg-rw" (include "common.names.fullname"  .) | quote }},
+            port=5432,
+            database='jupyterhub',
+          ).render_as_string(hide_password=False)
+        resident_scheduler.py: |
+          jupyterhub_resident_scheduler_role = {
+              "name": "jupyterhub-resident-scheduler",
+              "scopes": [
+                  "list:users",
+                  "read:users:activity",
+                  "read:servers",
+                  "servers",
+                  # "admin:users", # dynamically added if --cull-users is passed
+              ],
+              # assign the role to a jupyterhub service, so it gains these permissions
+              "services": ["jupyterhub-resident-scheduler"],
+          }
+
+          scheduler_cmd = ["python3", "-m", "jupyterhub_resident_scheduler"]
+          base_url = c.JupyterHub.get("base_url", "/")
+          scheduler_cmd.append("--url=http://localhost:8081" + url_path_join(base_url, "hub/api"))
+
+          scheduler_concurrency = get_config("scheduler.concurrency")
+          if scheduler_concurrency:
+              scheduler_cmd.append(f"--concurrency={scheduler_concurrency}")
+
+          scheduler_pre_start = get_config("scheduler.preStart")
+          if scheduler_pre_start:
+              scheduler_cmd.append(f"--pre_start={scheduler_pre_start}")
+
+          c.JupyterHub.services.append(
+              {
+                  "name": "jupyterhub-resident-scheduler",
+                  "command": scheduler_cmd,
+              }
+          )
+          c.JupyterHub.load_roles.append(jupyterhub_resident_scheduler_role)
+      services:
+        Impressum:
+          admin: false
+          url: https://urbanstack.de/impressum
+        Datenschutz:
+          admin: false
+          url: https://urbanstack.de/datenschutz
+    prePuller:
+      resources: {{- $.Values.jupyterhub.prePuller.resources | toYaml | nindent 8 }}
+    scheduling:
+      userScheduler:
+        enabled: false
+    singleuser:
+      image:
+        {{ $image := include "udh-platform.images.image" (dict "imageRoot" .Values.jupyterhub.notebook.image "global" .Values.global) }}
+        # not actually repository+tag but enough to make the jupyterhub chart put them back together correctly
+        name: {{ regexReplaceAll ":[^:]*$" $image "" | quote }}
+        tag: {{ regexReplaceAll "^.*:" $image "" | quote }}
+        pullPolicy: {{ .Values.jupyterhub.notebook.image.pullPolicy }}
+        {{- include "udh-platform.imagePullSecrets" (dict "context" .) | replace "imagePullSecrets:" "pullSecrets:" | nindent 8 }}
+      cpu:
+        limit: 0.5
+        guarantee: 0.25
+      extraPodConfig:
+        priorityClassName: jupyterhub-singleuser
+      memory:
+        limit: 1G
+        guarantee: 512M
+      storage:
+        capacity: {{ $.Values.jupyterhub.singleuser.storageCapacity }}
+        dynamic:
+          subPath: data
+      {{- if $.Values.global.trustCaSecretName }}
+        extraVolumes:
+          - name: ca-cert
+            secret:
+              secretName: {{ .Values.global.trustCaSecretName }}
+              items:
+              - key: ca.crt
+                path: ca.crt
+        extraVolumeMounts:
+          - mountPath: /tls
+            name: ca-cert
+      lifecycleHooks:
+        postStart:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - |
+                cat /tls/ca.crt >> $(python -c 'import certifi; print(certifi.where())')
+      {{- end }}
+      {{- if $.Values.jupyterhub.singleuser.allowPrivateIPs }}
+      networkPolicy:
+        egressAllowRules:
+          privateIPs: true
+      {{- end }}
+    proxy:
+      service:
+        type: ClusterIP
+      chp:
+        resources: {{- $.Values.jupyterhub.proxy.chp.resources | toYaml | nindent 10 }}
+      traefik:
+        resources: {{- $.Values.jupyterhub.proxy.traefik.resources | toYaml | nindent 10 }}
+      secretSync:
+        resources: {{- $.Values.jupyterhub.proxy.secretSync.resources | toYaml | nindent 10 }}
+    cull:
+      maxAge: 36000
+      {{- if .Values.global.testDeployment }}
+      timeout: 600
+      every: 300
+      {{- end }}

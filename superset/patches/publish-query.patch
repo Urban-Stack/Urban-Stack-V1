@@ -1,0 +1,52 @@
+diff --git a/superset-frontend/src/SqlLab/components/SqlEditor/index.tsx b/superset-frontend/src/SqlLab/components/SqlEditor/index.tsx
+index 527c22752d..05def34b7f 100644
+--- a/superset-frontend/src/SqlLab/components/SqlEditor/index.tsx
++++ b/superset-frontend/src/SqlLab/components/SqlEditor/index.tsx
+@@ -82,6 +82,7 @@ import {
+   formatQuery,
+   fetchQueryEditor,
+   switchQueryEditor,
++  getUpToDateQuery,
+ } from 'src/SqlLab/actions/sqlLab';
+ import {
+   STATE_TYPE_MAP,
+@@ -800,6 +801,23 @@ const SqlEditor: FC<Props> = ({
+       </Menu>
+     );
+ 
++    interface SqlQuery {
++      readonly sql: string;
++      readonly _tag: 'SqlQuery';
++    }
++
++    const SqlQuery = (sql: string): SqlQuery => ({
++      sql,
++      _tag: 'SqlQuery',
++    });
++
++    const postSqlQuery: () => void = () => {
++      dispatch((_: unknown, getState: () => SqlLabRootState) => {
++        const { sql } = getUpToDateQuery(getState(), queryEditor);
++        window.parent.postMessage(SqlQuery(sql.trim()), '*');
++      });
++    };
++
+     return (
+       <StyledToolbar className="sql-toolbar" id="js-sql-toolbar">
+         {hideActions ? (
+@@ -853,6 +871,15 @@ const SqlEditor: FC<Props> = ({
+               )}
+             </div>
+             <div className="rightItems">
++              {database?.database_name === 'clickhouse' && window.self !== window.top && (
++                <Button
++                  buttonSize="small"
++                  tooltip="Query öffentlich abfragbar machen"
++                  onClick={postSqlQuery}
++                >
++                  Veröffentlichen
++                </Button>
++              )}
+               <span>
+                 <SaveQuery
+                   queryEditorId={queryEditor.id}

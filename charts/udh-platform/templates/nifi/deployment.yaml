@@ -1,0 +1,153 @@
+{{- if .Values.nifi.enabled }}
+{{- $name := "nifi" -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-%s" (include "common.names.fullname" .) $name }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $name }}
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: {{ $name }}
+    spec:
+      {{- include "udh-platform.imagePullSecrets" (dict "context" .) | nindent 6 }}
+      securityContext:
+        runAsGroup: 1000
+        runAsUser: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      initContainers:
+      - name: prepare-volume
+        image: {{ include "udh-platform.images.image" (dict "imageRoot" .Values.nifi.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.nifi.image.pullPolicy }}
+        resources: {{- toYaml .Values.nifi.resources | nindent 10 }}
+        volumeMounts:
+          - name: nifi
+            mountPath: /target
+          {{- if .Values.global.trustCaSecretName }}
+          - mountPath: /certificates
+            name: ca-cert
+          {{- end }}
+        command:
+          - bash
+          - -c
+          - |
+            set -eu -o pipefail
+
+            for dir in conf content_repository database_repository flowfile_repository logs nar_extensions provenance_repository python_extensions state
+            do
+              if [[ ! -e /target/$dir ]]
+              then
+                rm -r /target/.$dir || true
+                cp -a $dir /target/.$dir
+                mv /target/.$dir /target/$dir
+              fi
+            done
+
+            rm -r /target/conf/{key,trust}store.jks || true
+
+            keytool -genkeypair \
+              -alias nifi \
+              -keyalg RSA \
+              -keysize 4096 \
+              -validity 3650 \
+              -keystore /target/conf/keystore.jks \
+              -storepass changeit \
+              -dname "CN={{ include "data-hub.nifi.hostname" . }}"
+
+            cp "$JAVA_HOME/lib/security/cacerts" /target/conf/truststore.jks
+            {{- if .Values.global.trustCaSecretName }}
+            keytool -importcert -storepass changeit -noprompt -keystore /target/conf/truststore.jks < /certificates/ca.crt && echo OK || echo NOK
+            {{- end }}
+      containers:
+      - name: nifi
+        image: {{ include "udh-platform.images.image" (dict "imageRoot" .Values.nifi.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.nifi.image.pullPolicy }}
+        resources: {{- toYaml .Values.nifi.resources | nindent 10 }}
+        ports:
+          - containerPort: 8443
+            name: https
+        readinessProbe:
+          tcpSocket:
+            port: 8443
+        livenessProbe:
+          tcpSocket:
+            port: 8443
+        envFrom:
+          - secretRef:
+              name: {{ printf "%s-%s" (include "common.names.fullname" .) "nifi-client-secret" | quote }}
+        env:
+          - name: NIFI_WEB_HTTPS_HOST
+            value: 0.0.0.0
+          - name: NIFI_WEB_PROXY_HOST
+            value: {{ include "data-hub.nifi.hostname" . | quote }}
+          - name: AUTH
+            value: oidc
+          - name: NIFI_SECURITY_USER_OIDC_DISCOVERY_URL
+            value: {{ include "udh.keycloak.realmUrl" . }}/.well-known/openid-configuration
+          - name: NIFI_SECURITY_USER_OIDC_CONNECT_TIMEOUT
+            value: "15"
+          - name: NIFI_SECURITY_USER_OIDC_READ_TIMEOUT
+            value: "15"
+          - name: NIFI_SECURITY_USER_OIDC_CLIENT_ID
+            value: nifi
+          - name: NIFI_SECURITY_USER_OIDC_CLAIM_IDENTIFYING_USER
+            # sub would be stable across email changes but email is easier to configure from the nifi UI
+            value: email
+          - name: NIFI_SECURITY_USER_OIDC_CLAIM_GROUPS
+            value: tenants
+          - name: NIFI_SECURITY_USER_OIDC_TRUSTSTORE_STRATEGY
+            value: NIFI
+          - name: INITIAL_ADMIN_IDENTITY
+            value: {{ .Values.nifi.initialAdminIdentity | quote }}
+          - name: KEYSTORE_PATH
+            value: conf/keystore.jks
+          - name: KEYSTORE_TYPE
+            value: jks
+          - name: KEYSTORE_PASSWORD
+            value: changeit
+          - name: TRUSTSTORE_PATH
+            value: conf/truststore.jks
+          - name: TRUSTSTORE_TYPE
+            value: jks
+          - name: TRUSTSTORE_PASSWORD
+            value: changeit
+        volumeMounts:
+          # see `docker inspect apache/nifi`
+          {{- range $dir := list
+            "conf"
+            "content_repository"
+            "database_repository"
+            "flowfile_repository"
+            "logs"
+            "nar_extensions"
+            "provenance_repository"
+            "python_extensions"
+            "state"
+          }}
+          - name: nifi
+            mountPath: /opt/nifi/nifi-current/{{ $dir }}
+            subPath: {{ $dir }}
+          {{- end }}
+      volumes:
+        - name: nifi
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-%s" (include "common.names.fullname" $) $name | quote }}
+        {{- if .Values.global.trustCaSecretName }}
+        - name: ca-cert
+          secret:
+            secretName: {{ .Values.global.trustCaSecretName }}
+            items:
+            - key: ca.crt
+              path: ca.crt
+        {{- end }}
+{{- end }}

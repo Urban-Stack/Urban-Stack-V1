@@ -1,0 +1,5 @@
+sensor_id;external_reference;location_description;location_name;sensor_type;custom1;custom2;custom3;custom4;custom5
+sensor-0;634;Baum im Pflanzring, Sensor direkt daneben, grenzt an den Bordstein und an den Gehweg;Hauptstraße 1;Bodenfeuchte;sandiger Boden;;;;
+sensor-1;12;Baum im Pflanzring, Sensor direkt daneben, grenzt an den Bordstein und an den Gehweg;Am Rathaus 65;Bodenfeuchte;sandiger Boden;;;;
+sensor-2;142;Baum im Pflanzring, Sensor direkt daneben, grenzt an den Bordstein und an den Gehweg;Knuffinger Straße 42;Bodenfeuchte;sandiger Boden;;;;
+sensor-3;53;Baum im Pflanzring, Sensor direkt daneben, grenzt an den Bordstein und an den Gehweg;Parkstraße 60;Bodenfeuchte;sandiger Boden;;;;

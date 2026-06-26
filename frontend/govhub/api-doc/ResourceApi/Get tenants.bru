@@ -1,0 +1,15 @@
+meta {
+  name: Get tenants
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

@@ -1,0 +1,936 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FormContent matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-8"
+  >
+    <h2
+      class="text-2xl font-bold text-gray-900"
+    >
+      Mandanteneinstellungen
+    </h2>
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Name des Mandanten
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier den Namen Ihres Mandanten ein (z.B. “Gütersloh”).
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="tenant-name-input"
+              name="tenant-name"
+              placeholder="Name Ihres Mandanten hier eingeben"
+              required=""
+              type="text"
+              value="Test Tenant"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Logo
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier das Logo Ihres Mandanten aus.
+        Das Logo sollte mindestens 500px breit sein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              currentimageurl="(:AnotherUrlYippie"
+              data-testid="tenant-logo-input"
+              imagealt="Kein Logo vorhanden"
+              imageheading="Vorschau:"
+              name="tenant-logo"
+              placeholder="Link zum Logo hier einfügen"
+              removebuttontext="Logo entfernen"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Titelbild GovHub
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier das Titelbild für die Startseite des GovHubs aus.
+        Das Bild sollte mindestens 600px breit sein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              currentimageurl="iAmAUrl:)"
+              data-testid="tenant-image-input"
+              imagealt="Kein Titelbild vorhanden"
+              imageheading="Vorschau:"
+              name="tenant-image"
+              placeholder="Link zum Titelbild hier einfügen"
+              removebuttontext="Titelbild entfernen"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Titelbild Citizen Hub
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier das Titelbild für die Startseite des Citizen Hubs aus.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              currentimageurl="(:AnotherUrlYippie"
+              data-testid="citizen-hub-image-input"
+              imagealt="Kein Titelbild vorhanden"
+              imageheading="Vorschau:"
+              name="citizen-hub-image"
+              placeholder="Link zum Titelbild hier einfügen"
+              removebuttontext="Titelbild entfernen"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Farbe GovHub
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier die Primärfarbe Ihres Mandanten für den GovHub aus.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <select
+              class="block w-full appearance-none border bg-arrow-down-icon bg-[length:0.75em_0.75em] bg-[position:right_12px_center] bg-no-repeat focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              hex="AAAAAA"
+              name="color-primary"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Farbe Citizen Hub
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier die Primärfarbe Ihres Mandanten für den Citizen Hub aus.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <select
+              class="block w-full appearance-none border bg-arrow-down-icon bg-[length:0.75em_0.75em] bg-[position:right_12px_center] bg-no-repeat focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              hex="FFFFFF"
+              name="uch-color-primary"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Neuigkeiten RSS Feed
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier die URL Ihres RSS Feeds für die Neuigkeiten auf der Startseite ein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="news-url"
+              name="news-url"
+              placeholder="Link zum RSS Feed hier eingeben"
+              type="text"
+              value="iAmAUrl:)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Koordinaten Rathaus
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier die Koordinaten des Rathauses Ihres Mandanten ein.        Der Kartenausschnitt wird auf der Startseite angezeigt.
+        Die Koordinaten sind zwei Zahlen mit Nachkommastellen, getrennt durch einen Doppelpunkt         (z.B. 10.2:30.4)
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="tenant-coords-input"
+              name="tenant-coords"
+              placeholder="Koordinaten hier eingeben"
+              type="text"
+              value="13:37"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Link zum Impressum
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier den Link zu Ihrem Impressum ein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="legal-notice-url"
+              name="legal-notice-url"
+              placeholder="Link zum Impressum hier eingeben"
+              required=""
+              type="text"
+              value="iAmAUrl:)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Link zur Datenschutzerklärung
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier den Link zu Ihrer Datenschutzerklärung ein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="privacy-url"
+              name="privacy-url"
+              placeholder="Link zur Datenschutzerklärung hier eingeben"
+              required=""
+              type="text"
+              value="(:AnotherUrlYippie"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Link zu Kontaktdaten
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier den Link zu Ihren Kontaktdaten ein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="contact-url"
+              name="contact-url"
+              placeholder="Link zu Kontaktdaten hier eingeben"
+              required=""
+              type="text"
+              value="iAmAUrl:)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="flex gap-2.5"
+    >
+      <button
+        class="relative flex items-center justify-center rounded-lg text-center font-medium focus:outline-none focus:ring-4 h-10 px-5 text-sm bg-primary-700 text-white hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+        type="submit"
+      >
+        Speichern
+      </button>
+      <button
+        class="relative flex items-center justify-center rounded-lg text-center font-medium focus:outline-none focus:ring-4 h-10 px-5 text-sm"
+        type="reset"
+      >
+        Abbrechen
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormContent matches snapshot with errors 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-8"
+  >
+    <h2
+      class="text-2xl font-bold text-gray-900"
+    >
+      Mandanteneinstellungen
+    </h2>
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Name des Mandanten
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier den Namen Ihres Mandanten ein (z.B. “Gütersloh”).
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="tenant-name-input"
+              errors="Tenant-Name muss mindestens 3 Zeichen beinhalten"
+              name="tenant-name"
+              placeholder="Name Ihres Mandanten hier eingeben"
+              required=""
+              type="text"
+              value="a"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Logo
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier das Logo Ihres Mandanten aus.
+        Das Logo sollte mindestens 500px breit sein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="tenant-logo-input"
+              imagealt="Kein Logo vorhanden"
+              imageheading="Vorschau:"
+              name="tenant-logo"
+              placeholder="Link zum Logo hier einfügen"
+              removebuttontext="Logo entfernen"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Titelbild GovHub
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier das Titelbild für die Startseite des GovHubs aus.
+        Das Bild sollte mindestens 600px breit sein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="tenant-image-input"
+              imagealt="Kein Titelbild vorhanden"
+              imageheading="Vorschau:"
+              name="tenant-image"
+              placeholder="Link zum Titelbild hier einfügen"
+              removebuttontext="Titelbild entfernen"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Titelbild Citizen Hub
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier das Titelbild für die Startseite des Citizen Hubs aus.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="citizen-hub-image-input"
+              imagealt="Kein Titelbild vorhanden"
+              imageheading="Vorschau:"
+              name="citizen-hub-image"
+              placeholder="Link zum Titelbild hier einfügen"
+              removebuttontext="Titelbild entfernen"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Farbe GovHub
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier die Primärfarbe Ihres Mandanten für den GovHub aus.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <select
+              class="block w-full appearance-none border bg-arrow-down-icon bg-[length:0.75em_0.75em] bg-[position:right_12px_center] bg-no-repeat focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              name="color-primary"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Farbe Citizen Hub
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Wählen Sie hier die Primärfarbe Ihres Mandanten für den Citizen Hub aus.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <select
+              class="block w-full appearance-none border bg-arrow-down-icon bg-[length:0.75em_0.75em] bg-[position:right_12px_center] bg-no-repeat focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              name="uch-color-primary"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Neuigkeiten RSS Feed
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier die URL Ihres RSS Feeds für die Neuigkeiten auf der Startseite ein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="news-url"
+              name="news-url"
+              placeholder="Link zum RSS Feed hier eingeben"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Koordinaten Rathaus
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier die Koordinaten des Rathauses Ihres Mandanten ein.        Der Kartenausschnitt wird auf der Startseite angezeigt.
+        Die Koordinaten sind zwei Zahlen mit Nachkommastellen, getrennt durch einen Doppelpunkt         (z.B. 10.2:30.4)
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="tenant-coords-input"
+              name="tenant-coords"
+              placeholder="Koordinaten hier eingeben"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Link zum Impressum
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier den Link zu Ihrem Impressum ein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="legal-notice-url"
+              errors="URL nicht valide"
+              name="legal-notice-url"
+              placeholder="Link zum Impressum hier eingeben"
+              required=""
+              type="text"
+              value="iAmAUrl:)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Link zur Datenschutzerklärung
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier den Link zu Ihrer Datenschutzerklärung ein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="privacy-url"
+              errors="URL nicht valide"
+              name="privacy-url"
+              placeholder="Link zur Datenschutzerklärung hier eingeben"
+              required=""
+              type="text"
+              value="(:AnotherUrlYippie"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="xl:w-5/6 grid gap-x-16 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+    >
+      <div
+        class="flex flex-col gap-2"
+      >
+        <h3
+          class="leading-none text-xl font-bold text-gray-900"
+        >
+          Link zu Kontaktdaten
+        </h3>
+        <p
+          class="text-gray-300 whitespace-pre-line"
+        >
+          Geben Sie hier den Link zu Ihren Kontaktdaten ein.
+        </p>
+      </div>
+      <div>
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 p-2.5 text-sm rounded-lg"
+              data-testid="contact-url"
+              errors="URL nicht valide"
+              name="contact-url"
+              placeholder="Link zu Kontaktdaten hier eingeben"
+              required=""
+              type="text"
+              value="iAmAUrl:)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr
+      class="h-px border-0 bg-gray-100"
+    />
+    <div
+      class="flex gap-2.5"
+    >
+      <button
+        class="relative flex items-center justify-center rounded-lg text-center font-medium focus:outline-none focus:ring-4 h-10 px-5 text-sm bg-primary-700 text-white hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+        type="submit"
+      >
+        Speichern
+      </button>
+      <button
+        class="relative flex items-center justify-center rounded-lg text-center font-medium focus:outline-none focus:ring-4 h-10 px-5 text-sm"
+        type="reset"
+      >
+        Abbrechen
+      </button>
+    </div>
+  </div>
+</div>
+`;

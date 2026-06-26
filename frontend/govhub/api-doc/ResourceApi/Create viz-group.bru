@@ -1,0 +1,15 @@
+meta {
+  name: Create viz-group
+  type: http
+  seq: 9
+}
+
+put {
+  url: {{keycloak-host}}/realms/{{realm}}/data-hub/tenants/{{tenant}}/viz-group/{{viz-group}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access-token}}
+}

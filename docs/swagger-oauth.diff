@@ -1,0 +1,25 @@
+diff --git a/render_swagger.py b/render_swagger.py
+index 4d7ba20..bd40ae2 100644
+--- a/render_swagger.py
++++ b/render_swagger.py
+@@ -24,10 +24,16 @@ TEMPLATE = string.Template("""
+ </div>
+ <script src="$swagger_lib_js" charset="UTF-8"></script>
+ <script>
+-    SwaggerUIBundle({
+-      url: '$path',
+-      dom_id: '#$id',
+-    })
++	window.ui = SwaggerUIBundle({
++		url: '$path',
++		dom_id: '#$id',
++		oauth2RedirectUrl: window.location.origin + '/schnittstellen/open-api/oauth2-redirect.html'
++	});
++	window.ui.initOAuth({
++		clientId: 'docs-open-api',
++		scopes: ['openid', 'data-hub'],
++		usePkceWithAuthorizationCodeGrant: true
++	});
+ </script>
+ 
+ """)
