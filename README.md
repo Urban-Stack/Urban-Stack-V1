@@ -218,7 +218,7 @@ Whether you contribute code, documentation, ideas, standards, or municipal use c
 
 # License
 
-This project is licensed under the **EUPL-1.2** License.
+This project is licensed under the **AGPL** License.
 
 See the [LICENSE](LICENSE) file for details.
 
