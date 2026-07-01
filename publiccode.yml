@@ -22,8 +22,7 @@ usedBy:
   - 'Stadt Halle (Westf.) '
   - Gemeinde Langenberg
   - Kreis Gütersloh
-logo: 
-  - asset/Logo.png
+logo: urbanstack.png
 categories:
   - collaboration
   - data-analytics
