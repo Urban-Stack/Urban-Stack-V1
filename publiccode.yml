@@ -1,0 +1,141 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+name: Urban Stack
+url: 'https://gitlab.opencode.de/oc000144987350/Urban-Stack-V1'
+landingURL: 'https://www.urbanstack.de'
+releaseDate: '2026-06-30'
+developmentStatus: stable
+softwareVersion: 1.0.0
+softwareType: configurationFiles
+platforms:
+  - web
+usedBy:
+  - Stadt Detmold
+  - Stadt Verl
+  - Stadt Rietberg
+  - Stadt Rheda-Wiedenbrück
+  - 'Stadt Werther (Westf.) '
+  - Stadt Harsewinkel
+  - 'Stadt Halle (Westf.) '
+  - Gemeinde Langenberg
+  - Kreis Gütersloh
+logo: asset/Logo.png
+categories:
+  - collaboration
+  - data-analytics
+  - data-collection
+  - data-visualization
+  - predictive-analysis
+maintenance:
+  type: internal
+  contacts:
+    - name: Amelie Mormann
+      email: amelie.mormann@guetersloh.de
+      phone: '+495241822089'
+legal:
+  mainCopyrightOwner: Stadt Gütersloh
+  repoOwner: Urban Stack
+  license: EUPL-1.2
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - de
+description:
+  de:
+    genericName: Urbane DatenplattformUrbane Datenpl
+    documentation: 'https://docs.urbanstack.de'
+    awards:
+      - DIGITAL-Award
+      - 'Landespreis für interkommunale Zusammenarbeit '
+    longDescription: >2
+       Urban Stack ist ein interkommunales digitales Ökosystem für Kommunen. Es verbindet eine urbane Datenplattform mit Anwendungen, Dashboards und weiteren digitalen Werkzeugen und schafft damit eine gemeinsame Grundlage für datenbasierte Verwaltungsarbeit, Planung, Steuerung, Transparenz und Beteiligung.
+
+      Ausgangspunkt ist, dass viele Kommunen vor ähnlichen Herausforderungen
+      stehen: Sie müssen Daten aus unterschiedlichen Quellen zusammenführen,
+      Prozesse besser unterstützen, Informationen verständlich aufbereiten und
+      digitale Lösungen trotz begrenzter personeller und finanzieller Ressourcen
+      dauerhaft betreiben. Urban Stack setzt genau hier an und stellt eine
+      technische und organisatorische Basis bereit, auf der kommunale Daten,
+      Anwendungen und Werkzeuge im Verbund genutzt werden können.
+
+
+      Das Ökosystem setzt sich aus drei zentralen Bereichen zusammen: dem Urban
+      Data Hub, dem Urban Gov Hub und dem Urban Citizen Hub. Der Urban Data Hub
+      bildet die Grundlage für den Umgang mit kommunalen Daten. Er ermöglicht
+      es, Informationen aus Fachverfahren, Sensorik, bestehenden Datenbanken,
+      Geodaten, Open-Data-Angeboten und weiteren kommunalen Systemen zu bündeln,
+      zu strukturieren und für unterschiedliche Anwendungsfälle verfügbar zu
+      machen. So entsteht eine verlässliche Datengrundlage, die nicht nur
+      einzelne Projekte unterstützt, sondern dauerhaft für Verwaltung, Planung
+      und kommunale Steuerung nutzbar wird.
+
+
+      Der Urban Gov Hub richtet sich an die verwaltungsinterne Arbeit. Er macht
+      Daten und Informationen über Dashboards, Karten, Analysen und Anwendungen
+      für Fachbereiche nutzbar und unterstützt Mitarbeitende dabei,
+      Entwicklungen besser zu verstehen, Entscheidungen vorzubereiten und
+      Prozesse datenbasiert zu begleiten. Dadurch können unterschiedliche
+      kommunale Aufgabenfelder – etwa Klimaanpassung, Mobilität,
+      Innenstadtentwicklung, Sozialplanung, Umweltmonitoring oder
+      Verwaltungsdigitalisierung – auf einer gemeinsamen technischen Grundlage
+      bearbeitet werden.
+
+
+      Der Urban Citizen Hub öffnet ausgewählte Informationen für
+      Stadtgesellschaft, Politik, Wirtschaft, Wissenschaft und
+      Zivilgesellschaft. Er unterstützt Transparenz, Kommunikation und
+      Beteiligung, indem Daten und Ergebnisse verständlich aufbereitet und über
+      geeignete Formate bereitgestellt werden können. Dazu gehören
+      beispielsweise Visualisierungen, offene Datensätze, Kartenansichten oder
+      digitale Beteiligungsangebote. So wird aus verwaltungsinternem Wissen ein
+      nutzbarer Beitrag für Öffentlichkeit und demokratische
+      Entscheidungsprozesse.
+
+
+      Urban Stack geht damit bewusst über eine reine technische Infrastruktur
+      hinaus. Neben den drei Hubs umfasst das Ökosystem auch modulare
+      Anwendungen und City Tools, also digitale Bausteine für konkrete kommunale
+      Aufgaben. Diese Werkzeuge können auf gemeinsamen Daten, Schnittstellen und
+      Standards aufbauen und dadurch leichter nachgenutzt, angepasst und
+      weiterentwickelt werden. Statt jede Lösung einzeln und unabhängig
+      voneinander zu entwickeln, entsteht ein wachsender Werkzeugkasten für
+      vielfältige kommunale Anwendungsfälle.
+
+
+      Ein besonderer Schwerpunkt liegt auf der interkommunalen Zusammenarbeit.
+      Viele Herausforderungen betreffen Städte, Gemeinden und Kreise
+      gleichermaßen. Urban Stack ermöglicht es, Erfahrungen, Datenmodelle,
+      Anwendungen und technische Komponenten gemeinsam zu nutzen. Dadurch können
+      Entwicklungsaufwände reduziert, Standards gestärkt und kommunale
+      Ressourcen wirkungsvoller eingesetzt werden.
+
+
+      Die Architektur ist auf Nachnutzung, Erweiterbarkeit und kommunale
+      Datensouveränität ausgelegt. Kommunen behalten die Kontrolle über ihre
+      Daten, Rollen, Zugriffsrechte und Konfigurationen und können zugleich von
+      einer gemeinsamen technischen Basis, wiederverwendbaren Komponenten und
+      einer wachsenden Anwendergemeinschaft profitieren. So unterstützt Urban
+      Stack sowohl einzelne kommunale Anwendungsfälle als auch den schrittweisen
+      Aufbau eines umfassenden kommunalen Datenökosystems.
+
+
+      Entwickelt wurde Urban Stack aus der kommunalen Praxis heraus. Das
+      Ökosystem richtet sich an Städte, Gemeinden, Kreise und kommunale Partner,
+      die Daten, Anwendungen und digitale Werkzeuge nicht isoliert, sondern
+      gemeinsam nutzen und weiterentwickeln möchten. Neben der eigenständigen
+      Nachnutzung offener Komponenten wird Urban Stack auch als
+      Software-as-a-Service bereitgestellt. Dadurch können Kommunen die
+      gemeinsame technische Basis und darauf aufbauende Anwendungen nutzen, ohne
+      selbst eine vollständige Betriebsinfrastruktur aufbauen zu müssen.
+      Gehostet wird der Urban Stack in einem C5-zertifizierten Rechenzentrum in
+      Deutschland. bei Interesse kommen Sie gerne auf uns zu. 
+    shortDescription: >-
+      Urban Stack ist das digitale Ökosystem für Kommunen: Datenplattform, City
+      Tools und weitere digitale Werkzeuge für vielfältige Anwendungsfälle.
+    screenshots:
+      - asset/slide_1.png
+      - asset/slide_2.png
+      - asset/slide_3.png
