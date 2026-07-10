@@ -114,10 +114,12 @@ test('run notebook (use platform library)', async ({ context, page }) => {
 		const cell0 = page.getByText(/\[.]:/).first();
 		await cell0.click();
 		for (let i = 0; i < 6; i++) await cell0.press('D');
-		await page.getByRole('textbox').fill('auth.');
-		await page.keyboard.press('Tab');
-		const completedItem = page.getByText('http');
-		await expect(completedItem).toBeVisible();
+		const completedItem = page.getByRole('code').filter({ hasText: 'http' });
+		await expect(async () => {
+			await page.getByRole('textbox').fill('auth.');
+			await page.keyboard.press('Tab');
+			await expect(completedItem).toBeVisible({ timeout: 5_000 });
+		}).toPass({ intervals: [2_000] });
 		await docsScreenshot('jupyterhub-autocomplete', completedItem, { highlight: false });
 	});
 
@@ -331,10 +333,14 @@ test('screenshot jupyterhub scheduler', async ({ page }) => {
 			zoom: 1.3
 		}
 	);
-	await docsScreenshot('jupyterhub-scheduler-job-overview-2', page.getByText('Tags'), {
-		highlight: false,
-		zoom: 1.3
-	});
+	await docsScreenshot(
+		'jupyterhub-scheduler-job-overview-2',
+		page.getByText('Tags', { exact: true }),
+		{
+			highlight: false,
+			zoom: 1.3
+		}
+	);
 
 	await docsScreenshot(
 		'jupyterhub-scheduler-job-download-1',
@@ -349,21 +355,12 @@ test('screenshot jupyterhub scheduler', async ({ page }) => {
 		{ crop: false, highlightRadius: 10 }
 	);
 	await page.getByRole('link', { name: 'HTML' }).click();
-	await expect(
-		page
-			.getByRole('region', { name: 'notebook content' })
-			.locator('iframe')
-			.contentFrame()
-			.locator('body')
-	).toBeVisible({ timeout: 10_000 });
-	await docsScreenshot(
-		'jupyterhub-scheduler-job-result',
-		page.locator('iframe').contentFrame().locator('html'),
-		{
-			highlight: false,
-			zoom: 1.1
-		}
-	);
+	const iframeBody = page.locator('iframe').contentFrame().locator('body');
+	await expect(iframeBody).toBeVisible({ timeout: 10_000 });
+	await docsScreenshot('jupyterhub-scheduler-job-result', iframeBody, {
+		highlight: false,
+		zoom: 1.1
+	});
 	await docsScreenshot(
 		'jupyterhub-scheduler-job-result-folder',
 		page.getByRole('listitem', { name: 'Name: jobs' }),

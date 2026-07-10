@@ -28,3 +28,13 @@ CVE-2026-7598
 CVE-2026-8376
 # perl doesn't extract any user controlled tar files
 CVE-2026-42496
+
+# linux kernel CVEs
+CVE-2026-43185
+CVE-2026-53215
+
+# ssh is not used
+CVE-2026-55200
+
+# DBUS internal
+CVE-2026-58016

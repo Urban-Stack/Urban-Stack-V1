@@ -32,7 +32,7 @@ WORKDIR /project/jupyter-scheduler
 
 RUN pip wheel --no-deps .
 
-FROM quay.io/jupyter/scipy-notebook:hub-5.2.1 AS legal-labextension-builder
+FROM quay.io/jupyter/scipy-notebook:hub-5.5.0 AS legal-labextension-builder
 # renovate: datasource=conda depName=nodejs
 ENV NODEJS_VERSION=22.13.0
 
@@ -41,7 +41,7 @@ RUN mamba install conda-forge::nodejs=$NODEJS_VERSION \
  && jupyter labextension install /legal \
  && rm -rf /opt/conda/share/jupyter/lab/staging/node_modules
 
-FROM quay.io/jupyter/scipy-notebook:hub-5.2.1
+FROM quay.io/jupyter/scipy-notebook:hub-5.5.0
 
 COPY --from=legal-labextension-builder /opt/conda/share/jupyter/lab /opt/conda/share/jupyter/lab
 

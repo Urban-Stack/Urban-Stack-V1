@@ -1,4 +1,4 @@
-# This repository adheres to the publiccode.yml standard by including this 
+# This repository adheres to the publiccode.yml standard by including this
 # metadata file that makes public software easily discoverable.
 # More info at https://github.com/italia/publiccode.yml
 
@@ -36,9 +36,9 @@ maintenance:
       email: amelie.mormann@guetersloh.de
       phone: '+495241822089'
 legal:
-  mainCopyrightOwner: Stadt Gütersloh
+  mainCopyrightOwner: teuto.net Netzdienste GmbH
   repoOwner: Urban Stack
-  license: EUPL-1.2
+  license: AGPL-3.0
 localisation:
   localisationReady: false
   availableLanguages:
@@ -131,7 +131,7 @@ description:
       gemeinsame technische Basis und darauf aufbauende Anwendungen nutzen, ohne
       selbst eine vollständige Betriebsinfrastruktur aufbauen zu müssen.
       Gehostet wird der Urban Stack in einem C5-zertifizierten Rechenzentrum in
-      Deutschland. bei Interesse kommen Sie gerne auf uns zu. 
+      Deutschland. bei Interesse kommen Sie gerne auf uns zu.
     shortDescription: >-
       Urban Stack ist das digitale Ökosystem für Kommunen: Datenplattform, City
       Tools und weitere digitale Werkzeuge für vielfältige Anwendungsfälle.

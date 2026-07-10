@@ -7,6 +7,8 @@ CVE-2023-6879
 CVE-2025-13836
 CVE-2026-27699
 CVE-2026-6100
+CVE-2026-54906
+CVE-2026-48930
 
 # low severity according to RedHat
 CVE-2026-24515
@@ -48,3 +50,19 @@ CVE-2026-42496
 
 # vitest dev ui is neither running nor exposed over the network
 CVE-2026-47429
+
+# shell-quote isn't used on user input
+CVE-2026-9277
+
+# linux kernel CVEs
+CVE-2026-43185
+CVE-2026-53215
+
+# no option to upload photoshop files
+CVE-2026-56367
+
+# ssh is not used
+CVE-2026-55200
+
+# DBUS internal
+CVE-2026-58016

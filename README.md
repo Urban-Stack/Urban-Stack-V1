@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/EUPL-1.2-blue?style=flat-square" alt="License">
+  <img src="https://img.shields.io/badge/License-AGPL--3.0-blue?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Open_Source-Yes-success?style=flat-square" alt="Open Source">
   <img src="https://img.shields.io/badge/Built_by-Municipalities-green?style=flat-square" alt="Municipalities">
   <img src="https://img.shields.io/badge/Digital_Sovereignty-orange?style=flat-square" alt="Digital Sovereignty">
@@ -218,7 +218,7 @@ Whether you contribute code, documentation, ideas, standards, or municipal use c
 
 # License
 
-This project is licensed under the **AGPL** License.
+This project is licensed under the **AGPL-3.0** License.
 
 See the [LICENSE](LICENSE) file for details.
 
@@ -227,4 +227,3 @@ See the [LICENSE](LICENSE) file for details.
 <p align="center">
   <strong>Built by municipalities. Shared with municipalities. Powered by Open Source.</strong>
 </p>
-

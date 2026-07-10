@@ -12,3 +12,5 @@ CVE-2026-7598
 CVE-2026-8376
 # perl doesn't extract any user controlled tar files
 CVE-2026-42496
+# ssh is not used
+CVE-2026-55200

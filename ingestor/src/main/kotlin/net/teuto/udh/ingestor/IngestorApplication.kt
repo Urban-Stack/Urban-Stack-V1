@@ -51,7 +51,7 @@ fun main(args: Array<String>) {
 class AudienceValidator : OAuth2TokenValidator<Jwt> {
     var error: OAuth2Error = OAuth2Error("invalid_token", "The required audience is missing", null)
     override fun validate(jwt: Jwt): OAuth2TokenValidatorResult {
-        return if (jwt.audience.contains("ingestor")) {
+        return if (jwt.audience?.contains("ingestor") ?: false) {
             OAuth2TokenValidatorResult.success()
         } else {
             OAuth2TokenValidatorResult.failure(error)

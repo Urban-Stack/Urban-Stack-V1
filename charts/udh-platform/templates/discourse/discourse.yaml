@@ -210,8 +210,12 @@ spec:
       protocol: {{ .Values.discourse.smtp.protocol }}
     {{ end }}
     redis:
-      image:
-        repository: bitnamilegacy/redis
+      enabled: false
+    externalRedis:
+      host: {{ include "data-hub.name" (dict "context" . "name" "d-vk-valkey") }}
+      port: 6379
+      existingSecret: {{ include "data-hub.name" (dict "context" . "name" "d-vk-valkey") }}
+      existingSecretPasswordKey: valkey-password
     updateStrategy:
       type: Recreate
       rollingUpdate:

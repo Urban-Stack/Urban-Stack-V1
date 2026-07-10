@@ -2,10 +2,13 @@ spring:
   application:
     name: ingestor
   cloud:
+    bootstrap:
+      enabled: true
     kubernetes:
       config:
         enabled: false
       secrets:
+        enabled: true
         enableApi: true
         name: ${DEPLOYMENT_NAME}
       reload:

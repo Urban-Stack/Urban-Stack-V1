@@ -14,10 +14,10 @@ Instead, please contact the Urban Stack maintainers directly:
 
 Please include:
 
-* A description of the vulnerability
-* Steps to reproduce the issue
-* Potential impact
-* Suggested remediation (if available)
+- A description of the vulnerability
+- Steps to reproduce the issue
+- Potential impact
+- Suggested remediation (if available)
 
 ## Responsible Disclosure
 
@@ -25,9 +25,9 @@ We are committed to working with security researchers and contributors to invest
 
 When reporting a vulnerability, we ask that you:
 
-* Give us reasonable time to investigate and resolve the issue
-* Avoid publicly disclosing the vulnerability before a fix is available
-* Provide sufficient information to help us reproduce and validate the issue
+- Give us reasonable time to investigate and resolve the issue
+- Avoid publicly disclosing the vulnerability before a fix is available
+- Provide sufficient information to help us reproduce and validate the issue
 
 ## What to Expect
 
@@ -43,19 +43,19 @@ After receiving a report, we will:
 
 This policy applies to:
 
-* Urban Stack Core Platform
-* Urban Data Hub
-* Urban Gov Hub
-* Urban Citizen Hub
-* Official Urban Stack modules and extensions
+- Urban Stack Core Platform
+- Urban Data Hub
+- Urban Gov Hub
+- Urban Citizen Hub
+- Official Urban Stack modules and extensions
 
 ## Our Commitment
 
 Urban Stack is committed to:
 
-* Secure software development
-* Open and transparent collaboration
-* Protection of municipal systems and data
-* Responsible vulnerability management
+- Secure software development
+- Open and transparent collaboration
+- Protection of municipal systems and data
+- Responsible vulnerability management
 
 We appreciate the efforts of security researchers, contributors, and community members who help improve the security of the Urban Stack ecosystem.
