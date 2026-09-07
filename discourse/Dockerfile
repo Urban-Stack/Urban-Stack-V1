@@ -28,7 +28,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
 # FINAL IMAGE
-FROM ghcr.io/ol-teuto/discourse:2026.5.0-debian-12-r12@sha256:27865135b52995ee4ae41c81bfe89de4a313f4b290650d3d75f62b1af15f5f99
+FROM ghcr.io/ol-teuto/discourse:2026.8.0-debian-12-r1@sha256:d95c691464dbd28ce665dba32a16fe685586b002d7d38d22318c8252b08b3793
 
 # remove unused dependency with CVE
 RUN apt remove -y libsqlite3-0 && apt update && apt upgrade -y

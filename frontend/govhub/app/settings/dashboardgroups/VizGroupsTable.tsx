@@ -15,17 +15,13 @@ import {
 } from '@/app/_lib/resource-api/viz-groups/vizGroups';
 import { VizGroupTestIds } from '@/app/settings/dashboardgroups/testIds';
 import { redirect, useSearchParams } from 'next/navigation';
-import {
-  hasScopeForVizGroup,
-  Scope,
-} from '@/app/_lib/resource-api/permission/scope';
 import { UdpBadge } from 'udp-ui/components';
 import { twMerge } from 'tailwind-merge';
 import { SEARCH_PARAMS } from '@/app/settings/dashboardgroups/common';
 
 export interface VizGroupTableProps {
   vizGroups: VizGroup[];
-  scopeMap: Map<string, Map<string, Scope[]>>;
+  adminMap: Map<string, Map<string, boolean>>;
 }
 const filterVizGroups = (vizGroups: VizGroup[], searchTextRaw: string) => {
   const searchText = searchTextRaw.toLowerCase();
@@ -38,10 +34,10 @@ const filterVizGroups = (vizGroups: VizGroup[], searchTextRaw: string) => {
 
 const VizGroupsTable: React.FC<VizGroupTableProps> = ({
   vizGroups,
-  scopeMap,
+  adminMap,
 }) => {
   const isVizGroupAdmin = (vizGroupName: string, tenant: string) =>
-    hasScopeForVizGroup(scopeMap, 'viz-group:admin', vizGroupName, tenant);
+    adminMap.get(tenant)?.get(vizGroupName) ?? false;
   const searchParams = useSearchParams();
   const searchText = searchParams.get(SEARCH_PARAMS.search) ?? '';
   const filteredVizGroups = filterVizGroups(vizGroups, searchText);

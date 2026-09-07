@@ -221,6 +221,32 @@ columns:
     column_name: previous_state_duration_error_parking
   - <<: *bool
     column_name: previous_state_duration_overflow_parking
+  - <<: *float64
+    column_name: dew_point
+  - <<: *float64
+    column_name: water_depth
+  - <<: *float64
+    column_name: friction_grip
+  - <<: *float64
+    column_name: ice_thickness
+  - <<: *float64
+    column_name: ground_temperature
+  - <<: *float64
+    column_name: road_surface_temperature
+  - <<: *float64
+    column_name: wind_gust_10_minute_maximum
+  - <<: *float64
+    column_name: vapor_pressure
+  - <<: *float64
+    column_name: solar_radiation
+  - <<: *float64
+    column_name: lightning_average_distance
+  - <<: *float64
+    column_name: precipitation_electrical_conductivity
+  - <<: *int64
+    column_name: road_condition_index
+  - <<: *int64
+    column_name: lightning_strike_count
   - <<: *string
     column_name: external_reference
   - <<: *string

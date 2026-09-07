@@ -8,7 +8,6 @@ import {
 } from '@/app/_lib/resource-api/graphql/datasets';
 import { FuncMock } from '@/app/_test/utils';
 import { StorageObject } from '@/app/_lib/storage/common';
-import { Scope } from '@/app/_lib/resource-api/permission/scope';
 
 jest.mock('@/app/_lib/storage/server', () => ({
   fetchObjects: jest.fn(),
@@ -32,8 +31,8 @@ const mockQueryAllDatasets = queryAllDatasets as unknown as FuncMock<
   typeof queryAllDatasets
 >;
 
-const TEST_PROJECT_PERMISSIONS: Map<string, Scope[]> = new Map([
-  ['project', ['project:admin']],
+const TEST_PROJECT_ADMIN_MAP: Map<string, Map<string, boolean>> = new Map([
+  ['tenant', new Map([['project', true]])],
 ]);
 
 describe('BucketContent', () => {
@@ -74,7 +73,7 @@ describe('BucketContent', () => {
     render(
       await BucketContent({
         bucket,
-        projectPermissions: TEST_PROJECT_PERMISSIONS,
+        adminMap: TEST_PROJECT_ADMIN_MAP,
       }),
     );
 
@@ -89,7 +88,7 @@ describe('BucketContent', () => {
     render(
       await BucketContent({
         bucket: 'invalid.bucket.name',
-        projectPermissions: TEST_PROJECT_PERMISSIONS,
+        adminMap: TEST_PROJECT_ADMIN_MAP,
       }),
     );
 
@@ -105,7 +104,7 @@ describe('BucketContent', () => {
     render(
       await BucketContent({
         bucket,
-        projectPermissions: TEST_PROJECT_PERMISSIONS,
+        adminMap: TEST_PROJECT_ADMIN_MAP,
       }),
     );
 
@@ -121,7 +120,7 @@ describe('BucketContent', () => {
     render(
       await BucketContent({
         bucket,
-        projectPermissions: TEST_PROJECT_PERMISSIONS,
+        adminMap: TEST_PROJECT_ADMIN_MAP,
       }),
     );
 
@@ -141,7 +140,7 @@ describe('BucketContent', () => {
     render(
       await BucketContent({
         bucket,
-        projectPermissions: new Map([['project', ['project:view']]]),
+        adminMap: new Map([['tenant', new Map([['project', false]])]]),
       }),
     );
 

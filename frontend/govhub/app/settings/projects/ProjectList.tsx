@@ -5,19 +5,14 @@ import { fetchAllProjects } from '@/app/_lib/resource-api/graphql/project';
 import SettingsFallbackWrapper, {
   FallbackContext,
 } from '@/app/settings/_common/SettingsFallbackWrapper';
-import { Scope } from '@/app/_lib/resource-api/permission/scope';
 
 interface ProjectListProps {
-  projectPermissions?: Map<string, Scope[]>;
   canCreateProject: boolean;
 }
 
-const ProjectList = async ({
-  projectPermissions,
-  canCreateProject,
-}: ProjectListProps) => {
+const ProjectList = async ({ canCreateProject }: ProjectListProps) => {
   const result = await fetchAllProjects();
-  const projects = toProjects(result);
+  const { projects, adminMap } = toProjects(result);
 
   const fallbacks: FallbackContext[] = [
     {
@@ -37,10 +32,7 @@ const ProjectList = async ({
   return (
     <SettingsFallbackWrapper fallbacks={fallbacks}>
       <div className='size-full'>
-        <ProjectListTable
-          projects={projects}
-          projectPermissions={projectPermissions}
-        />
+        <ProjectListTable projects={projects} adminMap={adminMap} />
       </div>
     </SettingsFallbackWrapper>
   );

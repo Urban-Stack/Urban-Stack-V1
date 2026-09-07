@@ -75,6 +75,20 @@ ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS previ
 ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS previous_state_duration_error_parking Nullable(Float64);
 ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS previous_state_duration_overflow_parking Nullable(Bool);
 
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS dew_point Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS water_depth Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS friction_grip Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS ice_thickness Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS ground_temperature Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS road_surface_temperature Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS wind_gust_10_minute_maximum Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS vapor_pressure Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS solar_radiation Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS lightning_average_distance Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS precipitation_electrical_conductivity Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS road_condition_index Nullable(Int64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS lightning_strike_count Nullable(Int64);
+
 CREATE USER IF NOT EXISTS queryonly IDENTIFIED BY {QUERYONLY_PASSWORD:String};
 
 CREATE ROW POLICY IF NOT EXISTS project_queryonly
@@ -95,7 +109,10 @@ DROP VIEW IF EXISTS sensor_messages_mv_2 ON CLUSTER clickhouse;
 DROP TABLE IF EXISTS sensor_messages_kafka_3 ON CLUSTER clickhouse;
 DROP VIEW IF EXISTS sensor_messages_mv_3 ON CLUSTER clickhouse;
 
-CREATE TABLE IF NOT EXISTS sensor_messages_kafka_4
+DROP TABLE IF EXISTS sensor_messages_kafka_4 ON CLUSTER clickhouse;
+DROP VIEW IF EXISTS sensor_messages_mv_4 ON CLUSTER clickhouse;
+
+CREATE TABLE IF NOT EXISTS sensor_messages_kafka_5
   ON CLUSTER clickhouse
   AS sensor_messages
   ENGINE = Kafka('KAFKA_HOST:9092', 'sensor_messages', '{replica}', 'JSONEachRow')
@@ -103,11 +120,11 @@ CREATE TABLE IF NOT EXISTS sensor_messages_kafka_4
     kafka_thread_per_consumer = 0, kafka_num_consumers = 1,
     input_format_null_as_default = 0;
 
-CREATE MATERIALIZED VIEW IF NOT EXISTS sensor_messages_mv_4
+CREATE MATERIALIZED VIEW IF NOT EXISTS sensor_messages_mv_5
   ON CLUSTER clickhouse
   TO sensor_messages AS
   SELECT *
-  FROM sensor_messages_kafka_4;
+  FROM sensor_messages_kafka_5;
 
 CREATE TABLE IF NOT EXISTS sensor_meta
 ON CLUSTER clickhouse (

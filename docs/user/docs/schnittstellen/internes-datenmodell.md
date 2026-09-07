@@ -15,49 +15,62 @@ Folgende Spalten sind verfügbar:
     }
 </style>
 
-| Spaltenname            | Datentyp | NULL möglich? | Einheit             | Beschreibung                                                                                                    |
-| ---------------------- | -------- | ------------- | ------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `time`                 | DateTime | Nein          |                     | der Zeitpunkt, zu dem die Messdaten aufgenommen wurden                                                          |
-| `project`              | String   | Nein          |                     | das Projekt, dem diese Daten zugeordnet sind, kann nicht manuell gesetzt werden, wird von der Plattform gesetzt |
-| `sensor_id`            | String   | Ja            |                     | eine eindeutige Identifikation des Sensors, der diese Daten erfasst hat                                         |
-| `latitude`             | Float64  | Ja            |                     | der Längengrad der Position, an der die Daten erfasst wurden                                                    |
-| `longitude`            | Float64  | Ja            |                     | der Breitengrad der Position, an der die Daten erfasst wurden                                                   |
-| `temperature_outside`  | Float32  | Ja            | °C                  | die gemessene Temperatur                                                                                        |
-| `uv_index`             | Float64  | Ja            |                     | Belastungsstärke durch Ultraviolette Strahlung                                                                  |
-| `humidity_air`         | Float64  | Ja            | %                   | Relative Luftfeuchtigkeit                                                                                       |
-| `air_pressure`         | Float64  | Ja            | hPa                 | Luftdruck                                                                                                       |
-| `wind_speed`           | Float64  | Ja            | m/s                 | aktuelle Windgeschwindigkeit                                                                                    |
-| `wind_peak_gust`       | Float64  | Ja            | m/s                 | Windgeschwindigkeit im lokalen Maximum                                                                          |
-| `wind_direction`       | Float64  | Ja            | °                   | Richtung des Windes                                                                                             |
-| `light_intensity`      | Float64  | Ja            | cd (Candela)        | Lichtstärke                                                                                                     |
-| `rain_intensity`       | Float64  | Ja            | mm/min              | Aktuelle Regenintensität                                                                                        |
-| `rain_accumulated`     | Float64  | Ja            | mm                  | Gesamte Niederschlagsmenge                                                                                      |
-| `battery_voltage`      | Float64  | Ja            | V (Volt)            | Aktuelle Spannung der Batterie                                                                                  |
-| `status`               | String   | Ja            |                     | Status des Geräts (normalerweise OK)                                                                            |
-| `soil_moisture1`       | Float64  | Ja            | %                   | Bodenfeuchte 1, in VMC (Volumetric Water Content)                                                               |
-| `soil_moisture2`       | Float64  | Ja            | %                   | Bodenfeuchte 2, in VMC (Volumetric Water Content)                                                               |
-| `soil_moisture3`       | Float64  | Ja            | %                   | Bodenfeuchte 3, in VMC (Volumetric Water Content)                                                               |
-| `soil_moisture4`       | Float64  | Ja            | %                   | Bodenfeuchte 4, in VMC (Volumetric Water Content)                                                               |
-| `soil_water_column1`   | Float64  | Ja            |                     | Wasserstand 1                                                                                                   |
-| `soil_water_column2`   | Float64  | Ja            |                     | Wasserstand 2                                                                                                   |
-| `soil_water_column3`   | Float64  | Ja            |                     | Wasserstand 3                                                                                                   |
-| `soil_water_column4`   | Float64  | Ja            |                     | Wasserstand 4                                                                                                   |
-| `soil_water_tension1`  | Float64  | Ja            | cb (centibar)       | Wasserspannung 1                                                                                                |
-| `soil_water_tension2`  | Float64  | Ja            | cb (centibar)       | Wasserspannung 2                                                                                                |
-| `soil_water_tension3`  | Float64  | Ja            | cb (centibar)       | Wasserspannung 3                                                                                                |
-| `soil_water_tension4`  | Float64  | Ja            | cb (centibar)       | Wasserspannung 4                                                                                                |
-| `soil_temperature1`    | Float64  | Ja            | °C                  | Bodentemperatur 1                                                                                               |
-| `soil_temperature2`    | Float64  | Ja            | °C                  | Bodentemperatur 2                                                                                               |
-| `soil_temperature3`    | Float64  | Ja            | °C                  | Bodentemperatur 3                                                                                               |
-| `soil_temperature4`    | Float64  | Ja            | °C                  | Bodentemperatur 4                                                                                               |
-| `pm2_5`                | Float64  | Ja            | µg/m³               | Feinstaub (PM2.5)                                                                                               |
-| `pm10`                 | Float64  | Ja            | µg/m³               | Feinstaub (PM10)                                                                                                |
-| `distance`             | Float64  | Ja            | cm                  | Distanz                                                                                                         |
-| `pedestrian_traffic_h` | Float64  | Ja            | Personen pro Stunde | Durschnittliche Passantenfrequenz                                                                               |
-| `lux`                  | Float64  | Ja            | lux                 | Beleuchtungsstärke                                                                                              |
-| `co2`                  | Float64  | Ja            | ppm                 | Kohlendioxid                                                                                                    |
-| `temperature_inside`   | Float32  | Ja            | °C                  | die gemessene Innentemperatur                                                                                   |
-| `battery_level`        | Float64  | Ja            | %                   | Batterieladestand in Prozent                                                                                    |
+| Spaltenname                             | Datentyp | NULL möglich? | Einheit             | Beschreibung                                                                                                    |
+| --------------------------------------- | -------- | ------------- | ------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `time`                                  | DateTime | Nein          |                     | der Zeitpunkt, zu dem die Messdaten aufgenommen wurden                                                          |
+| `project`                               | String   | Nein          |                     | das Projekt, dem diese Daten zugeordnet sind, kann nicht manuell gesetzt werden, wird von der Plattform gesetzt |
+| `sensor_id`                             | String   | Ja            |                     | eine eindeutige Identifikation des Sensors, der diese Daten erfasst hat                                         |
+| `latitude`                              | Float64  | Ja            |                     | der Längengrad der Position, an der die Daten erfasst wurden                                                    |
+| `longitude`                             | Float64  | Ja            |                     | der Breitengrad der Position, an der die Daten erfasst wurden                                                   |
+| `temperature_outside`                   | Float32  | Ja            | °C                  | die gemessene Temperatur                                                                                        |
+| `uv_index`                              | Float64  | Ja            |                     | Belastungsstärke durch Ultraviolette Strahlung                                                                  |
+| `humidity_air`                          | Float64  | Ja            | %                   | Relative Luftfeuchtigkeit                                                                                       |
+| `air_pressure`                          | Float64  | Ja            | hPa                 | Luftdruck                                                                                                       |
+| `wind_speed`                            | Float64  | Ja            | m/s                 | aktuelle Windgeschwindigkeit                                                                                    |
+| `wind_peak_gust`                        | Float64  | Ja            | m/s                 | Windgeschwindigkeit im lokalen Maximum                                                                          |
+| `wind_direction`                        | Float64  | Ja            | °                   | Richtung des Windes                                                                                             |
+| `light_intensity`                       | Float64  | Ja            | cd (Candela)        | Lichtstärke                                                                                                     |
+| `rain_intensity`                        | Float64  | Ja            | mm/min              | Aktuelle Regenintensität                                                                                        |
+| `rain_accumulated`                      | Float64  | Ja            | mm                  | Gesamte Niederschlagsmenge                                                                                      |
+| `battery_voltage`                       | Float64  | Ja            | V (Volt)            | Aktuelle Spannung der Batterie                                                                                  |
+| `status`                                | String   | Ja            |                     | Status des Geräts (normalerweise OK)                                                                            |
+| `soil_moisture1`                        | Float64  | Ja            | %                   | Bodenfeuchte 1, in VMC (Volumetric Water Content)                                                               |
+| `soil_moisture2`                        | Float64  | Ja            | %                   | Bodenfeuchte 2, in VMC (Volumetric Water Content)                                                               |
+| `soil_moisture3`                        | Float64  | Ja            | %                   | Bodenfeuchte 3, in VMC (Volumetric Water Content)                                                               |
+| `soil_moisture4`                        | Float64  | Ja            | %                   | Bodenfeuchte 4, in VMC (Volumetric Water Content)                                                               |
+| `soil_water_column1`                    | Float64  | Ja            |                     | Wasserstand 1                                                                                                   |
+| `soil_water_column2`                    | Float64  | Ja            |                     | Wasserstand 2                                                                                                   |
+| `soil_water_column3`                    | Float64  | Ja            |                     | Wasserstand 3                                                                                                   |
+| `soil_water_column4`                    | Float64  | Ja            |                     | Wasserstand 4                                                                                                   |
+| `soil_water_tension1`                   | Float64  | Ja            | cb (centibar)       | Wasserspannung 1                                                                                                |
+| `soil_water_tension2`                   | Float64  | Ja            | cb (centibar)       | Wasserspannung 2                                                                                                |
+| `soil_water_tension3`                   | Float64  | Ja            | cb (centibar)       | Wasserspannung 3                                                                                                |
+| `soil_water_tension4`                   | Float64  | Ja            | cb (centibar)       | Wasserspannung 4                                                                                                |
+| `soil_temperature1`                     | Float64  | Ja            | °C                  | Bodentemperatur 1                                                                                               |
+| `soil_temperature2`                     | Float64  | Ja            | °C                  | Bodentemperatur 2                                                                                               |
+| `soil_temperature3`                     | Float64  | Ja            | °C                  | Bodentemperatur 3                                                                                               |
+| `soil_temperature4`                     | Float64  | Ja            | °C                  | Bodentemperatur 4                                                                                               |
+| `pm2_5`                                 | Float64  | Ja            | µg/m³               | Feinstaub (PM2.5)                                                                                               |
+| `pm10`                                  | Float64  | Ja            | µg/m³               | Feinstaub (PM10)                                                                                                |
+| `distance`                              | Float64  | Ja            | cm                  | Distanz                                                                                                         |
+| `pedestrian_traffic_h`                  | Float64  | Ja            | Personen pro Stunde | Durschnittliche Passantenfrequenz                                                                               |
+| `lux`                                   | Float64  | Ja            | lux                 | Beleuchtungsstärke                                                                                              |
+| `co2`                                   | Float64  | Ja            | ppm                 | Kohlendioxid                                                                                                    |
+| `temperature_inside`                    | Float32  | Ja            | °C                  | die gemessene Innentemperatur                                                                                   |
+| `battery_level`                         | Float64  | Ja            | %                   | Batterieladestand in Prozent                                                                                    |
+| `dew_point`                             | Float64  | Ja            | °C                  | Taupunkt Winterdienst                                                                                           |
+| `water_depth`                           | Float64  | Ja            | mm                  | Wassertiefe Winterdienst                                                                                        |
+| `friction_grip`                         | Float64  | Ja            |                     | beschreibt die zu erwartende Griffigkeit der Fahrbahn                                                           |
+| `ice_thickness`                         | Float64  | Ja            | mm                  | Eisdicke                                                                                                        |
+| `ground_temperature`                    | Float64  | Ja            | °C                  | Bodentemperatur                                                                                                 |
+| `road_condition_index`                  | Int64    | Ja            |                     | Straßenzustandsindex z.B. Road condition index: 1 = dry,2 = moist, 3 = wet, 4 = slush, 5 = ice, 6 = snow/frost  |
+| `road_surface_temperature`              | Float64  | Ja            | °C                  | Straßenoberflächentemperatur                                                                                    |
+| `wind_gust_10_minute_maximum`           | Float64  | Ja            | m/s                 | Maximale Windböe (10 Minuten)                                                                                   |
+| `vapor_pressure`                        | Float64  | Ja            | kPa                 | Dampfdruck                                                                                                      |
+| `solar_radiation`                       | Float64  | Ja            | W/m²                | Solarstrahlung                                                                                                  |
+| `lightning_strike_count`                | Int64    | Ja            |                     | Blitzschläge Anzahl                                                                                             |
+| `lightning_average_distance`            | Float64  | Ja            | km                  | Blitzschläge – Durchschnittsdistanz/Entfernung                                                                  |
+| `precipitation_electrical_conductivity` | Float64  | Ja            | µS/cm               | elektrische Leitfähigkeit des Regenwassers                                                                      |
 
 Folgende Spalten sind ebenfalls Teil des internen Datenmodells, werden allerdings mit einem anderen Schlüsselnamen eingeliefert.
 

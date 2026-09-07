@@ -3,6 +3,15 @@
 {{- $discourseApiKey := include "udh.secret" $discourseApiKeySpec }}
 {{ include "udh.secretManifest" (merge (dict "value" $discourseApiKey) $discourseApiKeySpec) }}
 ---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: {{ include "data-hub.name" (dict "context" . "name" "bitnami") }}
+spec:
+  interval: 1h0m0s
+  url: oci://{{ .Values.global.ociMirror }}docker.io/bitnamicharts
+  type: oci
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -129,7 +138,7 @@ spec:
 
             authorized_extensions = jpg|jpeg|png|gif|heic|heif|webp|avif|ipynb
 
-            create_tag_allowed_groups = '1|2|0' # admin,moderators,everyone
+            create_tag_allowed_groups = '1|2|5' # admin,moderators,logged_in_users
 
             personal_message_enabled_groups = '1|2' # disable personal messages, use chat instead
 
@@ -210,12 +219,8 @@ spec:
       protocol: {{ .Values.discourse.smtp.protocol }}
     {{ end }}
     redis:
-      enabled: false
-    externalRedis:
-      host: {{ include "data-hub.name" (dict "context" . "name" "d-vk-valkey") }}
-      port: 6379
-      existingSecret: {{ include "data-hub.name" (dict "context" . "name" "d-vk-valkey") }}
-      existingSecretPasswordKey: valkey-password
+      image:
+        repository: bitnamilegacy/redis
     updateStrategy:
       type: Recreate
       rollingUpdate:

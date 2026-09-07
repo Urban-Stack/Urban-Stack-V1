@@ -3,14 +3,18 @@ package net.teuto.udh
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
+import io.kubernetes.client.custom.V1Patch
 import io.kubernetes.client.openapi.ApiException
 import io.kubernetes.client.openapi.Configuration
 import io.kubernetes.client.openapi.JSON
+import io.kubernetes.client.openapi.apis.AppsV1Api
 import io.kubernetes.client.openapi.apis.CoreV1Api
-import io.kubernetes.client.openapi.apis.NetworkingV1Api
+import io.kubernetes.client.openapi.models.V1ConfigMap
+import io.kubernetes.client.openapi.models.V1Deployment
 import io.kubernetes.client.openapi.models.V1ObjectMeta
 import io.kubernetes.client.openapi.models.V1Secret
 import io.kubernetes.client.util.Config
+import io.kubernetes.client.util.PatchUtils
 import io.kubernetes.client.util.generic.dynamic.DynamicKubernetesApi
 import io.kubernetes.client.util.generic.dynamic.DynamicKubernetesObject
 import jakarta.ws.rs.BadRequestException
@@ -24,19 +28,22 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import net.teuto.udh.UdhSharedApp.Companion.getDynamicHelmClient
-import net.teuto.udh.UdhSharedApp.Companion.sharedAppsNamespace
-import net.teuto.udh.UdhSharedApp.SharedAppConfig
 import org.keycloak.authorization.attribute.Attributes
-import org.keycloak.authorization.common.UserModelIdentity
+import org.keycloak.authorization.fgap.AdminPermissionsSchema
 import org.keycloak.authorization.identity.Identity
+import org.keycloak.authorization.identity.UserModelIdentity
 import org.keycloak.authorization.model.Resource
+import org.keycloak.models.AdminRoles
+import org.keycloak.models.ClientModel
+import org.keycloak.models.Constants
+import org.keycloak.models.KeycloakSession
 import org.keycloak.representations.idm.ClientRepresentation
 import org.keycloak.representations.idm.ProtocolMapperRepresentation
 import org.keycloak.services.managers.ClientManager
 import org.keycloak.services.managers.RealmManager
-import org.keycloak.services.resources.admin.permissions.AdminPermissions
 import java.lang.System.getenv
-import java.util.*
+import java.util.UUID
+import kotlin.jvm.optionals.getOrNull
 
 val SENSOR_CREDENTIAL_TYPE = ResourceType(
     resourceTypeName = "sensor-credential",
@@ -248,10 +255,9 @@ data class UdhTenant(val tenant: String) : UdhResourceModel, UdhPrincipal {
     ) {
         val tenantGroup =
             ctx.realm.getGroupById(tenantGroupId(tenant)) ?: ctx.realm.createGroup(tenantGroupId(tenant), tenant)
-        val mgmtPermissions = AdminPermissions.management(ctx.session, ctx.realm)
-        mgmtPermissions.groups().setPermissionsEnabled(tenantGroup, true)
-        tenantGroup.grantRole(mgmtPermissions.realmManagementClient.getRole("query-users"))
-        tenantGroup.grantRole(mgmtPermissions.realmManagementClient.getRole("query-groups"))
+        val realmMgmtClient = ctx.realm.getClientByClientId(Constants.REALM_MANAGEMENT_CLIENT_ID)
+        tenantGroup.grantRole(realmMgmtClient.getRole(AdminRoles.QUERY_USERS))
+        tenantGroup.grantRole(realmMgmtClient.getRole(AdminRoles.QUERY_GROUPS))
 
         // add admin group
         ignoreConflicts { executeAction(path, Action.Create("group", "admin"), ctx, delayedActionsList, null) }
@@ -276,7 +282,12 @@ data class UdhTenant(val tenant: String) : UdhResourceModel, UdhPrincipal {
         // add read permission
         executeAction(
             path,
-            Action.CreatePermission("ckan-editor", listOf("tenant:ckan-editor"), listOf(UdhGroup(tenant, "ckan-editor")), false),
+            Action.CreatePermission(
+                "ckan-editor",
+                listOf("tenant:ckan-editor"),
+                listOf(UdhGroup(tenant, "ckan-editor")),
+                false
+            ),
             ctx,
             delayedActionsList, null
         )
@@ -285,7 +296,13 @@ data class UdhTenant(val tenant: String) : UdhResourceModel, UdhPrincipal {
             path,
             Action.CreatePermission(
                 "members",
-                listOf("citytool:view", "dedicated-app:view",  "tenant:view", "tenant:discourse-member", "tenant:ckan-member"),
+                listOf(
+                    "citytool:view",
+                    "dedicated-app:view",
+                    "tenant:view",
+                    "tenant:discourse-member",
+                    "tenant:ckan-member"
+                ),
                 listOf(this),
                 false
             ),
@@ -347,6 +364,8 @@ data class UdhTenant(val tenant: String) : UdhResourceModel, UdhPrincipal {
             Attributes.from(mapOf("data-hub.attribute.groups" to listOf("/${tenant}")))
         )
     }
+
+    val kcGroupId get() = tenantGroupId(tenant)
 }
 
 @Serializable
@@ -428,10 +447,7 @@ data class UdhGroup(val tenant: String, val group: String) : UdhResourceModel, U
         body: String?
     ) {
         val tenantHash = tenantGroupId(tenant)
-        val groupGroup =
-            ctx.realm.createGroup(path.toHash(), group, ctx.realm.getGroupById(tenantHash))
-        val mgmtPermissions = AdminPermissions.management(ctx.session, ctx.realm)
-        mgmtPermissions.groups().setPermissionsEnabled(groupGroup, true)
+        ctx.realm.createGroup(path.toHash(), group, ctx.realm.getGroupById(tenantHash))
     }
 
     override fun postDelete(ctx: AuthzContext, delayedActionsList: DelayedActionsList) {
@@ -444,7 +460,9 @@ data class UdhGroup(val tenant: String, val group: String) : UdhResourceModel, U
         return AttributeIdentity(
             Attributes.from(mapOf("data-hub.attribute.groups" to listOf("/${tenant}/${group}")))
         )
+
     }
+    val kcGroupId get() = path.toHash()
 }
 
 
@@ -477,9 +495,8 @@ data class UdhSensorCredential(val tenant: String, val project: String, val sens
         ctx: AuthzContext,
         delayedActionsList: DelayedActionsList
     ) {
-        val credentialHash = path.toHash()
         val clientManager = ClientManager(RealmManager(ctx.session))
-        ctx.realm.clientsStream.filter { it.getAttribute("hash") == credentialHash }.forEach {
+        getServiceAccountClient(ctx.session)?.let {
             clientManager.removeClient(it.realm, it)
         }
     }
@@ -528,11 +545,28 @@ data class UdhSensorCredential(val tenant: String, val project: String, val sens
                 )
             )
         )
+        val clientManager = ClientManager(RealmManager(ctx.session))
         val client = ClientManager.createClient(ctx.session, ctx.realm, clientRep)
+        clientManager.enableServiceAccount(client)
+
         return mapOf(
             "username" to client.clientId,
             "password" to client.secret
         )
+    }
+
+    fun getServiceAccountClient(session: KeycloakSession): ClientModel? {
+        val credentialHash = path.toHash()
+        var result: ClientModel? = null
+        AdminPermissionsSchema.runWithoutAuthorization(session) {
+            result =
+                session.context.realm.clientsStream
+                    .filter {
+                        it.getAttribute("hash") == credentialHash
+                    }.findFirst()
+                    .getOrNull()
+        }
+        return result
     }
 
     override fun customAction(
@@ -1176,7 +1210,7 @@ data class UdhSharedApp(val tenant: String, val sharedApp: String) : UdhResource
     }
 
     fun toHelmValues(config: SharedAppConfig): Map<*, *> {
-        val keycloakHost = getenv("KEYCLOAK_HOSTNAME")
+        val keycloakHost = getenv("KC_HOSTNAME")!!
         val keycloakIssuer = "${keycloakHost}realms/udh"
         val certIssuer = getenv("APPS_CERT_ISSUER")
         val postgres = getenv("SHARED_APPS_POSTGRES")
@@ -1272,9 +1306,13 @@ data class UdhSharedApp(val tenant: String, val sharedApp: String) : UdhResource
     }
 
     fun setCategories(res: Resource, categories: List<CitytoolCategory>) {
-        res.setAttribute(ATTR_CATEGORIES, listOf(JSON.serialize(
-            categories.toSet().sorted()
-        )))
+        res.setAttribute(
+            ATTR_CATEGORIES, listOf(
+                JSON.serialize(
+                    categories.toSet().sorted()
+                )
+            )
+        )
     }
 
     override fun postCreate(
@@ -1419,16 +1457,22 @@ data class CitytoolMeta(
 enum class CitytoolCategory {
     @GraphQLDescription("Office")
     OFFICE,
+
     @GraphQLDescription("Fachverfahren")
     SPECIALIZED_APPLICATION,
+
     @GraphQLDescription("Datenanalyse")
     DATA_ANALYTICS,
+
     @GraphQLDescription("Bürgerservices")
     CITIZEN_SERVICES,
+
     @GraphQLDescription("Geoinformation")
     GEO_INFORMATION,
+
     @GraphQLDescription("Intelligente Automation")
     INTELLIGENT_AUTOMATION,
+
     @GraphQLDescription("Apps & Tools")
     APPS_TOOLS,
 }
@@ -1463,12 +1507,16 @@ data class UdhCitytool(val tenant: String, val citytool: String) : UdhResourceMo
             LOGGER.info("syncing citytools")
 
             val bucketServiceName = getenv("BUCKET_SERVICE_ENDPOINT") ?: return
-            val citytoolsIngressName = getenv("CITYTOOLS_INGRESS")
-            val citytoolsServiceName = getenv("CITYTOOLS_SERVICE_ENDPOINT")
+            val citytoolsConfigmapName = getenv("CITYTOOLS_CONFIGMAP")
             // based on https://web.archive.org/web/20190312223224/http://linuxplayer.org/2013/06/nginx-try-files-on-multiple-named-location-or-server
-            val citytoolsAnnotation = lookupResources(ctx, CITYTOOL_TYPE, emptyMap()).joinToString("") {
+            val citytoolsAnnotation = """
+            server {
+              listen       80;
+              server_name  localhost;
+              resolver kube-dns.kube-system.svc.cluster.local;
+            """.trimIndent() + "\n" + lookupResources(ctx, CITYTOOL_TYPE, emptyMap()).joinToString("") {
                 val model = it.getResourceModel()
-                val path = getPathAttribute(it)
+                val path = getPathAttribute(it, ctx)
                 "location ~ ^/?(${model.tenant})/($path)/(.*) {" +
                         if (model.citytool != path) {
                             "set \$tool ${model.citytool};"
@@ -1478,16 +1526,15 @@ data class UdhCitytool(val tenant: String, val citytool: String) : UdhResourceMo
                         "try_files /dev/null @citytools-overwrite;}\n"
             } + """
             location @citytools-overwrite {
-              set_if_empty ${'$'}tool ${'$'}2;
+              set ${'$'}tool ${'$'}2;
               proxy_pass $bucketServiceName/ct.${'$'}1.${'$'}tool/${'$'}3;
               proxy_intercept_errors on;
-              recursive_error_pages on;
-              error_page 404 = @citytools-base;
-              error_page 403 = @citytools-base;
+              error_page 404 = /${'$'}tool/$3;
+              error_page 403 = /${'$'}tool/$3;
             }
-
-            location @citytools-base {
-              proxy_pass $citytoolsServiceName/${'$'}tool/${'$'}3;
+            location = / {
+              return 301 https://urbanstack.de;
+            }
             }
             """.trimIndent()
             LOGGER.debug(citytoolsAnnotation)
@@ -1495,22 +1542,52 @@ data class UdhCitytool(val tenant: String, val citytool: String) : UdhResourceMo
 
             val client = Config.defaultClient()
             Configuration.setDefaultApiClient(client)
-            val api = NetworkingV1Api()
 
-            val citytoolsIngress = api.readNamespacedIngress(citytoolsIngressName, kubernetesNamespace).execute()
-            citytoolsIngress.metadata.putAnnotationsItem(
-                "nginx.ingress.kubernetes.io/server-snippet",
-                citytoolsAnnotation
+            val configmapPatch = Json.encodeToString(mapOf("data" to mapOf("default.conf" to citytoolsAnnotation)))
+
+            // https://github.com/kubernetes-client/java/blob/5c333ec8f3172eeebea24e663aadc03da24ac82d/extended/src/main/java/io/kubernetes/client/extended/kubectl/KubectlScale.java#L53
+            PatchUtils.patch(V1ConfigMap::class.java, {
+                CoreV1Api().patchNamespacedConfigMap(
+                    citytoolsConfigmapName,
+                    kubernetesNamespace,
+                    V1Patch(configmapPatch)
+                ).buildCall(null)
+            }, V1Patch.PATCH_FORMAT_STRATEGIC_MERGE_PATCH)
+
+            // kubernetes doesn't update the config map immediately, so just restart the deployment
+            val deploymentReloadPatch = Json.encodeToString(
+                mapOf(
+                    "spec" to mapOf(
+                        "template" to mapOf(
+                            "metadata" to mapOf(
+                                "annotations" to mapOf("citytools-config-version" to hashString(citytoolsAnnotation))
+                            )
+                        )
+                    )
+                )
             )
-            api.replaceNamespacedIngress(citytoolsIngressName, kubernetesNamespace, citytoolsIngress).execute()
+
+            PatchUtils.patch(V1Deployment::class.java, {
+                AppsV1Api().patchNamespacedDeployment(
+                    citytoolsConfigmapName,
+                    kubernetesNamespace,
+                    V1Patch(deploymentReloadPatch)
+                ).buildCall(null)
+            }, V1Patch.PATCH_FORMAT_STRATEGIC_MERGE_PATCH)
+
+            //val citytoolsConfigmap = api.readNamespacedConfigMap(citytoolsConfigmapName, kubernetesNamespace).execute()
+            //citytoolsConfigmap.data!!["default.conf"] = citytoolsAnnotation
+            //api.replaceNamespacedConfigMap(citytoolsConfigmapName, kubernetesNamespace, citytoolsConfigmap).execute()
         }
 
-        fun getStarsAttribute(res: UdhResource<*>): Int? {
-            return res.kcResource.attributes[ATTR_STARS]?.first()?.let(String::toInt)
+        // keycloak now caches resources more aggressively, this forces loading the attributes
+        // from the database
+        fun getStarsAttribute(res: UdhResource<*>, ctx: AuthzContext): Int? {
+            return res.path.getResource(ctx)?.attributes[ATTR_STARS]?.first()?.let(String::toInt)
         }
 
-        fun getPathAttribute(res: UdhResource<*>): String {
-            return res.kcResource.attributes[ATTR_PATH]!!.first()
+        fun getPathAttribute(res: UdhResource<*>, ctx: AuthzContext): String {
+            return res.path.getResource(ctx)?.attributes[ATTR_PATH]!!.first()
         }
     }
 
@@ -1526,8 +1603,10 @@ data class UdhCitytool(val tenant: String, val citytool: String) : UdhResourceMo
     // check if another citytool in this tenant already uses the path
     fun ensurePathValid(ctx: AuthzContext, path: String) {
         ensureValidName(path)
-        if (lookupResources(ctx, CITYTOOL_TYPE, mapOf(TENANT_TYPE.resourceTypeName to tenant))
-                .any { it.getResourceModel().citytool != citytool && getPathAttribute(it) == path }
+        val resources = lookupResources(ctx, CITYTOOL_TYPE, mapOf(TENANT_TYPE.resourceTypeName to tenant))
+        LOGGER.info("resouces: ${resources.joinToString(",") { it.getResourceModel().toString() + it.kcResource.attributes?.get(ATTR_PATH)?.firstOrNull() }}")
+        if (resources
+                .any { it.getResourceModel().citytool != citytool && getPathAttribute(it, ctx) == path }
         ) {
             throw ClientErrorException("path $path is already used", Response.Status.CONFLICT)
         }
@@ -1699,6 +1778,7 @@ data class UdhDedicatedApp(val tenant: String, val dedicatedApp: String) : UdhRe
     // we deliberately choose a different naming scheme from sharedApps here
     // since a malicious user can't control the dedicatedApp names, this is fine
     val clientId get() = "${dedicatedApp}-${tenant}"
+
     // note: needs to be below 62 characters, tenants can have up to 32 characters
     val internalName get() = "$dedicatedApp-$tenant"
     val dedicatedAppHost get() = "$dedicatedApp-$tenant.${getenv("DEDICATED_APPS_BASE_DOMAIN")}"
@@ -1721,7 +1801,8 @@ data class UdhDedicatedApp(val tenant: String, val dedicatedApp: String) : UdhRe
             TENANT_TYPE.resourceTypeName to tenant,
             DEDICATED_APP_TYPE.resourceTypeName to dedicatedApp
         )
-        val dedicatedAppAuthFlowId = ctx.realm.authenticationFlowsStream.filter { it.alias == "dedicated-app" }.findFirst().get().id
+        val dedicatedAppAuthFlowId =
+            ctx.realm.authenticationFlowsStream.filter { it.alias == "dedicated-app" }.findFirst().get().id
         clientRep.authenticationFlowBindingOverrides = mapOf("browser" to dedicatedAppAuthFlowId)
         clientRep.protocolMappers = meta.protocolMappers.map {
             val mapper = ProtocolMapperRepresentation()
@@ -1745,7 +1826,7 @@ data class UdhDedicatedApp(val tenant: String, val dedicatedApp: String) : UdhRe
     }
 
     fun toHelmValues(clientSecret: String): Map<*, *> {
-        val keycloakHost = getenv("KEYCLOAK_HOSTNAME")
+        val keycloakHost = getenv("KC_HOSTNAME")!!
         val keycloakIssuer = "${keycloakHost}realms/udh"
         val certIssuer = getenv("APPS_CERT_ISSUER")
         val postgres = getenv("DEDICATED_APPS_POSTGRES")
@@ -1808,7 +1889,8 @@ data class UdhDedicatedApp(val tenant: String, val dedicatedApp: String) : UdhRe
         val resp = hrApi.create(helmRelease)
         if (resp.httpStatusCode == 409) {
             val oldHr = hrApi.get(dedicatedAppsNamespace, internalName).throwsApiException().`object`
-            oldHr.raw.getAsJsonObject("spec").add("values", UdhSharedApp.Companion.GSON.toJsonTree(toHelmValues(clientSecret)))
+            oldHr.raw.getAsJsonObject("spec")
+                .add("values", UdhSharedApp.Companion.GSON.toJsonTree(toHelmValues(clientSecret)))
             hrApi.update(oldHr).throwsApiException()
         } else if (resp.httpStatusCode >= 400) {
             resp.throwsApiException()
@@ -1855,11 +1937,24 @@ data class UdhDedicatedApp(val tenant: String, val dedicatedApp: String) : UdhRe
         val adminGroupName = "$dedicatedApp-admin"
 
         // add admin group
-        ignoreConflicts { executeAction(UdhTenant(tenant).path, Action.Create(GROUP_TYPE.resourceTypeName, adminGroupName), ctx, delayedActionsList, null) }
+        ignoreConflicts {
+            executeAction(
+                UdhTenant(tenant).path,
+                Action.Create(GROUP_TYPE.resourceTypeName, adminGroupName),
+                ctx,
+                delayedActionsList,
+                null
+            )
+        }
         // add admin permission
         executeAction(
             path,
-            Action.CreatePermission("admin", listOf("${DEDICATED_APP_TYPE.resourceTypeName}:$ADMIN_SCOPE"), listOf(UdhGroup(tenant, adminGroupName)), false),
+            Action.CreatePermission(
+                "admin",
+                listOf("${DEDICATED_APP_TYPE.resourceTypeName}:$ADMIN_SCOPE"),
+                listOf(UdhGroup(tenant, adminGroupName)),
+                false
+            ),
             ctx,
             delayedActionsList, null
         )
@@ -1879,7 +1974,17 @@ data class UdhDedicatedApp(val tenant: String, val dedicatedApp: String) : UdhRe
         val adminGroupName = "$dedicatedApp-admin"
 
         // remove admin group
-        ignoreConflicts { executeAction(UdhTenant(tenant).path, Action.Delete(GROUP_TYPE.resourceTypeName, adminGroupName), ctx, delayedActionsList, null) }
+        try {
+            executeAction(
+                UdhTenant(tenant).path,
+                Action.Delete(GROUP_TYPE.resourceTypeName, adminGroupName),
+                ctx,
+                delayedActionsList,
+                null
+            )
+        } catch (_: NotFoundException) {
+            // probably already deleted
+        }
 
         delayedActionsList.changes.add {
             syncPostgres(ctx)

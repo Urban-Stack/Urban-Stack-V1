@@ -27,6 +27,7 @@ spec:
     fullnameOverride: null # default is empty string which removes all prefixes
     ingress:
       enabled: true
+      ingressClassName: nginx
       hosts:
         - {{ include "data-hub.jupyterhub.hostname" . }}
       annotations: {{- include "udh.ingress.annotations" (dict "context" $ "annotations" .Values.jupyterhub.ingress.annotations) | nindent 8 }}
@@ -65,6 +66,7 @@ spec:
           username_claim: sub # ensures that the user ALWAYS keeps their data (and only theirs!) across email address and username changes
           allow_all: true
           login_service: Data HUB
+          oauth_callback_url: {{ printf "https://%s/hub/oauth_callback" (include "data-hub.jupyterhub.hostname" .) }}
           logout_redirect_url: {{ printf "https://%s/realms/udh/protocol/openid-connect/logout?client_id=jupyterhub&post_logout_redirect_uri=https://%s/" (include "data-hub.keycloak.hostname" .) (include "data-hub.govhub.hostname" .) }}
           validate_server_cert: {{ .Values.fakeCa.enabled | ternary "false" "true" }}
         Authenticator:
@@ -186,11 +188,16 @@ spec:
               - |
                 cat /tls/ca.crt >> $(python -c 'import certifi; print(certifi.where())')
       {{- end }}
-      {{- if $.Values.jupyterhub.singleuser.allowPrivateIPs }}
       networkPolicy:
+        enabled: true
+        {{- if $.Values.jupyterhub.singleuser.allowPrivateIPs }}
         egressAllowRules:
           privateIPs: true
-      {{- end }}
+        {{- end }}
+        {{- with $.Values.global.networkPolicy.additionalExternalEgress }}
+        egress:
+          {{- . | toYaml | nindent 10 }}
+        {{- end }}
     proxy:
       service:
         type: ClusterIP

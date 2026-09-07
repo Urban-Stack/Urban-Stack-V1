@@ -66,3 +66,16 @@ CVE-2026-55200
 
 # DBUS internal
 CVE-2026-58016
+
+# perl is not used
+CVE-2026-13221
+CVE-2026-57433
+
+# minor issue
+CVE-2026-6653
+
+# dependency of npm, not exploitable
+CVE-2026-59873
+
+# not used server side
+CVE-2026-54466

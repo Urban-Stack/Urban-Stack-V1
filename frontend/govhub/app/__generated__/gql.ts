@@ -30,9 +30,10 @@ type Documents = {
   '\n  mutation InstallDedicatedApp($tenant: String!, $name: String!) {\n    tenant(tenant: $tenant) {\n      createDedicatedApp(dedicatedApp: $name) {\n        dedicatedApp\n        tenant\n        url\n      }\n    }\n  }\n': typeof types.InstallDedicatedAppDocument;
   '\n  mutation UnInstallDedicatedApp($tenant: String!, $name: String!) {\n    tenant(tenant: $tenant) {\n      deleteDedicatedApp(dedicatedApp: $name)\n    }\n  }\n': typeof types.UnInstallDedicatedAppDocument;
   '\n  query GetDedicatedAppContainerInfos(\n    $tenant: String!\n    $name: String!\n    $lines: Int!\n  ) {\n    dedicatedApp(tenant: $tenant, dedicatedApp: $name) {\n      dedicatedApp\n      containerLogs(lines: $lines)\n      containerStatus {\n        ready\n        running\n        waitingMessage\n        waitingReason\n        waiting\n        restartCount\n      }\n    }\n  }\n': typeof types.GetDedicatedAppContainerInfosDocument;
-  '\n  query AllProjects {\n    tenants {\n      projects {\n        tenant\n        project\n      }\n    }\n  }\n': typeof types.AllProjectsDocument;
+  '\n  query AllProjects {\n    tenants {\n      tenant\n      projects {\n        tenant\n        project\n        admin: hasScopes(scopes: ["project:admin"])\n      }\n    }\n  }\n': typeof types.AllProjectsDocument;
   '\n  query GetGroupsPermissions($tenant: String!, $project: String!) {\n    project(tenant: $tenant, project: $project) {\n      permissions {\n        name\n        groupPrincipals {\n          tenant\n          group\n        }\n        scopes\n      }\n    }\n  }\n': typeof types.GetGroupsPermissionsDocument;
   '\n  query GetVizGroupsPermissions($tenant: String!, $project: String!) {\n    project(tenant: $tenant, project: $project) {\n      permissions {\n        name\n        vizGroupPrincipals {\n          tenant\n          vizGroup\n        }\n        scopes\n      }\n    }\n  }\n': typeof types.GetVizGroupsPermissionsDocument;
+  '\n  query HasProjectScope($tenant: String!, $project: String!, $scope: String!) {\n    project(tenant: $tenant, project: $project) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n': typeof types.HasProjectScopeDocument;
   '\n  mutation CreateProject($tenant: String!, $project: String!) {\n    tenant(tenant: $tenant) {\n      createProject(project: $project) {\n        project\n        tenant\n      }\n    }\n  }\n': typeof types.CreateProjectDocument;
   '\n  mutation DeleteProject($tenant: String!, $project: String!) {\n    tenant(tenant: $tenant) {\n      deleteProject(project: $project)\n    }\n  }\n': typeof types.DeleteProjectDocument;
   '\n  mutation ProjectPermission(\n    $tenant: String!\n    $project: String!\n    $readGroups: [GroupInput!]!\n    $adminGroups: [GroupInput!]!\n  ) {\n    tenant(tenant: $tenant) {\n      project(project: $project) {\n        read: createPermission(\n          permission: {\n            name: "read"\n            scopes: ["project:read"]\n            groupPrincipals: $readGroups\n          }\n        )\n        admin: createPermission(\n          permission: {\n            name: "admin"\n            scopes: ["project:admin"]\n            groupPrincipals: $adminGroups\n          }\n        )\n      }\n    }\n  }\n': typeof types.ProjectPermissionDocument;
@@ -53,8 +54,7 @@ type Documents = {
   '\n  mutation DeleteSubscription(\n    $tenant: String!\n    $project: String!\n    $name: String!\n  ) {\n    tenant(tenant: $tenant) {\n      project(project: $project) {\n        deleteSensorSubscription(sensorSubscription: $name)\n      }\n    }\n  }\n': typeof types.DeleteSubscriptionDocument;
   '\n  mutation UpdateSubscription(\n    $tenant: String!\n    $project: String!\n    $oldName: String!\n    $newName: String!\n    $config: SubscriptionConfigInput!\n  ) {\n    tenant(tenant: $tenant) {\n      project(project: $project) {\n        deleteSensorSubscription(sensorSubscription: $oldName)\n        createSensorSubscription(\n          sensorSubscription: $newName\n          config: $config\n        ) {\n          sensorSubscription\n          config {\n            format\n            topic\n            uri\n            username\n          }\n        }\n      }\n    }\n  }\n': typeof types.UpdateSubscriptionDocument;
   '\n  query GetTenantName($tenant: String!, $attribute: String!) {\n    tenant(tenant: $tenant) {\n      attribute(attribute: $attribute)\n    }\n  }\n': typeof types.GetTenantNameDocument;
-  '\n  query GetAllTenantAndProjectScopes {\n    tenants {\n      tenant\n      scopes {\n        all\n        granted\n      }\n      projects {\n        project\n        scopes {\n          all\n          granted\n        }\n      }\n      groups {\n        group\n        scopes {\n          all\n          granted\n        }\n      }\n      vizGroups {\n        vizGroup\n        scopes {\n          all\n          granted\n        }\n      }\n    }\n  }\n': typeof types.GetAllTenantAndProjectScopesDocument;
-  '\n  query GetTenantScopes($tenant: String!) {\n    tenant(tenant: $tenant) {\n      scopes {\n        all\n        granted\n      }\n    }\n  }\n': typeof types.GetTenantScopesDocument;
+  '\n  query HasTenantScopes($tenant: String!, $scope: String!) {\n    tenant(tenant: $tenant) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n': typeof types.HasTenantScopesDocument;
   '\n  query TenantMemberships {\n    keycloakGroupMemberships {\n      tenant\n    }\n  }\n': typeof types.TenantMembershipsDocument;
   '\n  query AllUserGroups {\n    tenants {\n      tenant\n      groups {\n        group\n        keycloakGroupPath\n        isMember\n        scopes {\n          granted\n        }\n        permissions {\n          name\n          scopes\n          allowAllAuthenticatedUsers\n        }\n      }\n    }\n  }\n': typeof types.AllUserGroupsDocument;
   '\n  query UserGroupPermissions($tenant: String!, $group: String!) {\n    group(tenant: $tenant, group: $group) {\n      permissions {\n        name\n        groupPrincipals {\n          tenant\n          group\n        }\n        scopes\n      }\n    }\n  }\n': typeof types.UserGroupPermissionsDocument;
@@ -64,8 +64,8 @@ type Documents = {
   '\n  mutation EnableUserGroupShared($tenant: String!, $group: String!) {\n    tenant(tenant: $tenant) {\n      group(group: $group) {\n        shared: createPermission(\n          permission: {\n            name: "shared"\n            scopes: ["group:view"]\n            allowAllAuthenticatedUsers: true\n          }\n        )\n      }\n    }\n  }\n': typeof types.EnableUserGroupSharedDocument;
   '\n  mutation DisableUserGroupShared($tenant: String!, $group: String!) {\n    tenant(tenant: $tenant) {\n      group(group: $group) {\n        deletePermission(permission: "shared")\n      }\n    }\n  }\n': typeof types.DisableUserGroupSharedDocument;
   '\n  mutation UserGroupPermission(\n    $tenant: String!\n    $group: String!\n    $readGroups: [GroupInput!]!\n    $adminGroups: [GroupInput!]!\n  ) {\n    tenant(tenant: $tenant) {\n      group(group: $group) {\n        read: createPermission(\n          permission: {\n            name: "read"\n            scopes: ["group:read"]\n            groupPrincipals: $readGroups\n          }\n        )\n        admin: createPermission(\n          permission: {\n            name: "admin"\n            scopes: ["group:admin"]\n            groupPrincipals: $adminGroups\n          }\n        )\n      }\n    }\n  }\n': typeof types.UserGroupPermissionDocument;
-  '\n  query AllVizGroups {\n    tenants {\n      tenant\n      vizGroups {\n        vizGroup\n        tenant\n      }\n    }\n  }\n': typeof types.AllVizGroupsDocument;
-  '\n  query VizGroupsByTenant($tenant: String!) {\n    tenant(tenant: $tenant) {\n      vizGroups {\n        vizGroup\n        tenant\n      }\n    }\n  }\n': typeof types.VizGroupsByTenantDocument;
+  '\n  query AllVizGroups {\n    tenants {\n      tenant\n      vizGroups {\n        vizGroup\n        tenant\n        admin: hasScopes(scopes: ["viz-group:admin"])\n        dashboardView: hasScopes(scopes: ["dashboard:view"])\n      }\n    }\n  }\n': typeof types.AllVizGroupsDocument;
+  '\n  query VizGroupsByTenant($tenant: String!) {\n    tenant(tenant: $tenant) {\n      vizGroups {\n        vizGroup\n        tenant\n        admin: hasScopes(scopes: ["viz-group:admin"])\n      }\n    }\n  }\n': typeof types.VizGroupsByTenantDocument;
   '\n  mutation createVizGroup($tenant: String!, $name: String!) {\n    tenant(tenant: $tenant) {\n      createVizGroup(vizGroup: $name) {\n        tenant\n        vizGroup\n      }\n    }\n  }\n': typeof types.CreateVizGroupDocument;
   '\n  mutation deleteVizGroup($tenant: String!, $name: String!) {\n    tenant(tenant: $tenant) {\n      deleteVizGroup(vizGroup: $name)\n    }\n  }\n': typeof types.DeleteVizGroupDocument;
   '\n  query VizGroupDashboards($tenant: String!, $vizGroup: String!) {\n    vizGroup(tenant: $tenant, vizGroup: $vizGroup) {\n      tenant\n      vizGroup\n      dashboards {\n        slug\n        dashboard\n      }\n    }\n  }\n': typeof types.VizGroupDashboardsDocument;
@@ -75,6 +75,7 @@ type Documents = {
   '\n  mutation DeletePublishedQuery(\n    $tenant: String!\n    $vizGroup: String!\n    $name: String!\n  ) {\n    tenant(tenant: $tenant) {\n      vizGroup(vizGroup: $vizGroup) {\n        deletePublishedQuery(publishedQuery: $name)\n      }\n    }\n  }\n': typeof types.DeletePublishedQueryDocument;
   '\n  mutation CreatePublishedQuery(\n    $tenant: String!\n    $vizGroup: String!\n    $name: String!\n    $sql: String!\n  ) {\n    tenant(tenant: $tenant) {\n      vizGroup(vizGroup: $vizGroup) {\n        createPublishedQuery(publishedQuery: $name, config: { sql: $sql }) {\n          publishedQuery\n          config {\n            sql\n          }\n        }\n      }\n    }\n  }\n': typeof types.CreatePublishedQueryDocument;
   '\n  query GetPublishedQuery(\n    $tenant: String!\n    $vizGroup: String!\n    $name: String!\n  ) {\n    publishedQuery(\n      tenant: $tenant\n      vizGroup: $vizGroup\n      publishedQuery: $name\n    ) {\n      publishedQuery\n      config {\n        sql\n      }\n    }\n  }\n': typeof types.GetPublishedQueryDocument;
+  '\n  query HasVizGroupScope(\n    $tenant: String!\n    $vizGroup: String!\n    $scope: String!\n  ) {\n    vizGroup(tenant: $tenant, vizGroup: $vizGroup) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n': typeof types.HasVizGroupScopeDocument;
 };
 const documents: Documents = {
   '\n  mutation MutateHelpdeskTicket($title: String!, $description: String!) {\n    helpdesk(title: $title, description: $description)\n  }\n':
@@ -109,12 +110,14 @@ const documents: Documents = {
     types.UnInstallDedicatedAppDocument,
   '\n  query GetDedicatedAppContainerInfos(\n    $tenant: String!\n    $name: String!\n    $lines: Int!\n  ) {\n    dedicatedApp(tenant: $tenant, dedicatedApp: $name) {\n      dedicatedApp\n      containerLogs(lines: $lines)\n      containerStatus {\n        ready\n        running\n        waitingMessage\n        waitingReason\n        waiting\n        restartCount\n      }\n    }\n  }\n':
     types.GetDedicatedAppContainerInfosDocument,
-  '\n  query AllProjects {\n    tenants {\n      projects {\n        tenant\n        project\n      }\n    }\n  }\n':
+  '\n  query AllProjects {\n    tenants {\n      tenant\n      projects {\n        tenant\n        project\n        admin: hasScopes(scopes: ["project:admin"])\n      }\n    }\n  }\n':
     types.AllProjectsDocument,
   '\n  query GetGroupsPermissions($tenant: String!, $project: String!) {\n    project(tenant: $tenant, project: $project) {\n      permissions {\n        name\n        groupPrincipals {\n          tenant\n          group\n        }\n        scopes\n      }\n    }\n  }\n':
     types.GetGroupsPermissionsDocument,
   '\n  query GetVizGroupsPermissions($tenant: String!, $project: String!) {\n    project(tenant: $tenant, project: $project) {\n      permissions {\n        name\n        vizGroupPrincipals {\n          tenant\n          vizGroup\n        }\n        scopes\n      }\n    }\n  }\n':
     types.GetVizGroupsPermissionsDocument,
+  '\n  query HasProjectScope($tenant: String!, $project: String!, $scope: String!) {\n    project(tenant: $tenant, project: $project) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n':
+    types.HasProjectScopeDocument,
   '\n  mutation CreateProject($tenant: String!, $project: String!) {\n    tenant(tenant: $tenant) {\n      createProject(project: $project) {\n        project\n        tenant\n      }\n    }\n  }\n':
     types.CreateProjectDocument,
   '\n  mutation DeleteProject($tenant: String!, $project: String!) {\n    tenant(tenant: $tenant) {\n      deleteProject(project: $project)\n    }\n  }\n':
@@ -155,10 +158,8 @@ const documents: Documents = {
     types.UpdateSubscriptionDocument,
   '\n  query GetTenantName($tenant: String!, $attribute: String!) {\n    tenant(tenant: $tenant) {\n      attribute(attribute: $attribute)\n    }\n  }\n':
     types.GetTenantNameDocument,
-  '\n  query GetAllTenantAndProjectScopes {\n    tenants {\n      tenant\n      scopes {\n        all\n        granted\n      }\n      projects {\n        project\n        scopes {\n          all\n          granted\n        }\n      }\n      groups {\n        group\n        scopes {\n          all\n          granted\n        }\n      }\n      vizGroups {\n        vizGroup\n        scopes {\n          all\n          granted\n        }\n      }\n    }\n  }\n':
-    types.GetAllTenantAndProjectScopesDocument,
-  '\n  query GetTenantScopes($tenant: String!) {\n    tenant(tenant: $tenant) {\n      scopes {\n        all\n        granted\n      }\n    }\n  }\n':
-    types.GetTenantScopesDocument,
+  '\n  query HasTenantScopes($tenant: String!, $scope: String!) {\n    tenant(tenant: $tenant) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n':
+    types.HasTenantScopesDocument,
   '\n  query TenantMemberships {\n    keycloakGroupMemberships {\n      tenant\n    }\n  }\n':
     types.TenantMembershipsDocument,
   '\n  query AllUserGroups {\n    tenants {\n      tenant\n      groups {\n        group\n        keycloakGroupPath\n        isMember\n        scopes {\n          granted\n        }\n        permissions {\n          name\n          scopes\n          allowAllAuthenticatedUsers\n        }\n      }\n    }\n  }\n':
@@ -177,9 +178,9 @@ const documents: Documents = {
     types.DisableUserGroupSharedDocument,
   '\n  mutation UserGroupPermission(\n    $tenant: String!\n    $group: String!\n    $readGroups: [GroupInput!]!\n    $adminGroups: [GroupInput!]!\n  ) {\n    tenant(tenant: $tenant) {\n      group(group: $group) {\n        read: createPermission(\n          permission: {\n            name: "read"\n            scopes: ["group:read"]\n            groupPrincipals: $readGroups\n          }\n        )\n        admin: createPermission(\n          permission: {\n            name: "admin"\n            scopes: ["group:admin"]\n            groupPrincipals: $adminGroups\n          }\n        )\n      }\n    }\n  }\n':
     types.UserGroupPermissionDocument,
-  '\n  query AllVizGroups {\n    tenants {\n      tenant\n      vizGroups {\n        vizGroup\n        tenant\n      }\n    }\n  }\n':
+  '\n  query AllVizGroups {\n    tenants {\n      tenant\n      vizGroups {\n        vizGroup\n        tenant\n        admin: hasScopes(scopes: ["viz-group:admin"])\n        dashboardView: hasScopes(scopes: ["dashboard:view"])\n      }\n    }\n  }\n':
     types.AllVizGroupsDocument,
-  '\n  query VizGroupsByTenant($tenant: String!) {\n    tenant(tenant: $tenant) {\n      vizGroups {\n        vizGroup\n        tenant\n      }\n    }\n  }\n':
+  '\n  query VizGroupsByTenant($tenant: String!) {\n    tenant(tenant: $tenant) {\n      vizGroups {\n        vizGroup\n        tenant\n        admin: hasScopes(scopes: ["viz-group:admin"])\n      }\n    }\n  }\n':
     types.VizGroupsByTenantDocument,
   '\n  mutation createVizGroup($tenant: String!, $name: String!) {\n    tenant(tenant: $tenant) {\n      createVizGroup(vizGroup: $name) {\n        tenant\n        vizGroup\n      }\n    }\n  }\n':
     types.CreateVizGroupDocument,
@@ -199,6 +200,8 @@ const documents: Documents = {
     types.CreatePublishedQueryDocument,
   '\n  query GetPublishedQuery(\n    $tenant: String!\n    $vizGroup: String!\n    $name: String!\n  ) {\n    publishedQuery(\n      tenant: $tenant\n      vizGroup: $vizGroup\n      publishedQuery: $name\n    ) {\n      publishedQuery\n      config {\n        sql\n      }\n    }\n  }\n':
     types.GetPublishedQueryDocument,
+  '\n  query HasVizGroupScope(\n    $tenant: String!\n    $vizGroup: String!\n    $scope: String!\n  ) {\n    vizGroup(tenant: $tenant, vizGroup: $vizGroup) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n':
+    types.HasVizGroupScopeDocument,
 };
 
 /**
@@ -315,8 +318,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query AllProjects {\n    tenants {\n      projects {\n        tenant\n        project\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query AllProjects {\n    tenants {\n      projects {\n        tenant\n        project\n      }\n    }\n  }\n'];
+  source: '\n  query AllProjects {\n    tenants {\n      tenant\n      projects {\n        tenant\n        project\n        admin: hasScopes(scopes: ["project:admin"])\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query AllProjects {\n    tenants {\n      tenant\n      projects {\n        tenant\n        project\n        admin: hasScopes(scopes: ["project:admin"])\n      }\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -329,6 +332,12 @@ export function graphql(
 export function graphql(
   source: '\n  query GetVizGroupsPermissions($tenant: String!, $project: String!) {\n    project(tenant: $tenant, project: $project) {\n      permissions {\n        name\n        vizGroupPrincipals {\n          tenant\n          vizGroup\n        }\n        scopes\n      }\n    }\n  }\n',
 ): (typeof documents)['\n  query GetVizGroupsPermissions($tenant: String!, $project: String!) {\n    project(tenant: $tenant, project: $project) {\n      permissions {\n        name\n        vizGroupPrincipals {\n          tenant\n          vizGroup\n        }\n        scopes\n      }\n    }\n  }\n'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query HasProjectScope($tenant: String!, $project: String!, $scope: String!) {\n    project(tenant: $tenant, project: $project) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n',
+): (typeof documents)['\n  query HasProjectScope($tenant: String!, $project: String!, $scope: String!) {\n    project(tenant: $tenant, project: $project) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -453,14 +462,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetAllTenantAndProjectScopes {\n    tenants {\n      tenant\n      scopes {\n        all\n        granted\n      }\n      projects {\n        project\n        scopes {\n          all\n          granted\n        }\n      }\n      groups {\n        group\n        scopes {\n          all\n          granted\n        }\n      }\n      vizGroups {\n        vizGroup\n        scopes {\n          all\n          granted\n        }\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query GetAllTenantAndProjectScopes {\n    tenants {\n      tenant\n      scopes {\n        all\n        granted\n      }\n      projects {\n        project\n        scopes {\n          all\n          granted\n        }\n      }\n      groups {\n        group\n        scopes {\n          all\n          granted\n        }\n      }\n      vizGroups {\n        vizGroup\n        scopes {\n          all\n          granted\n        }\n      }\n    }\n  }\n'];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: '\n  query GetTenantScopes($tenant: String!) {\n    tenant(tenant: $tenant) {\n      scopes {\n        all\n        granted\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query GetTenantScopes($tenant: String!) {\n    tenant(tenant: $tenant) {\n      scopes {\n        all\n        granted\n      }\n    }\n  }\n'];
+  source: '\n  query HasTenantScopes($tenant: String!, $scope: String!) {\n    tenant(tenant: $tenant) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n',
+): (typeof documents)['\n  query HasTenantScopes($tenant: String!, $scope: String!) {\n    tenant(tenant: $tenant) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -519,14 +522,14 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query AllVizGroups {\n    tenants {\n      tenant\n      vizGroups {\n        vizGroup\n        tenant\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query AllVizGroups {\n    tenants {\n      tenant\n      vizGroups {\n        vizGroup\n        tenant\n      }\n    }\n  }\n'];
+  source: '\n  query AllVizGroups {\n    tenants {\n      tenant\n      vizGroups {\n        vizGroup\n        tenant\n        admin: hasScopes(scopes: ["viz-group:admin"])\n        dashboardView: hasScopes(scopes: ["dashboard:view"])\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query AllVizGroups {\n    tenants {\n      tenant\n      vizGroups {\n        vizGroup\n        tenant\n        admin: hasScopes(scopes: ["viz-group:admin"])\n        dashboardView: hasScopes(scopes: ["dashboard:view"])\n      }\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query VizGroupsByTenant($tenant: String!) {\n    tenant(tenant: $tenant) {\n      vizGroups {\n        vizGroup\n        tenant\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query VizGroupsByTenant($tenant: String!) {\n    tenant(tenant: $tenant) {\n      vizGroups {\n        vizGroup\n        tenant\n      }\n    }\n  }\n'];
+  source: '\n  query VizGroupsByTenant($tenant: String!) {\n    tenant(tenant: $tenant) {\n      vizGroups {\n        vizGroup\n        tenant\n        admin: hasScopes(scopes: ["viz-group:admin"])\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query VizGroupsByTenant($tenant: String!) {\n    tenant(tenant: $tenant) {\n      vizGroups {\n        vizGroup\n        tenant\n        admin: hasScopes(scopes: ["viz-group:admin"])\n      }\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -581,6 +584,12 @@ export function graphql(
 export function graphql(
   source: '\n  query GetPublishedQuery(\n    $tenant: String!\n    $vizGroup: String!\n    $name: String!\n  ) {\n    publishedQuery(\n      tenant: $tenant\n      vizGroup: $vizGroup\n      publishedQuery: $name\n    ) {\n      publishedQuery\n      config {\n        sql\n      }\n    }\n  }\n',
 ): (typeof documents)['\n  query GetPublishedQuery(\n    $tenant: String!\n    $vizGroup: String!\n    $name: String!\n  ) {\n    publishedQuery(\n      tenant: $tenant\n      vizGroup: $vizGroup\n      publishedQuery: $name\n    ) {\n      publishedQuery\n      config {\n        sql\n      }\n    }\n  }\n'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query HasVizGroupScope(\n    $tenant: String!\n    $vizGroup: String!\n    $scope: String!\n  ) {\n    vizGroup(tenant: $tenant, vizGroup: $vizGroup) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n',
+): (typeof documents)['\n  query HasVizGroupScope(\n    $tenant: String!\n    $vizGroup: String!\n    $scope: String!\n  ) {\n    vizGroup(tenant: $tenant, vizGroup: $vizGroup) {\n      hasScopes(scopes: [$scope])\n    }\n  }\n'];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

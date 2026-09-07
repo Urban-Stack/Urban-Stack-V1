@@ -10,7 +10,6 @@ import { CombinedGraphQLErrors } from '@apollo/client/errors';
 import { VizGroupTestIds } from '@/app/settings/dashboardgroups/testIds';
 import { SettingsTestIds } from '@/app/settings/_common/testIds';
 import { ALL_VIZ_GROUPS } from '@/app/_lib/resource-api/graphql/vizGroups';
-import { Scope } from '@/app/_lib/resource-api/permission/scope';
 
 const mockQuery = query as jest.Mock;
 const MockVizGroupsTable = VizGroupsTable as FuncMock<typeof VizGroupsTable>;
@@ -31,17 +30,6 @@ const VIZ_GROUPS: VizGroup[] = [
   { name: 'vizGroup2', tenant: 'tenant1', _tag: 'VizGroup' },
   { name: 'vizGroup3', tenant: 'tenant3', _tag: 'VizGroup' },
 ];
-
-const SCOPE_MAP: Map<string, Map<string, Scope[]>> = new Map([
-  [
-    'tenant1',
-    new Map<string, Scope[]>([
-      ['vizGroup1', ['viz-group:admin']],
-      ['vizGroup2', ['viz-group:admin']],
-    ]),
-  ],
-  ['tenant3', new Map<string, Scope[]>([['vizGroup3', ['viz-group:admin']]])],
-]);
 
 beforeEach(() => {
   mockQuery.mockReset();
@@ -68,7 +56,9 @@ const mockVizGroupsResult = (
       ? {
           data: {
             tenants: vizGroups.map(({ name, tenant }) => ({
-              vizGroups: [{ tenant, vizGroup: name }],
+              vizGroups: [
+                { tenant, vizGroup: name, admin: true, dashboardView: true },
+              ],
             })),
           },
           error,
@@ -81,7 +71,7 @@ it('renders list overview as expected', async () => {
   mockVizGroupsResult(VIZ_GROUPS);
 
   const { container } = render(
-    await VizGroupsList({ scopeMap: SCOPE_MAP, canCreateVizGroup: true }),
+    await VizGroupsList({ canCreateVizGroup: true }),
   );
 
   expect(container).toMatchSnapshot();
@@ -90,10 +80,10 @@ it('renders list overview as expected', async () => {
 it('calls table with correct viz group entries', async () => {
   mockVizGroupsResult(VIZ_GROUPS);
 
-  render(await VizGroupsList({ scopeMap: SCOPE_MAP, canCreateVizGroup: true }));
+  render(await VizGroupsList({ canCreateVizGroup: true }));
 
   expect(MockVizGroupsTable).toHaveBeenCalledWith(
-    { vizGroups: VIZ_GROUPS, scopeMap: SCOPE_MAP },
+    expect.objectContaining({ vizGroups: VIZ_GROUPS }),
     undefined,
   );
 });
@@ -101,9 +91,7 @@ it('calls table with correct viz group entries', async () => {
 it('shows "no viz groups" fallback if no viz groups retrieved', async () => {
   mockVizGroupsResult([]);
 
-  const component = render(
-    await VizGroupsList({ scopeMap: SCOPE_MAP, canCreateVizGroup: true }),
-  );
+  const component = render(await VizGroupsList({ canCreateVizGroup: true }));
 
   const table = component.queryByTestId(VizGroupTestIds.table);
   const fallback = component.getByTestId(SettingsTestIds.fallback);
@@ -119,9 +107,7 @@ it('shows "fetch error" fallback if error occurs when retrieving viz groups', as
     new CombinedGraphQLErrors({ errors: [{ message: '' }] }),
   );
 
-  const component = render(
-    await VizGroupsList({ scopeMap: SCOPE_MAP, canCreateVizGroup: true }),
-  );
+  const component = render(await VizGroupsList({ canCreateVizGroup: true }));
 
   const table = component.queryByTestId(VizGroupTestIds.table);
   const fallback = component.getByTestId(SettingsTestIds.fallback);

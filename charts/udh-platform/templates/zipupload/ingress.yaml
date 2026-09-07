@@ -13,6 +13,7 @@ metadata:
     {{- include "udh.ingress.annotations" (dict "annotations" .Values.zipupload.ingress.annotations "context" .) | nindent 4 }}
     nginx.ingress.kubernetes.io/cors-allow-origin: "https://{{ include "data-hub.govhub.hostname" . }}"
 spec:
+  ingressClassName: nginx
   rules:
     - host: {{ $host | quote }}
       http:

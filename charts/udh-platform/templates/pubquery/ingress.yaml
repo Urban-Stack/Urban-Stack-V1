@@ -11,6 +11,7 @@ metadata:
   annotations:
     {{- include "udh.ingress.annotations" (dict "annotations" .Values.pubquery.ingress.annotations "context" .) | nindent 4 }}
 spec:
+  ingressClassName: nginx
   rules:
     - host: {{ $host | quote }}
       http:

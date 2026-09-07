@@ -109,8 +109,12 @@ export async function createKeycloakUserInKeycloakUI(
 
 	await signInAdminKeycloak(page);
 	await page.goto(`${KEYCLOAK}admin/master/console/`);
-	await page.getByTestId('realmSelector').click();
-	await page.getByRole('menuitem', { name: 'udh' }).click();
+	const currentRealm = await page.getByTestId('currentRealm').textContent();
+	if (currentRealm != 'Urban Gov Hub') {
+		await page.getByRole('link', { name: 'Manage Realms' }).click();
+		await page.getByRole('link', { name: 'udh' }).click();
+		await expect(page.getByTestId('currentRealm')).toHaveText('Urban Gov Hub');
+	}
 	await page.getByRole('link', { name: 'Users' }).click();
 	await page.getByTestId('add-user').click();
 
@@ -125,10 +129,8 @@ export async function createKeycloakUserInKeycloakUI(
 	if (joinTenants.length > 0) {
 		await page.getByTestId('join-groups-button').click();
 		for (const tenant of joinTenants) {
-			await page.getByPlaceholder('Search group').fill(tenant.name);
-			await page.getByRole('button', { name: 'Search' }).click();
 			await page.getByTestId(`${tenant.name}-check`).check({ force: true });
-			await page.getByTestId(tenant.name).getByLabel('Select').click();
+			await page.getByText(tenant.name).click();
 			for (const project of tenant.groups) {
 				await page.getByTestId(`${project}-check`).check();
 			}
@@ -277,9 +279,13 @@ export async function getUserAttributes(userId: string): Promise<Record<string, 
 		Accepts: 'application/json'
 	};
 	const result = await axios.get<Record<string, string>>(
-		`${KEYCLOAK}admin/realms/udh/users/${userId}/unmanagedAttributes`,
+		`${KEYCLOAK}realms/udh/data-hub/_get_user_attributes/${userId}`,
 		{ headers: adminHeader }
 	);
+	delete result.data.email;
+	delete result.data.firstName;
+	delete result.data.lastName;
+	delete result.data.username;
 	return result.data;
 }
 

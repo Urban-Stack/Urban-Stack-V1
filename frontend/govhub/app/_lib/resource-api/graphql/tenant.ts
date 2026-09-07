@@ -1,11 +1,8 @@
 import { graphql } from '@/app/__generated__';
 import { ApolloClient, MaybeMasked } from '@apollo/client';
-import {
-  GetAllTenantAndProjectScopesQuery,
-  GetTenantNameQuery,
-  GetTenantScopesQuery,
-} from '@/app/__generated__/types';
+import { GetTenantNameQuery } from '@/app/__generated__/types';
 import { query } from '@/app/_lib/resource-api/client';
+import { Scope } from '../permission/scope';
 
 export const fetchTenantDisplayName: (
   tenant: string,
@@ -38,74 +35,27 @@ const fetchAttribute: (
     },
   });
 
-const ALL_TENANT_AND_PROJECT_SCOPES = graphql(`
-  query GetAllTenantAndProjectScopes {
-    tenants {
-      tenant
-      scopes {
-        all
-        granted
-      }
-      projects {
-        project
-        scopes {
-          all
-          granted
-        }
-      }
-      groups {
-        group
-        scopes {
-          all
-          granted
-        }
-      }
-      vizGroups {
-        vizGroup
-        scopes {
-          all
-          granted
-        }
-      }
-    }
-  }
-`);
-
-const TENANT_SCOPES = graphql(`
-  query GetTenantScopes($tenant: String!) {
+const HAS_TENANT_SCOPE = graphql(`
+  query HasTenantScopes($tenant: String!, $scope: String!) {
     tenant(tenant: $tenant) {
-      scopes {
-        all
-        granted
-      }
+      hasScopes(scopes: [$scope])
     }
   }
 `);
 
-export type AllTenantAndProjectScopes = ApolloClient.QueryResult<
-  MaybeMasked<GetAllTenantAndProjectScopesQuery>
->;
-
-export const GetAllTenantAndProjectScopes: () => Promise<AllTenantAndProjectScopes> =
-  async () =>
-    query({
-      query: ALL_TENANT_AND_PROJECT_SCOPES,
-    });
-
-export type TenantScopes = ApolloClient.QueryResult<
-  MaybeMasked<GetTenantScopesQuery>
->;
-
-export const queryTenantScopes: (tenant: string) => Promise<TenantScopes> = (
-  tenant,
-) =>
-  query({
-    query: TENANT_SCOPES,
-    variables: { tenant },
-  });
+export const queryHasTenantScope: (
+  tenant: string,
+  scope: Scope,
+) => Promise<boolean> = async (tenant, scope) =>
+  (
+    await query({
+      query: HAS_TENANT_SCOPE,
+      variables: { tenant, scope },
+    })
+  ).data?.tenant?.hasScopes ?? false;
 
 export const internal = {
   SINGLE_ATTRIBUTE,
-  TENANT_SCOPES,
+  HAS_TENANT_SCOPE,
   fetchAttribute,
 };

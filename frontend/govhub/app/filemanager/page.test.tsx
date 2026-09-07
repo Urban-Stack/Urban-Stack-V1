@@ -1,11 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import FileManagerPage from './page';
-import { toProjects } from '@/app/_lib/resource-api/project';
 import { fetchAllProjects } from '@/app/_lib/resource-api/graphql/project';
-import {
-  AllTenantAndProjectScopes,
-  GetAllTenantAndProjectScopes,
-} from '@/app/_lib/resource-api/graphql/tenant';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
 import { FuncMock } from '@/app/_test/utils';
 import { requireTenant } from '@/app/_lib/resource-api/legacy';
 
@@ -17,27 +13,24 @@ jest.mock('@/app/filemanager/_internal/BucketContent', () => () => (
   <div data-testid='mock-bucket-content' />
 ));
 
-jest.mock('@/app/_lib/resource-api/project', () => ({
-  toProjects: jest.fn(),
-}));
-
 jest.mock('@/app/_lib/resource-api/graphql/project', () => ({
   fetchAllProjects: jest.fn(),
 }));
 
 jest.mock('@/app/_lib/resource-api/graphql/tenant', () => ({
-  GetAllTenantAndProjectScopes: jest.fn(),
+  queryHasTenantScope: jest.fn(),
 }));
 
-const queryScopesMock: FuncMock<typeof GetAllTenantAndProjectScopes> =
-  GetAllTenantAndProjectScopes as unknown as jest.Mock;
+const queryHasTenantScopeMock: FuncMock<typeof queryHasTenantScope> =
+  queryHasTenantScope as unknown as jest.Mock;
+const fetchAllProjectsMock: FuncMock<typeof fetchAllProjects> =
+  fetchAllProjects as unknown as jest.Mock;
 
 jest.mock('@/app/_lib/resource-api/legacy', () => ({
   requireTenant: jest.fn(),
 }));
-const requireTenantMock = requireTenant as unknown as FuncMock<
-  typeof requireTenant
->;
+const requireTenantMock: FuncMock<typeof requireTenant> =
+  requireTenant as unknown as FuncMock<typeof requireTenant>;
 
 beforeAll(() => {
   requireTenantMock.mockResolvedValue('test-tenant');
@@ -45,13 +38,12 @@ beforeAll(() => {
 
 describe('S3ManagerPage', () => {
   it('shows Fallback if no projects exist', async () => {
-    (fetchAllProjects as jest.Mock).mockResolvedValueOnce([]);
-    (toProjects as jest.Mock).mockReturnValueOnce([]);
-    queryScopesMock.mockResolvedValueOnce({
+    fetchAllProjectsMock.mockResolvedValueOnce({
       data: {
         tenants: [],
       },
-    } as unknown as AllTenantAndProjectScopes);
+    });
+    queryHasTenantScopeMock.mockResolvedValue(false);
 
     render(await FileManagerPage({ searchParams: Promise.resolve({}) }));
     expect(
@@ -64,13 +56,23 @@ describe('S3ManagerPage', () => {
   });
 
   it('shows bucket selector but no object list if no bucket in search params', async () => {
-    queryScopesMock.mockResolvedValueOnce({
+    queryHasTenantScopeMock.mockResolvedValue(false);
+    fetchAllProjectsMock.mockResolvedValueOnce({
       data: {
-        tenants: [],
+        tenants: [
+          {
+            tenant: 'some-tenant',
+            projects: [
+              {
+                project: 'some-project',
+                admin: true,
+                tenant: 'some-tenant',
+              },
+            ],
+          },
+        ],
       },
-    } as unknown as AllTenantAndProjectScopes);
-    (fetchAllProjects as jest.Mock).mockResolvedValueOnce(['some raw data']);
-    (toProjects as jest.Mock).mockReturnValueOnce([{ id: 1 }]);
+    });
 
     render(await FileManagerPage({ searchParams: Promise.resolve({}) }));
     expect(screen.getByTestId('mock-bucket-selector')).toBeInTheDocument();
@@ -81,13 +83,23 @@ describe('S3ManagerPage', () => {
   });
 
   it('shows bucket content if bucket in search params', async () => {
-    (fetchAllProjects as jest.Mock).mockResolvedValueOnce(['some raw data']);
-    (toProjects as jest.Mock).mockReturnValueOnce([{ id: 1 }]);
-    queryScopesMock.mockResolvedValueOnce({
+    fetchAllProjectsMock.mockResolvedValueOnce({
       data: {
-        tenants: [],
+        tenants: [
+          {
+            tenant: 'some-tenant',
+            projects: [
+              {
+                project: 'some-project',
+                admin: true,
+                tenant: 'some-tenant',
+              },
+            ],
+          },
+        ],
       },
-    } as unknown as AllTenantAndProjectScopes);
+    });
+    queryHasTenantScopeMock.mockResolvedValue(false);
 
     render(
       await FileManagerPage({

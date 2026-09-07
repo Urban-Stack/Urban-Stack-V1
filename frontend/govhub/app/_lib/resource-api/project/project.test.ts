@@ -23,19 +23,22 @@ describe('toProject', () => {
       data: {
         tenants: [
           {
+            tenant: 't0',
             projects: [],
           },
           {
+            tenant: 't1',
             projects: [
-              { tenant: 't1', project: 'p1' },
-              { tenant: 't1', project: 'p2' },
-              { tenant: 't1', project: 'p3' },
+              { tenant: 't1', project: 'p1', admin: true },
+              { tenant: 't1', project: 'p2', admin: false },
+              { tenant: 't1', project: 'p3', admin: false },
             ],
           },
           {
+            tenant: 't2',
             projects: [
-              { tenant: 't2', project: 'p4' },
-              { tenant: 't2', project: 'p5' },
+              { tenant: 't2', project: 'p4', admin: false },
+              { tenant: 't2', project: 'p5', admin: true },
             ],
           },
         ],
@@ -50,8 +53,28 @@ describe('toProject', () => {
       { name: 'p5', tenant: 't2', _tag: 'Project' },
     ];
 
-    const projects = toProjects(result);
+    const expectedAdminMap = new Map([
+      ['t0', new Map()],
+      [
+        't1',
+        new Map([
+          ['p1', true],
+          ['p2', false],
+          ['p3', false],
+        ]),
+      ],
+      [
+        't2',
+        new Map([
+          ['p4', false],
+          ['p5', true],
+        ]),
+      ],
+    ]);
+
+    const { projects, adminMap } = toProjects(result);
 
     expect(projects).toEqual(expected);
+    expect(adminMap).toEqual(expectedAdminMap);
   });
 });

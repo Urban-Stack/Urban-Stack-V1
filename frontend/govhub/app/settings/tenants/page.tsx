@@ -5,8 +5,7 @@ import React from 'react';
 import TenantSettingsContent from '@/app/settings/tenants/TenantSettingsContent';
 import { requireTenant } from '@/app/_lib/resource-api/legacy';
 import { queryTenantSettings } from '@/app/_lib/resource-api/graphql/attributes';
-import { GetAllTenantAndProjectScopes } from '@/app/_lib/resource-api/graphql/tenant';
-import { isTenantAdmin } from '@/app/_lib/resource-api/permission/scope';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
 import { notFound } from 'next/navigation';
 
 export const generateMetadata = mkMetadata({
@@ -16,16 +15,16 @@ export const generateMetadata = mkMetadata({
 const TenantSettingsPage = async () => {
   const tenant = await requireTenant();
   const tenantSettings = await queryTenantSettings(tenant);
-  const scopes = await GetAllTenantAndProjectScopes();
+  const isTenantAdmin = await queryHasTenantScope(tenant, 'tenant:admin');
 
-  if (!isTenantAdmin(scopes, tenant)) {
+  if (!isTenantAdmin) {
     notFound();
   }
 
   return (
     <TenantSettingsContent
       tenantSettings={tenantSettings}
-      disabled={!isTenantAdmin(scopes, tenant)}
+      disabled={!isTenantAdmin}
     />
   );
 };

@@ -1,4 +1,8 @@
-import { fetchTenantDisplayName, internal, queryTenantScopes } from './tenant';
+import {
+  fetchTenantDisplayName,
+  internal,
+  queryHasTenantScope,
+} from './tenant';
 import { mutate, query } from '@/app/_lib/resource-api/client';
 
 jest.mock('@/app/_lib/resource-api/client', () => ({
@@ -52,14 +56,19 @@ describe('fetchAttribute', () => {
   });
 });
 
-describe('queryTenantScopes', () => {
+describe('queryHasTenantScope', () => {
   it('should call the client with the correct query', async () => {
-    await queryTenantScopes('guetersloh');
+    mockQuery.mockResolvedValue({
+      data: { tenant: { hasScopes: false } },
+    });
+
+    await queryHasTenantScope('guetersloh', 'tenant:admin');
 
     expect(mockQuery).toHaveBeenCalledWith({
-      query: internal.TENANT_SCOPES,
+      query: internal.HAS_TENANT_SCOPE,
       variables: {
         tenant: 'guetersloh',
+        scope: 'tenant:admin',
       },
     });
   });

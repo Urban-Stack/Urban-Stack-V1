@@ -13,7 +13,9 @@ import { quotedPrintableToString, searchByEmailAndSubject } from './helper/mail'
 
 test('sets and updates last login time', async ({ browser }) => {
 	const user = await createRandomTestUser([]);
-	await expect(getUserAttributes(user.id)).resolves.toEqual({});
+	await expect(getUserAttributes(user.id)).resolves.toEqual({
+		showName: ['true']
+	});
 	const page1 = await browser.newPage();
 	await page1.goto(UGH);
 	await signInWith(page1, user.username, DATA_HUB_ADMIN_PASSWORD);

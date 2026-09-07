@@ -10,7 +10,7 @@ global:
   babashka:
     image:
       registry: "docker.io"
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
       repository: "babashka/babashka"
       tag: 1.12.218
       digest: ""
@@ -39,7 +39,7 @@ keycloak:
   extensions:
     image:
       registry: "tickets.teuto.net:5050"
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
       repository: "4teuto/cust/9314/udh-platform/udp/keycloak-extensions"
       tag: ""
       digest: ""
@@ -185,7 +185,7 @@ discourse:
   image:
     registry: "tickets.teuto.net:5050"
     repository: 4teuto/cust/9314/udh-platform/udp/discourse
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   auth:
     email: admin@example.com
     username: admin
@@ -237,7 +237,7 @@ jupyterhub:
   hub:
     image:
       registry: "tickets.teuto.net:5050"
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
       repository: "4teuto/cust/9314/udh-platform/udp/jupyterhub"
       tag: ""
       digest: ""
@@ -256,7 +256,7 @@ jupyterhub:
   notebook:
     image:
       registry: "tickets.teuto.net:5050"
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
       repository: "4teuto/cust/9314/udh-platform/udp/jupyterhub-notebook"
       tag: ""
       digest: ""
@@ -322,7 +322,7 @@ superset:
   image:
     registry: "tickets.teuto.net:5050"
     repository: 4teuto/cust/9314/udh-platform/udp/superset
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   ingress:
     annotations: {}
   supersetNode:
@@ -430,7 +430,8 @@ citytools:
   enabled: true
   replicas: 1
   ingress:
-    annotations: {}
+    annotations:
+      nginx.ingress.kubernetes.io/server-snippet: ""
   image:
     registry: "tickets.teuto.net:5050"
     repository: 4teuto/cust/9314/udh-platform/udp/citytools

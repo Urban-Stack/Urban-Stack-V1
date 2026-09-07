@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "2.3.21"
     kotlin("plugin.serialization") version "2.3.21"
 }
-val keycloakVersion = "26.1.5"
+val keycloakVersion = "26.7.2"
 
 repositories {
     mavenCentral()
@@ -28,8 +28,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:5.3.2")
     implementation("io.gsonfire:gson-fire:1.9.0")
 
-    implementation("com.expediagroup:graphql-kotlin-schema-generator:8.9.0")
-    implementation("com.expediagroup:graphql-kotlin-server:8.9.0")
+    implementation("com.expediagroup:graphql-kotlin-schema-generator:10.2.2")
+    implementation("com.expediagroup:graphql-kotlin-server:10.2.2")
     implementation("com.graphql-java:graphql-java-extended-scalars:24.0")
 
     implementation("com.clickhouse:clickhouse-jdbc:0.9.4:all")

@@ -2,7 +2,6 @@ import { VizGroup } from '@/app/_lib/resource-api/viz-groups/vizGroups';
 import { render } from '@testing-library/react';
 import VizGroupsTable from '@/app/settings/dashboardgroups/VizGroupsTable';
 import { VizGroupTestIds } from '@/app/settings/dashboardgroups/testIds';
-import { Scope } from '@/app/_lib/resource-api/permission/scope';
 import { redirect, useSearchParams } from 'next/navigation';
 import userEvent from '@testing-library/user-event';
 
@@ -13,41 +12,41 @@ const VIZ_GROUPS: VizGroup[] = [
   { name: 'vizGroup3', tenant: 'tenant3', _tag: 'VizGroup' },
 ];
 
-const ADMIN_SCOPE_MAP: Map<string, Map<string, Scope[]>> = new Map([
+const ADMIN_MAP: Map<string, Map<string, boolean>> = new Map([
   [
     'tenant1',
-    new Map<string, Scope[]>([
-      ['vizGroup1', ['viz-group:admin']],
-      ['vizGroup2', ['viz-group:admin']],
+    new Map<string, boolean>([
+      ['vizGroup1', true],
+      ['vizGroup2', true],
     ]),
   ],
-  ['tenant3', new Map<string, Scope[]>([['vizGroup3', ['viz-group:admin']]])],
+  ['tenant3', new Map<string, boolean>([['vizGroup3', true]])],
 ]);
 
-const READ_SCOPE_MAP: Map<string, Map<string, Scope[]>> = new Map([
+const READ_MAP: Map<string, Map<string, boolean>> = new Map([
   [
     'tenant1',
-    new Map<string, Scope[]>([
-      ['vizGroup1', ['viz-group:read']],
-      ['vizGroup2', ['viz-group:read']],
+    new Map<string, boolean>([
+      ['vizGroup1', false],
+      ['vizGroup2', false],
     ]),
   ],
-  ['tenant3', new Map<string, Scope[]>([['vizGroup3', ['viz-group:read']]])],
+  ['tenant3', new Map<string, boolean>([['vizGroup3', false]])],
 ]);
 
-const MIXED_SCOPE_MAP: Map<string, Map<string, Scope[]>> = new Map([
+const MIXED_MAP: Map<string, Map<string, boolean>> = new Map([
   [
     'tenant1',
-    new Map<string, Scope[]>([
-      ['vizGroup1', ['viz-group:admin']],
-      ['vizGroup2', ['viz-group:read']],
+    new Map<string, boolean>([
+      ['vizGroup1', true],
+      ['vizGroup2', false],
     ]),
   ],
   [
     'tenant3',
-    new Map<string, Scope[]>([
-      ['vizGroup1', ['viz-group:read']],
-      ['vizGroup3', ['viz-group:read']],
+    new Map<string, boolean>([
+      ['vizGroup1', false],
+      ['vizGroup3', false],
     ]),
   ],
 ]);
@@ -66,7 +65,7 @@ beforeEach(() => {
 
 it('renders list overview as expected', async () => {
   const { container } = render(
-    <VizGroupsTable vizGroups={VIZ_GROUPS} scopeMap={ADMIN_SCOPE_MAP} />,
+    <VizGroupsTable vizGroups={VIZ_GROUPS} adminMap={ADMIN_MAP} />,
   );
 
   expect(container).toMatchSnapshot();
@@ -74,7 +73,7 @@ it('renders list overview as expected', async () => {
 
 it('contains exactly as many entries as vizGroups given', async () => {
   const component = render(
-    <VizGroupsTable vizGroups={VIZ_GROUPS} scopeMap={ADMIN_SCOPE_MAP} />,
+    <VizGroupsTable vizGroups={VIZ_GROUPS} adminMap={ADMIN_MAP} />,
   );
 
   const items = component.queryAllByTestId(VizGroupTestIds.tableItem);
@@ -88,7 +87,7 @@ describe('disabling works as expected', () => {
 
   it('fires redirect when clicking on a table row and not disabled', async () => {
     const component = render(
-      <VizGroupsTable vizGroups={VIZ_GROUPS} scopeMap={ADMIN_SCOPE_MAP} />,
+      <VizGroupsTable vizGroups={VIZ_GROUPS} adminMap={ADMIN_MAP} />,
     );
 
     const user = userEvent.setup();
@@ -102,7 +101,7 @@ describe('disabling works as expected', () => {
 
   it('fires redirect when pressing enter on a table row and not disabled', async () => {
     const component = render(
-      <VizGroupsTable vizGroups={VIZ_GROUPS} scopeMap={ADMIN_SCOPE_MAP} />,
+      <VizGroupsTable vizGroups={VIZ_GROUPS} adminMap={ADMIN_MAP} />,
     );
 
     const user = userEvent.setup();
@@ -116,7 +115,7 @@ describe('disabling works as expected', () => {
 
   it('does not fire redirect when clicking on a table row and disabled', async () => {
     const component = render(
-      <VizGroupsTable vizGroups={VIZ_GROUPS} scopeMap={READ_SCOPE_MAP} />,
+      <VizGroupsTable vizGroups={VIZ_GROUPS} adminMap={READ_MAP} />,
     );
 
     const user = userEvent.setup();
@@ -130,7 +129,7 @@ describe('disabling works as expected', () => {
 
   it('does fire/not fire for the same vizGroup, but different tenant', async () => {
     const component = render(
-      <VizGroupsTable vizGroups={VIZ_GROUPS} scopeMap={MIXED_SCOPE_MAP} />,
+      <VizGroupsTable vizGroups={VIZ_GROUPS} adminMap={MIXED_MAP} />,
     );
 
     const user = userEvent.setup();
@@ -156,7 +155,7 @@ describe('viz-group search', () => {
   it('Filters viz-groups by names matching the search parameter', () => {
     useSearchParamsMock.mockReturnValue(new URLSearchParams('?search=Group1'));
     const component = render(
-      <VizGroupsTable vizGroups={VIZ_GROUPS} scopeMap={MIXED_SCOPE_MAP} />,
+      <VizGroupsTable vizGroups={VIZ_GROUPS} adminMap={MIXED_MAP} />,
     );
 
     const items = component.queryAllByTestId(VizGroupTestIds.tableItem);
@@ -168,7 +167,7 @@ describe('viz-group search', () => {
   it('Filters viz-groups by tenant matching the search parameter', () => {
     useSearchParamsMock.mockReturnValue(new URLSearchParams('?search=tenant3'));
     const component = render(
-      <VizGroupsTable vizGroups={VIZ_GROUPS} scopeMap={MIXED_SCOPE_MAP} />,
+      <VizGroupsTable vizGroups={VIZ_GROUPS} adminMap={MIXED_MAP} />,
     );
 
     const items = component.queryAllByTestId(VizGroupTestIds.tableItem);
@@ -182,7 +181,7 @@ describe('viz-group search', () => {
       new URLSearchParams('?search=qweqfibuds'),
     );
     const component = render(
-      <VizGroupsTable vizGroups={VIZ_GROUPS} scopeMap={MIXED_SCOPE_MAP} />,
+      <VizGroupsTable vizGroups={VIZ_GROUPS} adminMap={MIXED_MAP} />,
     );
 
     const items = component.queryAllByTestId(VizGroupTestIds.tableItem);

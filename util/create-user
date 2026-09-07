@@ -27,7 +27,7 @@ kcadm () {
   inkc bash -c 'kcadm.sh "$@" -r udh --server http://localhost:8080 --user admin --realm master --password $KC_BOOTSTRAP_ADMIN_PASSWORD' - "$@"
 }
 
-KC_URL=$(inkc sh -c 'echo $KEYCLOAK_HOSTNAME')
+KC_URL=$(inkc sh -c 'echo $KC_HOSTNAME')
 
 echo "$firstname $lastname $email $KC_URL"
 echo "Press ENTER to confirm, Ctrl+C to cancel"

@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.type.LogicalType
 import graphql.ExceptionWhileDataFetching
 import graphql.ExecutionInput
 import graphql.GraphQL
-import graphql.Scalars
 import graphql.analysis.MaxQueryComplexityInstrumentation
 import graphql.analysis.MaxQueryDepthInstrumentation
 import graphql.execution.DataFetcherExceptionHandlerResult
@@ -30,15 +29,16 @@ import jakarta.ws.rs.core.UriInfo
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
 import net.teuto.udh.schema.RootMutation
 import net.teuto.udh.schema.RootQuery
 import org.jboss.logging.Logger
 import org.keycloak.authorization.AuthorizationProvider
 import org.keycloak.authorization.attribute.Attributes
 import org.keycloak.authorization.common.DefaultEvaluationContext
-import org.keycloak.authorization.common.UserModelIdentity
+import org.keycloak.authorization.fgap.AdminPermissionsSchema
+import org.keycloak.authorization.fgap.evaluation.partial.PartialEvaluationPolicyProvider
 import org.keycloak.authorization.identity.Identity
+import org.keycloak.authorization.identity.UserModelIdentity
 import org.keycloak.authorization.model.Policy
 import org.keycloak.authorization.model.Resource
 import org.keycloak.authorization.model.ResourceServer
@@ -61,18 +61,19 @@ import org.keycloak.representations.idm.ProtocolMapperRepresentation
 import org.keycloak.representations.idm.authorization.*
 import org.keycloak.services.managers.AppAuthManager
 import org.keycloak.services.managers.ClientManager
+import org.keycloak.services.managers.RealmManager
 import org.keycloak.services.resource.RealmResourceProvider
-import org.keycloak.services.resources.admin.permissions.AdminPermissionManagement
-import org.keycloak.services.resources.admin.permissions.AdminPermissions
+import org.keycloak.services.resources.admin.fgap.AdminPermissionManagement
+import org.keycloak.services.resources.admin.fgap.AdminPermissions
 import java.net.http.HttpResponse
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-import java.util.Locale
 import java.util.concurrent.CompletableFuture
 import java.util.function.BiFunction
+import java.util.stream.Stream
 import java.util.stream.Collectors
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
@@ -133,8 +134,12 @@ fun getAuthzContext(
     )
 }
 
-fun invokePrivate(obj: Any, methodName: String, args: Array<Any> = arrayOf()): Any? {
-    val fn = obj.javaClass.declaredMethods.first { it.name == methodName }
+fun invokePrivate(
+    obj: Any,
+    methodName: String,
+    args: Array<Any> = arrayOf(),
+): Any? {
+    val fn = obj.javaClass.methods.first { it.name == methodName }
     fn.isAccessible = true
     return fn.invoke(obj, *args)
 }
@@ -157,17 +162,84 @@ fun ensureRealmMgmtPermission(ctx: AuthzContext, mgmtPermissions: AdminPermissio
     val dataHubPolicy = ScopePermissionRepresentation()
     dataHubPolicy.name = "user-management"
     dataHubPolicy.description = "Allow user management based on data-hub permissions"
-    dataHubPolicy.resourceType = "Group"
-    dataHubPolicy.scopes = listOf(
-        invokePrivate(mgmtPermissions, "realmViewScope") as Scope,
-        invokePrivate(mgmtPermissions, "initializeRealmScope", arrayOf("manage-members")) as Scope,
-        invokePrivate(mgmtPermissions, "initializeRealmScope", arrayOf("manage-membership")) as Scope,
-    ).map { it.id }.toSet()
-    dataHubPolicy.policies = setOf(dataHubPolicy(ctx))
+    dataHubPolicy.resourceType = AdminPermissionsSchema.GROUPS_RESOURCE_TYPE
+    val adminResourceServer = ctx.storeFactory.resourceServerStore.findByClient(mgmtPermissions.realmPermissionsClient)
+    dataHubPolicy.scopes =
+        listOf(
+            AdminPermissionsSchema.SCHEMA.getScope(
+                ctx.session,
+                adminResourceServer,
+                AdminPermissionsSchema.GROUPS_RESOURCE_TYPE,
+                AdminPermissionsSchema.MANAGE_MEMBERS,
+            ),
+            AdminPermissionsSchema.SCHEMA.getScope(
+                ctx.session,
+                adminResourceServer,
+                AdminPermissionsSchema.GROUPS_RESOURCE_TYPE,
+                AdminPermissionsSchema.MANAGE_MEMBERSHIP,
+            ),
+            AdminPermissionsSchema.SCHEMA.getScope(
+                ctx.session,
+                adminResourceServer,
+                AdminPermissionsSchema.GROUPS_RESOURCE_TYPE,
+                AdminPermissionsSchema.MANAGE_MEMBERSHIP_OF_MEMBERS,
+            ),
+            AdminPermissionsSchema.SCHEMA.getScope(
+                ctx.session,
+                adminResourceServer,
+                AdminPermissionsSchema.GROUPS_RESOURCE_TYPE,
+                AdminPermissionsSchema.VIEW,
+            ),
+            AdminPermissionsSchema.SCHEMA.getScope(
+                ctx.session,
+                adminResourceServer,
+                AdminPermissionsSchema.GROUPS_RESOURCE_TYPE,
+                AdminPermissionsSchema.VIEW_MEMBERS,
+            ),
+        ).map { it.id }.toSet()
+    val dataHubGroupPolicy = PolicyRepresentation()
+    dataHubGroupPolicy.type = "data-hub-group"
+    dataHubGroupPolicy.name = "data-hub-group"
+    dataHubGroupPolicy.description = "data-hub specific group authorization"
+    dataHubGroupPolicy.resources = emptySet()
+    val polId = ensurePolicy(dataHubGroupPolicy, ctx.storeFactory.policyStore, adminResourceServer)
+    dataHubPolicy.policies = setOf(polId)
     return ensurePolicy(
         dataHubPolicy,
         ctx.policyStore,
-        ctx.storeFactory.resourceServerStore.findByClient(mgmtPermissions.realmManagementClient)
+        adminResourceServer,
+    )
+}
+
+fun ensureRealmUserMgmtPermission(
+    ctx: AuthzContext,
+    mgmtPermissions: AdminPermissionManagement,
+): String {
+    val dataHubPolicy = ScopePermissionRepresentation()
+    dataHubPolicy.name = "actual-user-management"
+    dataHubPolicy.description = "Allow actual user management based on data-hub permissions"
+    dataHubPolicy.resourceType = AdminPermissionsSchema.USERS_RESOURCE_TYPE
+    val adminResourceServer = ctx.storeFactory.resourceServerStore.findByClient(mgmtPermissions.realmPermissionsClient)
+    dataHubPolicy.scopes =
+        listOf(
+            AdminPermissionsSchema.SCHEMA.getScope(
+                ctx.session,
+                adminResourceServer,
+                AdminPermissionsSchema.USERS_RESOURCE_TYPE,
+                AdminPermissionsSchema.MANAGE_GROUP_MEMBERSHIP,
+            ),
+        ).map { it.id }.toSet()
+    val dataHubGroupPolicy = PolicyRepresentation()
+    dataHubGroupPolicy.type = "data-hub-group"
+    dataHubGroupPolicy.name = "data-hub-group"
+    dataHubGroupPolicy.description = "data-hub specific group authorization"
+    dataHubGroupPolicy.resources = emptySet()
+    val polId = ensurePolicy(dataHubGroupPolicy, ctx.storeFactory.policyStore, adminResourceServer)
+    dataHubPolicy.policies = setOf(polId)
+    return ensurePolicy(
+        dataHubPolicy,
+        ctx.policyStore,
+        adminResourceServer,
     )
 }
 
@@ -176,6 +248,7 @@ fun ensureGlobalPermissions(ctx: AuthzContext) {
     invokePrivate(mgmtPermissions, "initializeRealmResourceServer")
     invokePrivate(mgmtPermissions, "initializeRealmDefaultScopes")
     ensureRealmMgmtPermission(ctx, mgmtPermissions)
+    ensureRealmUserMgmtPermission(ctx, mgmtPermissions)
     ctx.resourceServer.decisionStrategy = DecisionStrategy.AFFIRMATIVE
     listOf("Default Permission", "Default Policy").forEach { policy ->
         ctx.policyStore.findByName(ctx.resourceServer, policy)?.let { ctx.policyStore.delete(it.id) }
@@ -661,17 +734,25 @@ fun ensureTenantPolicy(tenant: UdhTenant, ctx: AuthzContext): String {
     return ensureKcGroupPolicy(tenantGroupId(tenant.tenant), tenant.tenant, ctx)
 }
 
-fun ensureUserPolicy(userId: String, ctx: AuthzContext): String {
-    val userPermissions = AdminPermissions.evaluator(
-        ctx.session,
-        ctx.realm,
-        ctx.realm,
-        ctx.userModel!!
-    ).users()
+fun ensureUserPolicy(
+    userId: String,
+    ctx: AuthzContext,
+): String {
     val userPrincipal =
         ctx.session.users().getUserById(ctx.realm, userId) ?: throw NotFoundException()
-    if (!userPermissions.canView(userPrincipal)) {
-        throw NotFoundException()
+
+    // TODO: use userPermissions.canView(userPrincipal) when keycloak fixes it
+    // val permissionEvaluator = AdminPermissions.evaluator(ctx.session, ctx.realm, ctx.realm, ctx.userModel)
+
+    val realmMgmtClient = ctx.realm.getClientByClientId(Constants.REALM_MANAGEMENT_CLIENT_ID)
+
+    // check if the calling user can view all users
+    if (!ctx.userModel!!.hasRole(realmMgmtClient.getRole(AdminRoles.MANAGE_USERS))) {
+        // if not, check if the calling user can view *this* user principal
+        val manageGroupIds = DatahubGroupPolicyProvider.getManageKcGroupIdsForUser(ctx)
+        if (!userPrincipal.groupsStream.anyMatch { manageGroupIds.contains(it.id) }) {
+            throw NotFoundException()
+        }
     }
     val policy = UserPolicyRepresentation()
     policy.name = "user-${userId}"
@@ -998,7 +1079,11 @@ class ResourcePath(val path: List<Pair<String, String>> = listOf()) {
         return if (path.isEmpty()) {
             rootResource(ctx).kcResource
         } else {
-            ctx.resourceStore.findByName(ctx.resourceServer, toHash())
+            val res = ctx.resourceStore.findByName(ctx.resourceServer, toHash())
+            if (res == null) {
+                LOGGER.warn("getResource is null for ${pathRepresentation()}")
+            }
+            res
         }
     }
 
@@ -1025,15 +1110,22 @@ fun hasPermissionScopes(
     context: AuthzContext,
     evaluationContext: EvaluationContext
 ): Boolean {
-    val resolvedScopes = scopes.map {
-        val fullScopeName = if (it.contains(":")) {
+    val resolvedScopeNames = scopes.map {
+        if (it.contains(":")) {
             it
         } else {
             "${resource.type}:${it}"
         }
-        createScope(fullScopeName, context)
+
     }
-    return hasPermissions(resource, resolvedScopes, context, evaluationContext)
+    val identityWithCache = evaluationContext.identity as? EvaluationCacheUserModelIdentity
+    identityWithCache?.getCachedResult(resource, resolvedScopeNames)?.let {
+        return it
+    }
+    val resolvedScopes = resolvedScopeNames.map { createScope(it, context) }
+    val result = hasPermissions(resource, resolvedScopes, context, evaluationContext)
+    identityWithCache?.recordEvaluation(resource, resolvedScopeNames, result)
+    return result
 }
 
 fun hasPermissions(
@@ -1042,13 +1134,19 @@ fun hasPermissions(
     context: AuthzContext,
     evaluationContext: EvaluationContext
 ): Boolean {
+    val identityWithCache = evaluationContext.identity as? EvaluationCacheUserModelIdentity
+    identityWithCache?.getCachedResult(resource, scopes.map { it.name })?.let {
+        return it
+    }
     val resourcePermission = ResourcePermission(resource, scopes, context.resourceServer)
     val grantedScopes = context.authProvider.evaluators()
         .from(listOf(resourcePermission), evaluationContext)
         .evaluate(context.resourceServer, null)
         .firstOrNull()
         ?.scopes ?: return false
-    return grantedScopes.size == scopes.size
+    val result = grantedScopes.size == scopes.size
+    identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, result)
+    return result
 }
 
 fun findAllMatchingResources(
@@ -1082,17 +1180,245 @@ class DatahubResourcePolicyProvider(private val representationFunction: BiFuncti
     override fun close() {}
 }
 
+// this intentionally only implements a handful of functions, just enough to work in keycloak when returned from getPermissions
+class DynamicGroupPolicy(
+    val resNames: Set<String>,
+) : Policy {
+    override fun getId(): String? = null
+
+    override fun getType(): String = "data-hub-dynamic"
+
+    override fun getDecisionStrategy(): DecisionStrategy = DecisionStrategy.AFFIRMATIVE
+
+    override fun setDecisionStrategy(decisionStrategy: DecisionStrategy?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getLogic(): Logic = Logic.POSITIVE
+
+    override fun setLogic(logic: Logic?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getConfig(): Map<String, String> = emptyMap()
+
+    override fun setConfig(config: Map<String?, String?>?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeConfig(name: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun putConfig(
+        name: String?,
+        value: String?,
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getName(): String = "data hub custom name"
+
+    override fun setName(name: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getDescription(): String? = "data hub custom description"
+
+    override fun setDescription(description: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getResourceServer(): ResourceServer? = null
+
+    override fun getAssociatedPolicies(): Set<Policy> {
+        return setOf(this)
+    }
+
+    override fun getResources(): Set<Resource> {
+        TODO("Not yet implemented")
+    }
+
+    // this is the important function for partial evaluation, all of these ids are used to grant access
+    override fun getResourceNames(): Set<String> = resNames
+
+    override fun getScopes(): Set<Scope?>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun getOwner(): String? = null
+
+    override fun setOwner(owner: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun addScope(scope: Scope?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeScope(scope: Scope?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun addAssociatedPolicy(associatedPolicy: Policy?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeAssociatedPolicy(associatedPolicy: Policy?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun addResource(resource: Resource?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeResource(resource: Resource?) {
+        TODO("Not yet implemented")
+    }
+}
+
+class DatahubGroupPolicyProvider(
+    val keycloakSession: KeycloakSession,
+) : PolicyProvider,
+    PartialEvaluationPolicyProvider {
+    override fun evaluate(evaluation: Evaluation) {
+        val context = getAuthzContext(evaluation.authorizationProvider.keycloakSession, evaluation.context, null)
+        val client = context.realm.getClientById(evaluation.permission.resource.resourceServer.clientId)
+        val resourceClientId = client.clientId
+        val resource = evaluation.permission.resource
+        val scopes = evaluation.permission.scopes
+        val identityWithCache = evaluation.context.identity as? EvaluationCacheUserModelIdentity
+        identityWithCache?.getCachedResult(resource, scopes.map { it.name })?.let {
+            if (it) {
+                evaluation.grant()
+            } else {
+                evaluation.deny()
+            }
+            return
+        }
+//        LOGGER.info(
+//            "evaluation group $resourceClientId ${evaluation.permission.scopes.map {
+//                it.name
+//            }} ${resource.name} ${evaluation.permission.resourceType} ${resource.javaClass.canonicalName} ${resource.displayName} ${resource.owner}",
+//        )
+        if (resourceClientId.equals(Constants.ADMIN_PERMISSIONS_CLIENT_ID)) {
+            if (evaluation.permission.resourceType == "Groups") {
+                // used to handle access to keycloak groups, so user can manage themselves
+                val groupId = resource.name
+                val group = context.realm.getGroupById(groupId)
+                if (group == null) {
+                    identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = false)
+                    evaluation.deny()
+                    return
+                }
+                val groupName = group.name
+                val parentGroupName = group.parent?.name
+                if (parentGroupName != null) {
+                    val groupRes =
+                        ResourcePath(listOf(Pair("tenant", parentGroupName), Pair("group", groupName))).getResource(
+                            context,
+                        )
+                    if (groupRes != null &&
+                        hasPermissionScopes(
+                            groupRes,
+                            listOf(ADMIN_SCOPE),
+                            context,
+                            evaluation.context,
+                        )
+                    ) {
+                        identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
+                        evaluation.grant()
+                        return
+                    }
+                }
+                // if the user can access any subgroup, allow access to the supergroup
+                val tenantGroups = findAllMatchingResources("group", mapOf("tenant" to groupName), context)
+                if (tenantGroups.any {
+                        hasPermissionScopes(it, listOf(ADMIN_SCOPE), context, evaluation.context)
+                    }
+                ) {
+                    identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
+                    evaluation.grant()
+                    return
+                }
+            } else if (evaluation.permission.resourceType == "Users") {
+                val user = context.session.users().getUserById(context.realm, resource.name)
+                if (user != null) {
+                    val managedGroupIds = getManageKcGroupIdsForUser(context)
+                    if (user.groupsStream.anyMatch { managedGroupIds.contains(it.id) }) {
+                        identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
+                        evaluation.grant()
+                        return
+                    }
+                }
+            }
+        }
+        identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = false)
+        evaluation.deny()
+    }
+
+    override fun supports(policy: Policy): Boolean = policy.type == "data-hub-dynamic"
+
+    // we don't need to actually check anything for partial evaluation, because our own created dynamic policy only has the group ids the user has access to
+    override fun evaluate(
+        session: KeycloakSession,
+        policy: Policy,
+        subject: UserModel,
+    ): Boolean = policy.type == "data-hub-dynamic"
+
+    override fun getPermissions(
+        session: KeycloakSession,
+        resourceType: org.keycloak.representations.idm.authorization.ResourceType,
+        groupResourceType: org.keycloak.representations.idm.authorization.ResourceType?,
+        subject: UserModel,
+    ): Stream<Policy> {
+        if (resourceType.type != AdminPermissionsSchema.GROUPS_RESOURCE_TYPE) {
+            return Stream.empty()
+        }
+        val ctx = getAuthzContext(session, DefaultEvaluationContext(UserModelIdentity(session.context.realm, subject), session), subject)
+        // keycloak intends to load this from the database, but we create a policy at runtime instead
+        // that policy contains all the group ids that the user has access to, for partial evaluation
+        return Stream.of(DynamicGroupPolicy(getManageKcGroupIdsForUser(ctx)))
+    }
+
+    companion object {
+        fun getManageKcGroupIdsForUser(ctx: AuthzContext): Set<String> {
+            val groupResources = getResourcesForUser(ctx, GROUP_TYPE, emptyMap(), listOf(ADMIN_SCOPE))
+            val resources = groupResources.map { it.getResourceModel().kcGroupId }.toMutableSet()
+            // if you can manage the members of a subgroup of a tenant, you can also manage the users of the tenant group
+            groupResources.forEach {
+                val tenantRes = it.parent(ctx)?.getResourceModel() as? UdhTenant
+                if (tenantRes != null) {
+                    resources.add(tenantRes.kcGroupId)
+                }
+            }
+            getResourcesForUser(ctx, TENANT_TYPE, emptyMap(), listOf(ADMIN_SCOPE)).forEach {
+                resources.add(it.getResourceModel().kcGroupId)
+            }
+            return resources
+        }
+    }
+
+    override fun close() {}
+}
+
 class DatahubPolicyProvider(val authorization: AuthorizationProvider) : PolicyProvider {
     override fun evaluate(evaluation: Evaluation) {
         val context = getAuthzContext(evaluation.authorizationProvider.keycloakSession, evaluation.context, null)
         val client = context.realm.getClientById(evaluation.permission.resource.resourceServer.clientId)
         val resourceClientId = client.clientId
-        val realmMgmtClient = AdminPermissions.management(
-            evaluation.authorizationProvider.keycloakSession,
-            context.realm
-        ).realmManagementClient.clientId
         val resource = evaluation.permission.resource
         val scopes = evaluation.permission.scopes
+        val identityWithCache = evaluation.context.identity as? EvaluationCacheUserModelIdentity
+        identityWithCache?.getCachedResult(resource, scopes.map { it.name })?.let {
+            if (it) {
+                evaluation.grant()
+            } else {
+                evaluation.deny()
+            }
+            return
+        }
+        // LOGGER.info("evaluation ${resourceClientId} ${scopes.map { it.name }} ${resource.name} ${resource.type} ${resource.javaClass.canonicalName} ${resource.displayName} ${resource.owner} ${evaluation.permission.resourceType}")
         if (resourceClientId == DATA_HUB_CLIENT_ID) {
             // data-hub custom policy to make inheriting scopes work and give all permissions when admin
             val genResource = udhResourceFromKcResource(resource)
@@ -1110,6 +1436,7 @@ class DatahubPolicyProvider(val authorization: AuthorizationProvider) : PolicyPr
                     evaluation.context
                 ))
             ) {
+                identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = false)
                 evaluation.deny()
                 return
             }
@@ -1118,18 +1445,21 @@ class DatahubPolicyProvider(val authorization: AuthorizationProvider) : PolicyPr
             if (scopes.all { it.name == "${GROUP_TYPE.resourceTypeName}:${VIEW_SCOPE}" } && (genResource.getResourceModel() as? UdhGroup)?.let { group ->
                     evaluation.realm.isUserInGroup(evaluation.context.identity.id, "${group.tenant}/${group.group}")
                 } == true) {
+                identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
                 evaluation.grant()
                 return
             }
 
             // Either you are admin for the udh realm
-            if (evaluation.context.identity.hasClientRole(realmMgmtClient, "manage-realm")) {
+            if (evaluation.context.identity.hasClientRole(Constants.REALM_MANAGEMENT_CLIENT_ID, "manage-realm")) {
+                identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
                 evaluation.grant()
                 return
             }
             // or you are admin on this resource
             if (scopes.none { it.name == "${genResource.resourceType.resourceTypeName}:$ADMIN_SCOPE" }
                 && hasPermissionScopes(resource, listOf(ADMIN_SCOPE), context, evaluation.context)) {
+                identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
                 evaluation.grant()
                 return
             }
@@ -1138,6 +1468,7 @@ class DatahubPolicyProvider(val authorization: AuthorizationProvider) : PolicyPr
                 && scopes.none { it.name == "${genResource.resourceType.resourceTypeName}:$READ_SCOPE" }
                 && hasPermissionScopes(resource, listOf(READ_SCOPE), context, evaluation.context)
             ) {
+                identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
                 evaluation.grant()
                 return
             }
@@ -1149,10 +1480,11 @@ class DatahubPolicyProvider(val authorization: AuthorizationProvider) : PolicyPr
                     evaluation.context
                 )
             ) {
+                identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
                 evaluation.grant()
                 return
             }
-        } else if (resourceClientId.equals(realmMgmtClient) && resource.type.equals("Group")) {
+        } else if (resourceClientId.equals(Constants.ADMIN_PERMISSIONS_CLIENT_ID) && resource.type.equals("Groups")) {
             // used to handle access to keycloak groups, so user can manage themselves
             val groupId = resource.name.split(".").last()
             val group = context.realm.getGroupById(groupId)
@@ -1170,6 +1502,7 @@ class DatahubPolicyProvider(val authorization: AuthorizationProvider) : PolicyPr
                         evaluation.context
                     )
                 ) {
+                    identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
                     evaluation.grant()
                     return
                 }
@@ -1180,6 +1513,7 @@ class DatahubPolicyProvider(val authorization: AuthorizationProvider) : PolicyPr
                 if (tenantGroups.any {
                         hasPermissionScopes(it, listOf(ADMIN_SCOPE), context, evaluation.context)
                     }) {
+                    identityWithCache?.recordEvaluation(resource, scopes.map { it.name }, allowed = true)
                     evaluation.grant()
                     return
                 }
@@ -1300,9 +1634,9 @@ fun handleRequest(session: KeycloakSession, uriInfo: UriInfo, method: String, bo
 private fun userAuthzContext(session: KeycloakSession): AuthzContext {
     val authResult = AppAuthManager.BearerTokenAuthenticator(session).setAudience(DATA_HUB_CLIENT_ID).authenticate()
         ?: throw NotAuthorizedException("Bearer")
-    val ctx = getUserFromCredentialClient(session, authResult.user) ?: run {
-        val evaluationContext = DefaultEvaluationContext(UserModelIdentity(session.context.realm, authResult.user), session)
-        getAuthzContext(session, evaluationContext, authResult.user)
+    val ctx = getUserFromCredentialClient(session, authResult.user()) ?: run {
+        val evaluationContext = DefaultEvaluationContext(UserModelIdentity(session.context.realm, authResult.user()), session)
+        getAuthzContext(session, evaluationContext, authResult.user())
     }
     return ctx
 }
@@ -1397,13 +1731,14 @@ class DatahubResource(private val session: KeycloakSession) {
     @POST
     @Path("graphql")
     fun graphql(body: String): Any {
-        val ctx = AppAuthManager.BearerTokenAuthenticator(session).setAudience(DATA_HUB_CLIENT_ID).authenticate()?.let {
-            getUserFromCredentialClient(session, it.user) ?: run {
-                val evaluationContext =
-                    DefaultEvaluationContext(UserModelIdentity(session.context.realm, it.user), session)
-                getAuthzContext(session, evaluationContext, it.user)
+        val ctx =
+            AppAuthManager.BearerTokenAuthenticator(session).setAudience(DATA_HUB_CLIENT_ID).authenticate()?.let {
+                getUserFromCredentialClient(session, it.user()) ?: run {
+                    val evaluationContext =
+                        DefaultEvaluationContext(EvaluationCacheUserModelIdentity(session.context.realm, it.user()), session)
+                    getAuthzContext(session, evaluationContext, it.user())
+                }
             }
-        }
         val req = ObjectMapper().readValue(body, GraphQLRequest::class.java)
         val delayedActionsList = DelayedActionsList(
             mutableListOf(),
@@ -1411,6 +1746,7 @@ class DatahubResource(private val session: KeycloakSession) {
         )
         val graphQLContext = mutableMapOf<KClass<*>, Any>(KeycloakSession::class to session)
         if (ctx != null) {
+            ensureGlobalPermissions(ctx)
             graphQLContext[AuthzContext::class] = ctx
             graphQLContext[DelayedActionsList::class] = delayedActionsList
         }
@@ -1594,7 +1930,7 @@ class DatahubResource(private val session: KeycloakSession) {
             null
         )
 
-        if (authResult.user.serviceAccountClientLink?.let(emptyContext.realm::getClientById)?.clientId != clientId)
+        if (authResult.user().serviceAccountClientLink?.let(emptyContext.realm::getClientById)?.clientId != clientId)
             throw ForbiddenException("Bad user")
         return emptyContext
     }
@@ -1617,10 +1953,8 @@ class DatahubResource(private val session: KeycloakSession) {
     fun updateUserAttributes(userId: String, body: String): Response {
         val ctx = userAuthzContext(session)
         if (!ctx.evaluationContext.identity.hasClientRole(
-                AdminPermissions.management(
-                    ctx.authProvider.keycloakSession,
-                    ctx.realm
-                ).realmManagementClient.clientId, "manage-realm"
+                Constants.REALM_MANAGEMENT_CLIENT_ID,
+                "manage-realm",
             )
         )
             throw ForbiddenException()
@@ -1629,7 +1963,7 @@ class DatahubResource(private val session: KeycloakSession) {
 
         val user = session.users().getUserById(ctx.realm, userId) ?: throw NotFoundException()
 
-        attributes.forEach { key, value ->
+        attributes.forEach { (key, value) ->
             if (value == null) {
                 user.removeAttribute(key)
             } else {
@@ -1638,6 +1972,24 @@ class DatahubResource(private val session: KeycloakSession) {
         }
 
         return Response.noContent().build()
+    }
+
+    @GET
+    // seems like the keycloak api had a way of doing this, but it broke
+    @Path("_get_user_attributes/{userId}")
+    fun getUserAttributes(userId: String): Map<String, List<String>> {
+        val ctx = userAuthzContext(session)
+        if (!ctx.evaluationContext.identity.hasClientRole(
+                Constants.REALM_MANAGEMENT_CLIENT_ID,
+                "manage-realm",
+            )
+        ) {
+            throw ForbiddenException()
+        }
+
+        val user = session.users().getUserById(ctx.realm, userId) ?: throw NotFoundException()
+
+        return user.attributes
     }
 }
 
@@ -1648,10 +2000,8 @@ object RequestSingleton {
 
         val ctx = userAuthzContext(session)
         if (!ctx.evaluationContext.identity.hasClientRole(
-                AdminPermissions.management(
-                    ctx.authProvider.keycloakSession,
-                    ctx.realm
-                ).realmManagementClient.clientId, "manage-realm"
+                Constants.REALM_MANAGEMENT_CLIENT_ID,
+                "manage-realm",
             )
         )
             throw ForbiddenException()
@@ -1742,10 +2092,8 @@ object RequestSingleton {
     fun handleInactiveUsers(session: KeycloakSession): Response {
         val ctx = userAuthzContext(session)
         if (!ctx.evaluationContext.identity.hasClientRole(
-                AdminPermissions.management(
-                    ctx.authProvider.keycloakSession,
-                    ctx.realm
-                ).realmManagementClient.clientId, "manage-realm"
+                Constants.REALM_MANAGEMENT_CLIENT_ID,
+                "manage-realm",
             )
         )
             throw ForbiddenException()
@@ -1895,7 +2243,9 @@ fun getOrCreatePersonalCredentialClient(session: KeycloakSession, userId: String
         clientRep.protocolMappers = listOf(
             udhSyncMapper
         )
+        val clientManager = ClientManager(RealmManager(session))
         client = ClientManager.createClient(session, realm, clientRep)
+        clientManager.enableServiceAccount(client)
     } else {
         if (regenerateSecret) {
             KeycloakModelUtils.generateSecret(client)

@@ -3,48 +3,13 @@ import UserGroupsSettingsPage from '@/app/settings/usergroups/page';
 import { FuncMock } from '@/app/_test/utils';
 import { getPublicEnv } from '@/app/_lib/env';
 import UserGroupList from '@/app/settings/usergroups/UserGroupList';
-import {
-  AllTenantAndProjectScopes,
-  GetAllTenantAndProjectScopes,
-} from '@/app/_lib/resource-api/graphql/tenant';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
 import { requireTenant } from '@/app/_lib/resource-api/legacy';
 import { mutate, query } from '@/app/_lib/resource-api/client';
 import React from 'react';
 
 const TEST_KEYCLOAK_URL = 'https://keycloak.example.com';
 const TENANT = 'test-tenant';
-const TEST_SCOPES = {
-  data: {
-    tenants: [
-      {
-        tenant: 'test-tenant',
-        scopes: {
-          all: ['tenant:admin'],
-          granted: ['tenant:admin'],
-        },
-        projects: [
-          {
-            project: 'test-project',
-            scopes: {
-              all: ['project:admin'],
-              granted: ['project:admin'],
-            },
-          },
-        ],
-        groups: [
-          {
-            group: 'test-group',
-            scopes: {
-              all: ['group:admin'],
-              granted: ['group:admin'],
-            },
-          },
-        ],
-      },
-    ],
-  },
-} as unknown as AllTenantAndProjectScopes;
-
 jest.mock('@/app/meta', () => ({
   mkMetadata: jest.fn(),
 }));
@@ -72,7 +37,7 @@ jest.mock('@/app/_lib/resource-api/legacy', () => ({
 }));
 
 jest.mock('@/app/_lib/resource-api/graphql/tenant', () => ({
-  GetAllTenantAndProjectScopes: jest.fn(),
+  queryHasTenantScope: jest.fn(),
 }));
 
 jest.mock('@/app/_component/searchbar/AppSearchBar', () => ({
@@ -80,8 +45,7 @@ jest.mock('@/app/_component/searchbar/AppSearchBar', () => ({
   default: jest.fn(() => <div data-testid='mock-usergroup-search-bar' />),
 }));
 
-const queryScopesMock: FuncMock<typeof GetAllTenantAndProjectScopes> =
-  GetAllTenantAndProjectScopes as unknown as jest.Mock;
+const queryHasTenantScopeMock = queryHasTenantScope as unknown as jest.Mock;
 
 jest.mock('@/app/_lib/resource-api/client', () => ({
   query: jest.fn(),
@@ -92,7 +56,7 @@ const mockMutate = mutate as jest.Mock;
 
 beforeEach(() => {
   getPublicEnvMock.mockReset();
-  queryScopesMock.mockReset();
+  queryHasTenantScopeMock.mockReset();
   requireTenantMock.mockReset();
   mockQuery.mockReset();
   mockMutate.mockReset();
@@ -101,7 +65,7 @@ beforeEach(() => {
 describe('snapshot', () => {
   it('renders page as expected', async () => {
     requireTenantMock.mockResolvedValue(TENANT);
-    queryScopesMock.mockResolvedValue(TEST_SCOPES);
+    queryHasTenantScopeMock.mockResolvedValue(true);
 
     const { container } = render(await UserGroupsSettingsPage());
 
@@ -116,16 +80,16 @@ describe('subcomponents', () => {
     );
 
     requireTenantMock.mockResolvedValue(TENANT);
-    queryScopesMock.mockResolvedValue(TEST_SCOPES);
+    queryHasTenantScopeMock.mockResolvedValue(true);
 
     render(await UserGroupsSettingsPage());
 
     expect(UserGroupList).toHaveBeenCalledWith(
       {
         keycloakBaseUrl: TEST_KEYCLOAK_URL,
-        scopes: TEST_SCOPES,
         tenant: TENANT,
         isTenantAdmin: true,
+        isGroupAdminInAnyTenant: false,
       },
       undefined,
     );

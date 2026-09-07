@@ -1,6 +1,5 @@
 import { render, RenderResult, within } from '@testing-library/react';
 import { FuncMock } from '@/app/_test/utils';
-import { NetworkStatus } from '@apollo/client';
 import { CombinedGraphQLErrors } from '@apollo/client/errors';
 import { UserGroupTableTestIds as TestIds } from '@/app/settings/usergroups/testIds';
 import { SettingsTestIds } from '@/app/settings/_common/testIds';
@@ -8,7 +7,6 @@ import UserGroupList from '@/app/settings/usergroups/UserGroupList';
 import { queryAllUserGroups } from '@/app/_lib/resource-api/graphql/usergroups';
 import { mockQueryAllUserGroups } from '@/app/_test/graphql/mock.util';
 import { TEST_USER_GROUPS } from '@/app/_test/graphql/data.util';
-import { AllTenantAndProjectScopes } from '@/app/_lib/resource-api/graphql/tenant';
 import { useSearchParams } from 'next/navigation';
 
 jest.mock('@/app/settings/usergroups/actions', () => ({
@@ -21,32 +19,6 @@ jest.mock('next/navigation', () => ({
 
 const TEST_TENANT = 'test-tenant';
 const TEST_KEYCLOAK_URL = 'https://keycloak.example.com';
-const TEST_SCOPES = {
-  data: {
-    tenants: [
-      {
-        tenant: 'test-tenant',
-        scopes: {
-          all: ['tenant:admin'],
-          granted: ['tenant:admin'],
-        },
-        projects: [],
-        groups: [
-          {
-            group: 'test-group',
-            scopes: {
-              all: ['group:admin'],
-              granted: ['group:admin'],
-            },
-          },
-        ],
-        vizGroups: [],
-      },
-    ],
-  },
-  loading: false,
-  networkStatus: NetworkStatus.ready,
-} as unknown as AllTenantAndProjectScopes;
 
 const queryAllUserGroupsMock: FuncMock<typeof queryAllUserGroups> =
   queryAllUserGroups as unknown as jest.Mock;
@@ -63,7 +35,6 @@ const renderComponent: () => Promise<RenderResult> = async () =>
   render(
     await UserGroupList({
       keycloakBaseUrl: TEST_KEYCLOAK_URL,
-      scopes: TEST_SCOPES,
       tenant: TEST_TENANT,
       isTenantAdmin: true,
     }),

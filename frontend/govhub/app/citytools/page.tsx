@@ -18,14 +18,9 @@ import {
   toPublicSharedApps,
   toSharedApps,
 } from '@/app/_lib/resource-api/sharedapps/internal';
-import { queryTenantScopes } from '@/app/_lib/resource-api/graphql/tenant';
-import {
-  isCityToolAdmin,
-  isDedicatedAppAdmin,
-  isSharedAppAdmin,
-} from '@/app/_lib/resource-api/permission/scope';
 import { queryDedicatedApps } from '@/app/_lib/resource-api/graphql/dedicatedApps';
 import { toDedicatedApps } from '@/app/_lib/resource-api/dedicatedapps';
+import { queryHasTenantScope } from '../_lib/resource-api/graphql/tenant';
 
 export const generateMetadata = mkMetadata({ pageName: 'City Tools' });
 
@@ -42,10 +37,11 @@ const CityToolsPage = async () => {
     toDedicatedApps(tenant),
   );
 
-  const scopes = await queryTenantScopes(tenant);
-  const isSAAdmin = isSharedAppAdmin(scopes);
-  const isCTAdmin = isCityToolAdmin(scopes);
-  const isDAAdmin = isDedicatedAppAdmin(scopes);
+  const [isSAAdmin, isCTAdmin, isDAAdmin] = await Promise.all([
+    queryHasTenantScope(tenant, 'shared-app:admin'),
+    queryHasTenantScope(tenant, 'citytool:admin'),
+    queryHasTenantScope(tenant, 'dedicated-app:admin'),
+  ]);
 
   return (
     <div className='flex flex-col gap-y-4'>

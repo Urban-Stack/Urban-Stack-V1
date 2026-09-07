@@ -163,6 +163,11 @@ a {
   background: var(--primary-very-low);
 }
 
+.--has-menu > #create-topic {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 #create-topic {
   color: var(--secondary);
   background: var(--tertiary);
@@ -178,7 +183,6 @@ a {
     color: var(--secondary);
     box-shadow: var(--mint-hover-shadow);
     transition: all 0.3s linear;
-    border-radius: var(--mint-border-radius);
     .fa {
       color: var(--secondary);
     }
@@ -279,6 +283,10 @@ a {
   border-radius: 5px;
   .fa {
     color: var(--secondary);
+  }
+  &.topic-drafts-menu-trigger {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 }
 

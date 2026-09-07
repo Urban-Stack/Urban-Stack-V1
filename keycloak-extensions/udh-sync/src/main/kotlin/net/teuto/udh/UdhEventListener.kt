@@ -1,7 +1,7 @@
 package net.teuto.udh
 
 import org.keycloak.authorization.common.DefaultEvaluationContext
-import org.keycloak.authorization.common.UserModelIdentity
+import org.keycloak.authorization.identity.UserModelIdentity
 import org.keycloak.events.Event
 import org.keycloak.events.EventListenerProvider
 import org.keycloak.events.EventType

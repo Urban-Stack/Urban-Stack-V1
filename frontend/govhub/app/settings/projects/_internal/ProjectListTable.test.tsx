@@ -3,7 +3,6 @@ import ProjectListTable from '@/app/settings/projects/_internal/ProjectListTable
 import { redirect, useSearchParams } from 'next/navigation';
 import { ProjectsTestIds } from '@/app/settings/projects/testIds';
 import { Project } from '../../../_lib/resource-api/project';
-import { Scope } from '@/app/_lib/resource-api/permission/scope';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -23,11 +22,21 @@ const TEST_PROJECTS: Project[] = [
   { tenant: 'test-tenant-2', name: 'test-project-3', _tag: 'Project' },
   { tenant: 'test-tenant-2', name: 'test-project-4', _tag: 'Project' },
 ];
-const TEST_PROJECT_PERMISSIONS: Map<string, Scope[]> = new Map([
-  ['test-project-1', ['project:admin']],
-  ['test-project-2', ['project:admin']],
-  ['test-project-3', ['project:admin']],
-  ['test-project-4', ['project:read']],
+const TEST_ADMIN_MAP: Map<string, Map<string, boolean>> = new Map([
+  [
+    'test-tenant-1',
+    new Map([
+      ['test-project-1', true],
+      ['test-project-2', true],
+    ]),
+  ],
+  [
+    'test-tenant-2',
+    new Map([
+      ['test-project-3', true],
+      ['test-project-4', false],
+    ]),
+  ],
 ]);
 
 beforeEach(() => {
@@ -37,10 +46,7 @@ beforeEach(() => {
 describe('snapshot', () => {
   it('renders list overview as expected', async () => {
     const { container } = render(
-      <ProjectListTable
-        projects={TEST_PROJECTS}
-        projectPermissions={TEST_PROJECT_PERMISSIONS}
-      />,
+      <ProjectListTable projects={TEST_PROJECTS} adminMap={TEST_ADMIN_MAP} />,
     );
 
     expect(container).toMatchSnapshot();
@@ -49,7 +55,9 @@ describe('snapshot', () => {
 
 describe('content', () => {
   it('project list table contains as many entries as projects given', async () => {
-    const component = render(<ProjectListTable projects={TEST_PROJECTS} />);
+    const component = render(
+      <ProjectListTable projects={TEST_PROJECTS} adminMap={TEST_ADMIN_MAP} />,
+    );
 
     const items = component.queryAllByTestId(ProjectsTestIds.tableItem);
     expect(items).toHaveLength(TEST_PROJECTS.length);
@@ -59,10 +67,7 @@ describe('content', () => {
 describe('redirect', () => {
   it('click on project entry redirects to corresponding subpage', async () => {
     const component = render(
-      <ProjectListTable
-        projects={TEST_PROJECTS}
-        projectPermissions={TEST_PROJECT_PERMISSIONS}
-      />,
+      <ProjectListTable projects={TEST_PROJECTS} adminMap={TEST_ADMIN_MAP} />,
     );
     const rows = component.queryAllByTestId(ProjectsTestIds.tableItem);
     const testRow = rows[TEST_INDEX];
@@ -86,10 +91,7 @@ describe('redirect', () => {
 
   it('pressing enter on project entry redirects to corresponding subpage', async () => {
     const component = render(
-      <ProjectListTable
-        projects={TEST_PROJECTS}
-        projectPermissions={TEST_PROJECT_PERMISSIONS}
-      />,
+      <ProjectListTable projects={TEST_PROJECTS} adminMap={TEST_ADMIN_MAP} />,
     );
     const rows = component.queryAllByTestId(ProjectsTestIds.tableItem);
     const testRow = rows[TEST_INDEX];
@@ -118,7 +120,9 @@ describe('project search', () => {
     useSearchParamsMock.mockReturnValue(
       new URLSearchParams('?search=project-3'),
     );
-    const component = render(<ProjectListTable projects={TEST_PROJECTS} />);
+    const component = render(
+      <ProjectListTable projects={TEST_PROJECTS} adminMap={TEST_ADMIN_MAP} />,
+    );
 
     const items = component.queryAllByTestId(ProjectsTestIds.tableItem);
     expect(items).toHaveLength(1);
@@ -129,7 +133,9 @@ describe('project search', () => {
     useSearchParamsMock.mockReturnValue(
       new URLSearchParams('?search=tenant-1'),
     );
-    const component = render(<ProjectListTable projects={TEST_PROJECTS} />);
+    const component = render(
+      <ProjectListTable projects={TEST_PROJECTS} adminMap={TEST_ADMIN_MAP} />,
+    );
 
     const items = component.queryAllByTestId(ProjectsTestIds.tableItem);
     expect(items).toHaveLength(2);
@@ -139,7 +145,9 @@ describe('project search', () => {
 
   it('Lists no project when none match the search parameter', () => {
     useSearchParamsMock.mockReturnValue(new URLSearchParams('?search=xyz'));
-    const component = render(<ProjectListTable projects={TEST_PROJECTS} />);
+    const component = render(
+      <ProjectListTable projects={TEST_PROJECTS} adminMap={TEST_ADMIN_MAP} />,
+    );
 
     const items = component.queryAllByTestId(ProjectsTestIds.tableItem);
     expect(items).toHaveLength(0);

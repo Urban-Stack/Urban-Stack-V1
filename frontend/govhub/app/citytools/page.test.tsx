@@ -19,9 +19,7 @@ import {
   AllAndInstalledDedicatedApps,
   queryDedicatedApps,
 } from '@/app/_lib/resource-api/graphql/dedicatedApps';
-import type { TenantScopes } from '@/app/_lib/resource-api/graphql/tenant';
-import { queryTenantScopes } from '@/app/_lib/resource-api/graphql/tenant';
-import { Scope } from '@/app/_lib/resource-api/permission/scope';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
 import {
   DedicatedApps,
   toDedicatedApps,
@@ -58,7 +56,7 @@ jest.mock('@/app/_lib/resource-api/dedicatedapps', () => ({
 }));
 
 jest.mock('@/app/_lib/resource-api/graphql/tenant', () => ({
-  queryTenantScopes: jest.fn(),
+  queryHasTenantScope: jest.fn(),
 }));
 
 jest.mock('@/app/citytools/_internal/ToolCards', () => ({
@@ -98,8 +96,8 @@ const mockToDedicatedApps = toDedicatedApps as unknown as FuncMock<
   typeof toDedicatedApps
 >;
 
-const mockQueryTenantScopes = queryTenantScopes as unknown as FuncMock<
-  typeof queryTenantScopes
+const mockQueryHasTenantScope = queryHasTenantScope as unknown as FuncMock<
+  typeof queryHasTenantScope
 >;
 
 const TENANT = 'guetersloh';
@@ -217,19 +215,6 @@ describe('CityToolsPage', () => {
     _tag: 'DedicatedApps',
   } satisfies DedicatedApps;
 
-  const mockTenantScopesResult: (
-    granted: Scope[] | null,
-  ) => Partial<TenantScopes> = (g) => ({
-    data: {
-      tenant: {
-        scopes: {
-          all: [],
-          granted: g ?? [],
-        },
-      },
-    },
-  });
-
   it('renders page heading and passes static apps to CityToolCards', async () => {
     mockQueryStaticApps.mockResolvedValue(
       mockStaticAppsResult as AllAndInstalledStaticApps,
@@ -244,13 +229,7 @@ describe('CityToolsPage', () => {
       mockDedicatedAppsResult as AllAndInstalledDedicatedApps,
     );
     mockToDedicatedApps.mockReturnValue(() => dedicatedAppsModel);
-    mockQueryTenantScopes.mockResolvedValue(
-      mockTenantScopesResult([
-        'citytool:admin',
-        'shared-app:admin',
-        'dedicated-app:admin',
-      ]) as TenantScopes,
-    );
+    mockQueryHasTenantScope.mockResolvedValue(true);
 
     render(await CityToolsPage());
 
@@ -301,9 +280,7 @@ describe('CityToolsPage', () => {
       mockDedicatedAppsResult as AllAndInstalledDedicatedApps,
     );
     mockToDedicatedApps.mockReturnValue(() => dedicatedAppsModel);
-    mockQueryTenantScopes.mockResolvedValue(
-      mockTenantScopesResult(null) as TenantScopes,
-    );
+    mockQueryHasTenantScope.mockResolvedValue(false);
 
     render(await CityToolsPage());
 
@@ -347,9 +324,7 @@ describe('CityToolsPage', () => {
       mockDedicatedAppsResult as AllAndInstalledDedicatedApps,
     );
     mockToDedicatedApps.mockReturnValue(() => dedicatedAppsModel);
-    mockQueryTenantScopes.mockResolvedValue(
-      mockTenantScopesResult(['shared-app:admin']) as TenantScopes,
-    );
+    mockQueryHasTenantScope.mockResolvedValue(true);
 
     render(await CityToolsPage());
 
@@ -378,16 +353,7 @@ describe('CityToolsPage', () => {
       mockDedicatedAppsResult as AllAndInstalledDedicatedApps,
     );
     mockToDedicatedApps.mockReturnValue(() => dedicatedAppsModel);
-    mockQueryTenantScopes.mockResolvedValue({
-      data: {
-        tenant: {
-          scopes: {
-            all: [],
-            granted: ['citytool:view'],
-          },
-        },
-      },
-    } as Partial<TenantScopes> as TenantScopes);
+    mockQueryHasTenantScope.mockResolvedValue(false);
 
     render(await CityToolsPage());
 

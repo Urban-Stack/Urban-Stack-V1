@@ -22,3 +22,7 @@ CVE-2026-53215
 
 # ssh is not used
 CVE-2026-55200
+
+# perl is not used
+CVE-2026-13221
+CVE-2026-57433

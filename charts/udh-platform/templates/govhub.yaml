@@ -117,6 +117,7 @@ metadata:
     {{- include "udh.ingress.annotations" (dict "annotations" .Values.frontend.govhub.ingress.annotations "context" .) | nindent 4 }}
     nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
 spec:
+  ingressClassName: nginx
   rules:
     - host: {{ $host | quote }}
       http:

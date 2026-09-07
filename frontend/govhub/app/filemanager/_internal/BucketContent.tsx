@@ -7,17 +7,13 @@ import { fetchObjects } from '@/app/_lib/storage/server';
 import { isRight } from 'udp-ui/fp';
 import { queryAllDatasets } from '@/app/_lib/resource-api/graphql/datasets';
 import { Dataset, toDatasets } from '@/app/_lib/resource-api/project/dataset';
-import {
-  hasScopeForProject,
-  Scope,
-} from '@/app/_lib/resource-api/permission/scope';
 
 const BucketContent = async ({
   bucket,
-  projectPermissions,
+  adminMap,
 }: {
   bucket: string;
-  projectPermissions: Map<string, Scope[]>;
+  adminMap: Map<string, Map<string, boolean>>;
 }) => {
   const split = splitBucketName(bucket);
   if (!split) return <FallbackInvalidBucketName />;
@@ -25,11 +21,7 @@ const BucketContent = async ({
 
   const mObjects = await fetchObjects(bucket);
   const datasets = await queryAllDatasets(tenant, project).then(toDatasets);
-  const canManageFiles = hasScopeForProject(
-    projectPermissions,
-    'project:admin',
-    project,
-  );
+  const canManageFiles = adminMap.get(tenant)?.get(project) ?? false;
   return isRight(mObjects) ? (
     <Content
       tenant={tenant}

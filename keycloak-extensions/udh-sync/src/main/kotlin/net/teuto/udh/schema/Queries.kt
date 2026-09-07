@@ -15,6 +15,7 @@ import org.apache.http.client.utils.URLEncodedUtils
 import org.apache.http.message.BasicNameValuePair
 import org.keycloak.authorization.attribute.Attributes
 import org.keycloak.authorization.common.DefaultEvaluationContext
+import org.keycloak.authorization.fgap.AdminPermissionsSchema
 import org.keycloak.authorization.model.Policy
 import org.keycloak.models.KeycloakSession
 import org.keycloak.models.utils.ModelToRepresentation
@@ -263,7 +264,7 @@ class RootQuery : Query {
             val citytool = it.getResourceModel()
             val meta = citytool.getMeta()
             if (meta.showInCitizenhub) {
-                val path = UdhCitytool.getPathAttribute(it)
+                val path = UdhCitytool.getPathAttribute(it, ctx)
                 listOf(PublicCitytool(meta.name, path, meta.description, meta.indexPath, meta.pictureUri, meta.categories))
             } else {
                 emptyList()
@@ -706,8 +707,7 @@ open class SensorCredentialQuery(val tenant: String, val project: String, val se
     fun username(dfe: DataFetchingEnvironment): String {
         val ctx = dfe.getAuthzContextOrThrow()
         val cred = UdhSensorCredential(tenant, project, sensorCredential)
-        val credentialHash = cred.path.toHash()
-        return ctx.realm.clientsStream.filter { it.getAttribute("hash") == credentialHash }.findFirst().get().clientId
+        return cred.getServiceAccountClient(ctx.session)!!.clientId
     }
 }
 
@@ -876,7 +876,7 @@ fun getCitytoolInstalls(citytool: String, dfe: DataFetchingEnvironment): Citytoo
     var starsPresent = 0
 
     lookupResources(ctx, CITYTOOL_TYPE, mapOf(CITYTOOL_TYPE.resourceTypeName to citytool)).forEach { res ->
-        val stars = UdhCitytool.getStarsAttribute(res)
+        val stars = UdhCitytool.getStarsAttribute(res, ctx)
         installs += 1
         if (stars != null) {
             totalStars += stars
@@ -924,13 +924,13 @@ open class CitytoolQuery(val tenant: String, val citytool: String) : HasAttribut
     fun stars(dfe: DataFetchingEnvironment): Int? {
         val ctx = dfe.getAuthzContextOrThrow()
         val res = getUdhResource(ctx)
-        return UdhCitytool.getStarsAttribute(res)
+        return UdhCitytool.getStarsAttribute(res, ctx)
     }
 
     fun path(dfe: DataFetchingEnvironment): String {
         val ctx = dfe.getAuthzContextOrThrow()
         val res = getUdhResource(ctx)
-        return UdhCitytool.getPathAttribute(res)
+        return UdhCitytool.getPathAttribute(res, ctx)
     }
 
     fun installs(dfe: DataFetchingEnvironment): CitytoolInstalls {

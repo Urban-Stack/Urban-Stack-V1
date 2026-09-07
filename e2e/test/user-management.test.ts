@@ -111,7 +111,7 @@ test('can link to groups', async ({ page }) => {
 	await createTestUser(testUser, [tenant, `${tenant}/admin`]);
 	await page.goto(`${KEYCLOAK}admin/udh/console`);
 	await signIn(page, testUser);
-	await expect(page.getByRole('heading', { name: 'Welcome to' })).toBeVisible();
+	await expect(page.getByRole('heading', { name: 'Willkommen bei' })).toBeVisible();
 
 	await page.goto(`${KEYCLOAK}admin/udh/console/#/udh/groups/${tenantGroupPath}`);
 	await expect(page.getByTestId('view-header')).toContainText(tenant);

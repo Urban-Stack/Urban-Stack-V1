@@ -17,11 +17,19 @@ global:
             namespaceSelector:
               matchLabels:
                 kubernetes.io/metadata.name: ingress-nginx
+          - podSelector:
+              matchLabels:
+                app.kubernetes.io/name: traefik
+            namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: traefik
         ports:
           - protocol: TCP
             port: 80
           - protocol: TCP
             port: 443
+          - protocol: TCP
+            port: 8443
   testDeployment: true
 
 keycloak:

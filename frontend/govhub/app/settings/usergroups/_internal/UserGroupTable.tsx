@@ -17,8 +17,6 @@ import {
   IcCheckCircle,
   UdpBadge,
 } from 'udp-ui/components';
-import { AllTenantAndProjectScopes } from '@/app/_lib/resource-api/graphql/tenant';
-import { isGroupAdminInAnyTenant } from '@/app/_lib/resource-api/permission/scope';
 import { redirect, useSearchParams } from 'next/navigation';
 import {
   mkUserGroupHref,
@@ -32,7 +30,7 @@ interface UserGroupTableProps {
   keycloakBaseUrl: string;
   tenant: string;
   isTenantAdmin?: boolean;
-  scopes: AllTenantAndProjectScopes;
+  isGroupAdminInAnyTenant?: boolean;
 }
 const filterUserGroups = (userGroups: UserGroup[], searchTextRaw: string) => {
   const searchText = searchTextRaw.toLowerCase();
@@ -46,11 +44,11 @@ const filterUserGroups = (userGroups: UserGroup[], searchTextRaw: string) => {
 const UserGroupTable: React.FC<UserGroupTableProps> = ({
   userGroups,
   keycloakBaseUrl,
-  scopes,
   tenant,
   isTenantAdmin = false,
+  isGroupAdminInAnyTenant = false,
 }) => {
-  const hasAdminPermission = isTenantAdmin || isGroupAdminInAnyTenant(scopes);
+  const hasAdminPermission = isTenantAdmin || isGroupAdminInAnyTenant;
   const searchParams = useSearchParams();
   const searchText = searchParams.get(SEARCH_PARAMS.search) ?? '';
   const filteredUserGroups = filterUserGroups(userGroups, searchText);

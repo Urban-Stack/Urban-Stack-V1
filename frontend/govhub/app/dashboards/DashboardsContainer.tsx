@@ -8,23 +8,20 @@ import {
   sanitizeDashboards,
 } from '@/app/_lib/superset/util';
 import CreateDashboardButton from '@/app/dashboards/_create/CreateDashboardButton';
-import {
-  filterVizGroupsByScope,
-  VizGroup,
-} from '@/app/_lib/resource-api/viz-groups/vizGroups';
+import { VizGroup } from '@/app/_lib/resource-api/viz-groups/vizGroups';
 import DashboardsContent from '@/app/dashboards/DashboardsContent';
 import ViewSelector from '@/app/dashboards/ViewSelector';
 import { Dashboard } from '@/app/_lib/superset/types';
 import Filter from '@/app/dashboards/Filter';
 import AppSearchBar from '@/app/_component/searchbar/AppSearchBar';
 import { SEARCH_PARAMS } from '@/app/dashboards/_internal/common';
-import { Scope } from '@/app/_lib/resource-api/permission/scope';
 
 interface AppDashboardsContainerProps {
   supersetUri: string;
   canCreateDashboard: boolean;
-  vizGroups?: VizGroup[];
-  vizGroupScopeMap?: Map<string, Map<string, Scope[]>>;
+  vizGroups: VizGroup[];
+  adminMap?: Map<string, Map<string, boolean>>;
+  dashboardViewMap?: Map<string, Map<string, boolean>>;
 }
 
 /**
@@ -40,14 +37,16 @@ interface AppDashboardsContainerProps {
  * @param supersetUri        Superset base URI
  * @param canCreateDashboard `true` if the user has dashboard creation permissions for the current tenant - `false` otherwise
  * @param vizGroups          available viz groups for viewing or creating dashboards
- * @param vizGroupScopeMap   available scopes per viz group
+ * @param adminMap           per viz-group if the user is admin
+ * @param dashboardViewMap   per viz-group if the user can view dashboards
  * @constructor
  */
 const DashboardsContainer = ({
   supersetUri,
   canCreateDashboard,
   vizGroups,
-  vizGroupScopeMap,
+  adminMap,
+  dashboardViewMap,
 }: AppDashboardsContainerProps) => {
   const { getDashboards, useFavoriteStatuses } = useSuperset(supersetUri);
 
@@ -56,10 +55,8 @@ const DashboardsContainer = ({
     ? sanitizeDashboards(dashboardsResp.result)
     : [];
 
-  const vizGroupsWithViewScope = filterVizGroupsByScope(
-    vizGroups,
-    vizGroupScopeMap,
-    'dashboard:view',
+  const vizGroupsWithViewScope = vizGroups.filter(
+    (v) => dashboardViewMap?.get(v.tenant)?.get(v.name) ?? false,
   );
 
   const visibleDashboards = filterDashboards(sanitized, {
@@ -75,10 +72,8 @@ const DashboardsContainer = ({
     void setFavStatus(d.id, !d.favorite);
   };
 
-  const vizGroupsWithAdminScope = filterVizGroupsByScope(
-    vizGroups,
-    vizGroupScopeMap,
-    'viz-group:admin',
+  const vizGroupsWithAdminScope = vizGroups.filter(
+    (v) => adminMap?.get(v.tenant)?.get(v.name) ?? false,
   );
 
   return (

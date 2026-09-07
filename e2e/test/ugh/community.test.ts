@@ -81,7 +81,7 @@ test.describe('Community', () => {
 			page
 				.locator('iframe[title="discourse-iframe"]')
 				.contentFrame()
-				.getByText('Neues Thema erstellen')
+				.getByText('Erstelle ein neues Thema')
 		).toBeVisible({ timeout: 30000 });
 	});
 

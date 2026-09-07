@@ -6,7 +6,6 @@ import { sanitizeDashboards } from '@/app/_lib/superset/util';
 import DashboardsContent from '@/app/dashboards/DashboardsContent';
 import { VizGroup } from '@/app/_lib/resource-api/viz-groups/vizGroups';
 import { DashboardResponseRaw } from '@/app/_lib/superset/types';
-import { Scope } from '@/app/_lib/resource-api/permission/scope';
 
 jest.mock('@/app/_lib/superset/superset', () => ({
   useSuperset: jest.fn(),
@@ -46,17 +45,8 @@ const TENANT = 'test-tenant';
 const VIZ_GROUPS: VizGroup[] = [
   { name: 'group1', tenant: TENANT, _tag: 'VizGroup' },
 ];
-const VIZ_GROUP_SCOPES_ADMIN: Map<string, Map<string, Scope[]>> = new Map([
-  [TENANT, new Map<string, Scope[]>([['group1', ['viz-group:admin']]])],
-]);
-
-const VIZ_GROUP_SCOPES_READ: Map<string, Map<string, Scope[]>> = new Map([
-  [
-    TENANT,
-    new Map<string, Scope[]>([
-      ['group1', ['viz-group:read', 'dashboard:view']],
-    ]),
-  ],
+const VIZ_GROUP_SCOPES_ALLOW: Map<string, Map<string, boolean>> = new Map([
+  [TENANT, new Map<string, boolean>([['group1', true]])],
 ]);
 
 beforeAll(() => {
@@ -140,7 +130,7 @@ describe('DashboardsContainer', () => {
         supersetUri={SUPERSET_URI}
         canCreateDashboard={false}
         vizGroups={VIZ_GROUPS}
-        vizGroupScopeMap={VIZ_GROUP_SCOPES_READ}
+        dashboardViewMap={VIZ_GROUP_SCOPES_ALLOW}
       />,
     );
 
@@ -171,28 +161,15 @@ describe('DashboardsContainer', () => {
       { name: 'group2', tenant: 'test-tenant1', _tag: 'VizGroup' },
       { name: 'group3', tenant: 'test-tenant2', _tag: 'VizGroup' },
     ];
-    const vizGroupScopeMap: Map<string, Map<string, Scope[]>> = new Map([
+    const vizGroupScopeMap: Map<string, Map<string, boolean>> = new Map([
       [
         'test-tenant1',
-        new Map<string, Scope[]>([
-          [
-            'group1',
-            [
-              'viz-group:admin',
-              'dashboard:admin',
-              'dashboard:view',
-              'dashboard:read',
-            ],
-          ],
-          ['group2', []],
+        new Map<string, boolean>([
+          ['group1', true],
+          ['group2', false],
         ]),
       ],
-      [
-        'test-tenant2',
-        new Map<string, Scope[]>([
-          ['group3', ['viz-group:read', 'dashboard:view']],
-        ]),
-      ],
+      ['test-tenant2', new Map<string, boolean>([['group3', true]])],
     ]);
     const rawDashboards: DashboardResponseRaw[] = [
       {
@@ -252,7 +229,7 @@ describe('DashboardsContainer', () => {
         supersetUri={SUPERSET_URI}
         canCreateDashboard={false}
         vizGroups={vizGroups}
-        vizGroupScopeMap={vizGroupScopeMap}
+        dashboardViewMap={vizGroupScopeMap}
       />,
     );
 
@@ -294,6 +271,7 @@ describe('DashboardsContainer', () => {
         <DashboardsContainer
           supersetUri={SUPERSET_URI}
           canCreateDashboard={false}
+          vizGroups={VIZ_GROUPS}
         />,
       );
       expect(
@@ -306,7 +284,7 @@ describe('DashboardsContainer', () => {
         <DashboardsContainer
           supersetUri={SUPERSET_URI}
           canCreateDashboard={true}
-          vizGroups={undefined}
+          vizGroups={[]}
         />,
       );
       expect(
@@ -320,7 +298,7 @@ describe('DashboardsContainer', () => {
           supersetUri={SUPERSET_URI}
           canCreateDashboard={true}
           vizGroups={VIZ_GROUPS}
-          vizGroupScopeMap={VIZ_GROUP_SCOPES_READ}
+          dashboardViewMap={VIZ_GROUP_SCOPES_ALLOW}
         />,
       );
       expect(
@@ -334,7 +312,7 @@ describe('DashboardsContainer', () => {
           supersetUri={SUPERSET_URI}
           canCreateDashboard={true}
           vizGroups={VIZ_GROUPS}
-          vizGroupScopeMap={VIZ_GROUP_SCOPES_ADMIN}
+          adminMap={VIZ_GROUP_SCOPES_ALLOW}
         />,
       );
       expect(queryByTestId('mock-create-dashboard-button')).toBeInTheDocument();
@@ -355,6 +333,7 @@ describe('DashboardsContainer', () => {
       <DashboardsContainer
         supersetUri={SUPERSET_URI}
         canCreateDashboard={false}
+        vizGroups={VIZ_GROUPS}
       />,
     );
 
@@ -395,6 +374,7 @@ describe('DashboardsContainer', () => {
       <DashboardsContainer
         supersetUri={SUPERSET_URI}
         canCreateDashboard={false}
+        vizGroups={VIZ_GROUPS}
       />,
     );
 

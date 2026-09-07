@@ -9,6 +9,7 @@ import { graphql } from '@/app/__generated__';
 import { reject } from 'lodash';
 import { PermissionName } from '@/app/_lib/resource-api/util/shared-groups';
 import { mutate, query } from '@/app/_lib/resource-api/client';
+import { Scope } from '../permission/scope';
 
 export type AllProjects = ApolloClient.QueryResult<
   MaybeMasked<AllProjectsQuery>
@@ -17,9 +18,11 @@ export type AllProjects = ApolloClient.QueryResult<
 const ALL_PROJECTS = graphql(`
   query AllProjects {
     tenants {
+      tenant
       projects {
         tenant
         project
+        admin: hasScopes(scopes: ["project:admin"])
       }
     }
   }
@@ -51,6 +54,14 @@ const PROJECT_VIZGROUP_PERMISSIONS = graphql(`
         }
         scopes
       }
+    }
+  }
+`);
+
+const HAS_PROJECT_SCOPE = graphql(`
+  query HasProjectScope($tenant: String!, $project: String!, $scope: String!) {
+    project(tenant: $tenant, project: $project) {
+      hasScopes(scopes: [$scope])
     }
   }
 `);
@@ -178,6 +189,18 @@ export const queryProjectVizGroupPermissions: (
       project,
     },
   });
+
+export const queryHasProjectScope: (
+  tenant: string,
+  project: string,
+  scope: Scope,
+) => Promise<boolean> = async (tenant, project, scope) =>
+  (
+    await query({
+      query: HAS_PROJECT_SCOPE,
+      variables: { tenant, project, scope },
+    })
+  ).data?.project?.hasScopes ?? false;
 
 export type GroupPermission = Awaited<
   ReturnType<ReturnType<typeof addGroupPermission>>

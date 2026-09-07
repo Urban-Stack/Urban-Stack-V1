@@ -18,12 +18,27 @@ export const mkVizGroupHref: (tenant: string, vizGroup: string) => string = (
   vizGroup,
 ) => `/settings/dashboardgroups/${tenant}/${vizGroup}`;
 
-export const fromAllVizGroups: (result: AllVizGroups) => VizGroup[] = (
-  result,
-) =>
-  (result.data?.tenants ?? [])
+export const fromAllVizGroups: (result: AllVizGroups) => {
+  vizGroups: VizGroup[];
+  adminMap: Map<string, Map<string, boolean>>;
+  dashboardViewMap: Map<string, Map<string, boolean>>;
+} = (result) => ({
+  vizGroups: (result.data?.tenants ?? [])
     .flatMap((t) => t.vizGroups)
-    .map((v) => mkVizGroup(v.vizGroup, v.tenant));
+    .map((v) => mkVizGroup(v.vizGroup, v.tenant)),
+  adminMap: new Map(
+    result.data?.tenants.map((t) => [
+      t.tenant,
+      new Map(t.vizGroups.map((v) => [v.vizGroup, v.admin])),
+    ]),
+  ),
+  dashboardViewMap: new Map(
+    result.data?.tenants.map((t) => [
+      t.tenant,
+      new Map(t.vizGroups.map((v) => [v.vizGroup, v.dashboardView])),
+    ]),
+  ),
+});
 
 export const fromVizGroupsByTenant: (
   result: VizGroupsByTenant,

@@ -11,10 +11,20 @@ export const mkProjectHref: (tenant: string, projectName: string) => string = (
   projectName,
 ) => `/settings/projects/${tenant}/${projectName}`;
 
-export const toProjects: (result: AllProjects) => Project[] = (result) =>
-  (result.data?.tenants ?? [])
+export const toProjects: (result: AllProjects) => {
+  projects: Project[];
+  adminMap: Map<string, Map<string, boolean>>;
+} = (result) => ({
+  projects: (result.data?.tenants ?? [])
     .flatMap((t) => t.projects)
-    .map((p) => mkProject(p.project, p.tenant));
+    .map((p) => mkProject(p.project, p.tenant)),
+  adminMap: new Map(
+    result.data?.tenants.map((t) => [
+      t.tenant,
+      new Map(t.projects.map((v) => [v.project, v.admin])),
+    ]),
+  ),
+});
 
 const mkProject: (name: string, tenant: string) => Project = (
   name,

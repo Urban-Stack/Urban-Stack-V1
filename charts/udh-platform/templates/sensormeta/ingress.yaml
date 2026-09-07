@@ -12,6 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-origin: "https://{{ include "data-hub.govhub.hostname" . }},https://{{ include "data-hub.docs.hostname" . }}{{ if .Values.global.testDeployment }},http://0.0.0.0:8000,localhost:8000{{ end }}"
     {{- include "udh.ingress.annotations" (dict "annotations" .Values.sensormeta.ingress.annotations "context" .) | nindent 4 }}
 spec:
+  ingressClassName: nginx
   rules:
     - host: {{ $host | quote }}
       http:

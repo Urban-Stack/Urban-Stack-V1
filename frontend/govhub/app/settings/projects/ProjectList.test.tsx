@@ -7,9 +7,7 @@ import {
   AllProjects,
   fetchAllProjects,
 } from '@/app/_lib/resource-api/graphql/project';
-import { Project } from '../../_lib/resource-api/project';
 import { SettingsTestIds } from '@/app/settings/_common/testIds';
-import { Scope } from '@/app/_lib/resource-api/permission/scope';
 import { useSearchParams } from 'next/navigation';
 
 const fetchAllProjectsMock: FuncMock<typeof fetchAllProjects> =
@@ -22,30 +20,38 @@ jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(),
 }));
 
-const TEST_PROJECTS: Project[] = [
-  { tenant: 'test-tenant-1', name: 'test-project-1', _tag: 'Project' },
-  { tenant: 'test-tenant-1', name: 'test-project-2', _tag: 'Project' },
-  { tenant: 'test-tenant-2', name: 'test-project-3', _tag: 'Project' },
-];
-
-const TEST_PROJECT_PERMISSIONS: Map<string, Scope[]> = new Map([
-  ['test-project-1', ['project:admin']],
-  ['test-project-2', ['project:admin']],
-  ['test-project-3', ['project:admin']],
-  ['test-project-4', ['project:read']],
-]);
-
-const mockProjects = (projects: Project[], error?: CombinedGraphQLErrors) => {
+const mockProjects = (hasProjects: boolean, error?: CombinedGraphQLErrors) => {
   fetchAllProjectsMock.mockResolvedValueOnce({
     data: {
-      tenants: [
-        {
-          projects: projects.map((p) => ({
-            tenant: p.tenant,
-            project: p.name,
-          })),
-        },
-      ],
+      tenants: !hasProjects
+        ? []
+        : [
+            {
+              tenant: 'test-tenant-1',
+              projects: [
+                {
+                  project: 'test-project-1',
+                  tenant: 'test-tenant-1',
+                  admin: true,
+                },
+                {
+                  project: 'test-project-2',
+                  tenant: 'test-tenant-1',
+                  admin: true,
+                },
+              ],
+            },
+            {
+              tenant: 'test-tenant-2',
+              projects: [
+                {
+                  project: 'test-project-3',
+                  tenant: 'test-tenant-2',
+                  admin: true,
+                },
+              ],
+            },
+          ],
     },
     error: error,
   } as AllProjects);
@@ -58,11 +64,10 @@ beforeEach(() => {
 
 describe('snapshot', () => {
   it('renders list overview as expected', async () => {
-    mockProjects(TEST_PROJECTS);
+    mockProjects(true);
 
     const { container } = render(
       await ProjectList({
-        projectPermissions: TEST_PROJECT_PERMISSIONS,
         canCreateProject: true,
       }),
     );
@@ -73,11 +78,10 @@ describe('snapshot', () => {
 
 describe('content', () => {
   it('projects overview contains as many list entries as projects retrieved', async () => {
-    mockProjects(TEST_PROJECTS);
+    mockProjects(true);
 
     const component = render(
       await ProjectList({
-        projectPermissions: TEST_PROJECT_PERMISSIONS,
         canCreateProject: true,
       }),
     );
@@ -85,17 +89,16 @@ describe('content', () => {
     const table = component.getByTestId(TestIds.table);
     expect(table).toBeVisible();
     const tableRows = within(table).queryAllByTestId(TestIds.tableItem);
-    expect(tableRows).toHaveLength(TEST_PROJECTS.length);
+    expect(tableRows).toHaveLength(3);
     const fallback = component.queryByTestId(SettingsTestIds.fallback);
     expect(fallback).not.toBeInTheDocument();
   });
 
   it('shows "No projects" fallback if no projects retrieved', async () => {
-    mockProjects([]);
+    mockProjects(false);
 
     const component = render(
       await ProjectList({
-        projectPermissions: TEST_PROJECT_PERMISSIONS,
         canCreateProject: true,
       }),
     );
@@ -111,11 +114,13 @@ describe('content', () => {
   });
 
   it('shows "Fetch error" fallback if error occurs when retrieving projects', async () => {
-    mockProjects([], new CombinedGraphQLErrors({ errors: [{ message: '' }] }));
+    mockProjects(
+      false,
+      new CombinedGraphQLErrors({ errors: [{ message: '' }] }),
+    );
 
     const component = render(
       await ProjectList({
-        projectPermissions: TEST_PROJECT_PERMISSIONS,
         canCreateProject: true,
       }),
     );

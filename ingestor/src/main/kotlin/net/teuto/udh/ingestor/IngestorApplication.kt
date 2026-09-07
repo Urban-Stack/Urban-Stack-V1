@@ -263,9 +263,23 @@ val FLOAT_COLUMNS = setOf(
     "co2",
     "temperature_inside",
     "battery_level",
+    "dew_point",
+    "water_depth",
+    "friction_grip",
+    "ice_thickness",
+    "ground_temperature",
+    "road_surface_temperature",
+    "wind_gust_10_minute_maximum",
+    "vapor_pressure",
+    "solar_radiation",
+    "lightning_average_distance",
+    "precipitation_electrical_conductivity",
 ) + BEEPBASE_FLOAT_COLUMNS.map { "bp_$it" }
 
-val INTEGER_COLUMNS = BEEPBASE_INTEGER_COLUMNS.map { "bp_$it" }
+val INTEGER_COLUMNS = setOf(
+    "road_condition_index",
+    "lightning_strike_count"
+) + BEEPBASE_INTEGER_COLUMNS.map { "bp_$it" }
 
 val COMMON_FLOAT_MAPPING = mapOf(
     "co2_1" to "co2",
@@ -387,11 +401,11 @@ class KafkaStreamsConfig(topics: KafkaTopics) {
                                     "lon" -> "longitude" to v as? Number
                                     "uv" -> "uv_index" to v as? Number
                                     "humidity", "relative_humidity" -> "humidity_air" to v as? Number
-                                    "temperature" -> "temperature_outside" to v as? Number
-                                    "peak_wind_gust" -> "wind_peak_gust" to v as? Number
-                                    "rainfall_intensity" -> "rain_intensity" to v as? Number
+                                    "air_temperature", "temperature" -> "temperature_outside" to v as? Number
+                                    "maximum_wind_speed", "peak_wind_gust" -> "wind_peak_gust" to v as? Number
+                                    "precipitation", "rainfall_intensity" -> "rain_intensity" to v as? Number
                                     "barometric_pressure" -> "air_pressure" to (v as? Number)?.let { it.toDouble() / 10 }
-                                    "cumulative_rainfall" -> "rain_accumulated" to v as? Number
+                                    "cumulative_precipitation", "cumulative_rainfall" -> "rain_accumulated" to v as? Number
                                     "battery_level" -> "battery_voltage" to v as? Number
                                     "status" -> "status" to v as? String
                                     "moisturePercent1" -> "soil_moisture1" to v as? Number

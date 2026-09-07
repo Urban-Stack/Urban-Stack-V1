@@ -1799,10 +1799,12 @@ export type AllProjectsQuery = {
   __typename?: 'Query';
   tenants: Array<{
     __typename?: 'Tenant';
+    tenant: string;
     projects: Array<{
       __typename?: 'Project';
       tenant: string;
       project: string;
+      admin: boolean;
     }>;
   }>;
 };
@@ -1849,6 +1851,17 @@ export type GetVizGroupsPermissionsQuery = {
       }> | null;
     }> | null;
   } | null;
+};
+
+export type HasProjectScopeQueryVariables = Exact<{
+  tenant: Scalars['String']['input'];
+  project: Scalars['String']['input'];
+  scope: Scalars['String']['input'];
+}>;
+
+export type HasProjectScopeQuery = {
+  __typename?: 'Query';
+  project?: { __typename?: 'Project'; hasScopes: boolean } | null;
 };
 
 export type CreateProjectMutationVariables = Exact<{
@@ -2275,64 +2288,14 @@ export type GetTenantNameQuery = {
   tenant?: { __typename?: 'Tenant'; attribute?: string | null } | null;
 };
 
-export type GetAllTenantAndProjectScopesQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetAllTenantAndProjectScopesQuery = {
-  __typename?: 'Query';
-  tenants: Array<{
-    __typename?: 'Tenant';
-    tenant: string;
-    scopes: {
-      __typename?: 'Scopes';
-      all: Array<string>;
-      granted: Array<string>;
-    };
-    projects: Array<{
-      __typename?: 'Project';
-      project: string;
-      scopes: {
-        __typename?: 'Scopes';
-        all: Array<string>;
-        granted: Array<string>;
-      };
-    }>;
-    groups: Array<{
-      __typename?: 'Group';
-      group: string;
-      scopes: {
-        __typename?: 'Scopes';
-        all: Array<string>;
-        granted: Array<string>;
-      };
-    }>;
-    vizGroups: Array<{
-      __typename?: 'VizGroup';
-      vizGroup: string;
-      scopes: {
-        __typename?: 'Scopes';
-        all: Array<string>;
-        granted: Array<string>;
-      };
-    }>;
-  }>;
-};
-
-export type GetTenantScopesQueryVariables = Exact<{
+export type HasTenantScopesQueryVariables = Exact<{
   tenant: Scalars['String']['input'];
+  scope: Scalars['String']['input'];
 }>;
 
-export type GetTenantScopesQuery = {
+export type HasTenantScopesQuery = {
   __typename?: 'Query';
-  tenant?: {
-    __typename?: 'Tenant';
-    scopes: {
-      __typename?: 'Scopes';
-      all: Array<string>;
-      granted: Array<string>;
-    };
-  } | null;
+  tenant?: { __typename?: 'Tenant'; hasScopes: boolean } | null;
 };
 
 export type TenantMembershipsQueryVariables = Exact<{ [key: string]: never }>;
@@ -2484,6 +2447,8 @@ export type AllVizGroupsQuery = {
       __typename?: 'VizGroup';
       vizGroup: string;
       tenant: string;
+      admin: boolean;
+      dashboardView: boolean;
     }>;
   }>;
 };
@@ -2500,6 +2465,7 @@ export type VizGroupsByTenantQuery = {
       __typename?: 'VizGroup';
       vizGroup: string;
       tenant: string;
+      admin: boolean;
     }>;
   } | null;
 };
@@ -2653,4 +2619,15 @@ export type GetPublishedQueryQuery = {
     publishedQuery: string;
     config: { __typename?: 'PublishedQueryConfig'; sql: string };
   } | null;
+};
+
+export type HasVizGroupScopeQueryVariables = Exact<{
+  tenant: Scalars['String']['input'];
+  vizGroup: Scalars['String']['input'];
+  scope: Scalars['String']['input'];
+}>;
+
+export type HasVizGroupScopeQuery = {
+  __typename?: 'Query';
+  vizGroup?: { __typename?: 'VizGroup'; hasScopes: boolean } | null;
 };

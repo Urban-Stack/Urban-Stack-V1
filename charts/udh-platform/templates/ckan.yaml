@@ -37,6 +37,7 @@ spec:
       siteId: {{ .Values.ckan.siteId }}
       siteTitle: {{ .Values.ckan.siteTitle }}
       ingress:
+        ingressClassName: nginx
         hostname: {{ include "data-hub.ckan.hostname" . }}
         annotations: {{ .Values.ckan.ingress.annotations | default (dict) | toYaml | nindent 10 }} # TLS is default enabled in the chart
       image:

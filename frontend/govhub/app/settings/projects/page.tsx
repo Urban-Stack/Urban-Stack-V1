@@ -2,24 +2,21 @@ import { mkMetadata } from '@/app/meta';
 import ProjectList from '@/app/settings/projects/ProjectList';
 import React from 'react';
 import CreateProjectButton from '@/app/settings/projects/_create/CreateProjectButton';
-import {
-  canCreateProject,
-  projectPermissionMap,
-} from '@/app/_lib/resource-api/permission/scope';
-import { GetAllTenantAndProjectScopes } from '@/app/_lib/resource-api/graphql/tenant';
 import AppSearchBar from '@/app/_component/searchbar/AppSearchBar';
 import { SEARCH_PARAMS } from '@/app/settings/projects/common';
+import { requireTenant } from '@/app/_lib/resource-api/legacy';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
 
 export const generateMetadata = mkMetadata({
   pageName: 'Projekte',
 });
 
 const ProjectSettingsPage = async () => {
-  const scopes = await GetAllTenantAndProjectScopes();
-
-  const projectScopeMap = projectPermissionMap(scopes) ?? [];
-
-  const showProjectCreateButton = canCreateProject(scopes);
+  const tenant = await requireTenant();
+  const showProjectCreateButton = await queryHasTenantScope(
+    tenant,
+    'project:admin',
+  );
 
   return (
     <div className='h-full flex flex-col'>
@@ -39,10 +36,7 @@ const ProjectSettingsPage = async () => {
         className='mb-4'
       />
       <div className='flex flex-col flex-grow justify-center'>
-        <ProjectList
-          projectPermissions={projectScopeMap}
-          canCreateProject={showProjectCreateButton}
-        />
+        <ProjectList canCreateProject={showProjectCreateButton} />
       </div>
     </div>
   );

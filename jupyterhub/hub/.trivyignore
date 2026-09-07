@@ -14,3 +14,12 @@ CVE-2026-8376
 CVE-2026-42496
 # ssh is not used
 CVE-2026-55200
+# python version is not installed
+CVE-2019-16224
+CVE-2019-16225
+CVE-2019-16227
+# perl is not used
+CVE-2026-13221
+CVE-2026-57433
+# no user supplied xml
+CVE-2026-6653

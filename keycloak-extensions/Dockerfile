@@ -1,4 +1,6 @@
 ARG REGISTRY_MIRROR_LIB=""
+# renovate: datasource=docker depName=keycloak/keycloak
+ARG KEYCLOAK_VERSION=26.7.2
 
 FROM ${REGISTRY_MIRROR_LIB}maven:3.9.15-eclipse-temurin-21 AS java-build
 
@@ -10,9 +12,8 @@ COPY theme/pom.xml /project/
 RUN mvn package ; rm -r target/
 
 COPY theme /project/
-# renovate: datasource=docker depName=bitnamicharts/keycloak
-ARG KEYCLOAK_CHART_VERSION=24.3.2
-RUN ./generate-account-admin.sh $KEYCLOAK_CHART_VERSION && mvn package && cp target/*.jar /target
+ARG KEYCLOAK_VERSION
+RUN ./generate-account-admin.sh $KEYCLOAK_VERSION && mvn package && cp target/*.jar /target
 
 FROM ${REGISTRY_MIRROR_LIB}maven:3.9.15-eclipse-temurin-21 AS kc-frontend-build
 

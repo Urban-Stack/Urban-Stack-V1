@@ -6,12 +6,8 @@ import AppDashboardContainer from '@/app/dashboards/[slug]/AppDashboardContainer
 import DeleteDashboardButton from '@/app/dashboards/[slug]/DeleteDashboardButton';
 import { slugDetails } from '@/app/_lib/superset/util';
 import { twMerge } from 'tailwind-merge';
-import { GetAllTenantAndProjectScopes } from '@/app/_lib/resource-api/graphql/tenant';
-import {
-  hasScopeForVizGroup,
-  vizGroupPermissionMap,
-} from '@/app/_lib/resource-api/permission/scope';
 import { notFound } from 'next/navigation';
+import { queryHasVizGroupScope } from '@/app/_lib/resource-api/graphql/vizGroups';
 
 export const generateMetadata = mkMetadata({
   pageName: ({ slug }) => `Dashboard ${slug}`,
@@ -34,25 +30,21 @@ const DashboardPage = async ({
   const slug = (await params).slug;
   const editMode = (await searchParams).edit === 'true';
   const dashboardId = slugDetails(slug);
-  const scopes = await GetAllTenantAndProjectScopes();
-  const scopeMap = vizGroupPermissionMap(scopes);
 
-  const canSeeDashboard = hasScopeForVizGroup(
-    scopeMap,
-    'dashboard:view',
-    dashboardId?.vizGroup ?? '',
+  const canSeeDashboard = await queryHasVizGroupScope(
     dashboardId?.tenant ?? '',
+    dashboardId?.vizGroup ?? '',
+    'dashboard:view',
   );
 
   if (!canSeeDashboard) {
     notFound();
   }
 
-  const canDeleteDashboard = hasScopeForVizGroup(
-    scopeMap,
-    'viz-group:admin',
-    dashboardId?.vizGroup ?? '',
+  const canDeleteDashboard = await queryHasVizGroupScope(
     dashboardId?.tenant ?? '',
+    dashboardId?.vizGroup ?? '',
+    'viz-group:admin',
   );
 
   return (

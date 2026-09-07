@@ -5,27 +5,18 @@ import { requireTenant } from '@/app/_lib/resource-api/legacy';
 import { fromAllVizGroups } from '@/app/_lib/resource-api/viz-groups/vizGroups';
 import { query } from '@/app/_lib/resource-api/client';
 import { ALL_VIZ_GROUPS } from '@/app/_lib/resource-api/graphql/vizGroups';
-import { GetAllTenantAndProjectScopes } from '@/app/_lib/resource-api/graphql/tenant';
-import {
-  hasScopeForTenant,
-  tenantPermissionMap,
-  vizGroupPermissionMap,
-} from '@/app/_lib/resource-api/permission/scope';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
 
 export const generateMetadata = mkMetadata({ pageName: 'Dashboards' });
 
 const DashboardsPage = async () => {
   const tenant = await requireTenant();
-  const scopes = await GetAllTenantAndProjectScopes();
-  const vizGroupScopeMap = vizGroupPermissionMap(scopes);
-  const tenantScopeMap = tenantPermissionMap(scopes);
-  const canCreateDashboard = hasScopeForTenant(
-    tenantScopeMap,
-    'viz-group:admin',
+  const canCreateDashboard = await queryHasTenantScope(
     tenant,
+    'viz-group:admin',
   );
 
-  const vizGroups = await query({
+  const { vizGroups, adminMap, dashboardViewMap } = await query({
     query: ALL_VIZ_GROUPS,
   }).then(fromAllVizGroups);
 
@@ -34,7 +25,8 @@ const DashboardsPage = async () => {
       supersetUri={getPublicEnv('SUPERSET_URI')}
       canCreateDashboard={canCreateDashboard}
       vizGroups={vizGroups}
-      vizGroupScopeMap={vizGroupScopeMap}
+      adminMap={adminMap}
+      dashboardViewMap={dashboardViewMap}
     />
   );
 };

@@ -4,11 +4,7 @@ import { fetchAllProjects } from '@/app/_lib/resource-api/graphql/project';
 import { SEARCH_PARAMS } from '@/app/filemanager/_internal/common';
 import BucketSelector from './_internal/BucketSelector';
 import BucketContent from '@/app/filemanager/_internal/BucketContent';
-import { GetAllTenantAndProjectScopes } from '../_lib/resource-api/graphql/tenant';
-import {
-  isTenantAdmin,
-  projectPermissionMap,
-} from '../_lib/resource-api/permission/scope';
+import { queryHasTenantScope } from '../_lib/resource-api/graphql/tenant';
 import { requireTenant } from '../_lib/resource-api/legacy';
 import { mkMetadata } from '@/app/meta';
 
@@ -19,12 +15,10 @@ const FileManagerPage = async ({
 }: {
   searchParams: Promise<Partial<typeof SEARCH_PARAMS>>;
 }) => {
-  const projects = toProjects(await fetchAllProjects());
+  const { projects, adminMap } = toProjects(await fetchAllProjects());
   const bucket = (await searchParams).bucket;
-  const scopes = await GetAllTenantAndProjectScopes();
   const tenant = await requireTenant();
-  const projectPermissions = projectPermissionMap(scopes);
-  const canCreateProject = isTenantAdmin(scopes, tenant);
+  const canCreateProject = await queryHasTenantScope(tenant, 'project:admin');
 
   return (
     <main className='flex h-full flex-col items-center'>
@@ -35,12 +29,7 @@ const FileManagerPage = async ({
         {projects.length > 0 ? (
           <>
             <BucketSelector projects={projects} />
-            {bucket && (
-              <BucketContent
-                bucket={bucket}
-                projectPermissions={projectPermissions}
-              />
-            )}
+            {bucket && <BucketContent bucket={bucket} adminMap={adminMap} />}
           </>
         ) : (
           <FallbackNoProjects canCreateProject={canCreateProject} />

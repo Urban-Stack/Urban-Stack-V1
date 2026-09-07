@@ -1,5 +1,6 @@
 {{- if .Values.objectStorage.enabled -}}
 {{ $name := "citytools" -}}
+{{ $fullName := printf "%s-%s" (include "common.names.fullname" .) $name -}}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,16 +24,23 @@ spec:
         image: {{ include "udh-platform.images.image" (dict "imageRoot" .Values.citytools.image "global" .Values.global) }}
         imagePullPolicy: {{ .Values.citytools.image.pullPolicy }}
         ports:
-          - containerPort: 3000
+          - containerPort: 80
             name: http
         resources: {{- toYaml .Values.citytools.resources | nindent 10 }}
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx/conf.d
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: {{ $fullName }}
 
 ---
-{{ $serviceName := printf "%s-%s" (include "common.names.fullname" .) $name -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $serviceName }}
+  name: {{ $fullName }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: {{ $name }}
 spec:
@@ -42,6 +50,15 @@ spec:
     targetPort: http
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
     app.kubernetes.io/component: {{ $name }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+data:
+  zdummy.conf: ""
 ---
 {{ $host := include "data-hub.citytools.hostname" . -}}
 apiVersion: networking.k8s.io/v1
@@ -54,11 +71,12 @@ metadata:
     {{- include "udh.ingress.annotations" (dict "annotations" .Values.citytools.ingress.annotations "context" .) | nindent 4 }}
     nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
 spec:
+  ingressClassName: nginx
   rules:
     - host: {{ $host | quote }}
       http:
         paths:
-          - backend: {{- include "common.ingress.backend" (dict "serviceName"  $serviceName "servicePort" "http" "context" .) | nindent 14 }}
+          - backend: {{- include "common.ingress.backend" (dict "serviceName"  $fullName "servicePort" "http" "context" .) | nindent 14 }}
             pathType: Prefix
             path: /
   tls:

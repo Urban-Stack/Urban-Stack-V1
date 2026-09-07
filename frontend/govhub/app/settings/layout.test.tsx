@@ -5,10 +5,7 @@ import { usePathname } from 'next/navigation';
 import React from 'react';
 import { getPublicEnv } from '@/app/_lib/env';
 import SettingsSidebar from '@/app/settings/SettingsSidebar';
-import {
-  AllTenantAndProjectScopes,
-  GetAllTenantAndProjectScopes,
-} from '@/app/_lib/resource-api/graphql/tenant';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
 import { requireTenant } from '@/app/_lib/resource-api/legacy';
 
 const TEST_KEYCLOAK_URL = 'https://keycloak.example.com';
@@ -25,11 +22,10 @@ jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
 }));
 
-const getScopesMock: FuncMock<typeof GetAllTenantAndProjectScopes> =
-  GetAllTenantAndProjectScopes as unknown as jest.Mock;
+const queryHasTenantScopeMock = queryHasTenantScope as unknown as jest.Mock;
 
 jest.mock('../_lib/resource-api/graphql/tenant', () => ({
-  GetAllTenantAndProjectScopes: jest.fn(),
+  queryHasTenantScope: jest.fn(),
 }));
 
 jest.mock('@/app/_lib/resource-api/legacy', () => ({
@@ -42,33 +38,8 @@ const requireTenantMock = requireTenant as unknown as FuncMock<
 beforeEach(() => {
   getPublicEnvMock.mockReset();
   usePathnameMock.mockReset();
-  getScopesMock.mockReset();
   requireTenantMock.mockReset();
-
-  getScopesMock.mockResolvedValue({
-    data: {
-      tenants: [
-        {
-          tenant: 'test-tenant',
-          scopes: {
-            all: [],
-            granted: ['tenant:admin'],
-          },
-          projects: [],
-          groups: [
-            {
-              group: 'test-group',
-              scopes: {
-                all: [],
-                granted: ['group:admin'],
-              },
-            },
-          ],
-        },
-      ],
-    },
-  } as unknown as AllTenantAndProjectScopes);
-
+  queryHasTenantScopeMock.mockResolvedValue(true);
   requireTenantMock.mockResolvedValue('test-tenant');
 });
 

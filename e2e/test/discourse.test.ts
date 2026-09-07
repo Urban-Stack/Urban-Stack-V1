@@ -50,7 +50,7 @@ test.describe('Discourse', () => {
 		await page.goto(`${DISCOURSE}new-topic?category=${category}`);
 		await page.waitForTimeout(2000);
 		await page.getByPlaceholder('Gib einen Titel ein').fill(topic);
-		await page.getByText('optionale Schlagwörter').click();
+		await page.getByText('Optional tags').click();
 		for (const tag of tags) {
 			await page.getByRole('searchbox', { name: 'Suchen oder erstellen' }).fill(tag);
 			await page.getByRole('menuitemradio', { name: tag }).click();
@@ -99,6 +99,7 @@ test.describe('Discourse', () => {
 			password: DATA_HUB_ADMIN_PASSWORD
 		});
 		await page.getByRole('button', { name: 'Neue Kategorie' }).click();
+		await page.getByRole('button', { name: 'Diskussion Eine Standardkategorie' }).click();
 		await page
 			.getByRole('textbox', { name: 'Name der Kategorie' })
 			.fill(`subcategory for ${tenantPostfix}`);
@@ -106,7 +107,7 @@ test.describe('Discourse', () => {
 		await page.getByPlaceholder('Suchen …').fill(tenantName);
 		await page.getByRole('menuitemradio', { name: tenantName, exact: true }).click();
 		await page.getByRole('button', { name: 'Kategorie erstellen' }).click();
-		await expect(page.getByRole('button', { name: 'Kategorie löschen' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Bearbeiten: subcategory for' })).toBeVisible();
 		await page
 			.getByRole('textbox', { name: 'Name der Kategorie' })
 			.fill(`subcategory for ${tenantPostfix} 2`);
@@ -201,7 +202,7 @@ test.describe('Discourse', () => {
 		await memberPage.getByPlaceholder('Gib einen Titel ein').fill(testTopic);
 		await memberPage.locator('.ProseMirror').fill('Hey everyone, this is my very first topic');
 		// make sure everyone can create tags
-		await memberPage.getByText('optionale Schlagwörter').click();
+		await memberPage.getByText('Optional tags').click();
 		await memberPage
 			.getByPlaceholder('Suchen oder erstellen …')
 			.fill(`schlagwort ${myTenantPostfix}`);
@@ -463,7 +464,7 @@ test.describe('Discourse', () => {
 			'discourse-create-topic-change-category',
 			page.getByLabel('Filtern nach: Allgemein')
 		);
-		await docsScreenshot('discourse-create-topic-tags', page.getByText('optionale Schlagwörter'));
+		await docsScreenshot('discourse-create-topic-tags', page.getByText('Optional tags'));
 		await page
 			.getByRole('textbox', { name: 'Schreib hier. Verwende' })
 			.fill('**Fett** *Kursiv* [Ein Link](https://example.com)\n> Zitat\n\n`Vorformatierter Text`');

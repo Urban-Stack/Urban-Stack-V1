@@ -1,17 +1,17 @@
 diff --git a/config/site_settings.yml b/config/site_settings.yml
-index 115d93da8d..16581c2481 100644
+index f35e4b5765e..b30865852d2 100644
 --- a/config/site_settings.yml
 +++ b/config/site_settings.yml
-@@ -353,7 +353,7 @@ basic:
+@@ -401,7 +401,7 @@ basic:
    desktop_category_page_style:
      client: true
      enum: "CategoryPageStyle"
 -    default: "categories_and_latest_topics"
 +    default: "categories_boxes"
-     area: "interface"
+     area: "categories|interface"
    mobile_category_page_style:
      client: true
-@@ -1016,7 +1016,7 @@ users:
+@@ -1117,7 +1117,7 @@ users:
      area: "users"
    prioritize_username_in_ux:
      client: true
@@ -20,7 +20,7 @@ index 115d93da8d..16581c2481 100644
      area: "users"
    prioritize_full_name_in_ux:
      client: true
-@@ -1504,7 +1504,7 @@ posting:
+@@ -1643,7 +1643,7 @@ posting:
      area: "posts_and_topics"
    display_name_on_posts:
      client: true

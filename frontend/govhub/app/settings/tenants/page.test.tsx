@@ -5,10 +5,7 @@ import { FuncMock } from '@/app/_test/utils';
 import { TenantSettings } from '@/app/_lib/resource-api/graphql/attributes';
 import TenantSettingsContent from '@/app/settings/tenants/TenantSettingsContent';
 import { query } from '@/app/_lib/resource-api/client';
-import {
-  AllTenantAndProjectScopes,
-  GetAllTenantAndProjectScopes,
-} from '@/app/_lib/resource-api/graphql/tenant';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
 import { notFound } from 'next/navigation';
 
 const requireTenantMock = requireTenant as unknown as FuncMock<
@@ -29,7 +26,7 @@ jest.mock('@/app/settings/tenants/TenantSettingsContent', () =>
 );
 
 jest.mock('@/app/_lib/resource-api/graphql/tenant', () => ({
-  GetAllTenantAndProjectScopes: jest.fn(),
+  queryHasTenantScope: jest.fn(),
 }));
 
 const notFoundMock = notFound as jest.MockedFunction<() => never>;
@@ -37,8 +34,7 @@ jest.mock('next/navigation', () => ({
   notFound: jest.fn(),
 }));
 
-const queryScopesMock: FuncMock<typeof GetAllTenantAndProjectScopes> =
-  GetAllTenantAndProjectScopes as unknown as jest.Mock;
+const queryHasTenantScopeMock = queryHasTenantScope as unknown as jest.Mock;
 
 const mockTenantSettings = {
   data: {
@@ -51,28 +47,7 @@ const mockTenantSettings = {
 beforeEach(() => {
   requireTenantMock.mockResolvedValueOnce('tenant-1');
   mockQuery.mockResolvedValue(mockTenantSettings as TenantSettings);
-  queryScopesMock.mockResolvedValue({
-    data: {
-      tenants: [
-        {
-          tenant: 'tenant-1',
-          scopes: {
-            all: ['tenant:admin'],
-            granted: ['tenant:admin'],
-          },
-          projects: [
-            {
-              project: 'test-project',
-              scopes: {
-                all: ['project:admin'],
-                granted: ['project:admin'],
-              },
-            },
-          ],
-        },
-      ],
-    },
-  } as unknown as AllTenantAndProjectScopes);
+  queryHasTenantScopeMock.mockResolvedValue(true);
 });
 
 describe('TenantSettingsPage', () => {
@@ -86,28 +61,7 @@ describe('TenantSettingsPage', () => {
   });
 
   it('redirects away from page if permissions for the current tenant are not sufficient', async () => {
-    queryScopesMock.mockResolvedValueOnce({
-      data: {
-        tenants: [
-          {
-            tenant: 'tenant-1',
-            scopes: {
-              all: ['tenant:read'],
-              granted: ['tenant:read'],
-            },
-            projects: [
-              {
-                project: 'test-project',
-                scopes: {
-                  all: ['project:admin'],
-                  granted: ['project:admin'],
-                },
-              },
-            ],
-          },
-        ],
-      },
-    } as unknown as AllTenantAndProjectScopes);
+    queryHasTenantScopeMock.mockResolvedValueOnce(false);
 
     render(await TenantSettingsPage());
 

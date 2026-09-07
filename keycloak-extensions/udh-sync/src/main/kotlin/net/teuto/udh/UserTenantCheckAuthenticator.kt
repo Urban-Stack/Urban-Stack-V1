@@ -6,7 +6,7 @@ import org.keycloak.authentication.AuthenticationFlowError
 import org.keycloak.authentication.Authenticator
 import org.keycloak.authentication.authenticators.access.DenyAccessAuthenticatorFactory
 import org.keycloak.authorization.common.DefaultEvaluationContext
-import org.keycloak.authorization.common.UserModelIdentity
+import org.keycloak.authorization.identity.UserModelIdentity
 import org.keycloak.models.AuthenticatorConfigModel
 import org.keycloak.models.KeycloakSession
 import org.keycloak.models.RealmModel

@@ -40,19 +40,22 @@ base_url = f"{KEYCLOAK_REALM_URL}/data-hub"
 def sync(current_path: str, typ: str, rest, headers):
   if typ == "attributes":
     logging.info(f'patching attributes of {current_path}')
-    requests.patch(f"{base_url}/{current_path}/attributes", headers=headers, json=rest).raise_for_status()
+    path_after_base = f"/{current_path}/attributes".replace('//','/')
+    requests.patch(f"{base_url}{path_after_base}", headers=headers, json=rest).raise_for_status()
     return
   elif typ == "members":
     # handled separately
     return
-  res = requests.get(f"{base_url}/{current_path}/{typ}", headers=headers)
+  path_after_base = f"/{current_path}/{typ}".replace('//','/')
+  res = requests.get(f"{base_url}{path_after_base}", headers=headers)
   current = set(res.json())
   desired = set(rest.keys())
   logging.debug(f'at {current_path}: {current} vs {desired}')
   # don't delete resources
   for to_create in desired - current:
-    logging.info(f'creating {current_path}/{typ}/{to_create}')
-    requests.put(f"{base_url}/{current_path}/{typ}/{to_create}", headers=headers).raise_for_status()
+    path_after_base = f"/{current_path}/{typ}/{to_create}".replace('//','/')
+    logging.info(f'creating {path_after_base}')
+    requests.put(f"{base_url}{path_after_base}", headers=headers).raise_for_status()
   for subname, subresources in rest.items():
     for subtyp, subrest in subresources.items():
       sync(f"{current_path}/{typ}/{subname}", subtyp, subrest, headers)

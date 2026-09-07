@@ -9,8 +9,6 @@ const createUser = async (page: Page, userInfo: TestUserCreation) => {
 	await page.goto(`${KEYCLOAK}realms/citizenhub/account`);
 	await page.getByRole('button', { name: 'Registrieren' }).click();
 	await page.getByRole('textbox', { name: 'E-Mail:' }).fill(userInfo.email);
-	await page.getByRole('textbox', { name: 'Passwort:' }).fill(DATA_HUB_ADMIN_PASSWORD);
-	await page.getByRole('textbox', { name: 'Passwort bestätigen' }).fill(DATA_HUB_ADMIN_PASSWORD);
 	await page.getByRole('textbox', { name: 'Vorname' }).fill(userInfo.firstName);
 	await page.getByRole('textbox', { name: 'Nachname' }).fill(userInfo.lastName);
 	// terms and conditions
@@ -38,6 +36,9 @@ const createUser = async (page: Page, userInfo: TestUserCreation) => {
 	expect(link).toBeTruthy();
 
 	await page.goto(link);
+	await page.getByRole('textbox', { name: 'Neues Passwort' }).fill(DATA_HUB_ADMIN_PASSWORD);
+	await page.getByRole('textbox', { name: 'Passwort bestätigen' }).fill(DATA_HUB_ADMIN_PASSWORD);
+	await page.getByRole('button', { name: 'Absenden' }).click();
 
 	await page.getByRole('button', { name: `${userInfo.firstName} ${userInfo.lastName}` }).click();
 	await page.getByRole('menuitem', { name: 'Abmelden' }).click();

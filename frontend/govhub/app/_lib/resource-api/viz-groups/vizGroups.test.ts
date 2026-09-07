@@ -60,22 +60,67 @@ describe('fromAllVizGroups', () => {
       data: {
         tenants: [
           {
+            tenant: 'tenant1',
             vizGroups: [
-              { tenant: 'tenant1', vizGroup: 'vizGroup1' },
-              { tenant: 'tenant1', vizGroup: 'vizGroup2' },
+              {
+                tenant: 'tenant1',
+                vizGroup: 'vizGroup1',
+                admin: true,
+                dashboardView: true,
+              },
+              {
+                tenant: 'tenant1',
+                vizGroup: 'vizGroup2',
+                admin: false,
+                dashboardView: true,
+              },
             ],
           },
-          { vizGroups: [] },
-          { vizGroups: [{ tenant: 'tenant2', vizGroup: 'vizGroup3' }] },
+          { tenant: 'tenantX', vizGroups: [] },
+          {
+            tenant: 'tenant2',
+            vizGroups: [
+              {
+                tenant: 'tenant2',
+                vizGroup: 'vizGroup3',
+                admin: true,
+                dashboardView: false,
+              },
+            ],
+          },
         ],
       },
     } as unknown as AllVizGroups;
 
-    const expected: VizGroup[] = [
-      { name: 'vizGroup1', tenant: 'tenant1', _tag: 'VizGroup' },
-      { name: 'vizGroup2', tenant: 'tenant1', _tag: 'VizGroup' },
-      { name: 'vizGroup3', tenant: 'tenant2', _tag: 'VizGroup' },
-    ];
+    const expected = {
+      vizGroups: [
+        { name: 'vizGroup1', tenant: 'tenant1', _tag: 'VizGroup' },
+        { name: 'vizGroup2', tenant: 'tenant1', _tag: 'VizGroup' },
+        { name: 'vizGroup3', tenant: 'tenant2', _tag: 'VizGroup' },
+      ],
+      adminMap: new Map([
+        [
+          'tenant1',
+          new Map([
+            ['vizGroup1', true],
+            ['vizGroup2', false],
+          ]),
+        ],
+        ['tenantX', new Map([])],
+        ['tenant2', new Map([['vizGroup3', true]])],
+      ]),
+      dashboardViewMap: new Map([
+        [
+          'tenant1',
+          new Map([
+            ['vizGroup1', true],
+            ['vizGroup2', true],
+          ]),
+        ],
+        ['tenantX', new Map([])],
+        ['tenant2', new Map([['vizGroup3', false]])],
+      ]),
+    };
 
     const vizGroups = fromAllVizGroups(result);
 
@@ -85,7 +130,11 @@ describe('fromAllVizGroups', () => {
   it('returns an empty array if no tenants exist', () => {
     const result = { data: { tenants: [] } } as unknown as AllVizGroups;
 
-    expect(fromAllVizGroups(result)).toEqual([]);
+    expect(fromAllVizGroups(result)).toEqual({
+      vizGroups: [],
+      adminMap: new Map(),
+      dashboardViewMap: new Map(),
+    });
   });
 });
 

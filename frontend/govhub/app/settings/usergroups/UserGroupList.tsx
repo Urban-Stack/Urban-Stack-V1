@@ -5,20 +5,19 @@ import SettingsFallbackWrapper, {
   FallbackContext,
 } from '@/app/settings/_common/SettingsFallbackWrapper';
 import UserGroupTable from '@/app/settings/usergroups/_internal/UserGroupTable';
-import { AllTenantAndProjectScopes } from '@/app/_lib/resource-api/graphql/tenant';
 
 type UserGroupListProps = {
   keycloakBaseUrl: string;
   tenant: string;
   isTenantAdmin?: boolean;
-  scopes: AllTenantAndProjectScopes;
+  isGroupAdminInAnyTenant?: boolean;
 };
 
 const UserGroupList = async ({
   keycloakBaseUrl,
-  scopes,
   tenant,
   isTenantAdmin = false,
+  isGroupAdminInAnyTenant = false,
 }: UserGroupListProps) => {
   const result = await queryAllUserGroups();
   const userGroups = toUserGroups(result);
@@ -44,9 +43,9 @@ const UserGroupList = async ({
         <UserGroupTable
           userGroups={userGroups}
           keycloakBaseUrl={keycloakBaseUrl}
-          scopes={scopes}
           tenant={tenant}
           isTenantAdmin={isTenantAdmin}
+          isGroupAdminInAnyTenant={isGroupAdminInAnyTenant}
         />
       </div>
     </SettingsFallbackWrapper>

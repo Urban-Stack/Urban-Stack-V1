@@ -3,3 +3,6 @@ CVE-2026-22184
 
 # 32-bit only
 CVE-2026-31789
+
+# dependency of npm, not exploitable
+CVE-2026-59873

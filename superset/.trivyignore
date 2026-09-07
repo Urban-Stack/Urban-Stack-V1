@@ -35,6 +35,11 @@ CVE-2026-53215
 
 # ssh is not used
 CVE-2026-55200
+CVE-2026-60002
 
 # DBUS internal
 CVE-2026-58016
+
+# perl is not used
+CVE-2026-13221
+CVE-2026-57433

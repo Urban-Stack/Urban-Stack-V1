@@ -1802,10 +1802,12 @@ export type AllProjectsQuery = {
   __typename?: 'Query';
   tenants: Array<{
     __typename?: 'Tenant';
+    tenant: string;
     projects: Array<{
       __typename?: 'Project';
       tenant: string;
       project: string;
+      admin: boolean;
     }>;
   }>;
 };
@@ -1852,6 +1854,17 @@ export type GetVizGroupsPermissionsQuery = {
       }> | null;
     }> | null;
   } | null;
+};
+
+export type HasProjectScopeQueryVariables = Exact<{
+  tenant: Scalars['String']['input'];
+  project: Scalars['String']['input'];
+  scope: Scalars['String']['input'];
+}>;
+
+export type HasProjectScopeQuery = {
+  __typename?: 'Query';
+  project?: { __typename?: 'Project'; hasScopes: boolean } | null;
 };
 
 export type CreateProjectMutationVariables = Exact<{
@@ -2278,64 +2291,14 @@ export type GetTenantNameQuery = {
   tenant?: { __typename?: 'Tenant'; attribute?: string | null } | null;
 };
 
-export type GetAllTenantAndProjectScopesQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetAllTenantAndProjectScopesQuery = {
-  __typename?: 'Query';
-  tenants: Array<{
-    __typename?: 'Tenant';
-    tenant: string;
-    scopes: {
-      __typename?: 'Scopes';
-      all: Array<string>;
-      granted: Array<string>;
-    };
-    projects: Array<{
-      __typename?: 'Project';
-      project: string;
-      scopes: {
-        __typename?: 'Scopes';
-        all: Array<string>;
-        granted: Array<string>;
-      };
-    }>;
-    groups: Array<{
-      __typename?: 'Group';
-      group: string;
-      scopes: {
-        __typename?: 'Scopes';
-        all: Array<string>;
-        granted: Array<string>;
-      };
-    }>;
-    vizGroups: Array<{
-      __typename?: 'VizGroup';
-      vizGroup: string;
-      scopes: {
-        __typename?: 'Scopes';
-        all: Array<string>;
-        granted: Array<string>;
-      };
-    }>;
-  }>;
-};
-
-export type GetTenantScopesQueryVariables = Exact<{
+export type HasTenantScopesQueryVariables = Exact<{
   tenant: Scalars['String']['input'];
+  scope: Scalars['String']['input'];
 }>;
 
-export type GetTenantScopesQuery = {
+export type HasTenantScopesQuery = {
   __typename?: 'Query';
-  tenant?: {
-    __typename?: 'Tenant';
-    scopes: {
-      __typename?: 'Scopes';
-      all: Array<string>;
-      granted: Array<string>;
-    };
-  } | null;
+  tenant?: { __typename?: 'Tenant'; hasScopes: boolean } | null;
 };
 
 export type TenantMembershipsQueryVariables = Exact<{ [key: string]: never }>;
@@ -2487,6 +2450,8 @@ export type AllVizGroupsQuery = {
       __typename?: 'VizGroup';
       vizGroup: string;
       tenant: string;
+      admin: boolean;
+      dashboardView: boolean;
     }>;
   }>;
 };
@@ -2503,6 +2468,7 @@ export type VizGroupsByTenantQuery = {
       __typename?: 'VizGroup';
       vizGroup: string;
       tenant: string;
+      admin: boolean;
     }>;
   } | null;
 };
@@ -2656,6 +2622,17 @@ export type GetPublishedQueryQuery = {
     publishedQuery: string;
     config: { __typename?: 'PublishedQueryConfig'; sql: string };
   } | null;
+};
+
+export type HasVizGroupScopeQueryVariables = Exact<{
+  tenant: Scalars['String']['input'];
+  vizGroup: Scalars['String']['input'];
+  scope: Scalars['String']['input'];
+}>;
+
+export type HasVizGroupScopeQuery = {
+  __typename?: 'Query';
+  vizGroup?: { __typename?: 'VizGroup'; hasScopes: boolean } | null;
 };
 
 export const MutateHelpdeskTicketDocument = {
@@ -4904,6 +4881,7 @@ export const AllProjectsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'tenant' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'projects' },
@@ -4917,6 +4895,27 @@ export const AllProjectsDocument = {
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'project' },
+                      },
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'admin' },
+                        name: { kind: 'Name', value: 'hasScopes' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'scopes' },
+                            value: {
+                              kind: 'ListValue',
+                              values: [
+                                {
+                                  kind: 'StringValue',
+                                  value: 'project:admin',
+                                  block: false,
+                                },
+                              ],
+                            },
+                          },
+                        ],
                       },
                     ],
                   },
@@ -5140,6 +5139,114 @@ export const GetVizGroupsPermissionsDocument = {
 } as unknown as DocumentNode<
   GetVizGroupsPermissionsQuery,
   GetVizGroupsPermissionsQueryVariables
+>;
+export const HasProjectScopeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'HasProjectScope' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'tenant' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'project' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'scope' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'project' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'tenant' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'tenant' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'project' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'project' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'hasScopes' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'scopes' },
+                      value: {
+                        kind: 'ListValue',
+                        values: [
+                          {
+                            kind: 'Variable',
+                            name: { kind: 'Name', value: 'scope' },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  HasProjectScopeQuery,
+  HasProjectScopeQueryVariables
 >;
 export const CreateProjectDocument = {
   kind: 'Document',
@@ -7665,148 +7772,33 @@ export const GetTenantNameDocument = {
     },
   ],
 } as unknown as DocumentNode<GetTenantNameQuery, GetTenantNameQueryVariables>;
-export const GetAllTenantAndProjectScopesDocument = {
+export const HasTenantScopesDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetAllTenantAndProjectScopes' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'tenants' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'tenant' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'scopes' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'all' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'granted' },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'projects' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'project' },
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'scopes' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'all' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'granted' },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'groups' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'group' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'scopes' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'all' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'granted' },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'vizGroups' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'vizGroup' },
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'scopes' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'all' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'granted' },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  GetAllTenantAndProjectScopesQuery,
-  GetAllTenantAndProjectScopesQueryVariables
->;
-export const GetTenantScopesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetTenantScopes' },
+      name: { kind: 'Name', value: 'HasTenantScopes' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
           variable: {
             kind: 'Variable',
             name: { kind: 'Name', value: 'tenant' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'scope' },
           },
           type: {
             kind: 'NonNullType',
@@ -7838,17 +7830,22 @@ export const GetTenantScopesDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'scopes' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'all' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'granted' },
+                  name: { kind: 'Name', value: 'hasScopes' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'scopes' },
+                      value: {
+                        kind: 'ListValue',
+                        values: [
+                          {
+                            kind: 'Variable',
+                            name: { kind: 'Name', value: 'scope' },
+                          },
+                        ],
                       },
-                    ],
-                  },
+                    },
+                  ],
                 },
               ],
             },
@@ -7858,8 +7855,8 @@ export const GetTenantScopesDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  GetTenantScopesQuery,
-  GetTenantScopesQueryVariables
+  HasTenantScopesQuery,
+  HasTenantScopesQueryVariables
 >;
 export const TenantMembershipsDocument = {
   kind: 'Document',
@@ -8826,6 +8823,48 @@ export const AllVizGroupsDocument = {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'tenant' },
                       },
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'admin' },
+                        name: { kind: 'Name', value: 'hasScopes' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'scopes' },
+                            value: {
+                              kind: 'ListValue',
+                              values: [
+                                {
+                                  kind: 'StringValue',
+                                  value: 'viz-group:admin',
+                                  block: false,
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'dashboardView' },
+                        name: { kind: 'Name', value: 'hasScopes' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'scopes' },
+                            value: {
+                              kind: 'ListValue',
+                              values: [
+                                {
+                                  kind: 'StringValue',
+                                  value: 'dashboard:view',
+                                  block: false,
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
                     ],
                   },
                 },
@@ -8892,6 +8931,27 @@ export const VizGroupsByTenantDocument = {
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'tenant' },
+                      },
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'admin' },
+                        name: { kind: 'Name', value: 'hasScopes' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'scopes' },
+                            value: {
+                              kind: 'ListValue',
+                              values: [
+                                {
+                                  kind: 'StringValue',
+                                  value: 'viz-group:admin',
+                                  block: false,
+                                },
+                              ],
+                            },
+                          },
+                        ],
                       },
                     ],
                   },
@@ -9985,4 +10045,112 @@ export const GetPublishedQueryDocument = {
 } as unknown as DocumentNode<
   GetPublishedQueryQuery,
   GetPublishedQueryQueryVariables
+>;
+export const HasVizGroupScopeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'HasVizGroupScope' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'tenant' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'vizGroup' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'scope' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'vizGroup' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'tenant' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'tenant' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'vizGroup' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'vizGroup' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'hasScopes' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'scopes' },
+                      value: {
+                        kind: 'ListValue',
+                        values: [
+                          {
+                            kind: 'Variable',
+                            name: { kind: 'Name', value: 'scope' },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  HasVizGroupScopeQuery,
+  HasVizGroupScopeQueryVariables
 >;

@@ -14,6 +14,7 @@ import { mutate, query } from '@/app/_lib/resource-api/client';
 import { requireTenant } from '@/app/_lib/resource-api/legacy';
 import { PermissionName } from '@/app/_lib/resource-api/util/shared-groups';
 import { reject } from 'lodash';
+import { Scope } from '../permission/scope';
 
 export const ALL_VIZ_GROUPS = graphql(`
   query AllVizGroups {
@@ -22,6 +23,8 @@ export const ALL_VIZ_GROUPS = graphql(`
       vizGroups {
         vizGroup
         tenant
+        admin: hasScopes(scopes: ["viz-group:admin"])
+        dashboardView: hasScopes(scopes: ["dashboard:view"])
       }
     }
   }
@@ -33,6 +36,7 @@ export const VIZ_GROUPS_BY_TENANT = graphql(`
       vizGroups {
         vizGroup
         tenant
+        admin: hasScopes(scopes: ["viz-group:admin"])
       }
     }
   }
@@ -178,6 +182,19 @@ const GET_PUBLISHED_QUERY = graphql(`
     }
   }
 `);
+
+const HAS_VIZ_GROUP_SCOPE = graphql(`
+  query HasVizGroupScope(
+    $tenant: String!
+    $vizGroup: String!
+    $scope: String!
+  ) {
+    vizGroup(tenant: $tenant, vizGroup: $vizGroup) {
+      hasScopes(scopes: [$scope])
+    }
+  }
+`);
+
 /* c8 ignore end */
 
 export type AllVizGroups = ApolloClient.QueryResult<
@@ -335,6 +352,18 @@ export const querySinglePublishedQuery: (
       name,
     },
   });
+
+export const queryHasVizGroupScope: (
+  tenant: string,
+  vizGroup: string,
+  scope: Scope,
+) => Promise<boolean> = async (tenant, vizGroup, scope) =>
+  (
+    await query({
+      query: HAS_VIZ_GROUP_SCOPE,
+      variables: { tenant, vizGroup, scope },
+    })
+  ).data?.vizGroup?.hasScopes ?? false;
 
 export type DeletePublishedQuery = Awaited<
   ReturnType<typeof mutateDeletePublishedQuery>

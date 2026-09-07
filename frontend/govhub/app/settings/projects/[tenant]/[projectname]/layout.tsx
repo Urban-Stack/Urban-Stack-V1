@@ -3,15 +3,9 @@ import ProjectTabs from '@/app/settings/projects/[tenant]/[projectname]/ProjectT
 import { capitalize } from 'udp-ui/string';
 import Link from 'next/link';
 import { IcAngleLeft } from 'udp-ui/components';
-import {
-  fetchTenantDisplayName,
-  GetAllTenantAndProjectScopes,
-} from '@/app/_lib/resource-api/graphql/tenant';
-import {
-  hasScopeForProject,
-  projectPermissionMap,
-} from '@/app/_lib/resource-api/permission/scope';
+import { fetchTenantDisplayName } from '@/app/_lib/resource-api/graphql/tenant';
 import { notFound } from 'next/navigation';
+import { queryHasProjectScope } from '@/app/_lib/resource-api/graphql/project';
 
 const ProjectLayout = async ({
   children,
@@ -26,12 +20,10 @@ const ProjectLayout = async ({
   const tenantDisplay =
     (await fetchTenantDisplayName(tenant)) ?? capitalize(tenant);
 
-  const scopes = await GetAllTenantAndProjectScopes();
-
-  const isProjectAdmin = hasScopeForProject(
-    projectPermissionMap(scopes),
-    'project:admin',
+  const isProjectAdmin = await queryHasProjectScope(
+    tenant,
     projectname,
+    'project:admin',
   );
 
   if (!isProjectAdmin) {

@@ -1,10 +1,8 @@
 import { queryByRole, render } from '@testing-library/react';
 import ProjectSettingsPage from '@/app/settings/projects/page';
 import { FuncMock } from '@/app/_test/utils';
-import {
-  AllTenantAndProjectScopes,
-  GetAllTenantAndProjectScopes,
-} from '@/app/_lib/resource-api/graphql/tenant';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
+import { requireTenant } from '@/app/_lib/resource-api/legacy';
 import React from 'react';
 
 jest.mock('@/app/meta', () => ({
@@ -19,8 +17,20 @@ jest.mock('@/app/settings/projects/ProjectList', () =>
   jest.fn(() => <div>list of projects</div>),
 );
 
+jest.mock('@/auth', () => ({
+  auth: jest.fn(),
+}));
+
+jest.mock('@/app/_lib/resource-api/legacy', () => ({
+  requireTenant: jest.fn(),
+}));
+
+const requireTenantMock = requireTenant as unknown as FuncMock<
+  typeof requireTenant
+>;
+
 jest.mock('@/app/_lib/resource-api/graphql/tenant', () => ({
-  GetAllTenantAndProjectScopes: jest.fn(),
+  queryHasTenantScope: jest.fn(),
 }));
 
 jest.mock('@/app/_component/searchbar/AppSearchBar', () => ({
@@ -28,34 +38,12 @@ jest.mock('@/app/_component/searchbar/AppSearchBar', () => ({
   default: jest.fn(() => <div data-testid='mock-project-search-bar' />),
 }));
 
-const queryScopesMock: FuncMock<typeof GetAllTenantAndProjectScopes> =
-  GetAllTenantAndProjectScopes as unknown as jest.Mock;
+const queryHasTenantScopeMock = queryHasTenantScope as unknown as jest.Mock;
 
 describe('snapshot', () => {
   it('renders page as expected', async () => {
-    queryScopesMock.mockResolvedValue({
-      data: {
-        tenants: [
-          {
-            tenant: 'test-tenant',
-            scopes: {
-              all: ['tenant:admin'],
-              granted: ['tenant:admin'],
-            },
-            projects: [
-              {
-                project: 'test-project',
-                scopes: {
-                  all: ['project:admin'],
-                  granted: ['project:admin'],
-                },
-              },
-            ],
-            groups: [],
-          },
-        ],
-      },
-    } as unknown as AllTenantAndProjectScopes);
+    requireTenantMock.mockResolvedValue('test-tenant');
+    queryHasTenantScopeMock.mockResolvedValue(true);
 
     const { container } = render(await ProjectSettingsPage());
     expect(container).toMatchSnapshot();
@@ -64,29 +52,8 @@ describe('snapshot', () => {
 
 describe('user without permissions cannot see create button', () => {
   it('does not show create button without permissions', async () => {
-    queryScopesMock.mockResolvedValue({
-      data: {
-        tenants: [
-          {
-            tenant: 'test-tenant',
-            scopes: {
-              all: [],
-              granted: [],
-            },
-            projects: [
-              {
-                project: 'test-project',
-                scopes: {
-                  all: [],
-                  granted: [],
-                },
-              },
-            ],
-            groups: [],
-          },
-        ],
-      },
-    } as unknown as AllTenantAndProjectScopes);
+    requireTenantMock.mockResolvedValue('test-tenant');
+    queryHasTenantScopeMock.mockResolvedValue(false);
 
     const { container } = render(await ProjectSettingsPage());
 

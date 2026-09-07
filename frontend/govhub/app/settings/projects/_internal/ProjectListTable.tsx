@@ -12,17 +12,13 @@ import {
 import { redirect, useSearchParams } from 'next/navigation';
 import { ProjectsTestIds } from '@/app/settings/projects/testIds';
 import { mkProjectHref, Project } from '@/app/_lib/resource-api/project';
-import {
-  hasScopeForProject,
-  type Scope,
-} from '@/app/_lib/resource-api/permission/scope';
 import { twMerge } from 'tailwind-merge';
 import { UdpBadge } from 'udp-ui/components';
 import { SEARCH_PARAMS } from '@/app/settings/projects/common';
 
 interface ProjectListTableProps {
   projects: Project[];
-  projectPermissions?: Map<string, Scope[]>;
+  adminMap: Map<string, Map<string, boolean>>;
 }
 
 const filterProjects = (projects: Project[], searchTextRaw: string) => {
@@ -36,10 +32,10 @@ const filterProjects = (projects: Project[], searchTextRaw: string) => {
 
 const ProjectListTable: React.FC<ProjectListTableProps> = ({
   projects,
-  projectPermissions = new Map<string, Scope[]>(),
+  adminMap,
 }) => {
-  const isProjectAdmin = (projectName: string) =>
-    hasScopeForProject(projectPermissions, 'project:admin', projectName);
+  const isProjectAdmin = (project: Project) =>
+    adminMap.get(project.tenant)?.get(project.name) ?? false;
   const searchParams = useSearchParams();
   const searchText = searchParams.get(SEARCH_PARAMS.search) ?? '';
   const filteredProjects = filterProjects(projects, searchText);
@@ -58,8 +54,8 @@ const ProjectListTable: React.FC<ProjectListTableProps> = ({
           <ProjectListItem
             key={`${project.tenant}_${project.name}`}
             project={project}
-            disabled={!isProjectAdmin(project.name)}
-            isProjectAdmin={isProjectAdmin(project.name)}
+            disabled={!isProjectAdmin(project)}
+            isProjectAdmin={isProjectAdmin(project)}
           />
         ))}
       </TableBody>

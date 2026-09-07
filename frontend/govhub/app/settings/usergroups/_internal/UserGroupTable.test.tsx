@@ -11,7 +11,6 @@ import {
 } from '@/app/settings/usergroups/actions';
 import { UdpToast } from 'udp-ui/components';
 import { FuncMock } from '@/app/_test/utils';
-import { AllTenantAndProjectScopes } from '@/app/_lib/resource-api/graphql/tenant';
 import { redirect, useSearchParams } from 'next/navigation';
 import { createRender } from 'udp-ui/test-utils';
 import userEvent from '@testing-library/user-event';
@@ -21,31 +20,6 @@ const USER = userEvent.setup();
 const KEYCLOAK_URL = 'https://keycloak.example.com';
 const USER_GROUP = TEST_USER_GROUPS[0];
 const TENANT = 'test-tenant';
-
-const mkScopes = (groupScope: Scope) =>
-  ({
-    data: {
-      tenants: [
-        {
-          tenant: 'test-tenant',
-          scopes: {
-            all: ['tenant:admin'],
-            granted: ['tenant:admin'],
-          },
-          projects: [],
-          groups: [
-            {
-              group: 'test-group',
-              scopes: {
-                all: [groupScope],
-                granted: [groupScope],
-              },
-            },
-          ],
-        },
-      ],
-    },
-  }) as unknown as AllTenantAndProjectScopes;
 
 const UdpToastMock = UdpToast as unknown as jest.Mock;
 const deleteUserGroupMock: FuncMock<typeof deleteUserGroup> =
@@ -95,7 +69,6 @@ beforeEach(() => {
 const renderTable = createRender(UserGroupTable, {
   userGroups: [...TEST_USER_GROUPS],
   keycloakBaseUrl: KEYCLOAK_URL,
-  scopes: mkScopes('group:admin'),
   tenant: TENANT,
   isTenantAdmin: true,
 });
@@ -121,7 +94,11 @@ describe('snapshot', () => {
       ...USER_GROUP,
       ...{ scopes: { granted: ['group:view'] } },
     } as UserGroup;
-    renderTable({ userGroups: [readOnlyGroup], isTenantAdmin: false });
+    renderTable({
+      userGroups: [readOnlyGroup],
+      isTenantAdmin: false,
+      isGroupAdminInAnyTenant: true,
+    });
     const [_thead, tbody] = screen.getAllByRole('rowgroup');
 
     const row = within(tbody).getByRole('row');
@@ -143,15 +120,15 @@ describe('navigation', () => {
   const ADMIN_TEST_CASES = [
     {
       testCase: 'group admin only',
-      props: { scopes: mkScopes('group:admin'), isTenantAdmin: false },
+      props: { isTenantAdmin: false, isGroupAdminInAnyTenant: true },
     },
     {
       testCase: 'tenant admin only',
-      props: { scopes: mkScopes('group:view'), isTenantAdmin: true },
+      props: { isTenantAdmin: true },
     },
     {
       testCase: 'group admin and tenant admin',
-      props: { scopes: mkScopes('group:admin'), isTenantAdmin: true },
+      props: { isTenantAdmin: true },
     },
   ];
 
@@ -243,7 +220,7 @@ describe('navigation', () => {
 
   describe('link', () => {
     it('click on admin area link does not trigger redirect', async () => {
-      renderTable({ scopes: mkScopes('group:admin'), isTenantAdmin: true });
+      renderTable({ isTenantAdmin: true });
 
       const adminAreaLink = screen.getAllByTestId(TestIds.adminAreaLink)[0];
       await USER.click(adminAreaLink);
@@ -252,7 +229,7 @@ describe('navigation', () => {
     });
 
     it('enter on admin area link does not trigger redirect', async () => {
-      renderTable({ scopes: mkScopes('group:admin'), isTenantAdmin: true });
+      renderTable({ isTenantAdmin: true });
 
       const adminAreaLink = screen.getAllByTestId(TestIds.adminAreaLink)[0];
       adminAreaLink.focus();
@@ -329,15 +306,15 @@ describe('columns', () => {
   const ADMIN_SCOPE_TEST_CASES = [
     {
       testCase: 'tenant admin only',
-      props: { scopes: mkScopes('group:read'), isTenantAdmin: true },
+      props: { isTenantAdmin: true },
     },
     {
       testCase: 'group admin only',
-      props: { scopes: mkScopes('group:admin'), isTenantAdmin: false },
+      props: { isTenantAdmin: false, isGroupAdminInAnyTenant: true },
     },
     {
       testCase: 'tenant admin and group admin',
-      props: { scopes: mkScopes('group:admin'), isTenantAdmin: true },
+      props: { isTenantAdmin: true, isGroupAdminInAnyTenant: true },
     },
   ];
 
@@ -373,7 +350,7 @@ describe('columns', () => {
     );
 
     it('does not show shared column if user is neither tenant nor group admin', () => {
-      renderTable({ scopes: mkScopes('group:read'), isTenantAdmin: false });
+      renderTable({ isTenantAdmin: false, isGroupAdminInAnyTenant: false });
 
       const sharedHeader = queryColumnHeader('Geteilt');
       expect(sharedHeader).not.toBeInTheDocument();

@@ -11,8 +11,6 @@ test('can register and delete account', async ({ page }) => {
 		await page.goto(`${KEYCLOAK}realms/citizenhub/account`);
 		await page.getByRole('button', { name: 'Registrieren' }).click();
 		await page.getByRole('textbox', { name: 'E-Mail:' }).fill(email);
-		await page.getByRole('textbox', { name: 'Passwort:' }).fill(DATA_HUB_ADMIN_PASSWORD);
-		await page.getByRole('textbox', { name: 'Passwort bestätigen' }).fill(DATA_HUB_ADMIN_PASSWORD);
 		await page.getByRole('textbox', { name: 'Vorname' }).fill('A');
 		// terms and conditions
 		await page.getByRole('checkbox', { name: 'Ich habe die' }).check();
@@ -40,6 +38,9 @@ test('can register and delete account', async ({ page }) => {
 		expect(link).toBeTruthy();
 
 		await page.goto(link);
+		await page.getByRole('textbox', { name: 'Neues Passwort' }).fill(DATA_HUB_ADMIN_PASSWORD);
+		await page.getByRole('textbox', { name: 'Passwort bestätigen' }).fill(DATA_HUB_ADMIN_PASSWORD);
+		await page.getByRole('button', { name: 'Absenden' }).click();
 	});
 	await test.step('update user info', async () => {
 		await page.getByTestId('lastName').fill('F');

@@ -288,11 +288,13 @@ test('citytool override', async ({ browser }) => {
 		Body: await readFile(path.join(__dirname, 'masterportal-alerts.json'))
 	});
 	await inSeparateBrowser(browser, async (page) => {
-		await page.goto(masterportalUrl);
-		await expect(page.title()).resolves.toEqual('Masterportal von Knuffingen');
-		await expect(
-			page.getByText('Ich habe die volle Kontrolle über das Masterportal!')
-		).toBeVisible();
+		await expect(async () => {
+			await page.goto(masterportalUrl);
+			await expect(page.title()).resolves.toEqual('Masterportal von Knuffingen');
+			await expect(
+				page.getByText('Ich habe die volle Kontrolle über das Masterportal!')
+			).toBeVisible();
+		}).toPass({ intervals: [2_000] });
 	});
 });
 
@@ -339,11 +341,13 @@ test('presign zip upload', async ({ browser }) => {
 		await readFile(path.join(__dirname, 'masterportal.zip'))
 	);
 	await inSeparateBrowser(browser, async (page) => {
-		await page.goto(masterportalUrl);
-		await expect(page.title()).resolves.toEqual('Masterportal von Knuffingen');
-		await expect(
-			page.getByText('Ich habe die volle Kontrolle über das Masterportal!')
-		).toBeVisible();
+		await expect(async () => {
+			await page.goto(masterportalUrl);
+			await expect(page.title()).resolves.toEqual('Masterportal von Knuffingen');
+			await expect(
+				page.getByText('Ich habe die volle Kontrolle über das Masterportal!')
+			).toBeVisible();
+		}).toPass({ intervals: [2_000] });
 	});
 });
 

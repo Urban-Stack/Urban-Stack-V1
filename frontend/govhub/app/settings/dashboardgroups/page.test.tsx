@@ -2,10 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import DashboardGroupsSettingsPage from '@/app/settings/dashboardgroups/page';
 import { FuncMock } from '@/app/_test/utils';
-import {
-  AllTenantAndProjectScopes,
-  GetAllTenantAndProjectScopes,
-} from '@/app/_lib/resource-api/graphql/tenant';
+import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
 import { requireTenant } from '@/app/_lib/resource-api/legacy';
 
 const CREATE_BUTTON_ID = 'create-button';
@@ -26,7 +23,7 @@ jest.mock('@/app/settings/dashboardgroups/VizGroupsList', () =>
 );
 
 jest.mock('@/app/_lib/resource-api/graphql/tenant', () => ({
-  GetAllTenantAndProjectScopes: jest.fn(),
+  queryHasTenantScope: jest.fn(),
 }));
 
 const requireTenantMock = requireTenant as unknown as FuncMock<
@@ -41,40 +38,17 @@ jest.mock('@/app/_component/searchbar/AppSearchBar', () => ({
   default: jest.fn(() => <div data-testid='mock-vizgroup-search-bar' />),
 }));
 
-const queryScopesMock: FuncMock<typeof GetAllTenantAndProjectScopes> =
-  GetAllTenantAndProjectScopes as unknown as jest.Mock;
+const queryHasTenantScopeMock = queryHasTenantScope as unknown as jest.Mock;
 
 beforeEach(() => {
   requireTenantMock.mockReset();
-  queryScopesMock.mockReset();
+  queryHasTenantScopeMock.mockReset();
 });
 
 describe('snapshot', () => {
   it('renders page as expected', async () => {
     requireTenantMock.mockResolvedValue(TENANT);
-    queryScopesMock.mockResolvedValue({
-      data: {
-        tenants: [
-          {
-            tenant: TENANT,
-            scopes: {
-              all: ['tenant:admin'],
-              granted: ['tenant:admin', 'viz-group:admin'],
-            },
-            projects: [],
-            vizGroups: [
-              {
-                vizGroup: 'test-group',
-                scopes: {
-                  all: ['viz-group:admin'],
-                  granted: ['viz-group:admin'],
-                },
-              },
-            ],
-          },
-        ],
-      },
-    } as unknown as AllTenantAndProjectScopes);
+    queryHasTenantScopeMock.mockResolvedValue(true);
 
     const { container } = render(await DashboardGroupsSettingsPage());
 
@@ -85,22 +59,7 @@ describe('snapshot', () => {
 describe('create button permissions', () => {
   it('shows create button to admin user', async () => {
     requireTenantMock.mockResolvedValue(TENANT);
-    queryScopesMock.mockResolvedValueOnce({
-      data: {
-        tenants: [
-          {
-            tenant: TENANT,
-            scopes: {
-              all: [],
-              granted: ['tenant:admin', 'viz-group:admin'],
-            },
-            projects: [],
-            groups: [],
-            vizGroups: [],
-          },
-        ],
-      },
-    } as unknown as AllTenantAndProjectScopes);
+    queryHasTenantScopeMock.mockResolvedValue(true);
 
     render(await DashboardGroupsSettingsPage());
 
@@ -109,22 +68,7 @@ describe('create button permissions', () => {
 
   it('does not show create button to non-admin user', async () => {
     requireTenantMock.mockResolvedValue(TENANT);
-    queryScopesMock.mockResolvedValueOnce({
-      data: {
-        tenants: [
-          {
-            tenant: TENANT,
-            scopes: {
-              all: [],
-              granted: ['tenant:read'],
-            },
-            projects: [],
-            groups: [],
-            vizGroups: [],
-          },
-        ],
-      },
-    } as unknown as AllTenantAndProjectScopes);
+    queryHasTenantScopeMock.mockResolvedValue(false);
 
     render(await DashboardGroupsSettingsPage());
 

@@ -32,7 +32,7 @@ const ShareVizGroups = async ({
   );
   const allVizGroups = await queryAllVizGroups();
 
-  const vizGroups = fromAllVizGroups(allVizGroups);
+  const { vizGroups } = fromAllVizGroups(allVizGroups);
   const sharedVizGroups = toSharedVizGroups(permissionsResult);
 
   return (
