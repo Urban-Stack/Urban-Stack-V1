@@ -25,7 +25,7 @@ export async function uploadJupyterNotebook(page: Page, filename: string) {
 
 export async function waitForStartingJupyterServer(page: Page) {
 	await expect(page.getByText('Your server is starting up.')).toBeVisible();
-	await expect(page.getByText('Your server is starting up.')).toBeHidden({ timeout: 30000 });
+	await expect(page.getByText('Your server is starting up.')).toBeHidden({ timeout: 60000 });
 }
 
 test('login/logout', async ({ page }) => {

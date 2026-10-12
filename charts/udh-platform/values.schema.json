@@ -457,6 +457,43 @@
           "additionalProperties": false,
           "description": "Network policy settings",
           "properties": {
+            "ingressPods": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["namespace", "labels", "ports"],
+                "description": "Where the ingress pod is located, to allow traffic from and to pods that need it",
+                "properties": {
+                  "namespace": {
+                    "type": "string"
+                  },
+                  "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "ports": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["port", "protocol"],
+                      "properties": {
+                        "port": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "type": "string",
+                          "enum": ["TCP", "UDP"]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "additionalExternalEgress": {
               "type": "array",
               "description": "Array of external egresses pods are allowed to communicate with",

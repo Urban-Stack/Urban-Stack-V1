@@ -1,0 +1,55 @@
+{{- define "udh.netpol.ingress-pod.egress-ingress" -}}
+policyTypes:
+  - Egress
+  - Ingress
+egress:
+  {{- range $ingressPod := .Values.global.networkPolicy.ingressPods }}
+  - to:
+      - podSelector:
+          matchLabels: {{- $ingressPod.labels | toYaml | nindent 14 }}
+        namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: {{ $ingressPod.namespace }}
+    ports: {{- $ingressPod.ports | toYaml | nindent 8 }}
+  {{ end }}
+ingress:
+  {{- range $ingressPod := .Values.global.networkPolicy.ingressPods }}
+  - from:
+      - podSelector:
+          matchLabels: {{- $ingressPod.labels | toYaml | nindent 14 }}
+        namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: {{ $ingressPod.namespace }}
+    ports:
+      - port: http
+        protocol: TCP
+  {{ end }}
+{{- end -}}
+{{- if .Values.global.networkPolicy.ingressPods -}}
+# allow rei3 ingress and egress with the ingress controller
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ printf "%s-dedicated" (include "common.names.fullname" .) | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+  namespace: {{ include "udh.dedicated-apps-namespace" . }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: rei3
+  {{- include "udh.netpol.ingress-pod.egress-ingress" . | nindent 2 }}
+---
+# allow shared app ingress and egress with the ingress controller
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ printf "%s-shared" (include "common.names.fullname" .) | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+  namespace: {{ include "udh.shared-apps-namespace" . }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: urbanstack-shared-app
+  {{- include "udh.netpol.ingress-pod.egress-ingress" . | nindent 2 }}
+---
+{{- end -}}

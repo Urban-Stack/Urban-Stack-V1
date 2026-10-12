@@ -32,8 +32,10 @@ test('can be installed and uninstalled', async ({ page }) => {
 		{ tenant }
 	);
 	await expect(async () => {
-		await page.goto(sharedApp(tenant, 'my-cool-app'));
-		await expect(page.getByRole('heading', { name: 'Urban Gov Hub' })).toBeVisible();
+		await page.goto(sharedApp(tenant, 'my-cool-app'), { timeout: 10_000 });
+		await expect(page.getByRole('heading', { name: 'Urban Gov Hub' })).toBeVisible({
+			timeout: 10_000
+		});
 	}).toPass({ intervals: [5_000] });
 	await signInWith(page, DATA_HUB_ADMIN_USERNAME, DATA_HUB_ADMIN_PASSWORD);
 	await expect(page.getByText('Data Hub Admin', { exact: true })).toBeVisible();

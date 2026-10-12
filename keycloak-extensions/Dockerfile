@@ -1,8 +1,8 @@
 ARG REGISTRY_MIRROR_LIB=""
 # renovate: datasource=docker depName=keycloak/keycloak
-ARG KEYCLOAK_VERSION=26.7.2
+ARG KEYCLOAK_VERSION=26.8.0
 
-FROM ${REGISTRY_MIRROR_LIB}maven:3.9.15-eclipse-temurin-21 AS java-build
+FROM ${REGISTRY_MIRROR_LIB}maven:3.10.0-eclipse-temurin-21 AS java-build
 
 RUN mkdir /target
 
@@ -15,13 +15,13 @@ COPY theme /project/
 ARG KEYCLOAK_VERSION
 RUN ./generate-account-admin.sh $KEYCLOAK_VERSION && mvn package && cp target/*.jar /target
 
-FROM ${REGISTRY_MIRROR_LIB}maven:3.9.15-eclipse-temurin-21 AS kc-frontend-build
+FROM ${REGISTRY_MIRROR_LIB}maven:3.10.0-eclipse-temurin-21 AS kc-frontend-build
 
 WORKDIR /project
 RUN mkdir /target
 
 # renovate: datasource=github-tags depName=nvm-sh/nvm
-ARG NVM_VERSION=v0.40.4
+ARG NVM_VERSION=v0.40.8
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
 
 RUN git clone --depth 1 https://github.com/keycloak/keycloak.git --branch 26.0.7
@@ -45,14 +45,14 @@ RUN git -C /project/keycloak apply /add-custom-css-account-ui.patch
 
 RUN . ~/.nvm/nvm.sh && mvn package && cp target/*.jar /target
 
-FROM ${REGISTRY_MIRROR_LIB}gradle:9.5-jdk21-alpine AS kotlin-build
+FROM ${REGISTRY_MIRROR_LIB}gradle:9.8-jdk21-alpine AS kotlin-build
 WORKDIR /home/gradle/src
 COPY --chown=gradle:gradle udh-sync/*.kts ./
 RUN gradle --write-verification-metadata sha256 help -i
 COPY --chown=gradle:gradle udh-sync ./
 RUN gradle test fatJar -i
 
-FROM ${REGISTRY_MIRROR_LIB}busybox:1.37.0
+FROM ${REGISTRY_MIRROR_LIB}busybox:1.38.0
 COPY --from=java-build /target /providers
 COPY --from=kotlin-build /home/gradle/src/build/libs/udh-sync-all.jar /providers
 COPY --from=kc-frontend-build /target /providers

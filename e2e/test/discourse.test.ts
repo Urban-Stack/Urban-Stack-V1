@@ -106,6 +106,9 @@ test.describe('Discourse', () => {
 		await page.getByLabel('Filtern nach: Keiner').click();
 		await page.getByPlaceholder('Suchen …').fill(tenantName);
 		await page.getByRole('menuitemradio', { name: tenantName, exact: true }).click();
+		await expect(
+			page.getByText('Die Berechtigungen werden von der übergeordneten Kategorie übernommen')
+		).toBeVisible();
 		await page.getByRole('button', { name: 'Kategorie erstellen' }).click();
 		await expect(page.getByRole('heading', { name: 'Bearbeiten: subcategory for' })).toBeVisible();
 		await page

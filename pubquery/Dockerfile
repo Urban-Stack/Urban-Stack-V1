@@ -1,6 +1,6 @@
 ARG REGISTRY_MIRROR_LIB=""
 
-FROM ${REGISTRY_MIRROR_LIB}gradle:9.7-jdk21-alpine AS build
+FROM ${REGISTRY_MIRROR_LIB}gradle:9.8-jdk21-alpine AS build
 WORKDIR /home/gradle/src
 COPY --chown=gradle:gradle *.kts ./
 RUN gradle --write-verification-metadata sha256 help -i

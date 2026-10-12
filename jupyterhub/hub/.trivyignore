@@ -23,3 +23,5 @@ CVE-2026-13221
 CVE-2026-57433
 # no user supplied xml
 CVE-2026-6653
+# no JWTs used
+CVE-2026-102268

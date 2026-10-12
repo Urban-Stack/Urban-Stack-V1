@@ -4,6 +4,7 @@ import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import io.kubernetes.client.custom.V1Patch
+import io.kubernetes.client.openapi.ApiCallback
 import io.kubernetes.client.openapi.ApiException
 import io.kubernetes.client.openapi.Configuration
 import io.kubernetes.client.openapi.JSON
@@ -1026,8 +1027,10 @@ fun commonReadContainerLogs(namespace: String, labelSelector: String, lines: Int
     val core = CoreV1Api(Config.defaultClient())
     val pod = core.listNamespacedPod(namespace)
         .labelSelector(labelSelector).execute()?.items?.firstOrNull() ?: return null
+    val podName = pod.metadata?.name ?: return null
+    val podNamespace = pod.metadata?.namespace ?: return null
     try {
-        return core.readNamespacedPodLog(pod.metadata.name, pod.metadata.namespace).tailLines(lines).execute()
+        return core.readNamespacedPodLog(podName, podNamespace).tailLines(lines).execute()
     } catch (e: ApiException) {
         // this can fail when the pod fails to start, return null in that case
         e.printStackTrace()

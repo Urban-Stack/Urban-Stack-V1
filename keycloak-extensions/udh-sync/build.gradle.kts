@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.3.21"
-    kotlin("plugin.serialization") version "2.3.21"
+    kotlin("jvm") version "2.4.20"
+    kotlin("plugin.serialization") version "2.4.20"
 }
 val keycloakVersion = "26.7.2"
 
@@ -19,13 +19,13 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
     implementation("io.github.reactivecircus.cache4k:cache4k:0.14.0")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    implementation("aws.sdk.kotlin:s3:1.6.71")
-    implementation("aws.sdk.kotlin:iam:1.6.71")
+    implementation("aws.sdk.kotlin:s3:1.9.14")
+    implementation("aws.sdk.kotlin:iam:1.9.14")
 
     // full dependencies destroy Keycloak
-    implementation("io.kubernetes:client-java:24.0.0") { isTransitive = false }
-    implementation("io.kubernetes:client-java-api:24.0.0") { isTransitive = false }
-    implementation("com.squareup.okhttp3:okhttp:5.3.2")
+    implementation("io.kubernetes:client-java:27.0.0") { isTransitive = false }
+    implementation("io.kubernetes:client-java-api:27.0.0") { isTransitive = false }
+    implementation("com.squareup.okhttp3:okhttp:5.5.0")
     implementation("io.gsonfire:gson-fire:1.9.0")
 
     implementation("com.expediagroup:graphql-kotlin-schema-generator:10.2.2")

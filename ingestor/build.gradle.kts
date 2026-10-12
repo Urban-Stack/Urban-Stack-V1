@@ -1,9 +1,9 @@
 plugins {
-    kotlin("jvm") version "2.4.10"
-    kotlin("plugin.spring") version "2.4.10"
+    kotlin("jvm") version "2.4.20"
+    kotlin("plugin.spring") version "2.4.20"
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
-    kotlin("plugin.serialization") version "2.4.10"
+    kotlin("plugin.serialization") version "2.4.20"
 }
 
 kotlin {
@@ -21,7 +21,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-kubernetes-client-config:5.0.3")
     implementation("org.springframework.security:spring-security-oauth2-jose:7.1.1")
     implementation("org.apache.kafka:kafka-streams:4.3.1")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.4.10")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.4.20")
     implementation("org.springframework.boot:spring-boot-starter-kafka:4.1.1")
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")

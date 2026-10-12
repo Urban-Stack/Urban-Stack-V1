@@ -93,7 +93,7 @@ test.describe('base layout', () => {
 				return img?.complete && img.naturalWidth > 0;
 			},
 			null,
-			{ timeout: 30000 }
+			{ timeout: 60000 }
 		);
 
 		// open user menu

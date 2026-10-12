@@ -36,7 +36,10 @@ RUN apt update && apt upgrade -y && \
 # fix CVE-2025-43859
 # renovate: datasource=pypi depName=h11
 ENV H11_VERSION=0.16.0
-RUN uv pip install h11==$H11_VERSION
+# fix CVE-2026-102268
+# renovate: datasource=pypi depName=PyJWT
+ENV PYJWT_VERSION=2.15.1
+RUN uv pip install h11==$H11_VERSION PyJWT==$PYJWT_VERSION
 
 COPY patches /superset-patches
 RUN git -C /app apply --exclude="superset/translations/*" --include="superset/*" /superset-patches/*

@@ -54,7 +54,7 @@ open class EnumAsIntSerializer<T : Enum<*>>(
     }
 }
 
-private class VisibilityLevelSerializer : EnumAsIntSerializer<VisibilityLevel>(
+class VisibilityLevelSerializer : EnumAsIntSerializer<VisibilityLevel>(
     "VisibilityLevel",
     { it.level },
     { v -> VisibilityLevel.entries.first { it.level == v } }
@@ -78,7 +78,7 @@ enum class VisibilityLevel(val level: Int) {
     OWNERS(4),
 }
 
-private class PermissionTypeSerializer : EnumAsIntSerializer<PermissionType>(
+class PermissionTypeSerializer : EnumAsIntSerializer<PermissionType>(
     "PermissionType",
     { it.permission },
     { v -> PermissionType.entries.first { it.permission == v } }

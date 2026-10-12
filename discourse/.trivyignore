@@ -28,6 +28,8 @@ CVE-2026-26284
 
 # handlebar templates are precompiled
 CVE-2026-33937
+CVE-2026-106445
+CVE-2026-106446
 
 # allow_duplicate_key: false is not used
 CVE-2026-33210
@@ -79,3 +81,7 @@ CVE-2026-59873
 
 # not used server side
 CVE-2026-54466
+CVE-2026-90711
+
+# no running python server
+CVE-2026-19445

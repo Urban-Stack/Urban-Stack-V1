@@ -77,6 +77,7 @@ spec:
             cookie_options:
               expires_days: 0.4167
         KubeSpawner:
+          http_timeout: 60
           environment:
             BASE_DOMAIN: {{ $.Values.global.baseDomain | quote }}
       db:
@@ -198,6 +199,9 @@ spec:
         egress:
           {{- . | toYaml | nindent 10 }}
         {{- end }}
+      # doesn't work on the newest kubernetes version, we use network policies instead
+      cloudMetadata:
+        blockWithIptables: false
     proxy:
       service:
         type: ClusterIP

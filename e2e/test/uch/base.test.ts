@@ -9,7 +9,7 @@ test('access Citizen-Hub and get redirected to guetersloh', async ({ page }) => 
 });
 
 test('access specific tenant', async ({ page }) => {
-	await page.goto(UCH + '/detmold');
+	await page.goto(UCH + 'detmold');
 
 	await expect(page.getByRole('heading', { name: 'Herzlich Willkommen!' })).toBeVisible();
 	await expect(page.getByText('Im Urban Citizen Hub der Stadt Detmold')).toBeVisible();

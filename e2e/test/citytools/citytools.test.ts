@@ -265,11 +265,11 @@ test('citytool override', async ({ browser }) => {
 	await inSeparateBrowser(browser, async (page) => {
 		// the ingress controller might take a second to sync the config
 		await expect(async () => {
-			await page.goto(masterportalUrl);
+			await page.goto(masterportalUrl, { timeout: 10_000 });
 			await expect(page.getByRole('link', { name: 'Masterportal Basic' })).toBeVisible({
-				timeout: 5_000
+				timeout: 10_000
 			});
-		}).toPass({ intervals: [0], timeout: 20_000 });
+		}).toPass({ intervals: [0], timeout: 60_000 });
 		await expect(page.title()).resolves.toEqual('Basic - Portal');
 	});
 

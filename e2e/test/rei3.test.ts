@@ -29,7 +29,7 @@ test('can be installed and uninstalled', { tag: '@browserless' }, async ({ brows
 
 	await test.step('only admin login during maintenance', async () => {
 		await expect(async () => {
-			await userPage.goto(rei3Url);
+			await userPage.goto(rei3Url, { timeout: 10_000 });
 			await expect(userPage.getByText('REI3')).toBeVisible({ timeout: 5_000 });
 		}).toPass({ intervals: [5_000] });
 		await userPage.getByText('keycloak').click();
@@ -79,7 +79,7 @@ test('can be installed and uninstalled', { tag: '@browserless' }, async ({ brows
 
 	await test.step('admin user can turn off maintenance mode', async () => {
 		await expect(async () => {
-			await adminPage.goto(rei3Url);
+			await adminPage.goto(rei3Url, { timeout: 10_000 });
 			await expect(adminPage.getByText('REI3')).toBeVisible({ timeout: 5_000 });
 		}).toPass({ intervals: [5_000] });
 		await adminPage.getByText('keycloak').click();
@@ -135,7 +135,7 @@ test('blocks access for non tenant member', async ({ page }) => {
 	const user = await createRandomTestUser([otherTenant]);
 
 	await expect(async () => {
-		await page.goto(rei3Url);
+		await page.goto(rei3Url, { timeout: 10_000 });
 		await expect(page.getByText('REI3')).toBeVisible({ timeout: 5_000 });
 	}).toPass({ intervals: [5_000] });
 	await page.getByText('keycloak').click();

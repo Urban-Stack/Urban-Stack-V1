@@ -9,6 +9,13 @@ global:
       kubernetes.io/tls-acme: "true"
       cert-manager.io/issuer: "udh-test-iss"
   networkPolicy:
+    ingressPods:
+      - namespace: traefik
+        labels:
+          app.kubernetes.io/name: traefik
+        ports:
+          - port: 8443
+            protocol: TCP
     additionalExternalEgress:
       - to:
           - podSelector:

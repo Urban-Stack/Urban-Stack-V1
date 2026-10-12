@@ -125,7 +125,7 @@ test.describe('Citytools', () => {
 				return img?.complete && img.naturalWidth > 0;
 			},
 			null,
-			{ timeout: 30000 }
+			{ timeout: 60000 }
 		);
 		await expect(dialog).toContainText('App to track your hamsters.');
 		await dialog.getByRole('button', { name: 'Close' }).click();
