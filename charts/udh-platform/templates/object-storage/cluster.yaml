@@ -24,6 +24,26 @@ spec:
   dependsOn:
     - name: {{ printf "%s-rook-ceph" (include "common.names.fullname" .) | quote }}
   {{- end }}
+  {{ if .Values.objectStorage.serviceMonitor.enabled }}
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              group: monitoring.coreos.com
+              version: v1
+              kind: PrometheusRule
+              name: prometheus-ceph-rules
+            patch: |
+              - op: test
+                path: /spec/groups/4/name
+                value: mgr
+              - op: test
+                path: /spec/groups/4/rules/0/alert
+                value: CephMgrModuleCrash
+              - op: replace
+                path: /spec/groups/4/rules/0/labels/severity
+                value: warning
+  {{ end }}
   values:
     {{- if .Values.objectStorage.serviceMonitor.enabled }}
     monitoring:
