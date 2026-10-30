@@ -1,0 +1,1 @@
+../jupyterhub/notebook/ignore.rego

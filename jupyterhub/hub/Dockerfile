@@ -38,7 +38,11 @@ RUN echo "clone $JUPYTERHUB_BRANCH @ $JUPYTERHUB_COMMIT from $JUPYTERHUB_REPO" \
         && git clone --depth 1 --revision $JUPYTERHUB_COMMIT $JUPYTERHUB_REPO
 
 # jupyterhub requirements
-RUN wget -q https://raw.githubusercontent.com/jupyterhub/zero-to-jupyterhub-k8s/refs/tags/4.2.0/images/hub/requirements.txt
+# fix GHSA-6q48-6c7w-9gw2 (compromised emSign intermediate CA keys)
+# renovate: datasource=pypi depName=certifi
+ARG CERTIFI_VERSION=2026.10.19
+RUN wget -q https://raw.githubusercontent.com/jupyterhub/zero-to-jupyterhub-k8s/refs/tags/4.2.0/images/hub/requirements.txt \
+        && sed -i "s/^certifi==.*/certifi==${CERTIFI_VERSION}/" requirements.txt
 
 # jupyterhub-idle-culler
 RUN echo "clone $IDLE_CULLER_BRANCH @ $IDLE_CULLER_COMMIT from $IDLE_CULLER_REPO" \

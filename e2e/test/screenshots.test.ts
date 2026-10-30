@@ -48,7 +48,7 @@ test('screenshot MQTT subscription', async ({ page }) => {
 	await page.getByRole('textbox', { name: 'Topic' }).click();
 	await page
 		.getByRole('textbox', { name: 'Topic' })
-		.fill('/v3/my-application@my-tenant/devices/eui-ad304r5z21823fih/up');
+		.fill('v3/my-application@my-tenant/devices/eui-ad304r5z21823fih/up');
 	await page.getByRole('textbox', { name: 'Username' }).click();
 	await page.getByRole('textbox', { name: 'Username' }).fill('myuser');
 	await page.getByRole('textbox', { name: 'Username' }).press('Tab');

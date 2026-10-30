@@ -7,7 +7,7 @@ RUN gradle --write-verification-metadata sha256 help -i
 COPY --chown=gradle:gradle . ./
 RUN gradle bootJar -i --offline
 
-FROM ${REGISTRY_MIRROR_LIB}eclipse-temurin:21.0.12_8-jre-ubi9-minimal
+FROM ${REGISTRY_MIRROR_LIB}eclipse-temurin:21.0.12.1_1-jre-ubi10-minimal
 COPY --from=build /home/gradle/src/build/libs/ingestor.jar /
 
 CMD java -Xmx256m -jar /ingestor.jar

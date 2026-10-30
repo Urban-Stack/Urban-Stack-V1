@@ -3,10 +3,16 @@ LABEL authors="syeklu"
 
 USER root
 
-RUN apt remove -y libsqlite3-0 && apt update && apt upgrade -y
+RUN apt install libmagic1 -y &&\
+    apt remove -y libsqlite3-0 g++ linux-headers-amd64 libtool &&\
+    apt update &&\
+    apt upgrade -y &&\
+    apt autoremove -y
 
 RUN pip3 install -e git+https://github.com/SyeKlu/ckanext-keycloak.git@790a5304047ee04cecf26ec2aadb6f589a03f646#egg=ckanext-keycloak
 RUN pip install -r ${SRC_DIR}/ckanext-keycloak/requirements.txt
+# fix GHSA-6q48-6c7w-9gw2 (compromised emSign intermediate CA keys)
+RUN pip3 install certifi==2026.10.19
 
 COPY ./theme ${SRC_DIR}/ckanext-udh_theme
 RUN pip3 install -e ${SRC_DIR}/ckanext-udh_theme

@@ -5,11 +5,6 @@ import com.clickhouse.client.api.ClientException
 import com.clickhouse.client.api.ServerException
 import com.clickhouse.client.api.query.GenericRecord
 import com.clickhouse.client.api.query.QuerySettings
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.geotools.geojson.geom.GeometryJSON
 import org.geotools.geometry.jts.JTSFactoryFinder
@@ -40,6 +35,12 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.exchange
 import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.util.UriComponentsBuilder
+import tools.jackson.core.JsonGenerator
+import tools.jackson.databind.ObjectMapper
+import tools.jackson.databind.SerializationContext
+import tools.jackson.databind.json.JsonMapper
+import tools.jackson.databind.module.SimpleModule
+import tools.jackson.databind.ser.std.StdSerializer
 import java.time.Duration
 
 
@@ -50,13 +51,14 @@ fun main(args: Array<String>) {
     runApplication<PublishedQueryApplication>(*args)
 }
 
-val geometryObjectMapper: ObjectMapper = ObjectMapper().registerModules(
+val geometryObjectMapper: ObjectMapper = JsonMapper.builder().addModule(
     SimpleModule().addSerializer(
         Geometry::class.java, object : StdSerializer<Geometry>(Geometry::class.java) {
-            override fun serialize(value: Geometry, jgen: JsonGenerator, provider: SerializerProvider) =
+            override fun serialize(value: Geometry, jgen: JsonGenerator, context: SerializationContext) {
                 jgen.writeRawValue(GeometryJSON().toString(value))
+            }
         })
-)
+).build()
 
 fun resultsToFeatureCollection(results: List<GenericRecord>): String {
     val bodyObject = mapOf(

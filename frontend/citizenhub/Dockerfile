@@ -2,7 +2,7 @@
 ARG REGISTRY_MIRROR_LIB=""
 
 # Install dependencies only when needed
-FROM ${REGISTRY_MIRROR_LIB}node:24-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd AS builder
+FROM ${REGISTRY_MIRROR_LIB}node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85 AS builder
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
@@ -28,7 +28,7 @@ COPY . .
 RUN pnpm run build
 
 # Production image, copy all the files and run next
-FROM ${REGISTRY_MIRROR_LIB}node:24-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd AS runner
+FROM ${REGISTRY_MIRROR_LIB}node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85 AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production

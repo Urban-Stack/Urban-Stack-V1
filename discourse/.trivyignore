@@ -60,6 +60,11 @@ CVE-2026-9277
 CVE-2026-43185
 CVE-2026-53215
 CVE-2026-63825
+CVE-2026-90037
+CVE-2026-93221
+CVE-2026-98621
+CVE-2026-98725
+CVE-2026-98805
 
 # no option to upload photoshop files
 CVE-2026-56367
@@ -86,3 +91,9 @@ CVE-2026-90711
 
 # no running python server
 CVE-2026-19445
+
+# python is not used to make http requests
+GHSA-6q48-6c7w-9gw2
+
+# node is only used during build
+CVE-2026-111497
