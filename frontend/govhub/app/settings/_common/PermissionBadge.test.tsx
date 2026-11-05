@@ -11,8 +11,7 @@ import { UdpButtonTestIds } from 'udp-ui/components';
 
 const { FormContent } = _internal;
 
-const PermissionName = ['admin', 'read'] as const;
-type PermissionName = (typeof PermissionName)[number];
+type PermissionName = 'admin' | 'read';
 
 const USER = userEvent.setup();
 

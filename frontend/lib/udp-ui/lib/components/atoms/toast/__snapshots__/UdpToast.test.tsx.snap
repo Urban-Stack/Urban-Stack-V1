@@ -63,6 +63,8 @@ exports[`snapshot > matches snapshot for additional options 1`] = `
               <div
                 aria-hidden="false"
                 aria-label="notification timer"
+                aria-valuemax="100"
+                aria-valuemin="0"
                 class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--success"
                 role="progressbar"
                 style="animation-duration: 5000ms; animation-play-state: paused;"
@@ -133,6 +135,8 @@ exports[`snapshot > matches snapshot for additional options 1`] = `
             <div
               aria-hidden="false"
               aria-label="notification timer"
+              aria-valuemax="100"
+              aria-valuemin="0"
               class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--success"
               role="progressbar"
               style="animation-duration: 5000ms; animation-play-state: paused;"
@@ -260,6 +264,8 @@ exports[`snapshot > matches snapshot for type \`error\` 1`] = `
               <div
                 aria-hidden="false"
                 aria-label="notification timer"
+                aria-valuemax="100"
+                aria-valuemin="0"
                 class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--error"
                 role="progressbar"
                 style="animation-duration: 5000ms; animation-play-state: paused;"
@@ -330,6 +336,8 @@ exports[`snapshot > matches snapshot for type \`error\` 1`] = `
             <div
               aria-hidden="false"
               aria-label="notification timer"
+              aria-valuemax="100"
+              aria-valuemin="0"
               class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--error"
               role="progressbar"
               style="animation-duration: 5000ms; animation-play-state: paused;"
@@ -457,6 +465,8 @@ exports[`snapshot > matches snapshot for type \`success\` 1`] = `
               <div
                 aria-hidden="false"
                 aria-label="notification timer"
+                aria-valuemax="100"
+                aria-valuemin="0"
                 class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--success"
                 role="progressbar"
                 style="animation-duration: 5000ms; animation-play-state: paused;"
@@ -527,6 +537,8 @@ exports[`snapshot > matches snapshot for type \`success\` 1`] = `
             <div
               aria-hidden="false"
               aria-label="notification timer"
+              aria-valuemax="100"
+              aria-valuemin="0"
               class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar-theme--light Toastify__progress-bar--success"
               role="progressbar"
               style="animation-duration: 5000ms; animation-play-state: paused;"

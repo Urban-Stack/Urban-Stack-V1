@@ -1,0 +1,3 @@
+allowBuilds:
+  '@parcel/watcher': false
+  udp-ui@file:lib/udp-ui: true

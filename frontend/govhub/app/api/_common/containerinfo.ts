@@ -11,8 +11,7 @@ export type ContainerInfoErrorResponseBody = {
 };
 
 export type ContainerInfoResponseBody =
-  | ContainerInfoSuccessResponseBody
-  | ContainerInfoErrorResponseBody;
+  ContainerInfoSuccessResponseBody | ContainerInfoErrorResponseBody;
 
 export const isSuccess: (
   resp: ContainerInfoResponseBody,

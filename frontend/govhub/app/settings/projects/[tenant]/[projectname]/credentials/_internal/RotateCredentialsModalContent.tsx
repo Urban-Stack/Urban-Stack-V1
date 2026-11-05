@@ -1,6 +1,6 @@
 'use client';
 
-import React, { RefObject } from 'react';
+import React from 'react';
 import { UdpButton, UdpClientModalContentProps } from 'udp-ui/components';
 import Form from 'next/form';
 import { RotateCredentialState } from '@/app/settings/projects/[tenant]/[projectname]/credentials/form';
@@ -46,11 +46,7 @@ const FormContent = ({
     <p>Sensor Credentials {`"${credentialName}"`} rotieren?</p>
     {errors?.general && <ErrorContainer errors={errors.general} />}
     <div className='flex gap-3.5 flex-wrap w-fit [&>*]:grow [&>*]:justify-center'>
-      <UdpButton
-        type='submit'
-        loading={isLoading}
-        ref={initialFocusRef as RefObject<HTMLButtonElement>}
-      >
+      <UdpButton type='submit' loading={isLoading} ref={initialFocusRef}>
         Rotieren
       </UdpButton>
       <UdpButton color='tertiary' onClick={closeModal}>

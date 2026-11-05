@@ -94,6 +94,7 @@ CVE-2026-19445
 
 # python is not used to make http requests
 GHSA-6q48-6c7w-9gw2
+CVE-2026-115557
 
 # node is only used during build
 CVE-2026-111497

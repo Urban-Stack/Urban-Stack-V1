@@ -66,8 +66,8 @@ index e161a91a..92e5cdf4 100644
 Für Superset müssen die beiden Dateien `sensor_messages.yaml` und `sensor_messages_with_meta.yaml` angepasst werden. Die neue Spalte kann einfach am Ende hinzugefügt werden:
 
 ```yaml
-  - <<: *float64
-    column_name: my_new_column
+- <<: *float64
+  column_name: my_new_column
 ```
 
 ### Ingestor

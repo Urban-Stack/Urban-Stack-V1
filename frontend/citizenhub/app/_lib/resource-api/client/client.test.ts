@@ -27,7 +27,7 @@ describe('query', () => {
   it('uses provided client and calls its query method', async () => {
     clientMock.query.mockResolvedValueOnce({
       data: { foo: 'bar' },
-    } as ApolloClient.QueryResult);
+    });
 
     const result = await query(QUERY, clientMock as unknown as ApolloClient);
 

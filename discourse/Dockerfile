@@ -19,7 +19,7 @@ FROM ${REGISTRY_MIRROR_LIB}node:24-slim AS custom-plugin-build
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 # renovate: datasource=npm depName=pnpm
-ENV PNPM_VERSION=10.33.4
+ENV PNPM_VERSION=12.16.1
 RUN npm install --global pnpm@"$PNPM_VERSION"
 COPY custom-script/ /opt/custom-script/
 WORKDIR /opt/custom-script

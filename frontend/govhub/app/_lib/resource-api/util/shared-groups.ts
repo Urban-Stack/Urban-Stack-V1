@@ -16,9 +16,7 @@ export type SharedGroup = {
 };
 
 type SharedUserGroupPermissions =
-  | ProjectGroupPermissions
-  | VizGroupGroupPermissions
-  | UserGroupPermissions;
+  ProjectGroupPermissions | VizGroupGroupPermissions | UserGroupPermissions;
 
 const permissionsFrom = (result: SharedUserGroupPermissions) =>
   (() => {

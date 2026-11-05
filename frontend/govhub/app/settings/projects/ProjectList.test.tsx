@@ -3,10 +3,7 @@ import ProjectList from '@/app/settings/projects/ProjectList';
 import { FuncMock } from '@/app/_test/utils';
 import { CombinedGraphQLErrors } from '@apollo/client/errors';
 import { ProjectsTestIds as TestIds } from '@/app/settings/projects/testIds';
-import {
-  AllProjects,
-  fetchAllProjects,
-} from '@/app/_lib/resource-api/graphql/project';
+import { fetchAllProjects } from '@/app/_lib/resource-api/graphql/project';
 import { SettingsTestIds } from '@/app/settings/_common/testIds';
 import { useSearchParams } from 'next/navigation';
 
@@ -54,7 +51,7 @@ const mockProjects = (hasProjects: boolean, error?: CombinedGraphQLErrors) => {
           ],
     },
     error: error,
-  } as AllProjects);
+  });
 };
 const useSearchParamsMock = useSearchParams as jest.Mock;
 

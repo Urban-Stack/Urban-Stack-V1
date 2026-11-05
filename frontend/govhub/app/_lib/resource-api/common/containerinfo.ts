@@ -48,8 +48,7 @@ const normalizeLogs = (input: string): string => {
 };
 
 export type ContainerInfoQueryResult =
-  | GetSharedAppContainerInfos
-  | GetDedicatedAppContainerInfos;
+  GetSharedAppContainerInfos | GetDedicatedAppContainerInfos;
 
 export type UseContainerInfoHook = (
   tenant: string,

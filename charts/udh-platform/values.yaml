@@ -154,10 +154,10 @@ dedicatedApps:
   apps: {}
 
 clickhouse:
-  image: clickhouse/clickhouse-server:26.3.4.11
+  image: clickhouse/clickhouse-server:26.10.3.7
   replicas: 1
   keeper:
-    image: clickhouse/clickhouse-keeper:26.3.4.11
+    image: clickhouse/clickhouse-keeper:26.10.3.7
     replicas: 1
     persistence:
       data:

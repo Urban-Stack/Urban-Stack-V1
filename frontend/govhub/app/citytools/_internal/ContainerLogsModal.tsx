@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactElement, RefObject, useState } from 'react';
+import { MouseEventHandler, ReactElement, useState } from 'react';
 import {
   IcCheckCircle,
   IcClone,
@@ -156,7 +156,7 @@ const LogOutput = ({
         'focus-visible:ring-3 focus-visible:ring-primary-200',
         !!Fallback && 'grid place-items-center',
       )}
-      ref={initialFocusRef as RefObject<HTMLDivElement>}
+      ref={initialFocusRef}
       aria-label='Container-Logs'
       tabIndex={0}
     >

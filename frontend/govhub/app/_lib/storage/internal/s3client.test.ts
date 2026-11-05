@@ -17,7 +17,12 @@ jest.mock('@aws-sdk/client-sts', () => ({
 }));
 
 jest.mock('@aws-sdk/client-s3', () => ({
-  ...jest.requireActual('@aws-sdk/client-s3'),
+  S3ServiceException: class S3ServiceException extends Error {
+    constructor(options: { name?: string; message?: string } = {}) {
+      super(options.message);
+      this.name = options.name ?? 'S3ServiceException';
+    }
+  },
   S3: jest.fn().mockImplementation(() => ({
     listObjects: jest.fn().mockResolvedValue({
       Contents: [{ Key: 'obj1' }, { Key: 'obj2' }],

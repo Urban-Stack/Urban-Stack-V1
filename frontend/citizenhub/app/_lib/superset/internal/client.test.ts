@@ -62,7 +62,7 @@ describe('fetchDashboards', () => {
             changed_on_utc: d.changed_on_utc.toISOString(),
           })),
         }),
-    } as Response);
+    });
 
     const dashboards = await fetchDashboards(TENANT);
 
@@ -74,7 +74,7 @@ describe('fetchDashboards', () => {
   it('throws if response is malformed', async () => {
     global.fetch = fetchMock.mockResolvedValueOnce({
       json: () => Promise.resolve({ invalid: 'data' }),
-    } as Response);
+    });
 
     await expect(fetchDashboards(TENANT)).rejects.toThrow(z.ZodError);
   });

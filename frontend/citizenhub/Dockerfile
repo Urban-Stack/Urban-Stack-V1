@@ -8,11 +8,11 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # renovate: datasource=npm depName=pnpm
-ENV PNPM_VERSION=10.33.4
+ENV PNPM_VERSION=12.16.1
 RUN npm install --global pnpm@"$PNPM_VERSION"
 
 # Install dependencies based on the preferred package manager
-COPY package.json pnpm-lock.yaml* preinstall.sh ./
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml preinstall.sh ./
 COPY lib ./lib
 RUN pnpm run preinstall && \
     pnpm i --frozen-lockfile

@@ -40,7 +40,7 @@ export const createSharedApp: (
     return {
       data: preserveData(formData),
       errors: parsed.error.flatten().fieldErrors,
-    } as SharedAppState;
+    };
   }
 
   const name = newName(parsed.data.displayName);
@@ -70,7 +70,7 @@ export const updateSharedApp: (
     return {
       data: preserveData(formData),
       errors: parsed.error.flatten().fieldErrors,
-    } as SharedAppState;
+    };
   }
 
   const config = getConfig(parsed.data);

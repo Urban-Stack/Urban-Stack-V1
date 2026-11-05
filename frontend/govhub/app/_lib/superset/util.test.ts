@@ -13,11 +13,7 @@ import {
   generateDashboardsMock,
   generateSanitizedDashboardsMock,
 } from '@/app/_test/superset.util';
-import {
-  Dashboard,
-  DashboardResponseRaw,
-  FavoriteStatusType,
-} from '@/app/_lib/superset/types';
+import { Dashboard, DashboardResponseRaw } from '@/app/_lib/superset/types';
 import { range } from 'lodash';
 import {
   internal,
@@ -176,13 +172,10 @@ describe('mkDashboardHref', () => {
 describe('populateDashboards', () => {
   it('returns the internal representations of the given dashboards having the given favorite statuses', () => {
     const dashboards = generateSanitizedDashboardsMock();
-    const favStatuses = dashboards.map(
-      (dashboard) =>
-        ({
-          id: dashboard.id,
-          value: Math.random() < 0.5,
-        }) as FavoriteStatusType,
-    );
+    const favStatuses = dashboards.map((dashboard) => ({
+      id: dashboard.id,
+      value: Math.random() < 0.5,
+    }));
 
     const populatedDashboards = populateDashboards(dashboards, favStatuses);
 
@@ -205,10 +198,10 @@ describe('populateDashboards', () => {
     const dashboards = generateSanitizedDashboardsMock(
       dashboardIds.map((index) => ({ id: index })),
     );
-    const favStatuses = favStatusIds.map(
-      (index) =>
-        ({ id: index, value: Math.random() < 0.5 }) as FavoriteStatusType,
-    );
+    const favStatuses = favStatusIds.map((index) => ({
+      id: index,
+      value: Math.random() < 0.5,
+    }));
 
     const populatedDashboards = populateDashboards(dashboards, favStatuses);
 
@@ -224,10 +217,10 @@ describe('populateDashboards', () => {
     const dashboards = generateSanitizedDashboardsMock(
       dashboardIds.map((index) => ({ id: index })),
     );
-    const favStatuses = favStatusIds.map(
-      (index) =>
-        ({ id: index, value: Math.random() < 0.5 }) as FavoriteStatusType,
-    );
+    const favStatuses = favStatusIds.map((index) => ({
+      id: index,
+      value: Math.random() < 0.5,
+    }));
 
     const populatedDashboards = populateDashboards(dashboards, favStatuses);
 

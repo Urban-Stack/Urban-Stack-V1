@@ -37,11 +37,13 @@ const commonDashboardMockArgs = (id: number): DashboardMockArgs => ({
   id: id,
   dashboard_title: `Test Dashboard ${id}`,
   changed_on_utc: new Date(2024, 8, 15),
-  created_by: { id, first_name: 'Test', last_name: 'User' } as UserWithIdType,
+  created_by: { id, first_name: 'Test', last_name: 'User' },
   slug: `${TENANT}_${VIZ_GROUP}_test-dashboard-${id}`,
-  tags: ['Tag #1', 'Tag #2', 'Tag #3'].map(
-    (label, index) => ({ id: index, name: label, type: 1 }) as TagRaw,
-  ),
+  tags: ['Tag #1', 'Tag #2', 'Tag #3'].map((label, index) => ({
+    id: index,
+    name: label,
+    type: 1,
+  })),
   thumbnail_url: '/api/v1/test/thumbnail',
   published: id % 2 == 0,
 });

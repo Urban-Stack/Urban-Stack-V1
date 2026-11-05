@@ -17,7 +17,7 @@ describe('UpdateTenantSettingsForm', () => {
       UpdateTenantSettingsForm.parse({
         ...REQUIRED,
         tenantDisplayName,
-      } as UpdateTenantSettingsForm),
+      }),
     ).toThrow(ZodError);
   });
 
@@ -29,7 +29,7 @@ describe('UpdateTenantSettingsForm', () => {
       UpdateTenantSettingsForm.parse({
         ...REQUIRED,
         tenantDisplayName,
-      } as UpdateTenantSettingsForm),
+      }),
     ).toThrow(ZodError);
   });
 
@@ -43,7 +43,7 @@ describe('UpdateTenantSettingsForm', () => {
     const parsed = UpdateTenantSettingsForm.parse({
       ...REQUIRED,
       tenantDisplayName: tenantDisplayName,
-    } as UpdateTenantSettingsForm);
+    });
 
     expect(parsed).toEqual({
       ...REQUIRED,
@@ -64,7 +64,7 @@ describe('UpdateTenantSettingsForm', () => {
     const parsed = UpdateTenantSettingsForm.parse({
       ...REQUIRED,
       tenantCoords: coordsWithoutZoom,
-    } as UpdateTenantSettingsForm);
+    });
 
     const coordsWithZoom = coordsWithoutZoom
       ? coordsWithoutZoom + ':' + zoomFactor
@@ -82,7 +82,7 @@ describe('UpdateTenantSettingsForm', () => {
         UpdateTenantSettingsForm.parse({
           ...REQUIRED,
           colorPrimary,
-        } as UpdateTenantSettingsForm),
+        }),
       ).toThrow(ZodError);
     },
   );
@@ -94,7 +94,7 @@ describe('UpdateTenantSettingsForm', () => {
         UpdateTenantSettingsForm.parse({
           ...REQUIRED,
           colorPrimary: uchColorPrimary,
-        } as UpdateTenantSettingsForm),
+        }),
       ).toThrow(ZodError);
     },
   );
@@ -104,7 +104,7 @@ describe('UpdateTenantSettingsForm', () => {
       UpdateTenantSettingsForm.parse({
         ...REQUIRED,
         tenantLogoUrl: 'I am not a URL',
-      } as UpdateTenantSettingsForm),
+      }),
     ).toThrow(ZodError);
   });
 
@@ -113,7 +113,7 @@ describe('UpdateTenantSettingsForm', () => {
       UpdateTenantSettingsForm.parse({
         ...REQUIRED,
         tenantImageUrl: 'I am not a URL',
-      } as UpdateTenantSettingsForm),
+      }),
     ).toThrow(ZodError);
   });
 
@@ -122,7 +122,7 @@ describe('UpdateTenantSettingsForm', () => {
       UpdateTenantSettingsForm.parse({
         ...REQUIRED,
         citizenHubImageUrl: 'I am not a URL',
-      } as UpdateTenantSettingsForm),
+      }),
     ).toThrow(ZodError);
   });
 
@@ -131,7 +131,7 @@ describe('UpdateTenantSettingsForm', () => {
       UpdateTenantSettingsForm.parse({
         ...REQUIRED,
         newsUrl: 'I am not a URL',
-      } as UpdateTenantSettingsForm),
+      }),
     ).toThrow(ZodError);
   });
 
@@ -144,7 +144,7 @@ describe('UpdateTenantSettingsForm', () => {
         ...REQUIRED,
         tenantDisplayName,
         tenantCoords,
-      } as UpdateTenantSettingsForm),
+      }),
     ).toThrow(ZodError);
   });
 });

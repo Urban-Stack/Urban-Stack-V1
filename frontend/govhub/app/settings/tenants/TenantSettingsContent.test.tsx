@@ -3,7 +3,6 @@ import { _internal } from '@/app/settings/tenants/TenantSettingsContent';
 import { TenantSettingsState } from '@/app/settings/tenants/form';
 import { requireTenant } from '@/app/_lib/resource-api/legacy';
 import { FuncMock } from '@/app/_test/utils';
-import { TenantSettings } from '@/app/_lib/resource-api/graphql/attributes';
 import { mutate, query } from '@/app/_lib/resource-api/client';
 import React from 'react';
 import { Button, Select, TextInput } from 'flowbite-react';
@@ -78,9 +77,7 @@ const mockTenantSettingsStateErrors = {
 
 beforeEach(() => {
   requireTenantMock.mockResolvedValueOnce('tenant-1');
-  mockQuery.mockResolvedValue(
-    mockTenantSettingsState as unknown as TenantSettings,
-  );
+  mockQuery.mockResolvedValue(mockTenantSettingsState);
   mockMutate.mockReset();
 });
 

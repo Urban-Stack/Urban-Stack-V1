@@ -1,8 +1,5 @@
 import { z } from 'zod';
-import {
-  QueriedPublicAttributes,
-  queryPublicAttributes,
-} from '@/app/_lib/resource-api/graphql/publicAttributes';
+import { queryPublicAttributes } from '@/app/_lib/resource-api/graphql/publicAttributes';
 import { publicAttributes } from './publicAttributes';
 import {
   TEST_PUBLIC_ATTRIBUTES,
@@ -24,7 +21,7 @@ const mockGraphQLResponse = (data: Record<string, string>) => {
         value,
       })),
     },
-  } as QueriedPublicAttributes);
+  });
 };
 
 beforeEach(() => {

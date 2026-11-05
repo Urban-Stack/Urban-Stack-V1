@@ -2,7 +2,6 @@ import { render } from '@testing-library/react';
 import TenantSettingsPage from '@/app/settings/tenants/page';
 import { requireTenant } from '@/app/_lib/resource-api/legacy';
 import { FuncMock } from '@/app/_test/utils';
-import { TenantSettings } from '@/app/_lib/resource-api/graphql/attributes';
 import TenantSettingsContent from '@/app/settings/tenants/TenantSettingsContent';
 import { query } from '@/app/_lib/resource-api/client';
 import { queryHasTenantScope } from '@/app/_lib/resource-api/graphql/tenant';
@@ -46,7 +45,7 @@ const mockTenantSettings = {
 
 beforeEach(() => {
   requireTenantMock.mockResolvedValueOnce('tenant-1');
-  mockQuery.mockResolvedValue(mockTenantSettings as TenantSettings);
+  mockQuery.mockResolvedValue(mockTenantSettings);
   queryHasTenantScopeMock.mockResolvedValue(true);
 });
 

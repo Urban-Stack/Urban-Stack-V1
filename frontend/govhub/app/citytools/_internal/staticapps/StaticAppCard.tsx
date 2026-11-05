@@ -6,12 +6,7 @@ import {
   FORM_NAMES,
   InstallStaticAppState,
 } from '@/app/citytools/_internal/staticapps/form';
-import {
-  StateDataType,
-  StateType,
-  UdpCityToolCard,
-  UdpToast,
-} from 'udp-ui/components';
+import { StateDataType, UdpCityToolCard, UdpToast } from 'udp-ui/components';
 import CityToolUploadButton from './CityToolUploadButton';
 import { cond } from 'lodash';
 import { CITYTOOL_CATEGORY_LABELS } from '@/app/citytools/_internal/categories';
@@ -166,17 +161,17 @@ const mkState: (
 ) =>
   staticApp.isInstalled
     ? {
-        type: 'installed' as StateType,
+        type: 'installed',
         typeText: 'Installiert',
       }
     : isCityToolAdmin
       ? {
-          type: 'installable' as StateType,
+          type: 'installable',
           typeText: 'Installieren',
           onClick: onInstall,
         }
       : {
-          type: 'request' as StateType,
+          type: 'request',
           typeText: 'Zugriff anfordern',
           href: `/community?path=${encodeURIComponent(staticApp.requestCityToolLink)}`,
         };

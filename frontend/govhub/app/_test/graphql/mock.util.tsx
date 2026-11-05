@@ -11,10 +11,7 @@ import {
   queryAllVizGroups,
 } from '@/app/_lib/resource-api/graphql/vizGroups';
 import { SensorCredential } from '@/app/_lib/resource-api/project/credentials';
-import {
-  AllCredentials,
-  queryAllCredentials,
-} from '@/app/_lib/resource-api/graphql/credentials';
+import { queryAllCredentials } from '@/app/_lib/resource-api/graphql/credentials';
 
 export const mkCombinedGraphQLError = (...messages: string[]) =>
   new CombinedGraphQLErrors({
@@ -50,7 +47,7 @@ export const mockQueryAllCredentials =
           }
         : {},
       error,
-    } as unknown as AllCredentials);
+    });
   };
 
 /**

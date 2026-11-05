@@ -206,6 +206,9 @@ spec:
       service:
         type: ClusterIP
       chp:
+        image:
+          # TODO: remove once it's updated in the chart
+          tag: "5.4.0"
         resources: {{- $.Values.jupyterhub.proxy.chp.resources | toYaml | nindent 10 }}
       traefik:
         resources: {{- $.Values.jupyterhub.proxy.traefik.resources | toYaml | nindent 10 }}

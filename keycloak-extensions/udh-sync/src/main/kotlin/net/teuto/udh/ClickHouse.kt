@@ -13,7 +13,8 @@ val CLICKHOUSE_PASSWORD = System.getenv("CLICKHOUSE_PASSWORD")
 val CLICKHOUSE_PASSWORD_QUERYONLY = System.getenv("CLICKHOUSE_PASSWORD_QUERYONLY")
 
 fun createConnection(): Connection? = DriverManager.getConnection(
-    "jdbc:ch://$CLICKHOUSE_HOST:8123/",
+    // see https://github.com/metabase/metabase/issues/82869
+    "jdbc:ch://$CLICKHOUSE_HOST:8123/?clickhouse_setting_network_compression_method=lz4",
     CLICKHOUSE_USERNAME,
     CLICKHOUSE_PASSWORD
 )

@@ -16,33 +16,27 @@ describe('CreateCredentialForm', () => {
   it('throws ZodError on credential name too short', () => {
     const name = 'xs';
 
-    expect(() =>
-      CreateCredentialForm.parse({ name } as CreateCredentialForm),
-    ).toThrow(ZodError);
+    expect(() => CreateCredentialForm.parse({ name })).toThrow(ZodError);
   });
 
   it('throws ZodError on credential name too long', () => {
     const name =
       'tooLong_crduujisacfctqitlrbymonauexhkgeysabqwgzjlcsynwcnppxvmsfik';
 
-    expect(() =>
-      CreateCredentialForm.parse({ name } as CreateCredentialForm),
-    ).toThrow(ZodError);
+    expect(() => CreateCredentialForm.parse({ name })).toThrow(ZodError);
   });
 
   it('throws ZodError if credential name contains uppercase letters', () => {
     const name = 'Credential';
 
-    expect(() =>
-      CreateCredentialForm.parse({ name } as CreateCredentialForm),
-    ).toThrow(ZodError);
+    expect(() => CreateCredentialForm.parse({ name })).toThrow(ZodError);
   });
 
   it.each([
     'min',
     'max-enhicrduujisacfctqitlrbymonauexhkgeysabqwgzjlcsynwcnppxvmsfi',
   ])(`successfully parses credential for valid length`, (name) => {
-    const parsed = CreateCredentialForm.parse({ name } as CreateCredentialForm);
+    const parsed = CreateCredentialForm.parse({ name });
 
     expect(parsed).toEqual({ name });
   });
@@ -61,7 +55,7 @@ describe('mkCreateState', () => {
   });
 
   it('should return unknown error when data is undefined', () => {
-    const state = mkCreateState({ data: undefined } as CreateCredential);
+    const state = mkCreateState({ data: undefined });
 
     expect(state).toEqual({
       errors: { general: ['Ein unbekannter Fehler ist aufgetreten.'] },
@@ -106,7 +100,7 @@ describe('mkRotateState', () => {
   });
 
   it('should return unknown error when data is undefined', () => {
-    const state = mkRotateState({ data: undefined } as RotateCredential);
+    const state = mkRotateState({ data: undefined });
 
     expect(state).toEqual({
       errors: { general: ['Ein unbekannter Fehler ist aufgetreten.'] },
@@ -151,7 +145,7 @@ describe('mkDeleteState', () => {
   });
 
   it('should return unknown error when data is undefined', () => {
-    const state = mkDeleteState({ data: undefined } as DeleteCredential);
+    const state = mkDeleteState({ data: undefined });
 
     expect(state).toEqual({
       errors: { general: ['Ein unbekannter Fehler ist aufgetreten.'] },

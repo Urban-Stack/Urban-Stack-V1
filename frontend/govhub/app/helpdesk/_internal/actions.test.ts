@@ -1,5 +1,5 @@
 import { submitRequest } from './actions';
-import { FORM_NAMES, HelpDeskState } from './form';
+import { FORM_NAMES } from './form';
 import { requireAuth } from '@/app/_lib/auth';
 import { getPublicEnv } from '@/app/_lib/env';
 import { TEST_SESSION } from '@/app/_test/utils';
@@ -70,7 +70,7 @@ describe('submitRequest', () => {
       },
     });
 
-    const state = await submitRequest({} as HelpDeskState, formData);
+    const state = await submitRequest({}, formData);
     expect(state).toEqual({ data: { description: '', reason: '' } });
     expect(mutateCreateHelpDeskTicketMock).toHaveBeenCalledTimes(1);
   });
@@ -80,7 +80,7 @@ describe('submitRequest', () => {
       'Valid Subject',
       'Detailed description exceeding limit',
     );
-    const state = await submitRequest({} as HelpDeskState, formData);
+    const state = await submitRequest({}, formData);
 
     expect(state).toEqual({
       data: {
@@ -98,7 +98,7 @@ describe('submitRequest', () => {
       ),
       data: undefined,
     });
-    const state = await submitRequest({} as HelpDeskState, formData);
+    const state = await submitRequest({}, formData);
 
     expect(state).toEqual({
       data: { reason: 'AB', description: '123' },

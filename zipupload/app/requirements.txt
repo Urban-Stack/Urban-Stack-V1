@@ -1,5 +1,5 @@
-boto3==1.43.5
+boto3==1.43.121
 flask==3.1.3
-requests==2.33.1
+requests==2.34.2
 waitress==3.0.2
-pyseto==1.9.2
+pyseto==1.10.0

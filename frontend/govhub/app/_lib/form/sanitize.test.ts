@@ -4,7 +4,7 @@ import { CITYTOOL_CATEGORY_ORDER } from '@/app/citytools/_internal/categories';
 describe('sanitizeValue', () => {
   const mkFormDataEntryValue = (
     value: string | null,
-  ): FormDataEntryValue | null => value as FormDataEntryValue | null;
+  ): FormDataEntryValue | null => value;
 
   it('returns present string value', () => {
     expect(sanitizeValue(mkFormDataEntryValue('yippie'))).toEqual('yippie');
@@ -20,7 +20,7 @@ describe('sanitizeValue', () => {
 });
 describe('sanitizeCategories', () => {
   const mkFormDataEntryValues = (values: (string | File)[]) =>
-    values.map((val) => val as FormDataEntryValue);
+    values.map((val) => val);
 
   it('returns only known categories', () => {
     const input = mkFormDataEntryValues([

@@ -16,33 +16,27 @@ describe('CreateUserGroupForm', () => {
   it('throws ZodError on group name too short', () => {
     const name = 'xs';
 
-    expect(() =>
-      CreateUserGroupForm.parse({ name } as CreateUserGroupForm),
-    ).toThrow(ZodError);
+    expect(() => CreateUserGroupForm.parse({ name })).toThrow(ZodError);
   });
 
   it('throws ZodError on group name too long', () => {
     const name =
       'tooLong_crduujisacfctqitlrbymonauexhkgeysabqwgzjlcsynwcnppxvmsfik';
 
-    expect(() =>
-      CreateUserGroupForm.parse({ name } as CreateUserGroupForm),
-    ).toThrow(ZodError);
+    expect(() => CreateUserGroupForm.parse({ name })).toThrow(ZodError);
   });
 
   it('throws ZodError if group name contains uppercase letters', () => {
     const name = 'Group';
 
-    expect(() =>
-      CreateUserGroupForm.parse({ name } as CreateUserGroupForm),
-    ).toThrow(ZodError);
+    expect(() => CreateUserGroupForm.parse({ name })).toThrow(ZodError);
   });
 
   it.each([
     'min',
     'max-enhicrduujisacfctqitlrbymonauexhkgeysabqwgzjlcsynwcnppxvmsfi',
   ])(`successfully parses group for valid length`, (name) => {
-    const parsed = CreateUserGroupForm.parse({ name } as CreateUserGroupForm);
+    const parsed = CreateUserGroupForm.parse({ name });
 
     expect(parsed).toEqual({ name });
   });
@@ -104,7 +98,7 @@ describe('mkDeleteState', () => {
   });
 
   it('should return unknown error when data is undefined', () => {
-    const state = mkDeleteState({ data: undefined } as DeleteUserGroup);
+    const state = mkDeleteState({ data: undefined });
 
     expect(state).toEqual({
       errors: { general: ['Ein unbekannter Fehler ist aufgetreten.'] },
@@ -139,7 +133,7 @@ describe('mkUnshareState', () => {
   });
 
   it('should return unknown error when data is undefined', () => {
-    const state = mkUnshareState({ data: undefined } as DisableUserGroupShared);
+    const state = mkUnshareState({ data: undefined });
 
     expect(state).toEqual({
       errors: { general: ['Ein unbekannter Fehler ist aufgetreten.'] },

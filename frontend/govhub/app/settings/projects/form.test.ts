@@ -7,33 +7,27 @@ describe('CreateProjectForm', () => {
   it('throws ZodError on project name too short', () => {
     const name = 'xs';
 
-    expect(() =>
-      CreateProjectForm.parse({ name } as CreateProjectForm),
-    ).toThrow(ZodError);
+    expect(() => CreateProjectForm.parse({ name })).toThrow(ZodError);
   });
 
   it('throws ZodError on project name too long', () => {
     const name =
       'tooLong_crduujisacfctqitlrbymonauexhkgeysabqwgzjlcsynwcnppxvmsfik';
 
-    expect(() =>
-      CreateProjectForm.parse({ name } as CreateProjectForm),
-    ).toThrow(ZodError);
+    expect(() => CreateProjectForm.parse({ name })).toThrow(ZodError);
   });
 
   it('throws ZodError if project name contains uppercase letters', () => {
     const name = 'Project';
 
-    expect(() =>
-      CreateProjectForm.parse({ name } as CreateProjectForm),
-    ).toThrow(ZodError);
+    expect(() => CreateProjectForm.parse({ name })).toThrow(ZodError);
   });
 
   it.each([
     'min',
     'max-enhicrduujisacfctqitlrbymonauexhkgeysabqwgzjlcsynwcnppxvmsfi',
   ])(`successfully parses project for valid length`, (name) => {
-    const parsed = CreateProjectForm.parse({ name } as CreateProjectForm);
+    const parsed = CreateProjectForm.parse({ name });
 
     expect(parsed).toEqual({ name });
   });

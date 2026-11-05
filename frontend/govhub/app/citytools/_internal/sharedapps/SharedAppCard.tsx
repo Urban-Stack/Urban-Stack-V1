@@ -1,4 +1,4 @@
-import { StateDataType, StateType, UdpCityToolCard } from 'udp-ui/components';
+import { StateDataType, UdpCityToolCard } from 'udp-ui/components';
 import { SharedApp } from '@/app/_lib/resource-api/sharedapps/internal';
 import Link from 'next/link';
 import { mkHref } from '@/app/citytools/shared-app/util';
@@ -80,12 +80,12 @@ const mkState: (
       );
   return sharedApp.status === 'running'
     ? {
-        type: 'installed' as StateType,
+        type: 'installed',
         typeText: 'Installiert',
         render,
       }
     : {
-        type: 'warning' as StateType,
+        type: 'warning',
         typeText: 'Warnung',
         render,
       };

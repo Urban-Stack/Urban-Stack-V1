@@ -71,10 +71,7 @@ type ActionBadgeType = {
 };
 
 export type CreatorType =
-  | 'static-app'
-  | 'my-shared-app'
-  | 'public-shared-app'
-  | 'dedicated-app';
+  'static-app' | 'my-shared-app' | 'public-shared-app' | 'dedicated-app';
 
 export type UdpCityToolCardProps = Partial<
   Pick<ComponentPropsWithoutRef<'a'>, 'href' | 'target'>

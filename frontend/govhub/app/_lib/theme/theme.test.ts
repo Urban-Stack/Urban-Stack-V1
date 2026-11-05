@@ -94,7 +94,7 @@ describe('unsafeThemeRaw', () => {
   it('returns raw theme if primary color is present', () => {
     const result = internal.unsafeThemeRaw({
       data: { tenant: { colorPrimary: COLOR } },
-    } as unknown as ThemeAttributes);
+    });
 
     expect(result).toEqual({ colorPrimary: COLOR });
   });

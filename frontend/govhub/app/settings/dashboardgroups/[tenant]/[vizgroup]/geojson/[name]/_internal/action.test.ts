@@ -6,7 +6,6 @@ import {
 import {
   mutateCreatePublishedQuery,
   querySinglePublishedQuery,
-  SinglePublishedQuery,
 } from '@/app/_lib/resource-api/graphql/vizGroups';
 import { revalidatePath } from 'next/cache';
 import { FORM_NAMES } from './form';
@@ -230,7 +229,7 @@ describe('getPublishedQuery', () => {
           },
         },
       },
-    } as SinglePublishedQuery);
+    });
 
     const state = await getPublishedQuery(TENANT, VIZGROUP, QUERY_NAME);
 

@@ -15,7 +15,7 @@ describe('mkDeleteState', () => {
   });
 
   it('should return unknown error when data is undefined', () => {
-    const state = mkDeleteState({ data: undefined } as DeleteProject);
+    const state = mkDeleteState({ data: undefined });
 
     expect(state).toEqual({
       errors: { general: ['Ein unbekannter Fehler ist aufgetreten.'] },

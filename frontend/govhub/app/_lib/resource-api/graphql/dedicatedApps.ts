@@ -132,8 +132,7 @@ export const mutateUninstallDedicatedApp = async (name: string) => {
 };
 
 export type DedicatedAppInstallation =
-  | InstallDedicatedApp
-  | UnInstallDedicatedApp;
+  InstallDedicatedApp | UnInstallDedicatedApp;
 
 export const internal = {
   ALL_AND_INSTALLED_DEDICATEDAPPS,

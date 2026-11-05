@@ -3,10 +3,7 @@ import { FuncMock } from '@/app/_test/utils';
 import { render } from '@testing-library/react';
 import { notFound, usePathname } from 'next/navigation';
 import UserGroupLayout from '@/app/settings/usergroups/[tenant]/[groupname]/layout';
-import {
-  queryUserGroupScopes,
-  UserGroupScopes,
-} from '@/app/_lib/resource-api/graphql/usergroups';
+import { queryUserGroupScopes } from '@/app/_lib/resource-api/graphql/usergroups';
 import { Scope } from '@/app/_lib/resource-api/permission/scope';
 import { UdpTabs } from 'udp-ui/components';
 import { Breakpoint } from 'udp-ui/tailwind';
@@ -58,7 +55,7 @@ const mockQueryUserGroupScopes = (scopes: Scope[], error?: Error) =>
       },
     },
     error: error,
-  } as UserGroupScopes);
+  });
 
 const renderLayout = async (
   tenant: string = TENANT,
