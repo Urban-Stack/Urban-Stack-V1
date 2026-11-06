@@ -1,0 +1,462 @@
+version: 1.0.0
+database_uuid: 30d54d0f-992e-4d1b-8f2e-b9f9cf59f37c
+table_name: winterdienst
+sql: |
+  WITH
+    road AS
+    (
+        SELECT
+            location_name AS standort,
+            argMax(custom1, time) AS standorttyp,
+            max(time) AS letzte_fahrbahnmessung_utc,
+            argMax(road_surface_temperature, time) AS fahrbahntemperatur,
+            argMax(dew_point, time) AS taupunkt,
+            argMax(ground_temperature, time) AS bodentemperatur,
+            argMax(water_depth, time) AS wasserfilm_mm,
+            argMax(ice_thickness, time) AS eisdicke_mm,
+            argMax(friction_grip, time) AS grip,
+            argMax(road_condition_index, time) AS zustandsindex,
+            -- Naechste vorhandene Messung zum Zielzeitpunkt; groessere Toleranzfenster.
+            -- argMinIf vermeidet weitere JOINs und bewahrt den echten Messzeitpunkt.
+            countIf(road_surface_temperature IS NOT NULL
+                AND time BETWEEN now() - INTERVAL 55 MINUTE AND now() - INTERVAL 15 MINUTE) AS messungen_historie_30,
+            argMinIf(tuple(road_surface_temperature, time),
+                abs(dateDiff('second', time, now() - INTERVAL 30 MINUTE)),
+                road_surface_temperature IS NOT NULL
+                AND time BETWEEN now() - INTERVAL 55 MINUTE AND now() - INTERVAL 15 MINUTE) AS historie_30,
+            countIf(road_surface_temperature IS NOT NULL
+                AND time BETWEEN now() - INTERVAL 100 MINUTE AND now() - INTERVAL 45 MINUTE) AS messungen_historie_60,
+            argMinIf(tuple(road_surface_temperature, time),
+                abs(dateDiff('second', time, now() - INTERVAL 60 MINUTE)),
+                road_surface_temperature IS NOT NULL
+                AND time BETWEEN now() - INTERVAL 100 MINUTE AND now() - INTERVAL 45 MINUTE) AS historie_60
+        FROM default.sensor_messages_with_meta
+        WHERE project = 'guetersloh.zenner-winterdienst'
+          AND sensor_type = 'Straßenzustands- und Temperatursensor'
+          AND time >= now() - INTERVAL 24 HOUR
+          AND location_name IS NOT NULL
+        GROUP BY location_name
+    ),
+    weather AS
+    (
+        SELECT
+            location_name AS standort,
+            max(time) AS letzte_wettermessung_utc,
+            argMax(temperature_outside, time) AS w_lufttemperatur,
+            argMax(humidity_air, time) AS w_luftfeuchtigkeit,
+            argMax(rain_intensity, time) AS w_regenintensitaet,
+            argMax(rain_accumulated, time) AS w_regen_kumuliert,
+            argMax(wind_speed, time) AS w_wind_m_s,
+            argMax(wind_peak_gust, time) AS w_windboee_m_s,
+            argMax(wind_gust_10_minute_maximum, time) AS w_windboee_10min_max,
+            argMax(wind_direction, time) AS w_windrichtung_grad,
+            argMax(air_pressure, time) AS w_luftdruck,
+            argMax(solar_radiation, time) AS w_solarstrahlung,
+            argMax(vapor_pressure, time) AS w_dampfdruck,
+            argMax(battery_voltage, time) AS w_batterie_v,
+            argMax(lightning_strike_count, time) AS w_blitzanzahl,
+            argMax(precipitation_electrical_conductivity, time) AS w_niederschlag_leitfaehigkeit,
+            countIf(time >= now() - INTERVAL 180 MINUTE AND ifNull(rain_intensity, 0) > 0) AS w_regenpositive_messungen_180min,
+            countIf(time >= now() - INTERVAL 180 MINUTE AND rain_intensity IS NOT NULL) AS w_regenmessungen_180min
+        FROM default.sensor_messages_with_meta
+        WHERE project = 'guetersloh.zenner-winterdienst'
+          AND sensor_type = 'Wetterstation'
+          AND time >= now() - INTERVAL 24 HOUR
+          AND location_name IS NOT NULL
+        GROUP BY location_name
+    ),
+    combined AS
+    (
+        SELECT
+            r.standort, r.standorttyp, r.letzte_fahrbahnmessung_utc,
+            r.fahrbahntemperatur, r.taupunkt, r.bodentemperatur,
+            r.wasserfilm_mm, r.eisdicke_mm, r.grip, r.zustandsindex,
+            if(r.messungen_historie_30 > 0, toNullable(r.historie_30.1), CAST(NULL, 'Nullable(Float64)')) AS fahrbahntemperatur_vor_30min,
+            if(r.messungen_historie_30 > 0, toNullable(r.historie_30.2), CAST(NULL, 'Nullable(DateTime)')) AS zeitpunkt_vor_30min,
+            if(r.messungen_historie_60 > 0, toNullable(r.historie_60.1), CAST(NULL, 'Nullable(Float64)')) AS fahrbahntemperatur_vor_60min,
+            if(r.messungen_historie_60 > 0, toNullable(r.historie_60.2), CAST(NULL, 'Nullable(DateTime)')) AS zeitpunkt_vor_60min,
+            nullIf(w.letzte_wettermessung_utc, toDateTime(0)) AS letzte_wettermessung_utc,
+            w.w_lufttemperatur AS lufttemperatur,
+            w.w_luftfeuchtigkeit AS luftfeuchtigkeit,
+            w.w_regenintensitaet AS regenintensitaet,
+            w.w_regen_kumuliert AS regen_kumuliert,
+            w.w_regenpositive_messungen_180min AS regenpositive_messungen_180min,
+            w.w_regenmessungen_180min AS regenmessungen_180min,
+            w.w_wind_m_s AS wind_m_s,
+            w.w_windboee_m_s AS windboee_m_s,
+            w.w_windboee_10min_max AS windboee_10min_max,
+            w.w_windrichtung_grad AS windrichtung_grad,
+            round(w.w_luftdruck * 10, 1) AS luftdruck_hpa,
+            w.w_solarstrahlung AS solarstrahlung,
+            w.w_dampfdruck AS dampfdruck,
+            w.w_batterie_v AS batterie_v,
+            w.w_blitzanzahl AS blitzanzahl,
+            w.w_niederschlag_leitfaehigkeit AS niederschlag_leitfaehigkeit,
+            round(r.fahrbahntemperatur - r.taupunkt, 2) AS taupunktdifferenz,
+            dateDiff('minute', r.letzte_fahrbahnmessung_utc, now()) AS datenalter_fahrbahn_min,
+            if(w.letzte_wettermessung_utc = toDateTime(0), CAST(NULL, 'Nullable(Int64)'), toNullable(dateDiff('minute', w.letzte_wettermessung_utc, now()))) AS datenalter_wetter_min
+        FROM road AS r
+        LEFT JOIN weather AS w ON r.standort = w.standort
+    ),
+    trends AS
+    (
+        SELECT *,
+            if(fahrbahntemperatur_vor_30min IS NOT NULL AND fahrbahntemperatur IS NOT NULL, round(fahrbahntemperatur - fahrbahntemperatur_vor_30min, 2), CAST(NULL, 'Nullable(Float64)')) AS temperaturtrend_30min,
+            if(fahrbahntemperatur_vor_60min IS NOT NULL AND fahrbahntemperatur IS NOT NULL, round(fahrbahntemperatur - fahrbahntemperatur_vor_60min, 2), CAST(NULL, 'Nullable(Float64)')) AS temperaturtrend_60min,
+            if(zeitpunkt_vor_30min IS NOT NULL,
+                toNullable(dateDiff('minute', zeitpunkt_vor_30min, letzte_fahrbahnmessung_utc)),
+                CAST(NULL, 'Nullable(Int64)')) AS abstand_historie_30_min,
+            if(zeitpunkt_vor_60min IS NOT NULL,
+                toNullable(dateDiff('minute', zeitpunkt_vor_60min, letzte_fahrbahnmessung_utc)),
+                CAST(NULL, 'Nullable(Int64)')) AS abstand_historie_60_min,
+            if(fahrbahntemperatur_vor_60min IS NOT NULL AND fahrbahntemperatur IS NOT NULL AND dateDiff('minute', zeitpunkt_vor_60min, letzte_fahrbahnmessung_utc) BETWEEN 40 AND 110,
+              round((fahrbahntemperatur_vor_60min - fahrbahntemperatur) * 3600.0 / nullIf(dateDiff('second', zeitpunkt_vor_60min, letzte_fahrbahnmessung_utc), 0), 3),
+              CAST(NULL, 'Nullable(Float64)')) AS abkuehlung_c_pro_stunde,
+            if(fahrbahntemperatur_vor_30min IS NOT NULL AND fahrbahntemperatur IS NOT NULL AND dateDiff('minute', zeitpunkt_vor_30min, letzte_fahrbahnmessung_utc) BETWEEN 10 AND 65,
+              round((fahrbahntemperatur_vor_30min - fahrbahntemperatur) * 3600.0 / nullIf(dateDiff('second', zeitpunkt_vor_30min, letzte_fahrbahnmessung_utc), 0), 3),
+              CAST(NULL, 'Nullable(Float64)')) AS abkuehlung_30min_c_pro_stunde
+        FROM combined
+    ),
+    quality AS
+    (
+        SELECT *,
+            multiIf(datenalter_fahrbahn_min <= 20, 'Aktuell', datenalter_fahrbahn_min <= 40, 'Verzoegert', 'Veraltet') AS datenstatus_fahrbahn,
+            multiIf(datenalter_wetter_min IS NULL, 'Keine Daten', datenalter_wetter_min <= 20, 'Aktuell', datenalter_wetter_min <= 40, 'Verzoegert', 'Veraltet') AS datenstatus_wetter,
+            (datenalter_fahrbahn_min <= 20) AS fahrbahndaten_aktuell,
+            (datenalter_wetter_min IS NOT NULL AND datenalter_wetter_min <= 20) AS wetterdaten_aktuell,
+            if(standorttyp = 'Brücke', 1, 0) AS ist_bruecke,
+            multiIf(datenalter_fahrbahn_min > 20, 'Keine aktuellen Daten', abkuehlung_c_pro_stunde IS NULL, 'Keine Trenddaten', abkuehlung_c_pro_stunde >= 0.2, 'Fallend', abkuehlung_c_pro_stunde <= -0.2, 'Steigend', 'Stabil') AS temperaturentwicklung,
+            if(datenalter_fahrbahn_min <= 20 AND fahrbahntemperatur > 0 AND abkuehlung_c_pro_stunde >= 0.1,
+              toNullable(round(fahrbahntemperatur / nullIf(abkuehlung_c_pro_stunde, 0) * 60, 0)),
+              CAST(NULL, 'Nullable(Float64)')) AS prognose_nullgrad_roh_min
+        FROM trends
+    ),
+    flags AS
+    (
+        SELECT *,
+            (fahrbahndaten_aktuell AND fahrbahntemperatur <= 2 AND taupunktdifferenz <= 2) AS r01,
+            (fahrbahndaten_aktuell AND ((fahrbahntemperatur <= 1 AND taupunktdifferenz <= 1) OR (wetterdaten_aktuell AND luftfeuchtigkeit >= 90 AND fahrbahntemperatur <= 1.5))) AS r02,
+            (fahrbahndaten_aktuell AND fahrbahntemperatur <= 0 AND taupunktdifferenz <= 0.5) AS r03,
+            (fahrbahndaten_aktuell AND zustandsindex = 5) AS r04,
+            (fahrbahndaten_aktuell AND zustandsindex = 6) AS r05,
+            (fahrbahndaten_aktuell AND zustandsindex = 4) AS r06,
+            (fahrbahndaten_aktuell AND eisdicke_mm >= 0.10 AND (fahrbahntemperatur <= 0.5 OR zustandsindex IN (4, 5, 6) OR grip <= 0.50)) AS r07,
+            (fahrbahndaten_aktuell AND grip <= 0.30) AS r08,
+            (fahrbahndaten_aktuell AND grip > 0.30 AND grip <= 0.50) AS r09,
+            (fahrbahndaten_aktuell AND fahrbahntemperatur <= 0 AND wasserfilm_mm >= 0.10) AS r10,
+            (fahrbahndaten_aktuell AND wetterdaten_aktuell AND fahrbahntemperatur <= 0 AND regenintensitaet > 0) AS r11,
+            (fahrbahndaten_aktuell AND wetterdaten_aktuell AND fahrbahntemperatur <= 2 AND regenintensitaet > 0) AS r12,
+            (fahrbahndaten_aktuell AND wetterdaten_aktuell AND fahrbahntemperatur <= 0.5 AND taupunkt >= fahrbahntemperatur - 0.2 AND luftfeuchtigkeit >= 95) AS r13,
+            (fahrbahndaten_aktuell AND wetterdaten_aktuell AND regenmessungen_180min > 0 AND regenpositive_messungen_180min > 0 AND fahrbahntemperatur <= 0) AS r14,
+            (fahrbahndaten_aktuell AND ist_bruecke = 1 AND fahrbahntemperatur <= 3 AND taupunktdifferenz <= 2) AS r15
+        FROM quality
+    ),
+    scored AS
+    (
+        SELECT *,
+            multiIf(r03 OR r04 OR r08 OR r10 OR r11 OR r14 OR (r07 AND (zustandsindex = 5 OR grip <= 0.30)), 3,
+                    r02 OR r05 OR r06 OR r07 OR r09 OR r12 OR r13, 2,
+                    r01 OR r15, 1, 0) AS risikostufe_roh,
+            arrayStringConcat(arrayFilter(x -> x != '', [
+                if(r01, 'R01', ''), if(r02, 'R02', ''), if(r03, 'R03', ''),
+                if(r04, 'R04', ''), if(r05, 'R05', ''), if(r06, 'R06', ''),
+                if(r07, 'R07', ''), if(r08, 'R08', ''), if(r09, 'R09', ''),
+                if(r10, 'R10', ''), if(r11, 'R11', ''), if(r12, 'R12', ''),
+                if(r13, 'R13', ''), if(r14, 'R14', ''), if(r15, 'R15', '')
+            ]), ', ') AS aktive_regeln,
+            (toUInt8(ifNull(r01, 0)) + toUInt8(ifNull(r02, 0)) + toUInt8(ifNull(r03, 0))
+            + toUInt8(ifNull(r04, 0)) + toUInt8(ifNull(r05, 0)) + toUInt8(ifNull(r06, 0))
+            + toUInt8(ifNull(r07, 0)) + toUInt8(ifNull(r08, 0)) + toUInt8(ifNull(r09, 0))
+            + toUInt8(ifNull(r10, 0)) + toUInt8(ifNull(r11, 0)) + toUInt8(ifNull(r12, 0))
+            + toUInt8(ifNull(r13, 0)) + toUInt8(ifNull(r14, 0)) + toUInt8(ifNull(r15, 0))) AS anzahl_aktive_regeln
+        FROM flags
+    ),
+    assessment AS
+    (
+        SELECT *,
+            if(prognose_nullgrad_roh_min IS NOT NULL
+              AND prognose_nullgrad_roh_min <= 180
+              AND abkuehlung_30min_c_pro_stunde >= 0.1,
+              prognose_nullgrad_roh_min, CAST(NULL, 'Nullable(Float64)')) AS prognose_nullgrad_min,
+            multiIf(
+                NOT fahrbahndaten_aktuell, 'Keine Prognose',
+                fahrbahntemperatur <= 0, 'Keine Prognose',
+                abkuehlung_c_pro_stunde IS NULL OR abkuehlung_c_pro_stunde < 0.1, 'Keine Prognose',
+                abkuehlung_30min_c_pro_stunde IS NOT NULL
+                    AND abkuehlung_30min_c_pro_stunde <= -0.1, 'Trendwechsel - Prognose unsicher',
+                abkuehlung_30min_c_pro_stunde IS NULL, 'Keine aktuellen Trenddaten',
+                abkuehlung_30min_c_pro_stunde < 0.1, 'Trend nicht bestaetigt',
+                prognose_nullgrad_roh_min > 180, 'Ausserhalb Prognosehorizont',
+                abkuehlung_c_pro_stunde >= 0.3
+                    AND abkuehlung_30min_c_pro_stunde >= 0.2
+                    AND abs(abkuehlung_c_pro_stunde - abkuehlung_30min_c_pro_stunde) <= 0.3, 'Hoch',
+                abkuehlung_c_pro_stunde >= 0.2
+                    AND abkuehlung_30min_c_pro_stunde >= 0.1, 'Mittel',
+                'Gering'
+            ) AS prognose_qualitaet,
+            -- Lageentwicklung ist die Aenderung der Glatteisgefahr, nicht nur die Temperatur.
+            -- Bei Risikostufe 0 bleibt die Lage unveraendert, auch wenn es waermer wird.
+            multiIf(
+                NOT fahrbahndaten_aktuell, 'Nicht bewertbar',
+                abkuehlung_30min_c_pro_stunde IS NULL, 'Nicht bewertbar',
+                risikostufe_roh = 0, 'Unveraendert',
+                abkuehlung_30min_c_pro_stunde >= 0.2, 'Verschaerfung',
+                abkuehlung_30min_c_pro_stunde <= -0.2, 'Entspannung',
+                'Unveraendert'
+            ) AS lageentwicklung,
+            multiIf(
+                NOT fahrbahndaten_aktuell, 'Keine aktuellen Daten',
+                abkuehlung_30min_c_pro_stunde IS NULL, 'Keine Trenddaten',
+                abkuehlung_c_pro_stunde IS NOT NULL
+                    AND abkuehlung_c_pro_stunde >= 0.1
+                    AND abkuehlung_30min_c_pro_stunde <= -0.1, 'Trendwechsel - Erwaermung',
+                abkuehlung_c_pro_stunde IS NOT NULL
+                    AND abkuehlung_c_pro_stunde <= -0.1
+                    AND abkuehlung_30min_c_pro_stunde >= 0.1, 'Trendwechsel - Abkuehlung',
+                abkuehlung_30min_c_pro_stunde >= 0.2, 'Fallend',
+                abkuehlung_30min_c_pro_stunde <= -0.2, 'Steigend',
+                'Stabil'
+            ) AS temperaturentwicklung_kurzfristig,
+            multiIf(
+                NOT fahrbahndaten_aktuell, 'Daten pruefen',
+                risikostufe_roh = 3, 'Akut pruefen',
+                risikostufe_roh = 2 AND (fahrbahntemperatur <= 0.5 OR ist_bruecke = 1), 'Priorisiert pruefen',
+                risikostufe_roh = 2, 'Pruefen',
+                risikostufe_roh = 1, 'Beobachten',
+                'Beobachten'
+            ) AS handlungsbedarf
+        FROM scored
+    )
+    SELECT
+        standort, standorttyp, ist_bruecke,
+        letzte_fahrbahnmessung_utc, letzte_wettermessung_utc,
+        datenalter_fahrbahn_min, datenalter_wetter_min,
+        datenstatus_fahrbahn, datenstatus_wetter,
+        round(fahrbahntemperatur, 2) AS fahrbahntemperatur,
+        round(taupunkt, 2) AS taupunkt,
+        taupunktdifferenz,
+        round(bodentemperatur, 2) AS bodentemperatur,
+        round(lufttemperatur, 2) AS lufttemperatur,
+        round(luftfeuchtigkeit, 1) AS luftfeuchtigkeit,
+        round(wasserfilm_mm, 3) AS wasserfilm_mm,
+        round(eisdicke_mm, 3) AS eisdicke_mm,
+        round(grip, 2) AS grip,
+        zustandsindex,
+        multiIf(zustandsindex = 1, 'Trocken', zustandsindex = 2, 'Feucht',
+                zustandsindex = 3, 'Nass', zustandsindex = 4, 'Schneematsch',
+                zustandsindex = 5, 'Eis', zustandsindex = 6, 'Schnee / Reif',
+                'Unbekannt') AS fahrbahnzustand,
+        regenintensitaet, regen_kumuliert, regenpositive_messungen_180min,
+        wind_m_s, windboee_m_s, windboee_10min_max, windrichtung_grad,
+        luftdruck_hpa, solarstrahlung, dampfdruck, batterie_v,
+        blitzanzahl, niederschlag_leitfaehigkeit,
+        round(fahrbahntemperatur_vor_30min, 2) AS fahrbahntemperatur_vor_30min,
+        zeitpunkt_vor_30min, abstand_historie_30_min,
+        round(fahrbahntemperatur_vor_60min, 2) AS fahrbahntemperatur_vor_60min,
+        zeitpunkt_vor_60min, abstand_historie_60_min,
+        temperaturtrend_30min, temperaturtrend_60min,
+        abkuehlung_30min_c_pro_stunde,
+        abkuehlung_c_pro_stunde,
+        temperaturentwicklung,
+        temperaturentwicklung_kurzfristig,
+        prognose_nullgrad_min,
+        prognose_qualitaet,
+        lageentwicklung,
+        handlungsbedarf,
+        multiIf(datenstatus_fahrbahn != 'Aktuell', 'Keine aktuelle Bewertung',
+                datenstatus_wetter != 'Aktuell', 'Teilbewertung SurfaceVue',
+                'Vollstaendig') AS datenstatus,
+        if(fahrbahndaten_aktuell, toNullable(risikostufe_roh), CAST(NULL, 'Nullable(UInt8)')) AS risikostufe,
+        multiIf(NOT fahrbahndaten_aktuell, 'Keine verlaessliche Bewertung',
+                risikostufe_roh = 3, 'Kritisch', risikostufe_roh = 2, 'Warnung',
+                risikostufe_roh = 1, 'Hinweis', 'Unkritisch') AS alarmstatus,
+        multiIf(NOT fahrbahndaten_aktuell, 'Keine aktuelle Bewertung',
+                r11 OR r12 OR r13 OR r14 OR (r02 AND wetterdaten_aktuell AND luftfeuchtigkeit >= 90),
+                'SurfaceVue + Wetterstation',
+                risikostufe_roh > 0, 'SurfaceVue', 'Keine Regel aktiv') AS alarmquelle,
+        if(r15, 1, 0) AS risikostufe_bruecke,
+        aktive_regeln, anzahl_aktive_regeln
+    FROM assessment
+    ORDER BY risikostufe DESC NULLS LAST, standort
+schema: default
+main_dttm_col: letzte_fahrbahnmessung_utc
+uuid: 14d032d4-17b9-450b-93c4-f7e1dce05c8c
+metrics:
+  - metric_name: count
+    verbose_name: COUNT(*)
+    metric_type: count
+    expression: COUNT(*)
+    description: null
+    d3format: null
+    currency: null
+    extra: null
+    warning_text: null
+columns:
+  - column_name: standort
+    type: Nullable(String)
+    is_dttm: false
+  - column_name: standorttyp
+    type: Nullable(String)
+    is_dttm: false
+  - column_name: ist_bruecke
+    type: UInt8
+    is_dttm: false
+  - column_name: letzte_fahrbahnmessung_utc
+    type: DateTime
+    is_dttm: true
+  - column_name: letzte_wettermessung_utc
+    type: Nullable(DateTime)
+    is_dttm: true
+  - column_name: datenalter_fahrbahn_min
+    type: Int64
+    is_dttm: false
+  - column_name: datenalter_wetter_min
+    type: Nullable(Int64)
+    is_dttm: false
+  - column_name: datenstatus_fahrbahn
+    type: String
+    is_dttm: false
+  - column_name: datenstatus_wetter
+    type: String
+    is_dttm: false
+  - column_name: fahrbahntemperatur
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: taupunkt
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: taupunktdifferenz
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: bodentemperatur
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: lufttemperatur
+    type: Nullable(Float32)
+    is_dttm: false
+  - column_name: luftfeuchtigkeit
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: wasserfilm_mm
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: eisdicke_mm
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: grip
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: zustandsindex
+    type: Nullable(Int64)
+    is_dttm: false
+  - column_name: fahrbahnzustand
+    type: String
+    is_dttm: false
+  - column_name: regenintensitaet
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: regen_kumuliert
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: regenpositive_messungen_180min
+    type: UInt64
+    is_dttm: false
+  - column_name: wind_m_s
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: windboee_m_s
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: windboee_10min_max
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: windrichtung_grad
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: luftdruck_hpa
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: solarstrahlung
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: dampfdruck
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: batterie_v
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: blitzanzahl
+    type: Nullable(Int64)
+    is_dttm: false
+  - column_name: niederschlag_leitfaehigkeit
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: fahrbahntemperatur_vor_30min
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: zeitpunkt_vor_30min
+    type: Nullable(DateTime)
+    is_dttm: true
+  - column_name: abstand_historie_30_min
+    type: Nullable(Int64)
+    is_dttm: false
+  - column_name: fahrbahntemperatur_vor_60min
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: zeitpunkt_vor_60min
+    type: Nullable(DateTime)
+    is_dttm: true
+  - column_name: abstand_historie_60_min
+    type: Nullable(Int64)
+    is_dttm: false
+  - column_name: temperaturtrend_30min
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: temperaturtrend_60min
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: abkuehlung_30min_c_pro_stunde
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: abkuehlung_c_pro_stunde
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: temperaturentwicklung
+    type: String
+    is_dttm: false
+  - column_name: temperaturentwicklung_kurzfristig
+    type: String
+    is_dttm: false
+  - column_name: prognose_nullgrad_min
+    type: Nullable(Float64)
+    is_dttm: false
+  - column_name: prognose_qualitaet
+    type: String
+    is_dttm: false
+  - column_name: lageentwicklung
+    type: String
+    is_dttm: false
+  - column_name: handlungsbedarf
+    type: String
+    is_dttm: false
+  - column_name: datenstatus
+    type: String
+    is_dttm: false
+  - column_name: risikostufe
+    type: Nullable(UInt8)
+    is_dttm: false
+  - column_name: alarmstatus
+    type: String
+    is_dttm: false
+  - column_name: alarmquelle
+    type: String
+    is_dttm: false
+  - column_name: risikostufe_bruecke
+    type: UInt8
+    is_dttm: false
+  - column_name: aktive_regeln
+    type: String
+    is_dttm: false
+  - column_name: anzahl_aktive_regeln
+    type: UInt64
+    is_dttm: false
