@@ -71,6 +71,9 @@ Folgende Spalten sind verfügbar:
 | `lightning_strike_count`                | Int64    | Ja            |                     | Blitzschläge Anzahl                                                                                             |
 | `lightning_average_distance`            | Float64  | Ja            | km                  | Blitzschläge – Durchschnittsdistanz/Entfernung                                                                  |
 | `precipitation_electrical_conductivity` | Float64  | Ja            | µS/cm               | elektrische Leitfähigkeit des Regenwassers                                                                      |
+| `wehr_disturbance`                      | Bool     | Ja            | –                   | Zeigt an, ob eine Störung vorliegt (Ja oder Nein)                                                               |
+| `wehr_level`                            | Float64  | Ja            | mm                  | Gibt die Höhe des Wassers in Millimetern an, z.B. 25 mm                                                         |
+| `wehr_position`                         | Float64  | Ja            | –                   | Gibt an, welche der drei voreingestellten Höhen ausgewählt ist (1, 2 oder 3)                                    |
 
 Folgende Spalten sind ebenfalls Teil des internen Datenmodells, werden allerdings mit einem anderen Schlüsselnamen eingeliefert.
 

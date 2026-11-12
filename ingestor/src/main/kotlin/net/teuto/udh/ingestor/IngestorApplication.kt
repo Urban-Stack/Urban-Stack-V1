@@ -274,6 +274,8 @@ val FLOAT_COLUMNS = setOf(
     "solar_radiation",
     "lightning_average_distance",
     "precipitation_electrical_conductivity",
+    "wehr_level",
+    "wehr_position",
 ) + BEEPBASE_FLOAT_COLUMNS.map { "bp_$it" }
 
 val INTEGER_COLUMNS = setOf(
@@ -292,7 +294,7 @@ val COMMON_FLOAT_MAPPING = mapOf(
 
 val COMMON_INTEGER_MAPPING = BEEPBASE_INTEGER_COLUMNS.associateWith { "bp_$it" }
 
-val BOOLEAN_COLUMNS = setOf("previous_state_duration_overflow_parking") + BEEPBASE_BOOLEAN_COLUMNS.map { "bp_$it" }
+val BOOLEAN_COLUMNS = setOf("previous_state_duration_overflow_parking", "wehr_disturbance") + BEEPBASE_BOOLEAN_COLUMNS.map { "bp_$it" }
 
 val COMMON_BOOLEAN_MAPPING = mapOf(
     "previous_state_duration_overflow" to "previous_state_duration_overflow_parking"

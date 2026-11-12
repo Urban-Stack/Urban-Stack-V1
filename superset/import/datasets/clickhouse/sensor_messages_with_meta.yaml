@@ -247,6 +247,12 @@ columns:
     column_name: road_condition_index
   - <<: *int64
     column_name: lightning_strike_count
+  - <<: *bool
+    column_name: wehr_disturbance
+  - <<: *float64
+    column_name: wehr_level
+  - <<: *float64
+    column_name: wehr_position
   - <<: *string
     column_name: external_reference
   - <<: *string

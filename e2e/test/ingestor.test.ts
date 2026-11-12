@@ -164,7 +164,10 @@ test(
 				previous_state_duration_overflow: false,
 				previous_state_duration: 1326,
 				previous_state_duration_error: 6231,
-				dew_point: 5.12
+				dew_point: 5.12,
+				wehr_disturbance: true,
+				wehr_level: 42.5,
+				wehr_position: 2
 			},
 			location: null,
 			device_id: 'ecdd8956-0fda-4a6f-b8fe-ff4594dd0478',
@@ -241,7 +244,10 @@ test(
 					previous_state_duration_parking = ${zennerPayload.data.previous_state_duration} AND
 					previous_state_duration_error_parking = ${zennerPayload.data.previous_state_duration_error} AND
 					dew_point = ${zennerPayload.data.dew_point} AND
-					co2 = ${zennerPayload.data.co2_1}`;
+					co2 = ${zennerPayload.data.co2_1} AND
+					wehr_disturbance = ${zennerPayload.data.wehr_disturbance} AND
+					wehr_level = ${zennerPayload.data.wehr_level} AND
+					wehr_position = ${zennerPayload.data.wehr_position}`;
 			await checkSQL(
 				`${zennerCheckCommon}
 					AND latitude IS NULL

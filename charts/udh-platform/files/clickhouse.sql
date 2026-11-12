@@ -88,6 +88,9 @@ ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS light
 ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS precipitation_electrical_conductivity Nullable(Float64);
 ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS road_condition_index Nullable(Int64);
 ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS lightning_strike_count Nullable(Int64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS wehr_disturbance Nullable(Bool);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS wehr_level Nullable(Float64);
+ALTER TABLE sensor_messages ON CLUSTER clickhouse ADD COLUMN IF NOT EXISTS wehr_position Nullable(Float64);
 
 CREATE USER IF NOT EXISTS queryonly IDENTIFIED BY {QUERYONLY_PASSWORD:String};
 
@@ -112,7 +115,10 @@ DROP VIEW IF EXISTS sensor_messages_mv_3 ON CLUSTER clickhouse;
 DROP TABLE IF EXISTS sensor_messages_kafka_4 ON CLUSTER clickhouse;
 DROP VIEW IF EXISTS sensor_messages_mv_4 ON CLUSTER clickhouse;
 
-CREATE TABLE IF NOT EXISTS sensor_messages_kafka_5
+DROP TABLE IF EXISTS sensor_messages_kafka_5 ON CLUSTER clickhouse;
+DROP VIEW IF EXISTS sensor_messages_mv_5 ON CLUSTER clickhouse;
+
+CREATE TABLE IF NOT EXISTS sensor_messages_kafka_6
   ON CLUSTER clickhouse
   AS sensor_messages
   ENGINE = Kafka('KAFKA_HOST:9092', 'sensor_messages', '{replica}', 'JSONEachRow')
@@ -120,11 +126,11 @@ CREATE TABLE IF NOT EXISTS sensor_messages_kafka_5
     kafka_thread_per_consumer = 0, kafka_num_consumers = 1,
     input_format_null_as_default = 0;
 
-CREATE MATERIALIZED VIEW IF NOT EXISTS sensor_messages_mv_5
+CREATE MATERIALIZED VIEW IF NOT EXISTS sensor_messages_mv_6
   ON CLUSTER clickhouse
   TO sensor_messages AS
   SELECT *
-  FROM sensor_messages_kafka_5;
+  FROM sensor_messages_kafka_6;
 
 CREATE TABLE IF NOT EXISTS sensor_meta
 ON CLUSTER clickhouse (
